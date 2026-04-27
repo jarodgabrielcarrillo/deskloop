@@ -309,13 +309,11 @@
             </div>
           </div>
           <div class="input-group">
-            <label>Working hours per year</label>
-            <select id="workHours" onchange="recalc()">
-              <option value="2080">2,080 hrs (US standard)</option>
-              <option value="1800">1,800 hrs (EU standard)</option>
-              <option value="2000">2,000 hrs (general)</option>
-              <option value="1760">1,760 hrs (22 days leave)</option>
-            </select>
+            <label for="workHours">Working hours per year</label>
+            <input type="number" id="workHours" value="2080" min="100" max="8760" step="10" onchange="recalc()" placeholder="e.g. 2080">
+            <div style="font-size:11px;color:var(--text3);margin-top:5px;">
+              Common: 2,080 (US) · 1,800 (EU) · 2,000 (general)
+            </div>
           </div>
         </div>
 
