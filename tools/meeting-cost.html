@@ -3,32 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meeting Cost Calculator — Real-Time Team Cost | Deskloop</title>
-  <meta name="description" content="Calculate the real cost of your meetings in real time. Enter team size and average salary to see exactly how much your meeting is costing the company per second.">
-  <meta name="keywords" content="meeting cost calculator, how much does a meeting cost, meeting cost per minute, team meeting calculator, free meeting cost tool">
+  <title>Meeting Cost Calculator — Real-Time Team Cost in Any Currency | Deskloop</title>
+  <meta name="description" content="Calculate the real cost of your meetings in real time. Supports USD, EUR, GBP, AUD, CAD, PHP, INR, SGD, AED, JPY and more. No signup needed.">
+  <meta name="keywords" content="meeting cost calculator, how much does a meeting cost, meeting cost per minute, team meeting calculator, free meeting cost tool, meeting cost in pesos, meeting cost calculator UK">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/tools/meeting-cost.html">
-
-  <!-- Open Graph -->
   <meta property="og:title" content="Meeting Cost Calculator — See What Your Meeting Really Costs">
-  <meta property="og:description" content="Real-time meeting cost calculator. Find out exactly how much that meeting is costing your team.">
+  <meta property="og:description" content="Real-time meeting cost calculator with live currency conversion. Works in USD, EUR, GBP, PHP and 15+ currencies.">
   <meta property="og:url" content="https://deskloop.work/tools/meeting-cost.html">
   <meta property="og:type" content="website">
-
-  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Meeting Cost Calculator",
     "url": "https://deskloop.work/tools/meeting-cost.html",
-    "description": "Real-time calculator that shows the true cost of a meeting based on team size and salaries",
+    "description": "Real-time calculator showing the true cost of a meeting in any currency",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
-
   <link rel="stylesheet" href="../styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💸</text></svg>">
 
@@ -59,11 +54,12 @@
     }
 
     .cost-number.warning { color: #e08a00; }
-    .cost-number.danger  { color: #e05a5a; }
+    .cost-number.danger  { color: var(--danger); }
 
     .cost-sub {
       font-size: 13px;
       color: var(--text3);
+      min-height: 20px;
     }
 
     .timer-row {
@@ -92,11 +88,18 @@
 
     .input-group { display: flex; flex-direction: column; gap: 6px; }
 
-    .currency-input {
+    .currency-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .symbol-input {
       position: relative;
     }
 
-    .currency-input span {
+    .symbol-input .sym {
       position: absolute;
       left: 12px;
       top: 50%;
@@ -104,10 +107,60 @@
       color: var(--text2);
       font-size: 14px;
       pointer-events: none;
+      font-weight: 600;
     }
 
-    .currency-input input { padding-left: 26px; }
+    .symbol-input input { padding-left: 28px; }
 
+    /* Currency selector */
+    .currency-select-wrap {
+      position: relative;
+    }
+
+    .currency-flag {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    select#currency {
+      padding-left: 36px;
+      font-weight: 600;
+    }
+
+    /* Rate badge */
+    .rate-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text3);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 12px;
+      margin-top: 12px;
+    }
+
+    .rate-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: ratePulse 2s ease-in-out infinite;
+    }
+
+    .rate-dot.loading { background: var(--accent); }
+    .rate-dot.error   { background: var(--danger); animation: none; }
+
+    @keyframes ratePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Breakdown table */
     .breakdown-table {
       width: 100%;
       border-collapse: collapse;
@@ -119,6 +172,7 @@
       text-align: left;
       padding: 8px 12px;
       font-size: 11px;
+      font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--text3);
@@ -136,19 +190,29 @@
     .breakdown-table .val {
       text-align: right;
       font-family: var(--font-head);
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text);
+      font-size: 14px;
     }
 
-    .share-btn {
+    .copy-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       margin-top: 16px;
+    }
+
+    .copy-confirm {
+      font-size: 12px;
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
     @media (max-width: 600px) {
       .inputs-grid { grid-template-columns: 1fr; }
+      .currency-row { grid-template-columns: 1fr; }
+      .timer-row { gap: 8px; }
     }
   </style>
 </head>
@@ -175,22 +239,25 @@
   <main>
     <div class="container">
 
-      <!-- AdSense Banner -->
-      <!-- <ins class="adsbygoogle" ...></ins> -->
-
       <div class="page-header">
         <a href="/" class="back-link">← All tools</a>
         <h1>Meeting Cost Calculator</h1>
-        <p>Real-time dollar cost of your meeting as it happens</p>
+        <p>Real-time dollar cost of your meeting — in any currency</p>
       </div>
 
-      <!-- Main Calculator -->
+      <!-- Main tool -->
       <div class="tool-wrap">
 
         <div class="cost-display">
           <div class="cost-label">Total meeting cost</div>
-          <div class="cost-number" id="costDisplay">$0.00</div>
+          <div class="cost-number" id="costDisplay">–</div>
           <div class="cost-sub" id="costSub">Set your team details and start the clock</div>
+          <div style="display:flex;justify-content:center;margin-top:8px;">
+            <div class="rate-badge">
+              <div class="rate-dot loading" id="rateDot"></div>
+              <span id="rateLabel">Loading exchange rate…</span>
+            </div>
+          </div>
           <div class="timer-row">
             <div class="elapsed" id="elapsed">00:00:00</div>
             <div style="display:flex;gap:8px;">
@@ -200,17 +267,55 @@
           </div>
         </div>
 
+        <!-- Inputs -->
         <div class="inputs-grid">
           <div class="input-group">
             <label for="attendees">Number of attendees</label>
             <input type="number" id="attendees" value="6" min="1" max="500" onchange="recalc()">
           </div>
           <div class="input-group">
-            <label for="salary">Avg annual salary (USD)</label>
-            <div class="currency-input">
-              <span>$</span>
-              <input type="number" id="salary" value="80000" min="1000" max="10000000" step="1000" onchange="recalc()">
+            <label for="salaryUSD">Avg annual salary (in selected currency)</label>
+            <div class="symbol-input">
+              <span class="sym" id="salarySymbol">$</span>
+              <input type="number" id="salaryUSD" value="80000" min="1000" step="1000" onchange="recalc()">
             </div>
+          </div>
+        </div>
+
+        <div class="currency-row">
+          <div class="input-group">
+            <label for="currency">Display currency</label>
+            <div class="currency-select-wrap">
+              <span class="currency-flag" id="currencyFlag">🇺🇸</span>
+              <select id="currency" onchange="onCurrencyChange()">
+                <option value="USD">USD — US Dollar</option>
+                <option value="EUR">EUR — Euro</option>
+                <option value="GBP">GBP — British Pound</option>
+                <option value="AUD">AUD — Australian Dollar</option>
+                <option value="CAD">CAD — Canadian Dollar</option>
+                <option value="PHP">PHP — Philippine Peso</option>
+                <option value="INR">INR — Indian Rupee</option>
+                <option value="SGD">SGD — Singapore Dollar</option>
+                <option value="AED">AED — UAE Dirham</option>
+                <option value="JPY">JPY — Japanese Yen</option>
+                <option value="MYR">MYR — Malaysian Ringgit</option>
+                <option value="NZD">NZD — New Zealand Dollar</option>
+                <option value="CHF">CHF — Swiss Franc</option>
+                <option value="KRW">KRW — South Korean Won</option>
+                <option value="BRL">BRL — Brazilian Real</option>
+                <option value="MXN">MXN — Mexican Peso</option>
+                <option value="ZAR">ZAR — South African Rand</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Working hours per year</label>
+            <select id="workHours" onchange="recalc()">
+              <option value="2080">2,080 hrs (US standard)</option>
+              <option value="1800">1,800 hrs (EU standard)</option>
+              <option value="2000">2,000 hrs (general)</option>
+              <option value="1760">1,760 hrs (22 days leave)</option>
+            </select>
           </div>
         </div>
 
@@ -220,25 +325,25 @@
       <div class="metrics-grid">
         <div class="metric">
           <div class="metric-label">Cost per minute</div>
-          <div class="metric-value accent" id="perMinute">$0.00</div>
+          <div class="metric-value accent" id="perMinute">–</div>
         </div>
         <div class="metric">
           <div class="metric-label">Cost per hour</div>
-          <div class="metric-value" id="perHour">$0.00</div>
+          <div class="metric-value" id="perHour">–</div>
         </div>
         <div class="metric">
           <div class="metric-label">Attendees</div>
           <div class="metric-value" id="statAttendees">6</div>
         </div>
         <div class="metric">
-          <div class="metric-label">Hourly rate (avg)</div>
-          <div class="metric-value" id="statHourly">$38.46</div>
+          <div class="metric-label">Avg hourly rate</div>
+          <div class="metric-value" id="statHourly">–</div>
         </div>
       </div>
 
       <!-- Breakdown -->
       <div class="tool-wrap">
-        <p class="section-label" style="margin-bottom:12px;">// cost breakdown</p>
+        <p class="section-title" style="margin-bottom:14px;">// Cost breakdown</p>
         <table class="breakdown-table">
           <thead>
             <tr>
@@ -247,30 +352,27 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Per second</td><td class="val" id="bPerSec">$0.000</td></tr>
-            <tr><td>Per minute</td><td class="val" id="bPerMin">$0.00</td></tr>
-            <tr><td>Per 30 minutes</td><td class="val" id="bPer30">$0.00</td></tr>
-            <tr><td>Per 1 hour</td><td class="val" id="bPerHour">$0.00</td></tr>
-            <tr><td>Per 2 hours</td><td class="val" id="bPer2Hour">$0.00</td></tr>
-            <tr><td>Per day (8hr equivalent)</td><td class="val" id="bPerDay">$0.00</td></tr>
+            <tr><td>Per second</td>      <td class="val" id="bPerSec">–</td></tr>
+            <tr><td>Per minute</td>      <td class="val" id="bPerMin">–</td></tr>
+            <tr><td>Per 30 minutes</td>  <td class="val" id="bPer30">–</td></tr>
+            <tr><td>Per 1 hour</td>      <td class="val" id="bPerHour">–</td></tr>
+            <tr><td>Per 2 hours</td>     <td class="val" id="bPer2Hour">–</td></tr>
+            <tr><td>Per day (8hr)</td>   <td class="val" id="bPerDay">–</td></tr>
           </tbody>
         </table>
 
-        <div class="share-btn">
+        <div class="copy-row">
           <button class="btn btn-ghost" style="font-size:13px;" onclick="shareResult()">📋 Copy result</button>
-          <span id="copyConfirm" style="font-size:12px;color:var(--success);opacity:0;transition:opacity 0.3s;"></span>
+          <span class="copy-confirm" id="copyConfirm">Copied to clipboard!</span>
         </div>
       </div>
-
-      <!-- AdSense Banner -->
-      <!-- <ins class="adsbygoogle" ...></ins> -->
 
       <!-- SEO Block -->
       <div class="seo-block">
         <h2>How Much Does Your Meeting Really Cost?</h2>
-        <p>The Meeting Cost Calculator converts your team's time into real dollars, updated every second. It works by calculating the combined hourly rate of all attendees and running it as a live counter from the moment you start the clock.</p>
-        <p>Studies consistently show that unnecessary meetings are one of the largest drains on organizational productivity. A 1-hour meeting with 8 people at $80,000/year average salary costs over $307 — before accounting for the time it takes to mentally re-engage with deep work afterward.</p>
-        <p>Use this tool before scheduling recurring meetings, or run it live during a meeting to create a shared sense of urgency. Knowing the real cost of a meeting changes how you run them.</p>
+        <p>The Deskloop Meeting Cost Calculator converts your team's combined time into real money — updated every second from the moment you start the clock. It supports live currency conversion across 17 currencies including USD, EUR, GBP, PHP, INR, SGD, and more, powered by real-time exchange rates from the European Central Bank.</p>
+        <p>Studies consistently show that unnecessary meetings are one of the largest hidden costs in modern organizations. A 1-hour meeting with 8 people at an average salary of $80,000/year costs over $307 — before accounting for the time it takes to mentally re-engage with focused work afterward.</p>
+        <p>Use this tool before scheduling a recurring meeting, or run it live during a meeting to create a shared sense of urgency around staying on-agenda and finishing on time.</p>
       </div>
 
     </div>
@@ -286,22 +388,92 @@
   </footer>
 
   <script>
+    // ── Currency config ──
+    const CURRENCIES = {
+      USD: { symbol: '$',  flag: '🇺🇸', name: 'USD',  decimals: 2 },
+      EUR: { symbol: '€',  flag: '🇪🇺', name: 'EUR',  decimals: 2 },
+      GBP: { symbol: '£',  flag: '🇬🇧', name: 'GBP',  decimals: 2 },
+      AUD: { symbol: 'A$', flag: '🇦🇺', name: 'AUD',  decimals: 2 },
+      CAD: { symbol: 'C$', flag: '🇨🇦', name: 'CAD',  decimals: 2 },
+      PHP: { symbol: '₱',  flag: '🇵🇭', name: 'PHP',  decimals: 0 },
+      INR: { symbol: '₹',  flag: '🇮🇳', name: 'INR',  decimals: 0 },
+      SGD: { symbol: 'S$', flag: '🇸🇬', name: 'SGD',  decimals: 2 },
+      AED: { symbol: 'د.إ',flag: '🇦🇪', name: 'AED',  decimals: 2 },
+      JPY: { symbol: '¥',  flag: '🇯🇵', name: 'JPY',  decimals: 0 },
+      MYR: { symbol: 'RM', flag: '🇲🇾', name: 'MYR',  decimals: 2 },
+      NZD: { symbol: 'NZ$',flag: '🇳🇿', name: 'NZD',  decimals: 2 },
+      CHF: { symbol: 'Fr', flag: '🇨🇭', name: 'CHF',  decimals: 2 },
+      KRW: { symbol: '₩',  flag: '🇰🇷', name: 'KRW',  decimals: 0 },
+      BRL: { symbol: 'R$', flag: '🇧🇷', name: 'BRL',  decimals: 2 },
+      MXN: { symbol: 'MX$',flag: '🇲🇽', name: 'MXN',  decimals: 2 },
+      ZAR: { symbol: 'R',  flag: '🇿🇦', name: 'ZAR',  decimals: 2 },
+    };
+
+    // Fallback rates relative to USD (used if API fails)
+    const FALLBACK_RATES = {
+      USD:1, EUR:0.92, GBP:0.79, AUD:1.54, CAD:1.36,
+      PHP:58.5, INR:83.5, SGD:1.34, AED:3.67, JPY:149.5,
+      MYR:4.72, NZD:1.63, CHF:0.89, KRW:1330, BRL:5.05,
+      MXN:17.2, ZAR:18.7
+    };
+
+    // ── State ──
     let isRunning = false;
     let elapsedSeconds = 0;
     let interval = null;
-    let costPerSecond = 0;
+    let costPerSecondUSD = 0;
+    let exchangeRate = 1;
+    let currentCurrency = 'USD';
+    let rateLoaded = false;
 
-    function getAttendees() { return Math.max(1, parseInt(document.getElementById('attendees').value) || 1); }
-    function getSalary()    { return Math.max(1, parseFloat(document.getElementById('salary').value) || 80000); }
+    // ── Fetch exchange rate ──
+    async function fetchRate(toCurrency) {
+      const dot  = document.getElementById('rateDot');
+      const label = document.getElementById('rateLabel');
+      dot.className = 'rate-dot loading';
+      label.textContent = 'Fetching live rate…';
 
-    function calcCostPerSecond() {
-      const workingHoursPerYear = 2080;
-      const hourlyRate = getSalary() / workingHoursPerYear;
-      return (hourlyRate * getAttendees()) / 3600;
+      if (toCurrency === 'USD') {
+        exchangeRate = 1;
+        rateLoaded = true;
+        dot.className = 'rate-dot';
+        label.textContent = 'Base currency (USD)';
+        recalc();
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://api.frankfurter.app/latest?from=USD&to=${toCurrency}`);
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+        exchangeRate = data.rates[toCurrency];
+        rateLoaded = true;
+        dot.className = 'rate-dot';
+        label.textContent = `1 USD = ${exchangeRate.toFixed(4)} ${toCurrency} · Live rate`;
+      } catch {
+        exchangeRate = FALLBACK_RATES[toCurrency] || 1;
+        rateLoaded = true;
+        dot.className = 'rate-dot error';
+        label.textContent = `Approx. rate (offline fallback)`;
+      }
+      recalc();
     }
 
-    function fmt(n, dec = 2) {
-      return '$' + n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    // ── Helpers ──
+    function getAttendees()  { return Math.max(1, parseInt(document.getElementById('attendees').value) || 1); }
+    function getSalary()     { return Math.max(1, parseFloat(document.getElementById('salaryUSD').value) || 80000); }
+    function getWorkHours()  { return parseInt(document.getElementById('workHours').value) || 2080; }
+    function getCurrencyConfig() { return CURRENCIES[currentCurrency] || CURRENCIES.USD; }
+
+    function fmt(amountUSD, forceDec) {
+      const cfg = getCurrencyConfig();
+      const converted = amountUSD * exchangeRate;
+      const dec = forceDec !== undefined ? forceDec : cfg.decimals;
+      const formatted = converted.toLocaleString('en-US', {
+        minimumFractionDigits: dec,
+        maximumFractionDigits: dec
+      });
+      return cfg.symbol + formatted;
     }
 
     function fmtTime(s) {
@@ -311,48 +483,70 @@
       return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
     }
 
+    function calcCostPerSecondUSD() {
+      const hourlyRate = getSalary() / getWorkHours();
+      return (hourlyRate * getAttendees()) / 3600;
+    }
+
     function recalc() {
-      costPerSecond = calcCostPerSecond();
-      const perMin  = costPerSecond * 60;
-      const perHour = costPerSecond * 3600;
-      const hourlyAvg = getSalary() / 2080;
+      if (!rateLoaded) return;
+      costPerSecondUSD = calcCostPerSecondUSD();
+      const cfg = getCurrencyConfig();
 
-      document.getElementById('perMinute').textContent  = fmt(perMin);
-      document.getElementById('perHour').textContent    = fmt(perHour);
+      const perMin  = costPerSecondUSD * 60;
+      const perHour = costPerSecondUSD * 3600;
+      const hourlyAvg = getSalary() / getWorkHours();
+
+      document.getElementById('perMinute').textContent   = fmt(perMin);
+      document.getElementById('perHour').textContent     = fmt(perHour);
       document.getElementById('statAttendees').textContent = getAttendees();
-      document.getElementById('statHourly').textContent = fmt(hourlyAvg);
+      document.getElementById('statHourly').textContent  = fmt(hourlyAvg);
 
-      document.getElementById('bPerSec').textContent   = fmt(costPerSecond, 4);
-      document.getElementById('bPerMin').textContent   = fmt(perMin);
-      document.getElementById('bPer30').textContent    = fmt(costPerSecond * 1800);
-      document.getElementById('bPerHour').textContent  = fmt(perHour);
-      document.getElementById('bPer2Hour').textContent = fmt(costPerSecond * 7200);
-      document.getElementById('bPerDay').textContent   = fmt(costPerSecond * 28800);
+      document.getElementById('bPerSec').textContent    = fmt(costPerSecondUSD, Math.max(cfg.decimals, 3));
+      document.getElementById('bPerMin').textContent    = fmt(perMin);
+      document.getElementById('bPer30').textContent     = fmt(costPerSecondUSD * 1800);
+      document.getElementById('bPerHour').textContent   = fmt(perHour);
+      document.getElementById('bPer2Hour').textContent  = fmt(costPerSecondUSD * 7200);
+      document.getElementById('bPerDay').textContent    = fmt(costPerSecondUSD * 28800);
 
+      document.getElementById('salarySymbol').textContent = cfg.symbol;
       updateCostDisplay();
     }
 
     function updateCostDisplay() {
-      const total = costPerSecond * elapsedSeconds;
+      if (!rateLoaded) return;
+      const total = costPerSecondUSD * elapsedSeconds;
       const el = document.getElementById('costDisplay');
       el.textContent = fmt(total);
 
-      // Color thresholds
-      if (total >= 1000)     { el.className = 'cost-number danger'; }
-      else if (total >= 300) { el.className = 'cost-number warning'; }
-      else                   { el.className = 'cost-number'; }
+      const totalUSD = total;
+      if (totalUSD >= 1000)      { el.className = 'cost-number danger'; }
+      else if (totalUSD >= 300)  { el.className = 'cost-number warning'; }
+      else                       { el.className = 'cost-number'; }
 
-      const perMin = costPerSecond * 60;
+      const perMin = costPerSecondUSD * 60;
       document.getElementById('costSub').textContent = isRunning
         ? `${fmt(perMin)} per minute · ${getAttendees()} attendees`
-        : 'Press Start Meeting to begin the clock';
+        : elapsedSeconds > 0
+          ? `Meeting paused at ${fmtTime(elapsedSeconds)}`
+          : 'Set your team details and start the clock';
+    }
+
+    function onCurrencyChange() {
+      const sel = document.getElementById('currency');
+      currentCurrency = sel.value;
+      const cfg = CURRENCIES[currentCurrency];
+      document.getElementById('currencyFlag').textContent = cfg.flag;
+      rateLoaded = false;
+      fetchRate(currentCurrency);
     }
 
     function tick() {
       elapsedSeconds++;
       document.getElementById('elapsed').textContent = fmtTime(elapsedSeconds);
       updateCostDisplay();
-      document.title = `${fmt(costPerSecond * elapsedSeconds)} — Meeting Cost | Deskloop`;
+      const total = costPerSecondUSD * elapsedSeconds;
+      document.title = `${fmt(total)} — Meeting Cost | Deskloop`;
     }
 
     function toggleMeeting() {
@@ -378,19 +572,18 @@
     }
 
     function shareResult() {
-      const total = costPerSecond * elapsedSeconds;
+      const total = costPerSecondUSD * elapsedSeconds;
       const mins = Math.floor(elapsedSeconds / 60);
-      const text = `Our ${mins}-minute meeting with ${getAttendees()} people just cost ${fmt(total)}. (via deskloop.work/tools/meeting-cost.html)`;
+      const text = `Our ${mins}-minute meeting with ${getAttendees()} people just cost ${fmt(total)} (${currentCurrency}). Free calculator: deskloop.work/tools/meeting-cost.html`;
       navigator.clipboard.writeText(text).then(() => {
         const el = document.getElementById('copyConfirm');
-        el.textContent = 'Copied!';
         el.style.opacity = '1';
-        setTimeout(() => { el.style.opacity = '0'; }, 2000);
+        setTimeout(() => { el.style.opacity = '0'; }, 2500);
       });
     }
 
-    // Init
-    recalc();
+    // ── Init ──
+    fetchRate('USD');
   </script>
 
 </body>
