@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Work Hours Logger Online — Track Time No Signup | Deskloop</title>
+  <meta name="description" content="Free online work hours logger. Track your sessions, calculate total hours worked, and see where your time goes — no account, no app, no install required.">
+  <meta name="keywords" content="work hours logger, time tracker online free, work hours tracker no signup, free time logger, browser time tracker, freelance hours tracker, log work hours online">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://deskloop.work/tools/work-hours-logger.html">
+  <meta property="og:title" content="Free Work Hours Logger — Track Time in Your Browser">
+  <meta property="og:description" content="Log work sessions and track total hours. No signup, no app, works in your browser.">
+  <meta property="og:url" content="https://deskloop.work/tools/work-hours-logger.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Work Hours Logger",
+    "url": "https://deskloop.work/tools/work-hours-logger.html",
+    "description": "Free browser-based work hours logger with session tracking and daily totals",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕐</text></svg>">
+
+  <style>
+    /* ── Clock display ── */
+    .clock-display {
+      text-align: center;
+      padding: 36px 0 28px;
+    }
+
+    .clock-status {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      transition: color 0.3s;
+    }
+
+    .clock-status.running { color: var(--success); }
+    .clock-status.stopped { color: var(--text3); }
+
+    .clock-time {
+      font-family: var(--font-head);
+      font-size: clamp(56px, 14vw, 104px);
+      font-weight: 800;
+      letter-spacing: -4px;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.3s;
+    }
+
+    .clock-time.running { color: var(--success); }
+
+    .clock-sub {
+      font-size: 13px;
+      color: var(--text3);
+      margin-bottom: 28px;
+    }
+
+    .clock-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Project tag ── */
+    .project-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      align-items: center;
+    }
+
+    .project-row label {
+      white-space: nowrap;
+      margin: 0;
+      font-size: 11px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .project-row input {
+      flex: 1;
+      margin: 0;
+    }
+
+    /* ── Session log ── */
+    .log-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .session-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .session-table th {
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text3);
+      padding: 0 12px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .session-table th:last-child { text-align: right; }
+
+    .session-table td {
+      padding: 12px;
+      font-size: 13px;
+      color: var(--text2);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .session-table tr:last-child td { border-bottom: none; }
+
+    .session-table .dur {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .session-project {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(232,160,32,0.2);
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-top: 2px;
+    }
+
+    .session-del {
+      background: none;
+      border: none;
+      color: var(--text3);
+      cursor: pointer;
+      font-size: 13px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: color 0.18s, background 0.18s;
+      opacity: 0;
+    }
+
+    .session-table tr:hover .session-del { opacity: 1; }
+    .session-del:hover { color: var(--danger); background: rgba(224,85,85,0.08); }
+
+    /* ── Day groups ── */
+    .day-group-header {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text3);
+      padding: 14px 12px 6px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .day-total {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ── Empty state ── */
+    .empty-log {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text3);
+    }
+
+    .empty-log .icon { font-size: 36px; margin-bottom: 12px; }
+
+    .empty-log p { font-size: 13px; line-height: 1.7; color: var(--text3); }
+
+    /* ── Export ── */
+    .export-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Progress bar ── */
+    .goal-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .goal-label { font-size: 12px; color: var(--text3); white-space: nowrap; }
+
+    .goal-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--bg3);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .goal-fill {
+      height: 100%;
+      background: var(--success);
+      border-radius: 100px;
+      transition: width 0.5s var(--ease);
+    }
+
+    .goal-fill.over { background: var(--accent); }
+
+    .goal-pct { font-size: 12px; color: var(--text2); font-weight: 600; white-space: nowrap; }
+
+    @media (max-width: 600px) {
+      .project-row { flex-wrap: wrap; }
+      .session-del { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7" cy="7" r="4" stroke="#080808" stroke-width="2.5"/>
+            <circle cx="7" cy="7" r="1.5" fill="#080808"/>
+          </svg>
+        </div>
+        <span class="logo-text">Deskloop</span>
+      </a>
+      <div class="nav-right">
+        <a href="/#tools" class="nav-link">Tools</a>
+        <a href="/#about" class="nav-link">About</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <div class="page-header">
+        <a href="/" class="back-link">← All tools</a>
+        <h1>Work Hours Logger</h1>
+        <p>Track work sessions and see where your time actually goes</p>
+      </div>
+
+      <!-- Timer -->
+      <div class="tool-wrap">
+        <div class="clock-display">
+          <div class="clock-status stopped" id="clockStatus">READY TO TRACK</div>
+          <div class="clock-time" id="clockTime">00:00:00</div>
+          <div class="clock-sub" id="clockSub">Start a session to begin logging</div>
+          <div class="clock-controls">
+            <button class="btn btn-primary" id="startBtn" onclick="toggleSession()">Start Session</button>
+            <button class="btn btn-ghost" onclick="logManual()">+ Log manually</button>
+          </div>
+        </div>
+
+        <div class="project-row">
+          <label for="projectInput">Project</label>
+          <input type="text" id="projectInput" placeholder="e.g. Client work, Admin, Deep work…" maxlength="40">
+        </div>
+
+        <!-- Daily goal progress -->
+        <div class="goal-row" style="margin-top:20px;">
+          <span class="goal-label">Daily goal</span>
+          <div class="goal-bar"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
+          <span class="goal-pct" id="goalPct">0 / 8h</span>
+          <select id="goalHours" onchange="updateGoal()" style="width:auto;padding:6px 10px;font-size:12px;">
+            <option value="4">4h goal</option>
+            <option value="6">6h goal</option>
+            <option value="8" selected>8h goal</option>
+            <option value="10">10h goal</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-label">Today</div>
+          <div class="metric-value accent" id="statToday">0h 0m</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">This week</div>
+          <div class="metric-value" id="statWeek">0h 0m</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Sessions today</div>
+          <div class="metric-value" id="statSessions">0</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Avg session</div>
+          <div class="metric-value" id="statAvg">—</div>
+        </div>
+      </div>
+
+      <!-- Session log -->
+      <div class="tool-wrap">
+        <div class="log-header">
+          <p class="section-title">// Session log</p>
+          <div class="export-row" style="margin:0;">
+            <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px;" onclick="exportCSV()">Export CSV</button>
+            <button class="btn btn-danger" style="font-size:12px;padding:6px 12px;" onclick="clearAll()">Clear all</button>
+          </div>
+        </div>
+
+        <div id="logContainer">
+          <div class="empty-log">
+            <div class="icon">⏳</div>
+            <p>No sessions logged yet.<br>Start a session above to begin tracking your work hours.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manual entry modal -->
+      <div id="manualPanel" style="display:none;" class="tool-wrap">
+        <p class="section-title" style="margin-bottom:16px;">// Log a past session</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
+            <label>Date</label>
+            <input type="date" id="manDate">
+          </div>
+          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
+            <label>Start time</label>
+            <input type="time" id="manStart">
+          </div>
+          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
+            <label>End time</label>
+            <input type="time" id="manEnd">
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input type="text" id="manProject" placeholder="Project (optional)" style="flex:1;">
+          <button class="btn btn-primary" onclick="saveManual()">Save</button>
+          <button class="btn btn-ghost" onclick="closeManual()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- SEO block -->
+      <div class="seo-block">
+        <h2>Free Online Work Hours Logger — No Account Required</h2>
+        <p>The Deskloop Work Hours Logger lets you track work sessions directly in your browser with zero setup. Start a session timer, tag it with a project name, and build a complete log of where your working hours go — all stored locally on your device.</p>
+        <p>Whether you're a freelancer tracking billable hours, a remote worker logging your day, or a student managing study sessions, this tool gives you a clear picture of how your time is actually spent. Export your log to CSV at any time for invoicing or reporting.</p>
+        <p>Your session data is saved privately in your browser using local storage. No account, no subscription, no data sent to any server. Works on desktop and mobile.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-copy">
+        <span>© 2025 Deskloop.work — Free productivity tools</span>
+        <span style="color:var(--text3);font-size:11px;">No cookies · No tracking · No nonsense</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── State ──
+    let sessions = [];
+    let activeStart = null;
+    let activeTick = null;
+    let activeElapsed = 0;
+
+    // ── Storage ──
+    function save() { localStorage.setItem('dl_workhours_v1', JSON.stringify(sessions)); }
+    function load() {
+      try { sessions = JSON.parse(localStorage.getItem('dl_workhours_v1')) || []; }
+      catch { sessions = []; }
+    }
+
+    // ── Helpers ──
+    function pad(n) { return String(n).padStart(2,'0'); }
+
+    function fmtDuration(ms, short = false) {
+      const totalSec = Math.floor(ms / 1000);
+      const h = Math.floor(totalSec / 3600);
+      const m = Math.floor((totalSec % 3600) / 60);
+      const s = totalSec % 60;
+      if (short) return h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
+      return `${pad(h)}:${pad(m)}:${pad(s)}`;
+    }
+
+    function fmtTime(ts) {
+      const d = new Date(ts);
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function dateKey(ts) {
+      const d = new Date(ts);
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    }
+
+    function friendlyDate(key) {
+      const today = dateKey(Date.now());
+      const yesterday = dateKey(Date.now() - 86400000);
+      if (key === today) return 'Today';
+      if (key === yesterday) return 'Yesterday';
+      const d = new Date(key);
+      return d.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
+    }
+
+    function getProject() {
+      return document.getElementById('projectInput').value.trim() || 'General';
+    }
+
+    function getGoalMs() {
+      return parseInt(document.getElementById('goalHours').value) * 3600000;
+    }
+
+    // ── Session control ──
+    function toggleSession() {
+      if (activeStart) {
+        stopSession();
+      } else {
+        startSession();
+      }
+    }
+
+    function startSession() {
+      activeStart = Date.now();
+      activeElapsed = 0;
+      document.getElementById('startBtn').textContent = 'Stop Session';
+      document.getElementById('clockStatus').textContent = 'SESSION RUNNING';
+      document.getElementById('clockStatus').className = 'clock-status running';
+      document.getElementById('clockTime').className = 'clock-time running';
+      document.getElementById('clockSub').textContent = getProject();
+      document.title = '● Recording — Work Hours Logger | Deskloop';
+
+      activeTick = setInterval(() => {
+        activeElapsed = Date.now() - activeStart;
+        document.getElementById('clockTime').textContent = fmtDuration(activeElapsed);
+        updateGoal();
+      }, 1000);
+    }
+
+    function stopSession() {
+      clearInterval(activeTick);
+      const end = Date.now();
+      const duration = end - activeStart;
+
+      if (duration < 10000) {
+        // Ignore sessions under 10 seconds
+        resetClock();
+        return;
+      }
+
+      sessions.unshift({
+        id: end,
+        start: activeStart,
+        end,
+        duration,
+        project: getProject()
+      });
+
+      save();
+      resetClock();
+      render();
+    }
+
+    function resetClock() {
+      activeStart = null;
+      activeElapsed = 0;
+      document.getElementById('startBtn').textContent = 'Start Session';
+      document.getElementById('clockStatus').textContent = 'READY TO TRACK';
+      document.getElementById('clockStatus').className = 'clock-status stopped';
+      document.getElementById('clockTime').className = 'clock-time';
+      document.getElementById('clockTime').textContent = '00:00:00';
+      document.getElementById('clockSub').textContent = 'Start a session to begin logging';
+      document.title = 'Work Hours Logger | Deskloop';
+    }
+
+    function deleteSession(id) {
+      sessions = sessions.filter(s => s.id !== id);
+      save();
+      render();
+    }
+
+    function clearAll() {
+      if (!sessions.length) return;
+      if (!confirm('Clear all logged sessions? This cannot be undone.')) return;
+      sessions = [];
+      save();
+      render();
+    }
+
+    // ── Manual entry ──
+    function logManual() {
+      const panel = document.getElementById('manualPanel');
+      panel.style.display = 'block';
+      const now = new Date();
+      document.getElementById('manDate').value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+      document.getElementById('manStart').value = `${pad(now.getHours()-1)}:00`;
+      document.getElementById('manEnd').value = `${pad(now.getHours())}:00`;
+      panel.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function saveManual() {
+      const date = document.getElementById('manDate').value;
+      const start = document.getElementById('manStart').value;
+      const end = document.getElementById('manEnd').value;
+      const project = document.getElementById('manProject').value.trim() || 'General';
+
+      if (!date || !start || !end) return;
+
+      const startTs = new Date(`${date}T${start}`).getTime();
+      const endTs = new Date(`${date}T${end}`).getTime();
+
+      if (endTs <= startTs) { alert('End time must be after start time.'); return; }
+
+      sessions.unshift({
+        id: Date.now(),
+        start: startTs,
+        end: endTs,
+        duration: endTs - startTs,
+        project,
+        manual: true
+      });
+
+      sessions.sort((a,b) => b.start - a.start);
+      save();
+      closeManual();
+      render();
+    }
+
+    function closeManual() {
+      document.getElementById('manualPanel').style.display = 'none';
+      document.getElementById('manProject').value = '';
+    }
+
+    // ── Stats ──
+    function calcStats() {
+      const todayKey = dateKey(Date.now());
+      const weekAgo = Date.now() - 7 * 86400000;
+
+      const todaySessions = sessions.filter(s => dateKey(s.start) === todayKey);
+      const weekSessions = sessions.filter(s => s.start >= weekAgo);
+
+      const todayMs = todaySessions.reduce((a,s) => a + s.duration, 0);
+      const weekMs  = weekSessions.reduce((a,s) => a + s.duration, 0);
+      const avgMs   = todaySessions.length
+        ? todaySessions.reduce((a,s) => a + s.duration, 0) / todaySessions.length
+        : 0;
+
+      // Include active session in today total
+      const liveMs = activeStart ? (Date.now() - activeStart) : 0;
+
+      return { todayMs: todayMs + liveMs, weekMs, todayCount: todaySessions.length, avgMs };
+    }
+
+    function updateGoal() {
+      const { todayMs } = calcStats();
+      const goalMs = getGoalMs();
+      const pct = Math.min((todayMs / goalMs) * 100, 100);
+      const over = todayMs > goalMs;
+
+      document.getElementById('goalFill').style.width = pct + '%';
+      document.getElementById('goalFill').className = 'goal-fill' + (over ? ' over' : '');
+      document.getElementById('goalPct').textContent =
+        `${fmtDuration(todayMs, true)} / ${document.getElementById('goalHours').value}h`;
+    }
+
+    // ── Render ──
+    function render() {
+      const { todayMs, weekMs, todayCount, avgMs } = calcStats();
+
+      document.getElementById('statToday').textContent    = fmtDuration(todayMs, true);
+      document.getElementById('statWeek').textContent     = fmtDuration(weekMs, true);
+      document.getElementById('statSessions').textContent = todayCount;
+      document.getElementById('statAvg').textContent      = avgMs ? fmtDuration(avgMs, true) : '—';
+
+      updateGoal();
+      renderLog();
+    }
+
+    function renderLog() {
+      const container = document.getElementById('logContainer');
+      if (!sessions.length) {
+        container.innerHTML = `
+          <div class="empty-log">
+            <div class="icon">⏳</div>
+            <p>No sessions logged yet.<br>Start a session above to begin tracking your work hours.</p>
+          </div>`;
+        return;
+      }
+
+      // Group by day
+      const groups = {};
+      sessions.forEach(s => {
+        const key = dateKey(s.start);
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(s);
+      });
+
+      let html = '<table class="session-table"><thead><tr><th>Session</th><th>Time</th><th>Duration</th><th></th></tr></thead><tbody>';
+
+      Object.keys(groups).sort((a,b) => b.localeCompare(a)).forEach(key => {
+        const daySessions = groups[key];
+        const dayTotal = daySessions.reduce((a,s) => a + s.duration, 0);
+
+        html += `<tr><td colspan="4" style="padding:0;">
+          <div class="day-group-header">
+            <span>${friendlyDate(key)}</span>
+            <span class="day-total">${fmtDuration(dayTotal, true)}</span>
+          </div>
+        </td></tr>`;
+
+        daySessions.forEach(s => {
+          html += `<tr>
+            <td>
+              <div style="font-weight:600;color:var(--text);font-size:14px;">${s.project}</div>
+              ${s.manual ? '<span style="font-size:10px;color:var(--text3);">manually logged</span>' : ''}
+            </td>
+            <td style="color:var(--text3);font-size:12px;">${fmtTime(s.start)} – ${fmtTime(s.end)}</td>
+            <td class="dur">${fmtDuration(s.duration, true)}</td>
+            <td><button class="session-del" onclick="deleteSession(${s.id})" title="Delete">✕</button></td>
+          </tr>`;
+        });
+      });
+
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    // ── Export CSV ──
+    function exportCSV() {
+      if (!sessions.length) { alert('No sessions to export.'); return; }
+      const rows = [['Date','Project','Start','End','Duration (h)','Duration (min)']];
+      sessions.forEach(s => {
+        const d = new Date(s.start);
+        const dateStr = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+        const durH = (s.duration / 3600000).toFixed(2);
+        const durM = Math.round(s.duration / 60000);
+        rows.push([dateStr, s.project, fmtTime(s.start), fmtTime(s.end), durH, durM]);
+      });
+      const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `deskloop-hours-${dateKey(Date.now())}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ── Init ──
+    load();
+    render();
+
+    // Update live stats every 30s if session running
+    setInterval(() => { if (activeStart) render(); }, 30000);
+  </script>
+
+</body>
+</html>
