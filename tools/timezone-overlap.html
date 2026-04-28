@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Zone Overlap Finder — Best Meeting Time for Remote Teams | Deskloop</title>
+  <meta name="description" content="Find the best meeting time across multiple time zones instantly. Free online time zone overlap finder for remote teams. No signup required.">
+  <meta name="keywords" content="time zone overlap finder, best meeting time across time zones, remote team meeting scheduler, world clock overlap, time zone converter free">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://deskloop.work/tools/timezone-overlap.html">
+  <meta property="og:title" content="Time Zone Overlap Finder — Best Meeting Time for Remote Teams">
+  <meta property="og:description" content="Find the best overlap window across multiple time zones. Free, no signup.">
+  <meta property="og:url" content="https://deskloop.work/tools/timezone-overlap.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Time Zone Overlap Finder",
+    "url": "https://deskloop.work/tools/timezone-overlap.html",
+    "description": "Find the best meeting time across multiple time zones for remote teams",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+
+  <style>
+    /* ── Zone list ── */
+    .zones-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .zone-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+    }
+
+    .zone-row select,
+    .zone-row input { margin: 0; }
+
+    .zone-name {
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .zone-time {
+      font-family: var(--font-head);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+
+    .zone-offset {
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 2px;
+    }
+
+    .zone-del {
+      background: none;
+      border: none;
+      color: var(--text3);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      transition: color 0.18s, background 0.18s;
+      line-height: 1;
+    }
+
+    .zone-del:hover { color: var(--danger); background: rgba(224,85,85,0.08); }
+
+    /* ── Add zone ── */
+    .add-zone-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .add-zone-row .input-group { margin: 0; }
+    .add-zone-row select { margin: 0; }
+
+    /* ── Overlap grid ── */
+    .overlap-wrap {
+      overflow-x: auto;
+      margin-bottom: 8px;
+    }
+
+    .overlap-grid {
+      min-width: 600px;
+      display: grid;
+      gap: 0;
+    }
+
+    .grid-row {
+      display: grid;
+      grid-template-columns: 110px repeat(24, 1fr);
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+
+    .grid-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 8px;
+      line-height: 1.3;
+    }
+
+    .grid-label .sub { font-size: 10px; color: var(--text3); font-weight: 400; }
+
+    .hour-header {
+      font-size: 9px;
+      color: var(--text3);
+      text-align: center;
+      padding-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .hour-cell {
+      height: 32px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 600;
+      transition: opacity 0.2s;
+      cursor: default;
+      position: relative;
+    }
+
+    .hour-cell.work     { background: rgba(61,184,122,0.2);  color: var(--success); }
+    .hour-cell.overlap  { background: var(--success);         color: #080808; }
+    .hour-cell.sleep    { background: var(--bg3);             color: transparent; }
+    .hour-cell.evening  { background: rgba(232,160,32,0.12); color: var(--accent); }
+    .hour-cell.selected { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+    /* ── Hour header row ── */
+    .hour-header-row {
+      display: grid;
+      grid-template-columns: 110px repeat(24, 1fr);
+      gap: 2px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Overlap result ── */
+    .overlap-result {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-top: 16px;
+    }
+
+    .overlap-good {
+      border-color: rgba(61,184,122,0.3);
+      background: rgba(61,184,122,0.04);
+    }
+
+    .overlap-warn {
+      border-color: rgba(232,160,32,0.3);
+      background: rgba(232,160,32,0.04);
+    }
+
+    .overlap-none {
+      border-color: rgba(224,85,85,0.3);
+      background: rgba(224,85,85,0.04);
+    }
+
+    .overlap-title {
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .overlap-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .slot-pill {
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--success);
+      color: #080808;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .slot-pill.warn { background: var(--accent); }
+
+    /* ── Work hours config ── */
+    .work-hours-config {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    .work-hours-config input[type="number"] {
+      width: 64px;
+      padding: 6px 8px;
+      font-size: 13px;
+      margin: 0;
+      text-align: center;
+    }
+
+    .wh-sep { color: var(--text3); }
+
+    /* ── Live clocks ── */
+    .live-clocks {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .live-clock-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+
+    .lc-city {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text3);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .lc-time {
+      font-family: var(--font-head);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .lc-date { font-size: 11px; color: var(--text3); margin-top: 4px; }
+    .lc-status { font-size: 10px; margin-top: 4px; font-weight: 600; }
+    .lc-status.work  { color: var(--success); }
+    .lc-status.sleep { color: var(--text3); }
+    .lc-status.eve   { color: var(--accent); }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text3);
+    }
+
+    .legend-dot {
+      width: 12px; height: 12px;
+      border-radius: 3px;
+    }
+
+    .empty-zones {
+      text-align: center;
+      padding: 32px;
+      color: var(--text3);
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .add-zone-row { grid-template-columns: 1fr; }
+      .zone-row { grid-template-columns: 1fr auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7" cy="7" r="4" stroke="#080808" stroke-width="2.5"/>
+            <circle cx="7" cy="7" r="1.5" fill="#080808"/>
+          </svg>
+        </div>
+        <span class="logo-text">Deskloop</span>
+      </a>
+      <div class="nav-right">
+        <a href="/#tools" class="nav-link">Tools</a>
+        <a href="/#about" class="nav-link">About</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <div class="page-header">
+        <a href="/" class="back-link">← All tools</a>
+        <h1>Time Zone Overlap</h1>
+        <p>Find the best meeting window across multiple time zones instantly</p>
+      </div>
+
+      <div class="tool-wrap">
+
+        <!-- Live clocks -->
+        <p class="section-title" style="margin-bottom:14px;">// Live clocks</p>
+        <div class="live-clocks" id="liveClocks">
+          <div class="empty-zones">Add time zones below to see live clocks</div>
+        </div>
+
+        <!-- Work hours config -->
+        <div style="margin-bottom:8px;">
+          <p class="section-title" style="margin-bottom:12px;">// Overlap settings</p>
+          <div class="work-hours-config">
+            <span>Work hours:</span>
+            <input type="number" id="workStart" value="9" min="0" max="23" onchange="render()">
+            <span class="wh-sep">to</span>
+            <input type="number" id="workEnd" value="17" min="1" max="24" onchange="render()">
+            <span style="color:var(--text3);font-size:12px;">(local time for each zone)</span>
+          </div>
+        </div>
+
+        <!-- Add zone -->
+        <p class="section-title" style="margin-bottom:12px;">// Add locations</p>
+        <div class="add-zone-row">
+          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
+            <label for="cityInput">City / Label</label>
+            <input type="text" id="cityInput" placeholder="e.g. New York, London, Team HQ…" maxlength="30">
+          </div>
+          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
+            <label for="tzSelect">Time zone</label>
+            <select id="tzSelect"></select>
+          </div>
+          <button class="btn btn-primary" style="margin-bottom:1px;" onclick="addZone()">Add</button>
+        </div>
+
+        <!-- Zone list -->
+        <div class="zones-list" id="zonesList"></div>
+
+      </div>
+
+      <!-- Overlap grid -->
+      <div class="tool-wrap" id="overlapSection" style="display:none;">
+        <p class="section-title" style="margin-bottom:16px;">// 24-hour overlap grid</p>
+
+        <div class="overlap-wrap">
+          <div class="overlap-grid" id="overlapGrid"></div>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--success);"></div> All overlap (best)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(61,184,122,0.2);"></div> Work hours</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(232,160,32,0.12);border:1px solid rgba(232,160,32,0.2);"></div> Evening</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--bg3);border:1px solid var(--border);"></div> Night / sleep</div>
+        </div>
+
+        <div class="overlap-result" id="overlapResult"></div>
+
+        <div style="margin-top:16px;">
+          <button class="btn btn-ghost" style="font-size:13px;" onclick="copyResult()">📋 Copy best times</button>
+          <span id="copyConfirm" style="font-size:12px;color:var(--success);opacity:0;transition:opacity 0.3s;margin-left:10px;"></span>
+        </div>
+      </div>
+
+      <!-- SEO block -->
+      <div class="seo-block">
+        <h2>Free Time Zone Overlap Finder for Remote Teams</h2>
+        <p>The Deskloop Time Zone Overlap Finder helps distributed teams find the best window for meetings across multiple locations. Add any combination of cities and time zones, set your preferred work hours, and instantly see which hours work for everyone on a 24-hour visual grid.</p>
+        <p>Remote work has made time zone coordination one of the most common scheduling challenges for teams worldwide. Whether you're scheduling across New York, London, and Singapore, or coordinating between freelancers in different countries, this tool shows you the overlap at a glance.</p>
+        <p>No signup, no account, no install. Works entirely in your browser on desktop and mobile.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-copy">
+        <span>© 2025 Deskloop.work — Free productivity tools</span>
+        <span style="color:var(--text3);font-size:11px;">No cookies · No tracking · No nonsense</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Timezone database ──
+    const TIMEZONES = [
+      { label: 'UTC+0  — London, Reykjavik',          tz: 'Europe/London' },
+      { label: 'UTC+1  — Paris, Berlin, Rome',         tz: 'Europe/Paris' },
+      { label: 'UTC+2  — Cairo, Athens, Helsinki',     tz: 'Europe/Helsinki' },
+      { label: 'UTC+3  — Moscow, Nairobi, Riyadh',     tz: 'Europe/Moscow' },
+      { label: 'UTC+4  — Dubai, Abu Dhabi',            tz: 'Asia/Dubai' },
+      { label: 'UTC+5  — Karachi, Tashkent',           tz: 'Asia/Karachi' },
+      { label: 'UTC+5:30 — Mumbai, New Delhi',         tz: 'Asia/Kolkata' },
+      { label: 'UTC+6  — Dhaka, Almaty',               tz: 'Asia/Dhaka' },
+      { label: 'UTC+7  — Bangkok, Jakarta, Hanoi',     tz: 'Asia/Bangkok' },
+      { label: 'UTC+8  — Singapore, Manila, KL, HK',  tz: 'Asia/Singapore' },
+      { label: 'UTC+8  — Beijing, Shanghai, Taipei',   tz: 'Asia/Shanghai' },
+      { label: 'UTC+9  — Tokyo, Seoul',                tz: 'Asia/Tokyo' },
+      { label: 'UTC+10 — Sydney, Melbourne',           tz: 'Australia/Sydney' },
+      { label: 'UTC+12 — Auckland, Fiji',              tz: 'Pacific/Auckland' },
+      { label: 'UTC-3  — São Paulo, Buenos Aires',     tz: 'America/Sao_Paulo' },
+      { label: 'UTC-4  — Halifax, Santiago',           tz: 'America/Halifax' },
+      { label: 'UTC-5  — New York, Toronto, Lima',     tz: 'America/New_York' },
+      { label: 'UTC-6  — Chicago, Mexico City',        tz: 'America/Chicago' },
+      { label: 'UTC-7  — Denver, Phoenix',             tz: 'America/Denver' },
+      { label: 'UTC-8  — Los Angeles, Vancouver',      tz: 'America/Los_Angeles' },
+      { label: 'UTC-9  — Anchorage',                   tz: 'America/Anchorage' },
+      { label: 'UTC-10 — Honolulu',                    tz: 'Pacific/Honolulu' },
+    ];
+
+    const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    let zones = [];
+    let clockInterval = null;
+
+    // ── Build timezone select ──
+    function buildSelect() {
+      const sel = document.getElementById('tzSelect');
+      sel.innerHTML = TIMEZONES.map(t =>
+        `<option value="${t.tz}">${t.label}</option>`
+      ).join('');
+      // Default to user's local timezone if possible
+      try {
+        const local = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const match = TIMEZONES.find(t => t.tz === local);
+        if (match) sel.value = local;
+      } catch {}
+    }
+
+    // ── Get current hour in a timezone ──
+    function getHourInTz(tz) {
+      const str = new Date().toLocaleString('en-US', { timeZone: tz, hour: 'numeric', hour12: false });
+      return parseInt(str) % 24;
+    }
+
+    function getTimeInTz(tz) {
+      return new Date().toLocaleString('en-US', {
+        timeZone: tz,
+        hour: '2-digit', minute: '2-digit', hour12: true
+      });
+    }
+
+    function getDateInTz(tz) {
+      const d = new Date();
+      const parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: tz, weekday: 'short', month: 'short', day: 'numeric'
+      }).formatToParts(d);
+      const p = {};
+      parts.forEach(x => p[x.type] = x.value);
+      return `${p.weekday}, ${p.month} ${p.day}`;
+    }
+
+    function getOffsetStr(tz) {
+      try {
+        const now = new Date();
+        const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+        const tzDate = new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
+        const localDate = new Date();
+        const diff = Math.round((tzDate - localDate) / 3600000);
+        if (diff === 0) return 'Same as you';
+        return diff > 0 ? `+${diff}h from you` : `${diff}h from you`;
+      } catch { return tz; }
+    }
+
+    function getStatus(hour, workStart, workEnd) {
+      if (hour >= workStart && hour < workEnd) return 'work';
+      if (hour >= workEnd && hour < workEnd + 3) return 'eve';
+      return 'sleep';
+    }
+
+    // ── Add zone ──
+    function addZone() {
+      const city = document.getElementById('cityInput').value.trim();
+      const tz = document.getElementById('tzSelect').value;
+      if (!city) { document.getElementById('cityInput').focus(); return; }
+      if (zones.length >= 6) { alert('Maximum 6 locations. Remove one to add another.'); return; }
+      zones.push({ id: Date.now(), city, tz });
+      document.getElementById('cityInput').value = '';
+      render();
+    }
+
+    function removeZone(id) {
+      zones = zones.filter(z => z.id !== id);
+      render();
+    }
+
+    // ── Render everything ──
+    function render() {
+      renderLiveClocks();
+      renderZoneList();
+      renderOverlapGrid();
+    }
+
+    function renderLiveClocks() {
+      const el = document.getElementById('liveClocks');
+      if (!zones.length) {
+        el.innerHTML = '<div class="empty-zones">Add time zones below to see live clocks</div>';
+        return;
+      }
+      const ws = parseInt(document.getElementById('workStart').value) || 9;
+      const we = parseInt(document.getElementById('workEnd').value) || 17;
+
+      el.innerHTML = zones.map(z => {
+        const hour = getHourInTz(z.tz);
+        const status = getStatus(hour, ws, we);
+        const statusLabel = status === 'work' ? '● Working hours' : status === 'eve' ? '◐ Evening' : '○ Night / sleep';
+        const statusClass = status === 'work' ? 'work' : status === 'eve' ? 'eve' : 'sleep';
+        return `
+          <div class="live-clock-card">
+            <div class="lc-city">${escHtml(z.city)}</div>
+            <div class="lc-time">${getTimeInTz(z.tz)}</div>
+            <div class="lc-date">${getDateInTz(z.tz)}</div>
+            <div class="lc-status ${statusClass}">${statusLabel}</div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderZoneList() {
+      const el = document.getElementById('zonesList');
+      if (!zones.length) { el.innerHTML = ''; return; }
+      el.innerHTML = zones.map(z => {
+        const offset = getOffsetStr(z.tz);
+        const tzLabel = TIMEZONES.find(t => t.tz === z.tz)?.label || z.tz;
+        return `
+          <div class="zone-row">
+            <div>
+              <div class="zone-name">${escHtml(z.city)}</div>
+              <div class="zone-offset">${tzLabel.split('—')[1]?.trim() || z.tz} · ${offset}</div>
+            </div>
+            <div>
+              <div class="zone-time">${getTimeInTz(z.tz)}</div>
+              <div class="zone-offset">${getDateInTz(z.tz)}</div>
+            </div>
+            <button class="zone-del" onclick="removeZone(${z.id})" title="Remove">✕</button>
+          </div>`;
+      }).join('');
+    }
+
+    function renderOverlapGrid() {
+      const section = document.getElementById('overlapSection');
+      if (zones.length < 2) { section.style.display = 'none'; return; }
+      section.style.display = 'block';
+
+      const ws = parseInt(document.getElementById('workStart').value) || 9;
+      const we = parseInt(document.getElementById('workEnd').value) || 17;
+
+      // For each UTC hour 0-23, determine the local hour in each zone
+      // We'll use a reference date to get offsets
+      const now = new Date();
+
+      // Build grid
+      let headerHtml = '<div class="hour-header-row"><div></div>';
+      for (let h = 0; h < 24; h++) {
+        headerHtml += `<div class="hour-header">${h === 0 ? '12a' : h < 12 ? h+'a' : h === 12 ? '12p' : (h-12)+'p'}</div>`;
+      }
+      headerHtml += '</div>';
+
+      // For each zone, compute what UTC hours fall in their work window
+      // We get the UTC offset for each zone
+      function getUtcOffset(tz) {
+        const now = new Date();
+        const tzStr = now.toLocaleString('en-US', { timeZone: tz, hour: 'numeric', hour12: false, minute: 'numeric' });
+        const tzDate = new Date(now.toLocaleString('en-US', { timeZone: tz }));
+        const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+        return Math.round((tzDate - utcDate) / 3600000);
+      }
+
+      const offsets = zones.map(z => getUtcOffset(z.tz));
+
+      // For each UTC hour, check if it's work hours in each zone
+      function localHourFromUtc(utcHour, offsetHours) {
+        return ((utcHour + offsetHours) % 24 + 24) % 24;
+      }
+
+      // Build overlap map: for each UTC hour, is everyone in work hours?
+      const overlapMap = [];
+      for (let utcH = 0; utcH < 24; utcH++) {
+        const localHours = offsets.map(off => localHourFromUtc(utcH, off));
+        const allWork = localHours.every(lh => lh >= ws && lh < we);
+        const someWork = localHours.some(lh => lh >= ws && lh < we);
+        overlapMap.push({ allWork, someWork, localHours });
+      }
+
+      // Find overlap blocks
+      const overlapHours = overlapMap.map((o, i) => o.allWork ? i : -1).filter(i => i >= 0);
+
+      // Render rows
+      let gridHtml = headerHtml;
+      zones.forEach((z, zi) => {
+        let rowHtml = `<div class="grid-row"><div class="grid-label"><span>${escHtml(z.city)}</span></div>`;
+        for (let utcH = 0; utcH < 24; utcH++) {
+          const lh = overlapMap[utcH].localHours[zi];
+          const isOverlap = overlapMap[utcH].allWork;
+          const status = getStatus(lh, ws, we);
+          let cls = isOverlap ? 'overlap' : status === 'work' ? 'work' : status === 'eve' ? 'evening' : 'sleep';
+          const label = isOverlap ? '✓' : '';
+          rowHtml += `<div class="hour-cell ${cls}" title="${z.city}: ${lh}:00 local">${label}</div>`;
+        }
+        rowHtml += '</div>';
+        gridHtml += rowHtml;
+      });
+
+      document.getElementById('overlapGrid').innerHTML = gridHtml;
+
+      // Result summary
+      const resultEl = document.getElementById('overlapResult');
+      if (overlapHours.length === 0) {
+        // Try evening overlap
+        const eveningOverlap = [];
+        for (let utcH = 0; utcH < 24; utcH++) {
+          const localHours = overlapMap[utcH].localHours;
+          const allReasonable = localHours.every(lh => lh >= ws - 2 && lh < we + 3);
+          if (allReasonable) eveningOverlap.push(utcH);
+        }
+
+        if (eveningOverlap.length === 0) {
+          resultEl.className = 'overlap-result overlap-none';
+          resultEl.innerHTML = `
+            <div class="overlap-title">❌ No overlap found</div>
+            <div style="font-size:13px;color:var(--text2);margin-top:4px;">
+              No working hours overlap exists across these locations with current settings.
+              Try extending your work hours range or consider async communication.
+            </div>`;
+        } else {
+          resultEl.className = 'overlap-result overlap-warn';
+          const slots = eveningOverlap.map(h => formatUtcAsLocal(h, offsets[0]));
+          resultEl.innerHTML = `
+            <div class="overlap-title">⚠️ No ideal overlap — but these windows are close</div>
+            <div style="font-size:13px;color:var(--text2);margin-top:4px;">Outside normal work hours for some locations but within ±2 hours.</div>
+            <div class="overlap-slots">${slots.map(s => `<span class="slot-pill warn">${s}</span>`).join('')}</div>`;
+        }
+      } else {
+        resultEl.className = 'overlap-result overlap-good';
+        const slots = overlapHours.map(h => formatUtcAsLocal(h, offsets[0]));
+        resultEl.innerHTML = `
+          <div class="overlap-title">✅ ${overlapHours.length} hour${overlapHours.length!==1?'s':''} of overlap found</div>
+          <div style="font-size:13px;color:var(--text2);margin-top:4px;">These times work for everyone during standard work hours:</div>
+          <div class="overlap-slots">${slots.map(s => `<span class="slot-pill">${s}</span>`).join('')}</div>`;
+      }
+    }
+
+    function formatUtcAsLocal(utcHour, baseOffset) {
+      // Show time in first zone's local time
+      const lh = ((utcHour + baseOffset) % 24 + 24) % 24;
+      const suffix = lh < 12 ? 'am' : 'pm';
+      const display = lh === 0 ? 12 : lh > 12 ? lh - 12 : lh;
+      return `${display}${suffix}`;
+    }
+
+    function copyResult() {
+      if (zones.length < 2) return;
+      const text = document.getElementById('overlapResult').innerText
+        .replace(/[✅⚠️❌]/g, '').trim();
+      const zoneList = zones.map(z => z.city).join(', ');
+      navigator.clipboard.writeText(`Best meeting times across ${zoneList}:\n${text}\n\nFound with deskloop.work/tools/timezone-overlap.html`).then(() => {
+        const el = document.getElementById('copyConfirm');
+        el.style.opacity = '1';
+        el.textContent = 'Copied!';
+        setTimeout(() => { el.style.opacity = '0'; }, 2000);
+      });
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // ── Live clock tick ──
+    function startClock() {
+      clearInterval(clockInterval);
+      clockInterval = setInterval(() => {
+        renderLiveClocks();
+        renderZoneList();
+      }, 10000); // update every 10s
+    }
+
+    // ── Preload common zones ──
+    function preload() {
+      try {
+        const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const match = TIMEZONES.find(t => t.tz === localTz);
+        if (match) {
+          zones.push({ id: Date.now(), city: 'Your location', tz: localTz });
+          render();
+        }
+      } catch {}
+    }
+
+    // ── Init ──
+    buildSelect();
+    preload();
+    startClock();
+
+    // Enter key to add zone
+    document.getElementById('cityInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addZone();
+    });
+  </script>
+
+</body>
+</html>
