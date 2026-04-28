@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Decider — Random Task Picker to Beat Decision Paralysis | Deskloop</title>
+  <meta name="description" content="Can't decide what to work on next? Add your tasks, spin the wheel, and just start. Free online random task picker. No signup, no install.">
+  <meta name="keywords" content="task decider, random task picker, decision wheel, what to work on, beat decision paralysis, random task generator, task spinner free">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://deskloop.work/tools/task-decider.html">
+  <meta property="og:title" content="Task Decider — Spin to Pick What to Work On">
+  <meta property="og:description" content="Add your tasks, spin the wheel, just start. Free random task picker.">
+  <meta property="og:url" content="https://deskloop.work/tools/task-decider.html">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Task Decider",
+    "url": "https://deskloop.work/tools/task-decider.html",
+    "description": "Random task picker wheel to beat decision paralysis",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+
+  <style>
+    /* ── Wheel ── */
+    .wheel-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 0 16px;
+      position: relative;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin-bottom: 24px;
+    }
+
+    .wheel-canvas {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* Pointer arrow */
+    .wheel-pointer {
+      position: absolute;
+      top: 50%;
+      right: -14px;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      border-right: 28px solid var(--accent);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+      z-index: 10;
+    }
+
+    /* Center circle */
+    .wheel-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--border2);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* ── Result banner ── */
+    .result-banner {
+      background: var(--accent-dim);
+      border: 1px solid rgba(232,160,32,0.3);
+      border-radius: var(--radius-lg);
+      padding: 20px 28px;
+      text-align: center;
+      margin-bottom: 20px;
+      display: none;
+      animation: riseIn 0.4s var(--ease) forwards;
+    }
+
+    .result-banner.show { display: block; }
+
+    .result-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .result-task {
+      font-family: var(--font-head);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Task list ── */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      transition: border-color 0.18s;
+    }
+
+    .task-item.winner {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .task-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .task-text {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .task-del {
+      background: none;
+      border: none;
+      color: var(--text3);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 3px 6px;
+      border-radius: 4px;
+      transition: color 0.18s, background 0.18s;
+      opacity: 0;
+    }
+
+    .task-item:hover .task-del { opacity: 1; }
+    .task-del:hover { color: var(--danger); background: rgba(224,85,85,0.08); }
+
+    /* ── Add task ── */
+    .add-task-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .add-task-row input { flex: 1; margin: 0; }
+
+    /* ── Empty wheel ── */
+    .empty-wheel {
+      text-align: center;
+      padding: 32px 20px;
+      color: var(--text3);
+      font-size: 13px;
+    }
+
+    .empty-wheel .icon { font-size: 40px; margin-bottom: 12px; }
+
+    /* ── History ── */
+    .history-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    .history-item:last-child { border-bottom: none; }
+    .history-num { font-family: var(--font-head); font-weight: 700; color: var(--text3); font-size: 11px; width: 20px; }
+    .history-task { flex: 1; }
+    .history-time { font-size: 11px; color: var(--text3); }
+
+    @media (max-width: 600px) {
+      .wheel-container { width: 260px; height: 260px; }
+      .wheel-canvas { width: 260px; height: 260px; }
+      .task-del { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7" cy="7" r="4" stroke="#080808" stroke-width="2.5"/>
+            <circle cx="7" cy="7" r="1.5" fill="#080808"/>
+          </svg>
+        </div>
+        <span class="logo-text">Deskloop</span>
+      </a>
+      <div class="nav-right">
+        <a href="/#tools" class="nav-link">Tools</a>
+        <a href="/#about" class="nav-link">About</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <div class="page-header">
+        <a href="/" class="back-link">← All tools</a>
+        <h1>Task Decider</h1>
+        <p>Add your tasks, spin the wheel, just start</p>
+      </div>
+
+      <div class="tool-wrap">
+
+        <!-- Wheel -->
+        <div class="wheel-wrap">
+          <div class="wheel-container" id="wheelContainer">
+            <canvas class="wheel-canvas" id="wheelCanvas" width="300" height="300"></canvas>
+            <div class="wheel-pointer"></div>
+            <div class="wheel-center" onclick="spin()" title="Click to spin">🎲</div>
+          </div>
+
+          <button class="btn btn-primary" id="spinBtn" onclick="spin()" style="min-width:160px;font-size:15px;padding:14px 28px;">
+            Spin the wheel
+          </button>
+        </div>
+
+        <!-- Result -->
+        <div class="result-banner" id="resultBanner">
+          <div class="result-label">✦ Your task is</div>
+          <div class="result-task" id="resultTask">—</div>
+          <div class="result-actions">
+            <button class="btn btn-primary" onclick="startFocusTimer()">
+              ⏱ Start Focus Timer
+            </button>
+            <button class="btn btn-ghost" onclick="spin()">Spin again</button>
+          </div>
+        </div>
+
+        <!-- Task list -->
+        <p class="section-title" style="margin-bottom:12px;">// Your tasks</p>
+        <div class="task-list" id="taskList"></div>
+
+        <div class="add-task-row">
+          <input type="text" id="taskInput" placeholder="Add a task…" maxlength="50"
+            onkeydown="if(event.key==='Enter') addTask()">
+          <button class="btn btn-primary" onclick="addTask()">Add</button>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="btn btn-ghost" style="font-size:12px;padding:6px 14px;" onclick="loadPresets()">Load example tasks</button>
+          <button class="btn btn-danger" style="font-size:12px;padding:6px 14px;" onclick="clearTasks()">Clear all</button>
+        </div>
+
+      </div>
+
+      <!-- Spin history -->
+      <div class="tool-wrap" id="historyWrap" style="display:none;">
+        <p class="section-title" style="margin-bottom:14px;">// Spin history</p>
+        <div id="historyList"></div>
+      </div>
+
+      <!-- SEO block -->
+      <div class="seo-block">
+        <h2>Random Task Picker — Beat Decision Paralysis</h2>
+        <p>The Deskloop Task Decider helps you overcome the common productivity trap of spending more time deciding what to work on than actually working. Add your pending tasks, spin the wheel, and let randomness make the call — then commit and start.</p>
+        <p>Decision paralysis is a well-documented productivity killer. When faced with multiple important tasks, the brain often defaults to inaction or easy low-value work. Removing the decision entirely — with a spin of the wheel — tricks the brain into action and bypasses overthinking.</p>
+        <p>Use this tool when your task list feels overwhelming, when every task feels equally important, or when you just need a nudge to start. Works best combined with the Focus Timer — spin first, then lock in with a Pomodoro session.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-copy">
+        <span>© 2025 Deskloop.work — Free productivity tools</span>
+        <span style="color:var(--text3);font-size:11px;">No cookies · No tracking · No nonsense</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Colors ──
+    const COLORS = [
+      '#E8A020','#3DB87A','#5B8DEF','#E05A5A','#9B6EF3',
+      '#F06A3A','#2BBFBF','#E879B0','#8BC34A','#FF9800'
+    ];
+
+    // ── State ──
+    let tasks = [];
+    let spinHistory = [];
+    let isSpinning = false;
+    let currentAngle = 0;
+    let winnerIdx = -1;
+
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const SIZE = canvas.width;
+    const CX = SIZE / 2;
+    const CY = SIZE / 2;
+    const R = SIZE / 2 - 4;
+
+    // ── Storage ──
+    function save() {
+      localStorage.setItem('dl_tasks_v1', JSON.stringify(tasks));
+      localStorage.setItem('dl_spinhist_v1', JSON.stringify(spinHistory));
+    }
+
+    function load() {
+      try { tasks = JSON.parse(localStorage.getItem('dl_tasks_v1')) || []; } catch { tasks = []; }
+      try { spinHistory = JSON.parse(localStorage.getItem('dl_spinhist_v1')) || []; } catch { spinHistory = []; }
+    }
+
+    // ── Draw wheel ──
+    function drawWheel(angle) {
+      ctx.clearRect(0, 0, SIZE, SIZE);
+
+      if (!tasks.length) {
+        // Empty state
+        ctx.beginPath();
+        ctx.arc(CX, CY, R, 0, Math.PI * 2);
+        ctx.fillStyle = '#161616';
+        ctx.fill();
+        ctx.strokeStyle = '#2a2a2a';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#3E3C38';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Add tasks below', CX, CY);
+        return;
+      }
+
+      const slice = (Math.PI * 2) / tasks.length;
+
+      tasks.forEach((task, i) => {
+        const start = angle + i * slice;
+        const end = start + slice;
+        const color = COLORS[i % COLORS.length];
+        const isWinner = i === winnerIdx;
+
+        // Slice
+        ctx.beginPath();
+        ctx.moveTo(CX, CY);
+        ctx.arc(CX, CY, R, start, end);
+        ctx.closePath();
+        ctx.fillStyle = isWinner ? lighten(color) : color;
+        ctx.fill();
+        ctx.strokeStyle = '#080808';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Label
+        ctx.save();
+        ctx.translate(CX, CY);
+        ctx.rotate(start + slice / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#080808';
+        ctx.font = `bold ${tasks.length > 6 ? 11 : 13}px "Plus Jakarta Sans", sans-serif`;
+        ctx.textBaseline = 'middle';
+        const text = task.text.length > 18 ? task.text.slice(0, 16) + '…' : task.text;
+        ctx.fillText(text, R - 12, 0);
+        ctx.restore();
+      });
+
+      // Outer ring
+      ctx.beginPath();
+      ctx.arc(CX, CY, R, 0, Math.PI * 2);
+      ctx.strokeStyle = '#2a2a2a';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    function lighten(hex) {
+      const r = parseInt(hex.slice(1,3),16);
+      const g = parseInt(hex.slice(3,5),16);
+      const b = parseInt(hex.slice(5,7),16);
+      return `rgb(${Math.min(r+60,255)},${Math.min(g+60,255)},${Math.min(b+60,255)})`;
+    }
+
+    // ── Spin ──
+    function spin() {
+      if (isSpinning || tasks.length < 2) {
+        if (tasks.length === 1) pickWinner(0);
+        return;
+      }
+
+      isSpinning = true;
+      winnerIdx = -1;
+      document.getElementById('resultBanner').classList.remove('show');
+      document.getElementById('spinBtn').disabled = true;
+      document.getElementById('spinBtn').textContent = 'Spinning…';
+
+      // Random winner
+      const winner = Math.floor(Math.random() * tasks.length);
+      const slice = (Math.PI * 2) / tasks.length;
+
+      // Calculate target angle so winner segment faces the pointer (right side = angle 0)
+      // Pointer is at right, so we want the middle of winner's segment to be at angle 0 (3 o'clock)
+      // Wheel rotates clockwise, segment i starts at currentAngle + i * slice
+      // We want: currentAngle + winner * slice + slice/2 = -Math.PI/2 (top) ... 
+      // Actually pointer is on right: target = 2π - (winner * slice + slice/2)
+      const targetSegmentAngle = winner * slice + slice / 2;
+      const extraSpins = (Math.PI * 2) * (5 + Math.floor(Math.random() * 4));
+      const targetAngle = extraSpins - targetSegmentAngle + (Math.random() * slice * 0.6 - slice * 0.3);
+
+      const duration = 4000 + Math.random() * 1500;
+      const startTime = performance.now();
+      const startAngle = currentAngle;
+
+      function easeOut(t) {
+        return 1 - Math.pow(1 - t, 4);
+      }
+
+      function frame(now) {
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        const easedT = easeOut(t);
+        currentAngle = startAngle + targetAngle * easedT;
+        drawWheel(currentAngle);
+
+        if (t < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          currentAngle = startAngle + targetAngle;
+          isSpinning = false;
+          winnerIdx = winner;
+          drawWheel(currentAngle);
+          pickWinner(winner);
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    function pickWinner(idx) {
+      const task = tasks[idx];
+      document.getElementById('resultTask').textContent = task.text;
+      document.getElementById('resultBanner').classList.add('show');
+      document.getElementById('spinBtn').disabled = false;
+      document.getElementById('spinBtn').textContent = 'Spin again';
+
+      // Highlight winner in list
+      document.querySelectorAll('.task-item').forEach((el, i) => {
+        el.classList.toggle('winner', i === idx);
+      });
+
+      // Add to history
+      spinHistory.unshift({ task: task.text, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+      if (spinHistory.length > 10) spinHistory.pop();
+      save();
+      renderHistory();
+    }
+
+    function startFocusTimer() {
+      window.open('focus-timer.html', '_blank');
+    }
+
+    // ── Task management ──
+    function addTask() {
+      const input = document.getElementById('taskInput');
+      const text = input.value.trim();
+      if (!text) { input.focus(); return; }
+      if (tasks.length >= 10) { alert('Maximum 10 tasks. Remove one to add more.'); return; }
+      tasks.push({ id: Date.now(), text });
+      input.value = '';
+      winnerIdx = -1;
+      document.getElementById('resultBanner').classList.remove('show');
+      save();
+      renderTaskList();
+      drawWheel(currentAngle);
+    }
+
+    function removeTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      winnerIdx = -1;
+      document.getElementById('resultBanner').classList.remove('show');
+      save();
+      renderTaskList();
+      drawWheel(currentAngle);
+    }
+
+    function clearTasks() {
+      if (!tasks.length) return;
+      tasks = [];
+      winnerIdx = -1;
+      document.getElementById('resultBanner').classList.remove('show');
+      save();
+      renderTaskList();
+      drawWheel(currentAngle);
+    }
+
+    function loadPresets() {
+      const presets = [
+        'Reply to emails', 'Work on main project',
+        'Review pull requests', 'Update documentation',
+        'Plan tomorrow', 'Clear inbox'
+      ];
+      tasks = presets.map((text, i) => ({ id: Date.now() + i, text }));
+      winnerIdx = -1;
+      save();
+      renderTaskList();
+      drawWheel(currentAngle);
+    }
+
+    // ── Render ──
+    function renderTaskList() {
+      const el = document.getElementById('taskList');
+      if (!tasks.length) {
+        el.innerHTML = `<div class="empty-wheel"><div class="icon">🎯</div><p>Add tasks above to get started.<br>Minimum 2 tasks to spin.</p></div>`;
+        document.getElementById('spinBtn').disabled = true;
+        return;
+      }
+
+      document.getElementById('spinBtn').disabled = tasks.length < 2;
+      if (tasks.length === 1) document.getElementById('spinBtn').textContent = 'Pick task';
+
+      el.innerHTML = tasks.map((t, i) => `
+        <div class="task-item" id="ti-${t.id}">
+          <div class="task-color" style="background:${COLORS[i % COLORS.length]};"></div>
+          <span class="task-text">${escHtml(t.text)}</span>
+          <button class="task-del" onclick="removeTask(${t.id})" title="Remove">✕</button>
+        </div>`).join('');
+    }
+
+    function renderHistory() {
+      const wrap = document.getElementById('historyWrap');
+      const el = document.getElementById('historyList');
+      if (!spinHistory.length) { wrap.style.display = 'none'; return; }
+      wrap.style.display = 'block';
+      el.innerHTML = spinHistory.map((h, i) => `
+        <div class="history-item">
+          <span class="history-num">#${i+1}</span>
+          <span class="history-task">${escHtml(h.task)}</span>
+          <span class="history-time">${h.time}</span>
+        </div>`).join('');
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // ── Init ──
+    load();
+    renderTaskList();
+    renderHistory();
+    drawWheel(currentAngle);
+
+    document.getElementById('taskInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') addTask();
+    });
+  </script>
+
+</body>
+</html>
