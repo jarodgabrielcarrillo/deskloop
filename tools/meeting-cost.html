@@ -361,7 +361,33 @@
 
         <div class="copy-row">
           <button class="btn btn-ghost" style="font-size:13px;" onclick="shareResult()">📋 Copy result</button>
+          <button class="btn btn-ghost" style="font-size:13px;" onclick="showCard()">🖼 Share card</button>
           <span class="copy-confirm" id="copyConfirm">Copied to clipboard!</span>
+        </div>
+
+        <!-- Share card -->
+        <div id="shareCard" style="display:none;margin-top:16px;background:linear-gradient(135deg,#1a1400,#0f0f0f);border:1px solid rgba(232,160,32,0.3);border-radius:var(--radius-lg);padding:28px;text-align:center;">
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">MEETING COST REPORT</div>
+          <div style="font-family:var(--font-head);font-size:48px;font-weight:800;color:var(--accent);letter-spacing:-2px;margin-bottom:8px;" id="cardCost">$0.00</div>
+          <div style="font-size:14px;color:var(--text2);margin-bottom:16px;" id="cardDetails">—</div>
+          <div style="display:flex;justify-content:center;gap:24px;margin-bottom:20px;">
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--text);" id="cardTime">00:00</div>
+              <div style="font-size:11px;color:var(--text3);">Duration</div>
+            </div>
+            <div style="width:1px;background:var(--border);"></div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--text);" id="cardPeople">—</div>
+              <div style="font-size:11px;color:var(--text3);">Attendees</div>
+            </div>
+            <div style="width:1px;background:var(--border);"></div>
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--text);" id="cardPerMin">—</div>
+              <div style="font-size:11px;color:var(--text3);">Per minute</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);">deskloop.work/tools/meeting-cost.html</div>
+          <button class="btn btn-primary" style="margin-top:14px;font-size:13px;" onclick="copyCard()">📋 Copy as text</button>
         </div>
       </div>
 
@@ -567,6 +593,39 @@
       document.getElementById('startBtn').textContent = 'Start Meeting';
       document.title = 'Meeting Cost Calculator | Deskloop';
       updateCostDisplay();
+    }
+
+    function showCard() {
+      const total = costPerSecondUSD * elapsedSeconds;
+      const mins = Math.floor(elapsedSeconds / 60);
+      const secs = elapsedSeconds % 60;
+      document.getElementById('cardCost').textContent = fmt(total);
+      document.getElementById('cardDetails').textContent = `${getAttendees()} people · avg ${fmt(getSalary())} salary · ${currentCurrency}`;
+      document.getElementById('cardTime').textContent = `${mins}:${String(secs).padStart(2,'0')}`;
+      document.getElementById('cardPeople').textContent = getAttendees();
+      document.getElementById('cardPerMin').textContent = fmt(costPerSecondUSD * 60);
+      document.getElementById('shareCard').style.display = 'block';
+      document.getElementById('shareCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyCard() {
+      const total = costPerSecondUSD * elapsedSeconds;
+      const mins = Math.floor(elapsedSeconds / 60);
+      const text = [
+        '📊 MEETING COST REPORT',
+        `💸 Total cost: ${fmt(total)} (${currentCurrency})`,
+        `⏱ Duration: ${mins} minutes`,
+        `👥 Attendees: ${getAttendees()}`,
+        `📈 Cost per minute: ${fmt(costPerSecondUSD * 60)}`,
+        '',
+        'Generated at deskloop.work/tools/meeting-cost.html'
+      ].join('\n');
+      navigator.clipboard.writeText(text).then(() => {
+        const el = document.getElementById('copyConfirm');
+        el.textContent = 'Card copied!';
+        el.style.opacity = '1';
+        setTimeout(() => { el.style.opacity = '0'; }, 2500);
+      });
     }
 
     function shareResult() {

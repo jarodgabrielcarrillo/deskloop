@@ -378,7 +378,12 @@
 
       <!-- Overlap grid -->
       <div class="tool-wrap" id="overlapSection" style="display:none;">
-        <p class="section-title" style="margin-bottom:16px;">// 24-hour overlap grid</p>
+
+        <!-- Big overlap window at top -->
+        <div id="overlapSummaryTop" style="margin-bottom:24px;"></div>
+
+        <p class="section-title" style="margin-bottom:8px;">// 24-hour overlap grid</p>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:14px;">Each row = one location. <span style="color:var(--success);font-weight:600;">Bright green</span> = everyone's working hours overlap — your best meeting window.</p>
 
         <div class="overlap-wrap">
           <div class="overlap-grid" id="overlapGrid"></div>
@@ -640,6 +645,26 @@
       });
 
       document.getElementById('overlapGrid').innerHTML = gridHtml;
+
+      // Populate top summary
+      const topEl = document.getElementById('overlapSummaryTop');
+      if (overlapHours.length > 0) {
+        const slots = overlapHours.map(h => formatUtcAsLocal(h, offsets[0]));
+        topEl.innerHTML = `
+          <div style="background:rgba(61,184,122,0.08);border:1px solid rgba(61,184,122,0.3);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div style="font-size:28px;">✅</div>
+            <div>
+              <div style="font-family:var(--font-head);font-size:16px;font-weight:800;color:var(--success);margin-bottom:6px;">${overlapHours.length}h overlap found</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">${slots.map(s=>`<span style="background:var(--success);color:#080808;font-size:13px;font-weight:700;padding:4px 12px;border-radius:100px;">${s}</span>`).join('')}</div>
+            </div>
+          </div>`;
+      } else {
+        topEl.innerHTML = `
+          <div style="background:rgba(224,85,85,0.06);border:1px solid rgba(224,85,85,0.2);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:12px;">
+            <div style="font-size:24px;">⚠️</div>
+            <div style="font-size:14px;color:var(--text2);">No full overlap found. Try extending your work hours or see the grid for the closest windows.</div>
+          </div>`;
+      }
 
       // Result summary
       const resultEl = document.getElementById('overlapResult');

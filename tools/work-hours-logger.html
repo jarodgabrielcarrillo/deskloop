@@ -318,6 +318,12 @@
         </div>
       </div>
 
+      <!-- Weekly project summary -->
+      <div class="tool-wrap" id="weeklySummary" style="display:none;">
+        <p class="section-title" style="margin-bottom:14px;">// This week by project</p>
+        <div id="projectBreakdown"></div>
+      </div>
+
       <!-- Session log -->
       <div class="tool-wrap">
         <div class="log-header">
@@ -386,6 +392,40 @@
     let activeStart = null;
     let activeTick = null;
     let activeElapsed = 0;
+
+    function renderWeeklySummary() {
+      const weekAgo = Date.now() - 7 * 86400000;
+      const weekSessions = sessions.filter(s => s.start >= weekAgo);
+      const wrap = document.getElementById('weeklySummary');
+      const el = document.getElementById('projectBreakdown');
+
+      if (!weekSessions.length) { wrap.style.display = 'none'; return; }
+      wrap.style.display = 'block';
+
+      // Group by project
+      const projects = {};
+      weekSessions.forEach(s => {
+        if (!projects[s.project]) projects[s.project] = 0;
+        projects[s.project] += s.duration;
+      });
+
+      const total = Object.values(projects).reduce((a,b) => a+b, 0);
+      const sorted = Object.entries(projects).sort((a,b) => b[1]-a[1]);
+
+      el.innerHTML = sorted.map(([name, ms]) => {
+        const pct = Math.round((ms / total) * 100);
+        return `
+          <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="font-size:13px;font-weight:600;color:var(--text);">${escHtml(name)}</span>
+              <span style="font-size:13px;color:var(--text2);">${fmtDuration(ms,true)} <span style="color:var(--text3);">(${pct}%)</span></span>
+            </div>
+            <div style="height:6px;background:var(--bg3);border-radius:100px;overflow:hidden;">
+              <div style="height:100%;width:${pct}%;background:var(--accent);border-radius:100px;transition:width 0.5s;"></div>
+            </div>
+          </div>`;
+      }).join('');
+    }
 
     // ── Storage ──
     function save() { localStorage.setItem('dl_workhours_v1', JSON.stringify(sessions)); }
@@ -595,6 +635,7 @@
       document.getElementById('statAvg').textContent      = avgMs ? fmtDuration(avgMs, true) : '—';
 
       updateGoal();
+      renderWeeklySummary();
       renderLog();
     }
 

@@ -269,6 +269,7 @@
             <button class="btn btn-primary" onclick="startFocusTimer()">
               ⏱ Start Focus Timer
             </button>
+            <button class="btn btn-ghost" onclick="markDone()">✓ Done — remove</button>
             <button class="btn btn-ghost" onclick="spin()">Spin again</button>
           </div>
         </div>
@@ -489,6 +490,16 @@
       if (spinHistory.length > 10) spinHistory.pop();
       save();
       renderHistory();
+    }
+
+    function markDone() {
+      if (winnerIdx < 0 || winnerIdx >= tasks.length) return;
+      tasks.splice(winnerIdx, 1);
+      winnerIdx = -1;
+      document.getElementById('resultBanner').classList.remove('show');
+      save();
+      renderTaskList();
+      drawWheel(currentAngle);
     }
 
     function startFocusTimer() {

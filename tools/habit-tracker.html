@@ -383,6 +383,52 @@
 
     .summary-stat .lbl { font-size: 11px; color: var(--text3); margin-top: 2px; }
 
+    /* Confetti canvas */
+    #confettiCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Streak warning */
+    .streak-warning {
+      background: rgba(224,85,85,0.08);
+      border: 1px solid rgba(224,85,85,0.25);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--danger);
+      font-weight: 500;
+    }
+
+    .streak-warning.show { display: flex; }
+    .streak-warning .icon { font-size: 18px; flex-shrink: 0; }
+
+    /* Completion banner */
+    .complete-banner {
+      background: rgba(61,184,122,0.08);
+      border: 1px solid rgba(61,184,122,0.25);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--success);
+      font-weight: 600;
+      animation: riseIn 0.4s var(--ease) forwards;
+    }
+
+    .complete-banner.show { display: flex; }
+    .complete-banner .icon { font-size: 24px; }
+
     @media (max-width: 600px) {
       .add-form { flex-wrap: wrap; }
       .habit-row { grid-template-columns: auto 1fr auto; }
@@ -393,6 +439,8 @@
   </style>
 </head>
 <body>
+
+<canvas id="confettiCanvas"></canvas>
 
   <header>
     <div class="nav-inner">
@@ -469,6 +517,18 @@
         <!-- Emoji picker -->
         <div class="emoji-picker" id="emojiPicker"></div>
 
+        <!-- Streak warning -->
+        <div class="streak-warning" id="streakWarning">
+          <span class="icon">⚠️</span>
+          <span id="streakWarningText">You have streaks at risk today — don't break the chain!</span>
+        </div>
+
+        <!-- Completion banner -->
+        <div class="complete-banner" id="completeBanner">
+          <span class="icon">🎉</span>
+          <span>All habits done for today! Incredible consistency.</span>
+        </div>
+
         <!-- Tab bar -->
         <div class="tab-bar">
           <button class="tab-btn active" onclick="switchTab('today', this)">Today</button>
@@ -519,6 +579,77 @@
   </footer>
 
   <script>
+    // ── Confetti ──
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const pieces = Array.from({ length: 120 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height,
+        r: Math.random() * 8 + 4,
+        d: Math.random() * 120,
+        color: ['#E8A020','#3DB87A','#5B8DEF','#E05A5A','#9B6EF3','#F06A3A'][Math.floor(Math.random()*6)],
+        tilt: Math.random() * 10 - 10,
+        tiltAngle: 0,
+        tiltSpeed: Math.random() * 0.1 + 0.05
+      }));
+      let frame = 0;
+      const maxFrames = 180;
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          p.tiltAngle += p.tiltSpeed;
+          p.y += Math.cos(p.d) + 2;
+          p.x += Math.sin(frame / 20);
+          p.tilt = Math.sin(p.tiltAngle) * 12;
+          ctx.beginPath();
+          ctx.lineWidth = p.r;
+          ctx.strokeStyle = p.color;
+          ctx.moveTo(p.x + p.tilt + p.r / 4, p.y);
+          ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 4);
+          ctx.stroke();
+        });
+        frame++;
+        if (frame < maxFrames) requestAnimationFrame(draw);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      draw();
+    }
+
+    // ── Streak warnings ──
+    function checkStreakWarnings() {
+      const key = todayKey();
+      const atRisk = habits.filter(h => {
+        const streak = calcStreak(h);
+        return streak > 0 && !h.log[key];
+      });
+      const warning = document.getElementById('streakWarning');
+      if (atRisk.length > 0) {
+        warning.classList.add('show');
+        const names = atRisk.slice(0, 2).map(h => `"${h.name}"`).join(', ');
+        const extra = atRisk.length > 2 ? ` +${atRisk.length - 2} more` : '';
+        document.getElementById('streakWarningText').textContent =
+          `Streak${atRisk.length > 1 ? 's' : ''} at risk: ${names}${extra} — don't break the chain!`;
+      } else {
+        warning.classList.remove('show');
+      }
+    }
+
+    // ── Completion check ──
+    let wasComplete = false;
+    function checkCompletion() {
+      const key = todayKey();
+      const total = habits.length;
+      if (!total) { document.getElementById('completeBanner').classList.remove('show'); return; }
+      const done = habits.filter(h => !!h.log[key]).length;
+      const isComplete = done === total;
+      document.getElementById('completeBanner').classList.toggle('show', isComplete);
+      if (isComplete && !wasComplete) launchConfetti();
+      wasComplete = isComplete;
+    }
+
     // ── Emoji options ──
     const EMOJIS = ['🎯','💪','📚','🏃','🧘','💧','🥗','😴','✍️','🎸',
                     '🌿','🧠','❤️','🚴','🏋️','🍎','☕','🎨','💻','🌅',
@@ -750,6 +881,8 @@
       updateDate();
       updateStats();
       renderToday();
+      checkStreakWarnings();
+      checkCompletion();
       if (currentTab === 'week') renderWeek();
     }
 

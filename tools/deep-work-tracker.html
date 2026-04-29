@@ -455,6 +455,16 @@
         </div>
       </div>
 
+      <!-- Score history -->
+      <div class="tool-wrap">
+        <p class="section-title" style="margin-bottom:16px;">// Focus score history (4 weeks)</p>
+        <div style="position:relative;height:100px;" id="scoreChartWrap">
+          <canvas id="scoreChart" style="width:100%;height:100px;"></canvas>
+          <div id="scoreChartEmpty" style="text-align:center;padding:28px;color:var(--text3);font-size:13px;">Log sessions across multiple weeks to see your score trend.</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--text3);" id="scoreChartLabels"></div>
+      </div>
+
       <!-- Session history -->
       <div class="tool-wrap">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
@@ -490,6 +500,76 @@
   </footer>
 
   <script>
+    function renderScoreChart() {
+      const canvas = document.getElementById('scoreChart');
+      const empty = document.getElementById('scoreChartEmpty');
+      const labels = document.getElementById('scoreChartLabels');
+      const ctx = canvas.getContext('2d');
+
+      // Build 4 weekly buckets
+      const weeks = [];
+      for (let w = 3; w >= 0; w--) {
+        const start = Date.now() - (w + 1) * 7 * 86400000;
+        const end   = Date.now() - w * 7 * 86400000;
+        const wSessions = sessions.filter(s => s.start >= start && s.start < end);
+        const wMs = wSessions.reduce((a,s) => a + s.duration, 0);
+        weeks.push({ score: calcScore(wSessions, wMs), label: w === 0 ? 'This week' : `${w}w ago` });
+      }
+
+      const hasData = weeks.some(w => w.score > 0);
+      canvas.style.display = hasData ? 'block' : 'none';
+      empty.style.display  = hasData ? 'none' : 'block';
+      if (!hasData) { labels.innerHTML = ''; return; }
+
+      const W = canvas.offsetWidth || 600;
+      const H = 100;
+      canvas.width = W;
+      canvas.height = H;
+      ctx.clearRect(0, 0, W, H);
+
+      const max = Math.max(...weeks.map(w => w.score), 1);
+      const pad = 20;
+      const chartW = W - pad * 2;
+      const step = chartW / (weeks.length - 1);
+
+      const points = weeks.map((w, i) => ({
+        x: pad + i * step,
+        y: H - pad - ((w.score / max) * (H - pad * 2))
+      }));
+
+      // Fill area
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, H - pad);
+      points.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.lineTo(points[points.length-1].x, H - pad);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(232,160,32,0.08)';
+      ctx.fill();
+
+      // Line
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      points.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.strokeStyle = '#E8A020';
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      // Dots + labels
+      points.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#E8A020';
+        ctx.fill();
+        ctx.fillStyle = '#8a8578';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(weeks[i].score, p.x, p.y - 8);
+      });
+
+      labels.innerHTML = weeks.map(w => `<span>${w.label}</span>`).join('');
+    }
+
     // ── Constants ──
     const QUALITY_LABELS = ['', 'Distracted', 'Okay', 'Good', 'Great', 'Flow state 🔥'];
     const DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -763,6 +843,7 @@
     function render() {
       renderStats();
       renderWeekChart();
+      renderScoreChart();
       renderHistory();
     }
 
