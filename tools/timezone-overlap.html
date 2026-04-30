@@ -3,89 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Time Zone Overlap Finder — Interactive World Map | Deskloop</title>
-  <meta name="description" content="Find the best meeting time across multiple time zones with an interactive world map. Click countries to add them. Free, no signup, built for remote teams.">
-  <meta name="keywords" content="time zone overlap finder, world map time zone, best meeting time remote teams, time zone calculator map, free time zone tool">
+  <title>Time Zone Overlap Finder — Interactive Map | Deskloop</title>
+  <meta name="description" content="Find the best meeting time across multiple time zones. Click time zone regions on an interactive world map. Free, no signup, built for remote teams.">
+  <meta name="keywords" content="time zone overlap finder, world map time zone, best meeting time remote teams, time zone calculator map, UTC offset map">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/tools/timezone-overlap.html">
-  <meta property="og:title" content="Time Zone Overlap Finder — Interactive World Map">
-  <meta property="og:description" content="Click countries on a world map to find the best meeting window. Free, no signup.">
+  <meta property="og:title" content="Time Zone Overlap Finder — Interactive Map">
+  <meta property="og:description" content="Click time zone regions on a world map to find the best meeting window. Free, no signup.">
   <meta property="og:url" content="https://deskloop.work/tools/timezone-overlap.html">
   <meta property="og:type" content="website">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Time Zone Overlap Finder",
-    "url": "https://deskloop.work/tools/timezone-overlap.html",
-    "description": "Interactive world map time zone overlap finder for remote teams",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-  }
-  </script>
   <link rel="stylesheet" href="../styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
 
   <style>
-    /* ── Map ── */
     .map-wrap {
       position: relative;
-      background: #0a1628;
+      background: #06101f;
       border-radius: var(--radius);
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       border: 1px solid var(--border);
+      user-select: none;
     }
 
-    .map-wrap svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+    .map-wrap svg { width: 100%; height: auto; display: block; }
 
-    .map-wrap path {
-      fill: #1a2840;
-      stroke: #0a1628;
-      stroke-width: 0.5;
+    /* Timezone zone styling */
+    .tz-zone {
       cursor: pointer;
-      transition: fill 0.15s;
+      transition: opacity 0.15s, filter 0.15s;
+      opacity: 0.75;
     }
 
-    .map-wrap path:hover { fill: #2a4a7a; }
-    .map-wrap path.added { fill: #E8A020; }
-    .map-wrap path.added:hover { fill: #f0b840; }
+    .tz-zone:hover {
+      opacity: 1;
+      filter: brightness(1.3);
+    }
 
+    .tz-zone.selected {
+      opacity: 1;
+      filter: brightness(1.4) drop-shadow(0 0 6px currentColor);
+      stroke: #fff;
+      stroke-width: 0.8;
+    }
+
+    .tz-zone.selected:hover { filter: brightness(1.5); }
+
+    /* Graticule lines */
+    .graticule { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 0.5; }
+
+    /* Tooltip */
     .map-tooltip {
       position: absolute;
-      background: var(--bg2);
-      border: 1px solid var(--border2);
+      background: rgba(10,15,25,0.95);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: var(--radius-sm);
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
+      padding: 8px 14px;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 0.15s;
+      transition: opacity 0.12s;
       white-space: nowrap;
-      z-index: 10;
+      z-index: 20;
+      backdrop-filter: blur(8px);
     }
 
     .map-tooltip.show { opacity: 1; }
+    .tt-name { font-size: 13px; font-weight: 700; color: #fff; }
+    .tt-time { font-size: 12px; color: var(--accent); margin-top: 2px; font-family: var(--font-head); }
+    .tt-hint { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
 
-    .map-hint {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 11px;
-      color: rgba(255,255,255,0.3);
-      pointer-events: none;
-      white-space: nowrap;
+    /* Legend */
+    .tz-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
     }
 
-    /* ── Zone pills ── */
+    .legend-zone {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text3);
+      cursor: pointer;
+      padding: 3px 8px;
+      border-radius: 100px;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .legend-zone:hover { color: var(--text); border-color: var(--border); }
+    .legend-zone.selected { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Added zones */
     .zones-row {
       display: flex;
       flex-wrap: wrap;
@@ -99,212 +116,109 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
       border-radius: 100px;
       padding: 6px 14px;
       font-size: 13px;
       font-weight: 600;
-      color: var(--text);
-      transition: border-color 0.18s;
+      color: #080808;
+      transition: opacity 0.15s;
     }
 
-    .zone-pill.active { border-color: var(--accent); background: var(--accent-dim); }
-
-    .zone-pill-flag { font-size: 16px; }
+    .zone-pill:hover { opacity: 0.85; }
 
     .zone-pill-time {
       font-family: var(--font-head);
       font-weight: 800;
-      font-size: 14px;
-      color: var(--accent);
+      font-size: 13px;
+      opacity: 0.7;
     }
 
     .zone-pill-del {
-      background: none;
-      border: none;
-      color: var(--text3);
-      cursor: pointer;
-      font-size: 13px;
-      padding: 0 0 0 2px;
-      line-height: 1;
+      background: none; border: none;
+      color: rgba(0,0,0,0.5);
+      cursor: pointer; font-size: 13px;
+      padding: 0 0 0 2px; line-height: 1;
       transition: color 0.15s;
     }
 
-    .zone-pill-del:hover { color: var(--danger); }
+    .zone-pill-del:hover { color: #000; }
+    .zones-empty { font-size: 13px; color: var(--text3); font-style: italic; }
 
-    .zones-empty {
-      font-size: 13px;
-      color: var(--text3);
-      font-style: italic;
-    }
-
-    /* ── Sub-zone picker modal ── */
-    .subzone-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .subzone-modal.open { display: flex; }
-
-    .subzone-box {
-      background: var(--bg2);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      width: min(400px, 90vw);
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-
-    .subzone-title {
-      font-family: var(--font-head);
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-
-    .subzone-opt {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: border-color 0.18s, background 0.18s;
-      font-size: 13px;
-      color: var(--text2);
-    }
-
-    .subzone-opt:hover { border-color: var(--accent); background: var(--accent-dim); color: var(--text); }
-    .subzone-opt .tz-time { font-family: var(--font-head); font-weight: 700; color: var(--accent); }
-
-    /* ── Overlap grid ── */
+    /* Overlap grid */
     .overlap-wrap { overflow-x: auto; margin-bottom: 8px; }
 
     .hour-header-row {
       display: grid;
-      grid-template-columns: 100px repeat(24, 1fr);
-      gap: 2px;
-      margin-bottom: 4px;
+      grid-template-columns: 110px repeat(24, 1fr);
+      gap: 2px; margin-bottom: 4px;
     }
 
-    .hour-lbl {
-      font-size: 9px;
-      color: var(--text3);
-      text-align: center;
-      font-weight: 600;
-    }
+    .hour-lbl { font-size: 9px; color: var(--text3); text-align: center; font-weight: 600; }
 
     .grid-row {
       display: grid;
-      grid-template-columns: 100px repeat(24, 1fr);
-      gap: 2px;
-      margin-bottom: 2px;
+      grid-template-columns: 110px repeat(24, 1fr);
+      gap: 2px; margin-bottom: 2px;
     }
 
     .grid-zone-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text2);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      padding-right: 6px;
-      overflow: hidden;
+      font-size: 11px; font-weight: 600; color: var(--text2);
+      display: flex; align-items: center; gap: 4px;
+      padding-right: 4px; overflow: hidden;
     }
 
-    .grid-zone-label span {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .grid-zone-label .dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
     }
+
+    .grid-zone-label span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .hour-cell {
-      height: 28px;
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      font-weight: 700;
-      cursor: default;
+      height: 28px; border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; cursor: default;
     }
 
     .hour-cell.overlap  { background: var(--success); color: #080808; }
-    .hour-cell.work     { background: rgba(61,184,122,0.18); color: var(--success); }
-    .hour-cell.evening  { background: rgba(232,160,32,0.12); color: var(--accent); }
+    .hour-cell.work     { background: rgba(61,184,122,0.18); }
+    .hour-cell.evening  { background: rgba(232,160,32,0.12); }
     .hour-cell.sleep    { background: var(--bg3); }
 
-    /* ── Overlap result ── */
-    .overlap-top {
-      margin-bottom: 20px;
-    }
-
-    .overlap-good { background: rgba(61,184,122,0.06); border: 1px solid rgba(61,184,122,0.25); border-radius: var(--radius); padding: 16px 20px; }
-    .overlap-warn { background: rgba(232,160,32,0.06); border: 1px solid rgba(232,160,32,0.25); border-radius: var(--radius); padding: 16px 20px; }
-    .overlap-none { background: rgba(224,85,85,0.06); border: 1px solid rgba(224,85,85,0.2); border-radius: var(--radius); padding: 16px 20px; }
-
-    .ov-title { font-family: var(--font-head); font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-    .ov-slots { display: flex; flex-wrap: wrap; gap: 6px; }
-    .ov-pill { background: var(--success); color: #080808; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
-    .ov-pill.warn { background: var(--accent); }
-
-    /* ── Legend ── */
-    .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
-    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text3); }
-    .legend-dot { width: 12px; height: 12px; border-radius: 2px; }
-
-    /* ── Live clocks ── */
+    /* Clocks */
     .clocks-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 10px; margin-bottom: 20px;
     }
 
     .clock-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
+      background: var(--bg2); border-radius: var(--radius);
+      padding: 14px 16px; border-left: 3px solid;
     }
 
-    .cc-flag { font-size: 20px; margin-bottom: 4px; }
-    .cc-city { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
-    .cc-time { font-family: var(--font-head); font-size: 24px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; }
+    .cc-offset { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; opacity: 0.7; }
+    .cc-name { font-size: 11px; font-weight: 600; color: var(--text3); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cc-time { font-family: var(--font-head); font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; }
     .cc-date { font-size: 11px; color: var(--text3); margin-top: 4px; }
     .cc-status { font-size: 10px; font-weight: 700; margin-top: 4px; }
     .cc-status.work { color: var(--success); }
     .cc-status.eve  { color: var(--accent); }
     .cc-status.sleep{ color: var(--text3); }
 
-    /* ── Work hours config ── */
-    .wh-config {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 13px;
-      color: var(--text2);
-      margin-bottom: 16px;
-    }
+    /* Overlap result */
+    .overlap-top { margin-bottom: 20px; }
+    .overlap-good { background: rgba(61,184,122,0.06); border: 1px solid rgba(61,184,122,0.25); border-radius: var(--radius); padding: 16px 20px; }
+    .overlap-none { background: rgba(224,85,85,0.06); border: 1px solid rgba(224,85,85,0.2); border-radius: var(--radius); padding: 16px 20px; }
+    .ov-title { font-family: var(--font-head); font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .ov-slots { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ov-pill { background: var(--success); color: #080808; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
 
-    .wh-config input[type="number"] {
-      width: 58px; padding: 6px 8px; font-size: 13px; margin: 0; text-align: center;
-    }
+    /* Work hours */
+    .wh-config { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--text2); margin-bottom: 16px; }
+    .wh-config input[type="number"] { width: 58px; padding: 6px 8px; font-size: 13px; margin: 0; text-align: center; }
 
     @media (max-width: 600px) {
-      .hour-header-row, .grid-row { grid-template-columns: 70px repeat(24, 1fr); }
-      .grid-zone-label { font-size: 9px; }
+      .hour-header-row, .grid-row { grid-template-columns: 80px repeat(24, 1fr); }
     }
   </style>
 </head>
@@ -331,39 +245,28 @@
   <div class="page-header">
     <a href="/" class="back-link">← All tools</a>
     <h1>Time Zone Overlap</h1>
-    <p>Click countries on the map to find the best meeting window for your remote team</p>
+    <p>Click a time zone region on the map to add it — find the best meeting window instantly</p>
   </div>
 
-  <!-- Map tool -->
   <div class="tool-wrap">
+    <p class="section-title" style="margin-bottom:10px;">// Click a time zone to add it</p>
 
     <!-- Map -->
-    <p class="section-title" style="margin-bottom:10px;">// Click countries to add them</p>
     <div class="map-wrap" id="mapWrap">
-      <div class="map-tooltip" id="mapTooltip"></div>
-      <div class="map-hint">Click any country to add its time zone</div>
-    </div>
-
-    <!-- Added zones -->
-    <div class="zones-row" id="zonesRow">
-      <span class="zones-empty">No locations added yet — click a country above</span>
-    </div>
-
-    <!-- Manual add for edge cases -->
-    <details style="margin-bottom:16px;">
-      <summary style="font-size:12px;color:var(--text3);cursor:pointer;user-select:none;">+ Add manually (for US, Australia, Russia multi-zone countries)</summary>
-      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-top:12px;align-items:end;">
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <label>Label</label>
-          <input type="text" id="manLabel" placeholder="e.g. New York" maxlength="25">
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <label>Time zone</label>
-          <select id="manTz"></select>
-        </div>
-        <button class="btn btn-primary" onclick="addManual()" style="margin-bottom:1px;">Add</button>
+      <div class="map-tooltip" id="mapTooltip">
+        <div class="tt-name" id="ttName"></div>
+        <div class="tt-time" id="ttTime"></div>
+        <div class="tt-hint" id="ttHint"></div>
       </div>
-    </details>
+    </div>
+
+    <!-- Legend -->
+    <div class="tz-legend" id="tzLegend"></div>
+
+    <!-- Added zones pills -->
+    <div class="zones-row" id="zonesRow">
+      <span class="zones-empty">No time zones added — click a region on the map</span>
+    </div>
 
     <!-- Work hours config -->
     <div class="wh-config">
@@ -376,21 +279,16 @@
 
     <!-- Live clocks -->
     <div class="clocks-grid" id="clocksGrid" style="display:none;"></div>
-
   </div>
 
-  <!-- Overlap section -->
+  <!-- Overlap -->
   <div class="tool-wrap" id="overlapSection" style="display:none;">
-
-    <!-- Big summary at top -->
     <div class="overlap-top" id="overlapTop"></div>
 
     <p class="section-title" style="margin-bottom:6px;">// 24-hour overlap grid</p>
     <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">
-      <span style="color:var(--success);font-weight:700;">Bright green</span> = everyone overlaps.
-      <span style="color:rgba(61,184,122,0.7);font-weight:600;">Soft green</span> = work hours.
-      <span style="color:var(--accent);">Amber</span> = evening.
-      Dark = night.
+      <span style="color:var(--success);font-weight:700;">Bright green</span> = everyone overlaps (best meeting time).
+      Soft green = work hours. Amber = evening.
     </p>
 
     <div class="overlap-wrap">
@@ -403,21 +301,10 @@
     </div>
   </div>
 
-  <!-- Sub-zone modal -->
-  <div class="subzone-modal" id="subzoneModal" onclick="closeModal(event)">
-    <div class="subzone-box">
-      <div class="subzone-title" id="subzoneTitle">Select a region</div>
-      <div id="subzoneOpts"></div>
-      <button class="btn btn-ghost" style="margin-top:12px;width:100%;font-size:13px;" onclick="closeSubzone()">Cancel</button>
-    </div>
-  </div>
-
-  <!-- SEO -->
   <div class="seo-block">
-    <h2>Interactive World Map Time Zone Overlap Finder</h2>
-    <p>The Deskloop Time Zone Overlap Finder lets you click countries directly on an interactive world map to build your team's location list — then instantly shows you the hours that work for everyone in a 24-hour visual grid. Built for remote teams scheduling across multiple continents.</p>
-    <p>Unlike dropdown-based tools, the map makes it immediately intuitive to add locations and understand geographic spread. The overlap grid highlights the exact hours where all selected time zones fall within work hours simultaneously.</p>
-    <p>Free, no signup, works entirely in your browser. Supports all major world time zones.</p>
+    <h2>Interactive Time Zone Overlap Finder for Remote Teams</h2>
+    <p>The Deskloop Time Zone Overlap Finder displays the world divided into time zone regions, color-coded by UTC offset. Click any region to add it to your comparison — then instantly see which hours overlap across all selected zones in a 24-hour visual grid.</p>
+    <p>Built for distributed teams scheduling across continents. No signup, no install, works entirely in your browser.</p>
   </div>
 
 </div>
@@ -433,209 +320,162 @@
 </footer>
 
 <script>
-// ── Country → timezone data ──
-const COUNTRY_TZ = {
-  // Single-zone countries
-  GB:'Europe/London', IE:'Europe/London', PT:'Europe/Lisbon',
-  IS:'Atlantic/Reykjavik', FR:'Europe/Paris', DE:'Europe/Berlin',
-  NL:'Europe/Amsterdam', BE:'Europe/Brussels', CH:'Europe/Zurich',
-  AT:'Europe/Vienna', IT:'Europe/Rome', ES:'Europe/Madrid',
-  PL:'Europe/Warsaw', CZ:'Europe/Prague', SK:'Europe/Bratislava',
-  HU:'Europe/Budapest', RO:'Europe/Bucharest', HR:'Europe/Zagreb',
-  RS:'Europe/Belgrade', SI:'Europe/Ljubljana', BA:'Europe/Sarajevo',
-  ME:'Europe/Podgorica', MK:'Europe/Skopje', AL:'Europe/Tirane',
-  GR:'Europe/Athens', BG:'Europe/Sofia', TR:'Europe/Istanbul',
-  FI:'Europe/Helsinki', SE:'Europe/Stockholm', NO:'Europe/Oslo',
-  DK:'Europe/Copenhagen', EE:'Europe/Tallinn', LV:'Europe/Riga',
-  LT:'Europe/Vilnius', BY:'Europe/Minsk', UA:'Europe/Kiev',
-  MD:'Europe/Chisinau', GE:'Asia/Tbilisi', AM:'Asia/Yerevan',
-  AZ:'Asia/Baku', KZ:'Asia/Almaty', UZ:'Asia/Tashkent',
-  TM:'Asia/Ashgabat', TJ:'Asia/Dushanbe', KG:'Asia/Bishkek',
-  AF:'Asia/Kabul', PK:'Asia/Karachi', IN:'Asia/Kolkata',
-  NP:'Asia/Kathmandu', LK:'Asia/Colombo', BD:'Asia/Dhaka',
-  MM:'Asia/Rangoon', TH:'Asia/Bangkok', VN:'Asia/Ho_Chi_Minh',
-  KH:'Asia/Phnom_Penh', LA:'Asia/Vientiane', MY:'Asia/Kuala_Lumpur',
-  SG:'Asia/Singapore', ID:'Asia/Jakarta', PH:'Asia/Manila',
-  CN:'Asia/Shanghai', TW:'Asia/Taipei', HK:'Asia/Hong_Kong',
-  MO:'Asia/Macau', KR:'Asia/Seoul', JP:'Asia/Tokyo',
-  MN:'Asia/Ulaanbaatar', KP:'Asia/Pyongyang',
-  SA:'Asia/Riyadh', AE:'Asia/Dubai', QA:'Asia/Qatar',
-  KW:'Asia/Kuwait', BH:'Asia/Bahrain', OM:'Asia/Muscat',
-  YE:'Asia/Aden', IQ:'Asia/Baghdad', IR:'Asia/Tehran',
-  JO:'Asia/Amman', LB:'Asia/Beirut', SY:'Asia/Damascus',
-  IL:'Asia/Jerusalem', PS:'Asia/Gaza',
-  EG:'Africa/Cairo', LY:'Africa/Tripoli', TN:'Africa/Tunis',
-  DZ:'Africa/Algiers', MA:'Africa/Casablanca', SD:'Africa/Khartoum',
-  ET:'Africa/Addis_Ababa', KE:'Africa/Nairobi', TZ:'Africa/Dar_es_Salaam',
-  UG:'Africa/Kampala', RW:'Africa/Kigali', BI:'Africa/Bujumbura',
-  CD:'Africa/Kinshasa', CG:'Africa/Brazzaville', GA:'Africa/Libreville',
-  CM:'Africa/Douala', NG:'Africa/Lagos', GH:'Africa/Accra',
-  CI:"Africa/Abidjan", SN:'Africa/Dakar', ML:'Africa/Bamako',
-  BF:'Africa/Ouagadougou', NE:'Africa/Niamey', TD:'Africa/Ndjamena',
-  MR:'Africa/Nouakchott', GW:'Africa/Bissau', GM:'Africa/Banjul',
-  GN:'Africa/Conakry', SL:'Africa/Freetown', LR:'Africa/Monrovia',
-  TG:'Africa/Lome', BJ:'Africa/Porto-Novo', ZA:'Africa/Johannesburg',
-  ZW:'Africa/Harare', ZM:'Africa/Lusaka', MW:'Africa/Blantyre',
-  MZ:'Africa/Maputo', BW:'Africa/Gaborone', NA:'Africa/Windhoek',
-  AO:'Africa/Luanda', MG:'Indian/Antananarivo',
-  NZ:'Pacific/Auckland', FJ:'Pacific/Fiji', PG:'Pacific/Port_Moresby',
-  SB:'Pacific/Guadalcanal', VU:'Pacific/Efate', TO:'Pacific/Tongatapu',
-  WS:'Pacific/Apia', CK:'Pacific/Rarotonga',
-  MX:'America/Mexico_City', GT:'America/Guatemala',
-  BZ:'America/Belize', HN:'America/Tegucigalpa',
-  SV:'America/El_Salvador', NI:'America/Managua',
-  CR:'America/Costa_Rica', PA:'America/Panama',
-  CU:'America/Havana', JM:'America/Jamaica', HT:'America/Port-au-Prince',
-  DO:'America/Santo_Domingo', PR:'America/Puerto_Rico',
-  TT:'America/Port_of_Spain', BB:'America/Barbados',
-  CO:'America/Bogota', VE:'America/Caracas', GY:'America/Guyana',
-  SR:'America/Paramaribo', EC:'America/Guayaquil', PE:'America/Lima',
-  BO:'America/La_Paz', PY:'America/Asuncion', UY:'America/Montevideo',
-  AR:'America/Argentina/Buenos_Aires', CL:'America/Santiago',
-  BR:'America/Sao_Paulo',
-  // Multi-zone — will trigger sub-picker
-  US:['America/New_York','America/Chicago','America/Denver','America/Los_Angeles','America/Anchorage','Pacific/Honolulu'],
-  CA:['America/Toronto','America/Winnipeg','America/Edmonton','America/Vancouver'],
-  AU:['Australia/Sydney','Australia/Darwin','Australia/Perth'],
-  RU:['Europe/Moscow','Asia/Yekaterinburg','Asia/Novosibirsk','Asia/Vladivostok'],
-  MN:['Asia/Ulaanbaatar'],
-};
-
-const SUBZONE_LABELS = {
-  'America/New_York':'Eastern (New York)',
-  'America/Chicago':'Central (Chicago)',
-  'America/Denver':'Mountain (Denver)',
-  'America/Los_Angeles':'Pacific (Los Angeles)',
-  'America/Anchorage':'Alaska',
-  'Pacific/Honolulu':'Hawaii',
-  'America/Toronto':'Eastern (Toronto)',
-  'America/Winnipeg':'Central (Winnipeg)',
-  'America/Edmonton':'Mountain (Edmonton)',
-  'America/Vancouver':'Pacific (Vancouver)',
-  'Australia/Sydney':'Eastern (Sydney)',
-  'Australia/Darwin':'Central (Darwin)',
-  'Australia/Perth':'Western (Perth)',
-  'Europe/Moscow':'Moscow',
-  'Asia/Yekaterinburg':'Yekaterinburg',
-  'Asia/Novosibirsk':'Novosibirsk',
-  'Asia/Vladivostok':'Vladivostok',
-};
-
-const COUNTRY_FLAGS = {
-  GB:'🇬🇧',IE:'🇮🇪',PT:'🇵🇹',FR:'🇫🇷',DE:'🇩🇪',NL:'🇳🇱',BE:'🇧🇪',
-  CH:'🇨🇭',AT:'🇦🇹',IT:'🇮🇹',ES:'🇪🇸',PL:'🇵🇱',GR:'🇬🇷',TR:'🇹🇷',
-  SE:'🇸🇪',NO:'🇳🇴',DK:'🇩🇰',FI:'🇫🇮',
-  IN:'🇮🇳',PK:'🇵🇰',BD:'🇧🇩',LK:'🇱🇰',
-  CN:'🇨🇳',JP:'🇯🇵',KR:'🇰🇷',TW:'🇹🇼',HK:'🇭🇰',
-  SG:'🇸🇬',MY:'🇲🇾',PH:'🇵🇭',TH:'🇹🇭',VN:'🇻🇳',ID:'🇮🇩',
-  AE:'🇦🇪',SA:'🇸🇦',IL:'🇮🇱',EG:'🇪🇬',
-  ZA:'🇿🇦',NG:'🇳🇬',KE:'🇰🇪',
-  AU:'🇦🇺',NZ:'🇳🇿',
-  US:'🇺🇸',CA:'🇨🇦',MX:'🇲🇽',BR:'🇧🇷',AR:'🇦🇷',CO:'🇨🇴',
-  RU:'🇷🇺',UA:'🇺🇦',
-};
-
-const COUNTRY_NAMES = {
-  GB:'United Kingdom',IE:'Ireland',PT:'Portugal',IS:'Iceland',
-  FR:'France',DE:'Germany',NL:'Netherlands',BE:'Belgium',
-  CH:'Switzerland',AT:'Austria',IT:'Italy',ES:'Spain',
-  PL:'Poland',CZ:'Czechia',SK:'Slovakia',HU:'Hungary',
-  RO:'Romania',HR:'Croatia',RS:'Serbia',SI:'Slovenia',
-  GR:'Greece',BG:'Bulgaria',TR:'Turkey',
-  FI:'Finland',SE:'Sweden',NO:'Norway',DK:'Denmark',
-  EE:'Estonia',LV:'Latvia',LT:'Lithuania',BY:'Belarus',
-  UA:'Ukraine',MD:'Moldova',GE:'Georgia',AM:'Armenia',AZ:'Azerbaijan',
-  RU:'Russia',
-  IN:'India',PK:'Pakistan',NP:'Nepal',LK:'Sri Lanka',BD:'Bangladesh',
-  AF:'Afghanistan',TM:'Turkmenistan',UZ:'Uzbekistan',TJ:'Tajikistan',KG:'Kyrgyzstan',KZ:'Kazakhstan',
-  MM:'Myanmar',TH:'Thailand',VN:'Vietnam',KH:'Cambodia',LA:'Laos',
-  MY:'Malaysia',SG:'Singapore',ID:'Indonesia',PH:'Philippines',
-  CN:'China',TW:'Taiwan',HK:'Hong Kong',MO:'Macau',
-  KR:'South Korea',JP:'Japan',KP:'North Korea',MN:'Mongolia',
-  SA:'Saudi Arabia',AE:'UAE',QA:'Qatar',KW:'Kuwait',BH:'Bahrain',
-  OM:'Oman',YE:'Yemen',IQ:'Iraq',IR:'Iran',
-  JO:'Jordan',LB:'Lebanon',SY:'Syria',IL:'Israel',PS:'Palestine',
-  EG:'Egypt',LY:'Libya',TN:'Tunisia',DZ:'Algeria',MA:'Morocco',
-  SD:'Sudan',ET:'Ethiopia',KE:'Kenya',TZ:'Tanzania',UG:'Uganda',
-  RW:'Rwanda',NG:'Nigeria',GH:'Ghana',ZA:'South Africa',
-  ZM:'Zambia',ZW:'Zimbabwe',MZ:'Mozambique',AO:'Angola',MG:'Madagascar',
-  US:'United States',CA:'Canada',MX:'Mexico',
-  GT:'Guatemala',BZ:'Belize',HN:'Honduras',SV:'El Salvador',
-  NI:'Nicaragua',CR:'Costa Rica',PA:'Panama',
-  CU:'Cuba',JM:'Jamaica',HT:'Haiti',DO:'Dominican Republic',
-  CO:'Colombia',VE:'Venezuela',GY:'Guyana',SR:'Suriname',
-  EC:'Ecuador',PE:'Peru',BO:'Bolivia',PY:'Paraguay',
-  UY:'Uruguay',AR:'Argentina',CL:'Chile',BR:'Brazil',
-  AU:'Australia',NZ:'New Zealand',PG:'Papua New Guinea',FJ:'Fiji',
-};
-
-const ALL_TZ = [
-  {label:'UTC+0 London',tz:'Europe/London'},
-  {label:'UTC+1 Paris/Berlin',tz:'Europe/Paris'},
-  {label:'UTC+2 Helsinki/Athens',tz:'Europe/Helsinki'},
-  {label:'UTC+3 Moscow',tz:'Europe/Moscow'},
-  {label:'UTC+4 Dubai',tz:'Asia/Dubai'},
-  {label:'UTC+5 Karachi',tz:'Asia/Karachi'},
-  {label:'UTC+5:30 Mumbai',tz:'Asia/Kolkata'},
-  {label:'UTC+6 Dhaka',tz:'Asia/Dhaka'},
-  {label:'UTC+7 Bangkok',tz:'Asia/Bangkok'},
-  {label:'UTC+8 Singapore/Manila',tz:'Asia/Singapore'},
-  {label:'UTC+8 Shanghai',tz:'Asia/Shanghai'},
-  {label:'UTC+9 Tokyo/Seoul',tz:'Asia/Tokyo'},
-  {label:'UTC+10 Sydney',tz:'Australia/Sydney'},
-  {label:'UTC+12 Auckland',tz:'Pacific/Auckland'},
-  {label:'UTC-3 São Paulo',tz:'America/Sao_Paulo'},
-  {label:'UTC-4 Halifax',tz:'America/Halifax'},
-  {label:'UTC-5 New York',tz:'America/New_York'},
-  {label:'UTC-6 Chicago',tz:'America/Chicago'},
-  {label:'UTC-7 Denver',tz:'America/Denver'},
-  {label:'UTC-8 Los Angeles',tz:'America/Los_Angeles'},
-  {label:'UTC-9 Anchorage',tz:'America/Anchorage'},
-  {label:'UTC-10 Honolulu',tz:'Pacific/Honolulu'},
+// ── Timezone zone definitions ──
+// Each zone: id, label, utcOffset, tz (IANA), color, representative cities
+const ZONES = [
+  { id:'utc-12', label:'UTC−12', offset:-12, tz:'Etc/GMT+12',   color:'#1a237e', cities:'Baker Island' },
+  { id:'utc-11', label:'UTC−11', offset:-11, tz:'Pacific/Pago_Pago', color:'#283593', cities:'Samoa' },
+  { id:'utc-10', label:'UTC−10', offset:-10, tz:'Pacific/Honolulu', color:'#1565c0', cities:'Hawaii, Tahiti' },
+  { id:'utc-9',  label:'UTC−9',  offset:-9,  tz:'America/Anchorage', color:'#0277bd', cities:'Alaska' },
+  { id:'utc-8',  label:'UTC−8',  offset:-8,  tz:'America/Los_Angeles', color:'#00838f', cities:'LA, Vancouver, Seattle' },
+  { id:'utc-7',  label:'UTC−7',  offset:-7,  tz:'America/Denver', color:'#00695c', cities:'Denver, Phoenix' },
+  { id:'utc-6',  label:'UTC−6',  offset:-6,  tz:'America/Chicago', color:'#2e7d32', cities:'Chicago, Mexico City' },
+  { id:'utc-5',  label:'UTC−5',  offset:-5,  tz:'America/New_York', color:'#558b2f', cities:'New York, Toronto, Lima' },
+  { id:'utc-4',  label:'UTC−4',  offset:-4,  tz:'America/Halifax', color:'#9e9d24', cities:'Halifax, Caracas' },
+  { id:'utc-3',  label:'UTC−3',  offset:-3,  tz:'America/Sao_Paulo', color:'#f57f17', cities:'São Paulo, Buenos Aires' },
+  { id:'utc-2',  label:'UTC−2',  offset:-2,  tz:'America/Noronha', color:'#e65100', cities:'Mid-Atlantic' },
+  { id:'utc-1',  label:'UTC−1',  offset:-1,  tz:'Atlantic/Azores', color:'#bf360c', cities:'Azores, Cape Verde' },
+  { id:'utc0',   label:'UTC±0',  offset:0,   tz:'Europe/London', color:'#4e342e', cities:'London, Lisbon, Accra' },
+  { id:'utc+1',  label:'UTC+1',  offset:1,   tz:'Europe/Paris', color:'#6a1b9a', cities:'Paris, Berlin, Rome, Lagos' },
+  { id:'utc+2',  label:'UTC+2',  offset:2,   tz:'Europe/Helsinki', color:'#4527a0', cities:'Helsinki, Cairo, Joburg' },
+  { id:'utc+3',  label:'UTC+3',  offset:3,   tz:'Europe/Moscow', color:'#283593', cities:'Moscow, Nairobi, Riyadh' },
+  { id:'utc+4',  label:'UTC+4',  offset:4,   tz:'Asia/Dubai', color:'#1565c0', cities:'Dubai, Baku, Tbilisi' },
+  { id:'utc+5',  label:'UTC+5',  offset:5,   tz:'Asia/Karachi', color:'#0277bd', cities:'Karachi, Tashkent' },
+  { id:'utc+5h', label:'UTC+5:30', offset:5.5, tz:'Asia/Kolkata', color:'#00838f', cities:'Mumbai, New Delhi, Colombo' },
+  { id:'utc+6',  label:'UTC+6',  offset:6,   tz:'Asia/Dhaka', color:'#00695c', cities:'Dhaka, Almaty' },
+  { id:'utc+7',  label:'UTC+7',  offset:7,   tz:'Asia/Bangkok', color:'#2e7d32', cities:'Bangkok, Jakarta, Hanoi' },
+  { id:'utc+8',  label:'UTC+8',  offset:8,   tz:'Asia/Singapore', color:'#558b2f', cities:'Singapore, Manila, KL, Beijing' },
+  { id:'utc+9',  label:'UTC+9',  offset:9,   tz:'Asia/Tokyo', color:'#9e9d24', cities:'Tokyo, Seoul' },
+  { id:'utc+10', label:'UTC+10', offset:10,  tz:'Australia/Sydney', color:'#f57f17', cities:'Sydney, Melbourne' },
+  { id:'utc+11', label:'UTC+11', offset:11,  tz:'Pacific/Noumea', color:'#e65100', cities:'Solomon Islands' },
+  { id:'utc+12', label:'UTC+12', offset:12,  tz:'Pacific/Auckland', color:'#bf360c', cities:'Auckland, Fiji' },
 ];
 
+// lon→x: ((lon+180)/360)*1000, lat→y: ((85-lat)/145)*500
+function proj(lon, lat) {
+  return [(((lon + 180) / 360) * 1000).toFixed(1), (((85 - lat) / 145) * 500).toFixed(1)];
+}
+
+function p(lon, lat) { const [x,y] = proj(lon,lat); return `${x},${y}`; }
+
+function rectPath(lon1, lat1, lon2, lat2) {
+  return `M${p(lon1,lat1)} L${p(lon2,lat1)} L${p(lon2,lat2)} L${p(lon1,lat2)} Z`;
+}
+
+function polyPath(pts) {
+  return pts.map((pt,i) => (i===0?'M':'L') + p(pt[0],pt[1])).join(' ') + ' Z';
+}
+
+// ── Zone region paths (lon1,lat1 → lon2,lat2 bands with geographic shapes) ──
+const ZONE_REGIONS = {
+  'utc-12': [rectPath(-180,85,-172,85), rectPath(-180,20,-172,-60)],
+  'utc-11': [rectPath(-172,85,-162,85), rectPath(-172,20,-162,-60)],
+  'utc-10': [
+    rectPath(-162,85,-147,85),
+    polyPath([[-162,30],[-147,30],[-147,18],[-155,18],[-162,24]]),
+  ],
+  'utc-9': [polyPath([[-168,72],[-141,72],[-141,55],[-168,55]])],
+  'utc-8': [polyPath([[-141,72],[-114,52],[-124,32],[-117,30],[-141,55]])],
+  'utc-7': [polyPath([[-114,52],[-102,50],[-102,24],[-115,24],[-117,30],[-114,52]])],
+  'utc-6': [polyPath([[-102,50],[-86,50],[-86,30],[-87,15],[-80,8],[-92,8],[-102,24]])],
+  'utc-5': [
+    polyPath([[-86,50],[-66,50],[-66,24],[-80,8],[-87,15],[-86,30]]),
+    polyPath([[-82,8],[-75,-4],[-80,-18],[-80,8]]),
+    rectPath(-78,-4,-68,-18),
+  ],
+  'utc-4': [
+    polyPath([[-66,50],[-52,48],[-52,44],[-60,44],[-66,24],[-60,8],[-63,-3],[-60,-60],[-52,-60],[-52,-3],[-60,-3]]),
+    rectPath(-70,-18,-60,-35),
+  ],
+  'utc-3': [
+    polyPath([[-52,48],[-34,48],[-34,-60],[-52,-60]]),
+    rectPath(-60,-35,-52,-56),
+  ],
+  'utc-2': [rectPath(-34,0,-28,-60), rectPath(-34,5,-28,0)],
+  'utc-1': [rectPath(-28,45,-14,35), rectPath(-28,-10,-14,-20)],
+  'utc0': [
+    polyPath([[-14,60],[3,60],[3,48],[-5,44],[-10,36],[-18,28],[-18,5],[-10,5],[-14,10],[-20,15],[-18,28]]),
+    polyPath([[-18,5],[-10,5],[-2,5],[2,-5],[0,-60],[-20,-60],[-18,-10],[-18,5]]),
+    polyPath([[-10,60],[-3,60],[-3,52],[-10,52]]),
+  ],
+  'utc+1': [
+    polyPath([[3,55],[15,55],[15,36],[12,30],[10,4],[3,4],[3,55]]),
+    polyPath([[10,4],[15,4],[15,-12],[5,-12],[8,-5]]),
+    polyPath([[10,-12],[18,-12],[18,-30],[10,-30]]),
+    rectPath(-2,5,10,4),
+  ],
+  'utc+2': [
+    polyPath([[15,72],[30,72],[30,36],[36,22],[32,22],[28,12],[22,4],[15,4],[15,55]]),
+    polyPath([[28,12],[36,22],[42,12],[36,4],[28,4]]),
+    polyPath([[18,-12],[30,-12],[30,-30],[18,-30]]),
+    polyPath([[30,-30],[40,-30],[40,-60],[30,-60]]),
+  ],
+  'utc+3': [
+    polyPath([[30,72],[42,72],[42,36],[54,22],[48,22],[36,22],[30,36]]),
+    polyPath([[36,4],[48,4],[48,-4],[36,-4]]),
+    rectPath(36,22,42,12),
+    polyPath([[40,-10],[50,-10],[50,-60],[40,-60]]),
+  ],
+  'utc+4': [polyPath([[42,72],[54,72],[54,36],[60,36],[54,22],[42,36]]), rectPath(42,4,54,-4)],
+  'utc+5': [polyPath([[54,72],[66,72],[66,36],[60,22],[54,36]]), rectPath(54,26,66,22), rectPath(60,30,75,24)],
+  'utc+5h': [polyPath([[72,36],[80,36],[80,8],[75,8],[68,8],[68,36]])],
+  'utc+6': [polyPath([[80,36],[88,36],[88,22],[80,22]]), rectPath(86,28,92,22), rectPath(66,55,80,40)],
+  'utc+7': [
+    polyPath([[88,36],[100,36],[100,4],[96,1],[88,4],[88,22]]),
+    polyPath([[96,1],[100,4],[105,-2],[100,-8],[96,1]]),
+    rectPath(80,55,100,40),
+  ],
+  'utc+8': [
+    polyPath([[100,36],[120,36],[120,-4],[105,-10],[100,-8],[100,4]]),
+    polyPath([[120,36],[120,22],[105,22],[105,36]]),
+    polyPath([[110,-4],[122,-4],[122,-12],[110,-12]]),
+    rectPath(100,55,120,40),
+  ],
+  'utc+9': [
+    polyPath([[120,50],[135,50],[135,30],[120,30]]),
+    polyPath([[130,48],[145,45],[145,30],[130,30]]),
+  ],
+  'utc+10': [
+    polyPath([[135,50],[148,50],[148,-12],[135,-12]]),
+    polyPath([[115,-20],[135,-20],[135,-42],[115,-42]]),
+  ],
+  'utc+11': [rectPath(148,-4,168,-20)],
+  'utc+12': [
+    polyPath([[168,72],[180,72],[180,-60],[168,-60]]),
+    polyPath([[165,-36],[178,-36],[178,-48],[165,-48]]),
+    rectPath(-180,72,-168,-60),
+  ],
+};
+
 // ── State ──
-let zones = []; // [{code, tz, label, flag}]
+let zones = [];
 let clockInterval = null;
-let pendingCountry = null;
 
-// ── Build manual TZ select ──
-function buildManSelect() {
-  const sel = document.getElementById('manTz');
-  sel.innerHTML = ALL_TZ.map(t => `<option value="${t.tz}">${t.label}</option>`).join('');
-  try {
-    const local = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const m = ALL_TZ.find(t => t.tz === local);
-    if (m) sel.value = local;
-  } catch {}
-}
-
-// ── Time helpers ──
-function getLocalHour(tz) {
-  return parseInt(new Date().toLocaleString('en-US',{timeZone:tz,hour:'numeric',hour12:false})) % 24;
-}
+// ── Helpers ──
+function getZone(id) { return ZONES.find(z => z.id === id); }
 
 function getLocalTime(tz) {
-  return new Date().toLocaleString('en-US',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:true});
+  try {
+    return new Date().toLocaleString('en-US',{timeZone:tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+  } catch { return '--:--'; }
+}
+
+function getLocalTimeShort(tz) {
+  try {
+    return new Date().toLocaleString('en-US',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:true});
+  } catch { return '--:--'; }
 }
 
 function getLocalDate(tz) {
-  return new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',month:'short',day:'numeric'}).format(new Date());
+  try {
+    return new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',month:'short',day:'numeric'}).format(new Date());
+  } catch { return ''; }
 }
 
-function getUtcOffset(tz) {
-  const tzD = new Date(new Date().toLocaleString('en-US',{timeZone:tz}));
-  const utcD = new Date(new Date().toLocaleString('en-US',{timeZone:'UTC'}));
-  return Math.round((tzD - utcD) / 3600000);
-}
-
-function localHourFromUtc(utcH, off) { return ((utcH + off) % 24 + 24) % 24; }
-
-function fmtHour(h) {
-  if (h === 0) return '12a';
-  if (h < 12) return h + 'a';
-  if (h === 12) return '12p';
-  return (h-12) + 'p';
+function getLocalHour(tz) {
+  try {
+    return parseInt(new Date().toLocaleString('en-US',{timeZone:tz,hour:'numeric',hour12:false})) % 24;
+  } catch { return 0; }
 }
 
 function getStatus(h, ws, we) {
@@ -644,120 +484,187 @@ function getStatus(h, ws, we) {
   return 'sleep';
 }
 
-// ── Add zone ──
-function addZone(code, tz, label, flag) {
-  if (zones.length >= 6) { alert('Maximum 6 locations.'); return; }
-  if (zones.find(z => z.tz === tz)) { alert('This time zone is already added.'); return; }
-  zones.push({ code, tz, label, flag: flag || COUNTRY_FLAGS[code] || '🌐' });
-  highlightMap();
-  renderPills();
-  renderClocks();
-  renderOverlap();
+function localHourFromOffset(utcH, off) {
+  return (((utcH + off) % 24) + 24) % 24;
 }
 
-function removeZone(tz) {
-  zones = zones.filter(z => z.tz !== tz);
-  highlightMap();
-  renderPills();
-  renderClocks();
-  renderOverlap();
+function fmtHour(h) {
+  if (h === 0) return '12a';
+  if (h < 12) return h + 'a';
+  if (h === 12) return '12p';
+  return (h-12) + 'p';
 }
 
-function addManual() {
-  const label = document.getElementById('manLabel').value.trim() || 'Location';
-  const tz = document.getElementById('manTz').value;
-  addZone('', tz, label, '🌐');
-  document.getElementById('manLabel').value = '';
-}
+// ── Build SVG map ──
+function buildMap() {
+  const wrap = document.getElementById('mapWrap');
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 1000 500');
+  svg.setAttribute('xmlns', ns);
 
-// ── Map country click ──
-function onCountryClick(code) {
-  const tzData = COUNTRY_TZ[code];
-  if (!tzData) return;
-  const name = COUNTRY_NAMES[code] || code;
-  const flag = COUNTRY_FLAGS[code] || '🌐';
+  // Ocean
+  const ocean = document.createElementNS(ns, 'rect');
+  ocean.setAttribute('width', '1000');
+  ocean.setAttribute('height', '500');
+  ocean.setAttribute('fill', '#06101f');
+  ocean.style.pointerEvents = 'none';
+  svg.appendChild(ocean);
 
-  if (Array.isArray(tzData)) {
-    // Multi-zone — show picker
-    pendingCountry = { code, name, flag };
-    document.getElementById('subzoneTitle').textContent = `${flag} ${name} — Select region`;
-    document.getElementById('subzoneOpts').innerHTML = tzData.map(tz => `
-      <div class="subzone-opt" onclick="pickSubzone('${tz}')">
-        <span>${SUBZONE_LABELS[tz] || tz}</span>
-        <span class="tz-time">${getLocalTime(tz)}</span>
-      </div>`).join('');
-    document.getElementById('subzoneModal').classList.add('open');
-  } else {
-    addZone(code, tzData, name, flag);
+  // Graticule (longitude lines every 15°)
+  for (let lon = -180; lon <= 180; lon += 15) {
+    const [x] = proj(lon, 0);
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', x); line.setAttribute('y1', 0);
+    line.setAttribute('x2', x); line.setAttribute('y2', 500);
+    line.setAttribute('class', 'graticule');
+    svg.appendChild(line);
   }
-}
-
-function pickSubzone(tz) {
-  if (!pendingCountry) return;
-  const label = `${pendingCountry.name} (${SUBZONE_LABELS[tz]?.split(' ')[0] || ''})`;
-  addZone(pendingCountry.code, tz, label, pendingCountry.flag);
-  closeSubzone();
-}
-
-function closeSubzone() {
-  document.getElementById('subzoneModal').classList.remove('open');
-  pendingCountry = null;
-}
-
-function closeModal(e) {
-  if (e.target.id === 'subzoneModal') closeSubzone();
-}
-
-// ── Map highlight ──
-function highlightMap() {
-  document.querySelectorAll('#mapWrap path[data-code]').forEach(path => {
-    const code = path.getAttribute('data-code');
-    path.classList.toggle('added', zones.some(z => z.code === code));
+  // Equator + tropics
+  [0, 23.5, -23.5, 66.5, -66.5].forEach(lat => {
+    const [, y] = proj(0, lat);
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', 0); line.setAttribute('y1', y);
+    line.setAttribute('x2', 1000); line.setAttribute('y2', y);
+    line.setAttribute('class', 'graticule');
+    svg.appendChild(line);
   });
+
+  // Timezone zone groups
+  ZONES.forEach(zone => {
+    const paths = ZONE_REGIONS[zone.id];
+    if (!paths) return;
+    const g = document.createElementNS(ns, 'g');
+    g.setAttribute('class', 'tz-zone');
+    g.setAttribute('data-id', zone.id);
+    g.setAttribute('fill', zone.color);
+    g.setAttribute('stroke', 'rgba(0,0,0,0.3)');
+    g.setAttribute('stroke-width', '0.5');
+
+    paths.forEach(d => {
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', d);
+      g.appendChild(path);
+    });
+
+    g.addEventListener('mouseenter', e => onZoneHover(e, zone.id));
+    g.addEventListener('mousemove', onZoneMove);
+    g.addEventListener('mouseleave', hideTip);
+    g.addEventListener('click', () => onZoneClick(zone.id));
+    svg.appendChild(g);
+  });
+
+  // UTC offset labels on map
+  ZONES.forEach(zone => {
+    const [x, y] = proj(zone.offset * 15, 0);
+    const text = document.createElementNS(ns, 'text');
+    text.setAttribute('x', x);
+    text.setAttribute('y', y);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', 'rgba(255,255,255,0.25)');
+    text.setAttribute('font-size', '7');
+    text.setAttribute('font-family', 'sans-serif');
+    text.setAttribute('pointer-events', 'none');
+    text.textContent = zone.label;
+    svg.appendChild(text);
+  });
+
+  wrap.insertBefore(svg, wrap.firstChild);
 }
 
 // ── Tooltip ──
-function showTooltip(e, code) {
-  const name = COUNTRY_NAMES[code];
-  if (!name) return;
-  const tz = COUNTRY_TZ[code];
-  const tzLabel = Array.isArray(tz) ? 'Multiple zones' : getLocalTime(tz);
+function onZoneHover(e, id) {
+  const zone = getZone(id);
+  if (!zone) return;
+  document.getElementById('ttName').textContent = `${zone.label} — ${zone.cities}`;
+  document.getElementById('ttTime').textContent = getLocalTime(zone.tz);
+  document.getElementById('ttHint').textContent = zones.find(z=>z.id===id) ? 'Click to remove' : 'Click to add';
   const tip = document.getElementById('mapTooltip');
-  tip.textContent = `${COUNTRY_FLAGS[code]||''} ${name} · ${tzLabel}`;
   tip.classList.add('show');
-  moveTip(e);
+  positionTip(e);
 }
 
-function moveTip(e) {
+function onZoneMove(e) { positionTip(e); }
+
+function positionTip(e) {
   const tip = document.getElementById('mapTooltip');
   const wrap = document.getElementById('mapWrap');
   const rect = wrap.getBoundingClientRect();
-  let x = e.clientX - rect.left + 10;
-  let y = e.clientY - rect.top + 10;
-  if (x + 200 > rect.width) x -= 210;
+  let x = e.clientX - rect.left + 12;
+  let y = e.clientY - rect.top + 12;
+  if (x + 240 > rect.width) x -= 260;
+  if (y + 80 > rect.height) y -= 90;
   tip.style.left = x + 'px';
   tip.style.top  = y + 'px';
 }
 
 function hideTip() { document.getElementById('mapTooltip').classList.remove('show'); }
 
+// ── Zone click ──
+function onZoneClick(id) {
+  if (zones.find(z => z.id === id)) {
+    zones = zones.filter(z => z.id !== id);
+  } else {
+    if (zones.length >= 6) { alert('Maximum 6 time zones.'); return; }
+    const zone = getZone(id);
+    zones.push({ id: zone.id, tz: zone.tz, label: zone.label, color: zone.color, offset: zone.offset });
+  }
+  updateMapHighlights();
+  renderLegend();
+  renderPills();
+  renderClocks();
+  renderOverlap();
+}
+
+function removeZone(id) {
+  zones = zones.filter(z => z.id !== id);
+  updateMapHighlights();
+  renderLegend();
+  renderPills();
+  renderClocks();
+  renderOverlap();
+}
+
+function updateMapHighlights() {
+  document.querySelectorAll('.tz-zone').forEach(g => {
+    const id = g.getAttribute('data-id');
+    g.classList.toggle('selected', zones.some(z => z.id === id));
+  });
+}
+
+// ── Render legend ──
+function buildLegend() {
+  const el = document.getElementById('tzLegend');
+  el.innerHTML = ZONES.map(zone => `
+    <div class="legend-zone" data-id="${zone.id}" onclick="onZoneClick('${zone.id}')">
+      <div class="legend-dot" style="background:${zone.color};"></div>
+      <span>${zone.label}</span>
+    </div>`).join('');
+}
+
+function renderLegend() {
+  document.querySelectorAll('.legend-zone').forEach(el => {
+    const id = el.getAttribute('data-id');
+    el.classList.toggle('selected', zones.some(z => z.id === id));
+  });
+}
+
 // ── Render pills ──
 function renderPills() {
   const el = document.getElementById('zonesRow');
   if (!zones.length) {
-    el.innerHTML = '<span class="zones-empty">No locations added yet — click a country above</span>';
+    el.innerHTML = '<span class="zones-empty">No time zones added — click a region on the map</span>';
     return;
   }
   el.innerHTML = zones.map(z => `
-    <div class="zone-pill">
-      <span class="zone-pill-flag">${z.flag}</span>
+    <div class="zone-pill" style="background:${z.color};">
       <span>${z.label}</span>
-      <span class="zone-pill-time">${getLocalTime(z.tz)}</span>
-      <button class="zone-pill-del" onclick="removeZone('${z.tz}')" title="Remove">✕</button>
+      <span class="zone-pill-time">${getLocalTimeShort(z.tz)}</span>
+      <button class="zone-pill-del" onclick="removeZone('${z.id}')" title="Remove">✕</button>
     </div>`).join('');
 }
 
-// ── Render live clocks ──
+// ── Render clocks ──
 function renderClocks() {
   const grid = document.getElementById('clocksGrid');
   if (!zones.length) { grid.style.display = 'none'; return; }
@@ -769,17 +676,17 @@ function renderClocks() {
     const s = getStatus(h, ws, we);
     const sLabel = s==='work'?'● Working hours':s==='evening'?'◐ Evening':'○ Night/sleep';
     return `
-      <div class="clock-card">
-        <div class="cc-flag">${z.flag}</div>
-        <div class="cc-city">${z.label}</div>
-        <div class="cc-time">${getLocalTime(z.tz)}</div>
+      <div class="clock-card" style="border-left-color:${z.color};">
+        <div class="cc-offset" style="color:${z.color};">${z.label}</div>
+        <div class="cc-name">${z.tz.split('/')[1]?.replace(/_/g,' ') || z.tz}</div>
+        <div class="cc-time">${getLocalTimeShort(z.tz)}</div>
         <div class="cc-date">${getLocalDate(z.tz)}</div>
         <div class="cc-status ${s}">${sLabel}</div>
       </div>`;
   }).join('');
 }
 
-// ── Render overlap grid ──
+// ── Render overlap ──
 function renderOverlap() {
   const sec = document.getElementById('overlapSection');
   if (zones.length < 2) { sec.style.display = 'none'; return; }
@@ -787,16 +694,10 @@ function renderOverlap() {
 
   const ws = parseInt(document.getElementById('workStart').value) || 9;
   const we = parseInt(document.getElementById('workEnd').value) || 17;
-  const offsets = zones.map(z => getUtcOffset(z.tz));
 
-  // For each UTC hour, local hour per zone
   const hourData = Array.from({length:24}, (_, utcH) => {
-    const lhs = offsets.map(off => localHourFromUtc(utcH, off));
-    return {
-      lhs,
-      allWork: lhs.every(lh => lh >= ws && lh < we),
-      anyWork: lhs.some(lh => lh >= ws && lh < we)
-    };
+    const lhs = zones.map(z => localHourFromOffset(utcH, z.offset));
+    return { lhs, allWork: lhs.every(lh => lh >= ws && lh < we) };
   });
 
   const overlapHours = hourData.map((d,i) => d.allWork ? i : -1).filter(i => i >= 0);
@@ -804,28 +705,31 @@ function renderOverlap() {
   // Top summary
   const topEl = document.getElementById('overlapTop');
   if (overlapHours.length > 0) {
-    const slots = overlapHours.map(h => fmtHour(localHourFromUtc(h, offsets[0])));
+    const baseOffset = zones[0].offset;
+    const slots = overlapHours.map(h => fmtHour(localHourFromOffset(h, baseOffset)));
     topEl.innerHTML = `
       <div class="overlap-good">
-        <div class="ov-title">✅ ${overlapHours.length} hour${overlapHours.length!==1?'s':''} of overlap — best meeting times:</div>
+        <div class="ov-title">✅ ${overlapHours.length} hour${overlapHours.length!==1?'s':''} of overlap — best meeting times <span style="color:var(--text3);font-size:12px;font-family:var(--font-body);font-weight:400;">(shown in ${zones[0].label})</span></div>
         <div class="ov-slots">${slots.map(s=>`<span class="ov-pill">${s}</span>`).join('')}</div>
       </div>`;
   } else {
     topEl.innerHTML = `
       <div class="overlap-none">
-        <div class="ov-title">⚠️ No full overlap found</div>
-        <div style="font-size:13px;color:var(--text2);margin-top:4px;">No hours where everyone is within work time. Consider async communication or extending work hours above.</div>
+        <div class="ov-title">⚠️ No full overlap — try adjusting work hours or selecting closer zones</div>
       </div>`;
   }
 
-  // Header row
+  // Grid
   let html = '<div class="hour-header-row"><div></div>';
   for (let h = 0; h < 24; h++) html += `<div class="hour-lbl">${fmtHour(h)}</div>`;
   html += '</div>';
 
-  // Zone rows
   zones.forEach((z, zi) => {
-    html += `<div class="grid-row"><div class="grid-zone-label"><span>${z.flag}</span><span>${z.label}</span></div>`;
+    html += `<div class="grid-row">
+      <div class="grid-zone-label">
+        <div class="dot" style="background:${z.color};"></div>
+        <span>${z.label}</span>
+      </div>`;
     for (let utcH = 0; utcH < 24; utcH++) {
       const lh = hourData[utcH].lhs[zi];
       const isOverlap = hourData[utcH].allWork;
@@ -843,230 +747,47 @@ function copyResult() {
   if (zones.length < 2) return;
   const ws = parseInt(document.getElementById('workStart').value) || 9;
   const we = parseInt(document.getElementById('workEnd').value) || 17;
-  const offsets = zones.map(z => getUtcOffset(z.tz));
   const overlapHours = Array.from({length:24},(_,h)=>h).filter(utcH =>
-    zones.every((z,i) => { const lh = localHourFromUtc(utcH, offsets[i]); return lh >= ws && lh < we; })
+    zones.every(z => { const lh = localHourFromOffset(utcH, z.offset); return lh >= ws && lh < we; })
   );
-  const zoneList = zones.map(z => `${z.flag} ${z.label} (${getLocalTime(z.tz)})`).join('\n');
-  const slots = overlapHours.map(h => fmtHour(localHourFromUtc(h, offsets[0]))).join(', ') || 'No overlap';
-  navigator.clipboard.writeText(`🌍 Time Zone Overlap\n\nLocations:\n${zoneList}\n\nBest meeting times: ${slots}\n\ndeskloop.work/tools/timezone-overlap.html`).then(() => {
+  const baseOff = zones[0].offset;
+  const slots = overlapHours.map(h => fmtHour(localHourFromOffset(h, baseOff))).join(', ') || 'No overlap';
+  const zList = zones.map(z => `${z.label} (${getLocalTimeShort(z.tz)})`).join('\n');
+  navigator.clipboard.writeText(`🌍 Time Zone Overlap\n\n${zList}\n\nBest meeting times: ${slots}\n\ndeskloop.work/tools/timezone-overlap.html`).then(() => {
     const el = document.getElementById('copyConfirm');
-    el.style.opacity = '1';
-    el.textContent = 'Copied!';
+    el.style.opacity = '1'; el.textContent = 'Copied!';
     setTimeout(() => el.style.opacity = '0', 2000);
   });
 }
 
-// ── Build SVG map ──
-function buildMap() {
-  // Simplified world SVG with major country paths
-  // Using a simplified Robinson-ish projection
-  const mapEl = document.getElementById('mapWrap');
-
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 1000 500');
-  svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-
-  // We'll draw simplified country rectangles/polygons by approximate lat/lon
-  // Real world: use a proper TopoJSON, but for a lightweight inline version
-  // we draw simplified outlines
-
-  const countries = getCountryPaths();
-  countries.forEach(({code, d}) => {
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', d);
-    path.setAttribute('data-code', code);
-    if (COUNTRY_NAMES[code]) {
-      path.addEventListener('mouseenter', e => showTooltip(e, code));
-      path.addEventListener('mousemove', moveTip);
-      path.addEventListener('mouseleave', hideTip);
-      path.addEventListener('click', () => onCountryClick(code));
-    }
-    svg.appendChild(path);
-  });
-
-  // Ocean background
-  const ocean = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-  ocean.setAttribute('width', '1000');
-  ocean.setAttribute('height', '500');
-  ocean.setAttribute('fill', '#0a1628');
-  ocean.style.pointerEvents = 'none';
-  svg.insertBefore(ocean, svg.firstChild);
-
-  mapEl.insertBefore(svg, mapEl.firstChild);
-}
-
-function getCountryPaths() {
-  // Simplified world map paths — Mercator-ish projection
-  // lon: -180 to 180 → x: 0 to 1000
-  // lat: 85 to -60 → y: 0 to 500
-  function proj(lon, lat) {
-    const x = ((lon + 180) / 360) * 1000;
-    const y = ((85 - lat) / 145) * 500;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }
-  function rect(lon1, lat1, lon2, lat2, code) {
-    return { code, d: `M${proj(lon1,lat1)} L${proj(lon2,lat1)} L${proj(lon2,lat2)} L${proj(lon1,lat2)} Z` };
-  }
-  function poly(points, code) {
-    const d = points.map((p,i) => (i===0?'M':'L') + proj(p[0],p[1])).join(' ') + ' Z';
-    return { code, d };
-  }
-
-  return [
-    // North America
-    poly([[-168,72],[-52,72],[-52,42],[-80,42],[-80,25],[-87,15],[-77,8],[-117,32],[-140,60],[-168,72]],'US'),
-    poly([[-141,83],[-52,72],[-52,42],[-82,42],[-95,49],[-141,60]],'CA'),
-    rect(-117,32,-87,15,'MX'),
-    rect(-92,18,-83,8,'GT'), rect(-89,18,-88,15,'BZ'),
-    rect(-89,16,-83,13,'HN'), rect(-90,14,-87,13,'SV'),
-    rect(-88,15,-83,11,'NI'), rect(-86,11,-82,8,'CR'),
-    rect(-83,10,-77,7,'PA'),
-    rect(-74,12,-60,0,'VE'), rect(-82,8,-74,0,'CO'),
-    rect(-81,-2,-75,-18,'EC'), rect(-81,-2,-68,-18,'PE'),
-    rect(-69,-10,-57,-22,'BO'), rect(-58,-18,-48,-35,'BR'),
-    rect(-57,-22,-53,-33,'PY'), rect(-75,-33,-53,-55,'AR'),
-    rect(-75,-33,-65,-55,'CL'), rect(-58,-30,-53,-34,'UY'),
-    rect(-85,24,-74,19,'CU'), rect(-78,20,-72,17,'JM'),
-    rect(-74,20,-71,17,'HT'), rect(-72,20,-68,17,'DO'),
-    // Europe
-    poly([[-10,60],[2,60],[2,51],[-5,48],[-9,38],[0,36],[14,36],[14,46],[27,46],[27,42],[23,37],[26,40],[32,42],[36,42],[36,70],[28,72],[15,78],[-3,72],[-10,60]],'GB'),
-    rect(-10,60,2,50,'IE'),
-    poly([[-9,44],[-9,36],[3,36],[3,44]],'PT'),
-    poly([[-10,44],[3,44],[3,43],[5,47],[-2,48],[-5,44]],'ES'),
-    poly([[3,51],[8,55],[15,55],[15,47],[7,46],[6,44],[3,43],[3,51]],'FR'),
-    poly([[6,55],[15,55],[15,47],[7,47],[6,55]],'DE'),
-    poly([[6,52],[13,52],[13,50],[6,50]],'NL'),
-    poly([[3,51],[6,51],[6,50],[3,50]],'BE'),
-    poly([[6,48],[10,48],[10,46],[7,46]],'CH'),
-    poly([[10,48],[17,48],[17,46],[10,46]],'AT'),
-    poly([[7,47],[15,47],[15,38],[13,38],[8,40],[7,44]],'IT'),
-    poly([[3,43],[8,43],[8,42],[4,37],[3,43]],'ES'),
-    poly([[14,54],[24,54],[24,50],[14,50]],'PL'),
-    poly([[16,50],[19,50],[19,47],[16,47]],'CZ'),
-    poly([[16,48],[22,48],[22,45],[16,45]],'HU'),
-    poly([[22,48],[30,48],[30,43],[22,43]],'RO'),
-    poly([[20,45],[27,45],[27,41],[20,41]],'RS'),
-    poly([[19,42],[23,42],[23,39],[19,39]],'AL'),
-    poly([[22,42],[26,42],[26,38],[22,38]],'GR'),
-    poly([[27,42],[37,42],[37,36],[27,36]],'TR'),
-    poly([[16,50],[19,50],[19,48],[16,48]],'SK'),
-    poly([[5,58],[32,70],[32,58],[5,58]],'NO'),
-    poly([[11,69],[25,69],[25,55],[11,55]],'SE'),
-    poly([[20,71],[32,71],[32,60],[20,60]],'FI'),
-    rect(8,58,25,54,'DK'),
-    poly([[23,55],[26,55],[26,53],[23,53]],'LT'),
-    poly([[23,58],[26,58],[26,56],[23,56]],'LV'),
-    poly([[24,60],[27,60],[27,58],[24,58]],'EE'),
-    poly([[23,53],[34,53],[34,50],[23,50]],'UA'),
-    poly([[24,53],[32,53],[32,49],[24,49]],'BY'),
-    // Russia
-    poly([[28,72],[180,72],[180,42],[60,42],[60,55],[40,55],[28,72]],'RU'),
-    // Middle East & Central Asia
-    poly([[26,42],[38,42],[38,36],[32,30],[26,30],[26,42]],'TR'),
-    rect(35,38,48,34,'IR'),
-    rect(44,38,48,30,'IQ'),
-    rect(36,34,42,30,'SY'),
-    rect(35,33,39,29,'LB'),
-    rect(34,33,36,29,'IL'),
-    rect(34,33,36,29,'PS'),
-    rect(36,32,39,29,'JO'),
-    rect(42,30,56,22,'SA'),
-    rect(51,26,56,22,'AE'),
-    rect(56,25,60,22,'OM'),
-    rect(44,24,48,12,'YE'),
-    rect(50,26,52,24,'QA'),
-    rect(50,27,52,25,'BH'),
-    rect(47,30,49,28,'KW'),
-    rect(60,38,73,30,'AF'),
-    rect(62,38,73,24,'PK'),
-    rect(58,44,68,36,'TM'),
-    rect(64,45,73,38,'UZ'),
-    rect(68,42,78,36,'TJ'),
-    rect(73,42,80,39,'KG'),
-    rect(50,54,80,44,'KZ'),
-    // South & SE Asia
-    poly([[68,37],[97,28],[97,8],[80,8],[72,22],[68,37]],'IN'),
-    rect(80,28,88,26,'NP'),
-    rect(80,10,82,6,'LK'),
-    rect(88,26,92,22,'BD'),
-    rect(92,28,101,10,'MM'),
-    rect(97,22,106,5,'TH'),
-    rect(102,22,108,8,'VN'),
-    rect(102,15,107,10,'LA'),
-    rect(102,15,107,10,'KH'),
-    rect(100,6,119,-6,'MY'),
-    rect(103,1.5,104.5,1,'SG'),
-    poly([[95,6],[141,6],[141,-10],[115,-10],[106,-7],[100,-7],[95,6]],'ID'),
-    rect(116,20,122,18,'PH'),
-    rect(118,22,126,5,'PH'),
-    // East Asia
-    poly([[73,55],[135,55],[135,20],[73,20]],'CN'),
-    poly([[130,46],[145,46],[145,30],[130,30]],'JP'),
-    poly([[125,38],[130,38],[130,34],[125,34]],'KR'),
-    rect(120,25.5,122,21.5,'TW'),
-    rect(114,22.5,114.4,22,'HK'),
-    // Africa
-    poly([[-18,36],[37,36],[37,22],[43,12],[43,-12],[35,-26],[25,-35],[16,-30],[12,-6],[-2,4],[-18,20],[-18,36]],'MA'),
-    rect(-6,36,12,30,'DZ'),
-    rect(8,38,15,30,'TN'),
-    rect(12,33,25,22,'LY'),
-    rect(25,32,36,22,'EG'),
-    rect(24,22,38,10,'SD'),
-    rect(33,15,43,8,'ET'),
-    rect(34,4,42,-5,'KE'),
-    rect(28,-1,36,-12,'TZ'),
-    rect(24,-1,32,-12,'UG'),
-    rect(28,-8,36,-18,'MZ'),
-    rect(22,-8,30,-18,'ZM'),
-    rect(25,-18,34,-22,'ZW'),
-    rect(16,-18,26,-30,'NA'),
-    rect(20,-22,32,-35,'ZA'),
-    rect(8,14,16,8,'NG'),
-    rect(-2,12,2,4,'GH'),
-    rect(-8,10,-4,4,'CI'),
-    rect(-16,16,-8,10,'SN'),
-    rect(9,4,16,-4,'CM'),
-    rect(12,-4,18,-12,'CD'),
-    // Oceania
-    poly([[114,-14],[154,-14],[154,-40],[114,-40]],'AU'),
-    poly([[166,-34],[178,-34],[178,-46],[166,-46]],'NZ'),
-    rect(141,-4,155,-10,'PG'),
-  ];
-}
-
-// ── Clock tick ──
-function startClock() {
-  clearInterval(clockInterval);
-  clockInterval = setInterval(() => {
-    renderPills();
-    renderClocks();
-  }, 15000);
-}
-
-// ── Auto-detect local ──
-function autoDetectLocal() {
+// ── Auto-detect local zone ──
+function autoDetect() {
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const match = Object.entries(COUNTRY_TZ).find(([code, data]) => {
-      if (Array.isArray(data)) return data.includes(tz);
-      return data === tz;
+    const now = new Date();
+    const utcD = new Date(now.toLocaleString('en-US', {timeZone:'UTC'}));
+    const tzD  = new Date(now.toLocaleString('en-US', {timeZone:tz}));
+    const rawOff = Math.round((tzD - utcD) / 1800000) / 2;
+    // Find closest zone
+    let best = null, bestDiff = Infinity;
+    ZONES.forEach(z => {
+      const diff = Math.abs(z.offset - rawOff);
+      if (diff < bestDiff) { bestDiff = diff; best = z; }
     });
-    if (match) {
-      const [code, data] = match;
-      const label = COUNTRY_NAMES[code] || code;
-      const tzToUse = Array.isArray(data) ? tz : data;
-      addZone(code, tzToUse, label, COUNTRY_FLAGS[code] || '🌐');
-    }
+    if (best) onZoneClick(best.id);
   } catch {}
 }
 
 // ── Init ──
 buildMap();
-buildManSelect();
-autoDetectLocal();
-startClock();
-</script>
+buildLegend();
+autoDetect();
 
+clearInterval(clockInterval);
+clockInterval = setInterval(() => {
+  renderPills();
+  renderClocks();
+}, 15000);
+</script>
 </body>
 </html>
