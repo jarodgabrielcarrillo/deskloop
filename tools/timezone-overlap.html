@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Time Zone Overlap Finder — Interactive World Map | Deskloop</title>
-  <meta name="description" content="Find the best meeting time across multiple time zones with an accurate interactive world map. Click any country to add its time zone. Free, no signup.">
-  <meta name="keywords" content="time zone overlap finder, world map time zone, best meeting time remote teams, time zone calculator, UTC offset map free">
+  <meta name="description" content="Find the best meeting time across multiple time zones. Hover the world map to see timezone bands, click to select them. Free, no signup, built for remote teams.">
+  <meta name="keywords" content="time zone overlap finder, world map time zone bands, best meeting time remote teams, UTC offset map, time zone selector map">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/tools/timezone-overlap.html">
   <meta property="og:title" content="Time Zone Overlap Finder — Interactive World Map">
-  <meta property="og:description" content="Click countries on an accurate world map to find your team's best meeting window. Free, no signup.">
+  <meta property="og:description" content="Hover timezone bands on a world map to find your team's best meeting window. Free, no signup.">
   <meta property="og:url" content="https://deskloop.work/tools/timezone-overlap.html">
   <meta property="og:type" content="website">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Time Zone Overlap Finder","url":"https://deskloop.work/tools/timezone-overlap.html","description":"Interactive world map time zone overlap finder for remote teams","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
@@ -17,6 +17,89 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
 
   <style>
+    /* ── Multi-timezone picker modal ── */
+    .picker-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .picker-overlay.open { display: flex; }
+
+    .picker-box {
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      width: min(440px, 92vw);
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .picker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .picker-title {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .picker-close {
+      background: none; border: none;
+      color: var(--text3); cursor: pointer;
+      font-size: 20px; padding: 4px;
+      line-height: 1; border-radius: 4px;
+      transition: color 0.15s;
+    }
+
+    .picker-close:hover { color: var(--text); }
+
+    .picker-sub {
+      font-size: 12px;
+      color: var(--text3);
+      margin-bottom: 18px;
+    }
+
+    .picker-opt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      gap: 12px;
+    }
+
+    .picker-opt:hover { border-color: var(--accent); background: var(--accent-dim); }
+    .picker-opt:last-child { margin-bottom: 0; }
+
+    .picker-opt-left { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+    .picker-opt-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .picker-opt-tz { font-size: 11px; color: var(--text3); }
+
+    .picker-opt-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+    .picker-opt-time { font-family: var(--font-head); font-size: 16px; font-weight: 800; color: var(--accent); }
+    .picker-opt-utc { font-size: 11px; color: var(--text3); }
+
+    .picker-opt-swatch {
+      width: 10px; height: 10px;
+      border-radius: 50%; flex-shrink: 0;
+    }
+
     /* ── Map ── */
     .map-section {
       background: #050d1a;
@@ -35,14 +118,13 @@
     }
 
     .country {
-      stroke: rgba(0,0,0,0.35);
+      stroke: rgba(0,0,0,0.3);
       stroke-width: 0.4;
       cursor: pointer;
-      transition: filter 0.12s, opacity 0.12s;
+      transition: opacity 0.15s;
     }
 
-    .country:hover { filter: brightness(1.5); opacity: 1 !important; }
-    .country.selected { stroke: #fff; stroke-width: 1.2; opacity: 1 !important; filter: brightness(1.3); }
+    .country.selected { stroke: rgba(255,255,255,0.5); stroke-width: 0.8; }
 
     .graticule { fill: none; stroke: rgba(255,255,255,0.04); stroke-width: 0.4; }
     .sphere { fill: #050d1a; }
@@ -219,13 +301,13 @@
   <div class="page-header">
     <a href="/" class="back-link">← All tools</a>
     <h1>Time Zone Overlap</h1>
-    <p>Click any country on the map — find your team's best meeting window instantly</p>
+    <p>Hover the map to preview a timezone band — click to select it</p>
   </div>
 
   <div class="tool-wrap">
 
     <!-- Map -->
-    <p class="section-title" style="margin-bottom:10px;">// Click a country to add its time zone</p>
+    <p class="section-title" style="margin-bottom:10px;">// Hover a region — click to add that timezone</p>
     <div class="map-section" style="height:360px;">
       <div class="map-loading" id="mapLoading">
         <div class="spinner"></div>
@@ -598,32 +680,37 @@ function getStatus(h, ws, we) {
   return 'sleep';
 }
 
-// ── Add / remove zone ──
-function addZone(countryId) {
-  const cd = COUNTRY_DATA[countryId];
-  if (!cd) return;
-
-  // Find the OFFSET_ZONES entry for this offset
-  const zone = getZoneForOffset(cd.o);
+// ── Toggle timezone band ──
+function toggleBand(tzKey) {
+  const zone = OFFSET_ZONES.find(z => z.key === tzKey);
   if (!zone) return;
-
-  // Toggle: if same offset zone already added, remove it
-  const existing = selectedZones.findIndex(z => z.key === zone.key);
+  const existing = selectedZones.findIndex(z => z.key === tzKey);
   if (existing >= 0) {
     selectedZones.splice(existing, 1);
   } else {
     if (selectedZones.length >= 6) { alert('Maximum 6 time zones.'); return; }
+    const rep = Object.values(COUNTRY_DATA).find(cd => getZoneForOffset(cd.o)?.key === tzKey);
     selectedZones.push({
-      key: zone.key, label: zone.label, tz: cd.tz,
-      o: cd.o, color: zone.color, name: cd.n
+      key: zone.key, label: zone.label,
+      tz: rep ? rep.tz : 'UTC',
+      o: zone.o, color: zone.color,
+      name: zone.label
     });
   }
-
   updateMapColors();
   renderLegend();
   renderPills();
   renderClocks();
   renderOverlap();
+}
+
+// ── Add zone by country ID (used by autoDetect) ──
+function addZone(countryId) {
+  const cd = COUNTRY_DATA[countryId];
+  if (!cd) return;
+  const zone = getZoneForOffset(cd.o);
+  if (!zone) return;
+  toggleBand(zone.key);
 }
 
 function removeZone(key) {
@@ -662,53 +749,80 @@ async function buildMap() {
       .attr('class','graticule')
       .attr('d', path);
 
-    // Countries
+    // Countries — rendered as background, grouped by UTC offset
     const countries = topojson.feature(world, world.objects.countries);
+
+    // Build offset key lookup
+    function offsetKey(id) {
+      const cd = COUNTRY_DATA[id];
+      if (!cd) return null;
+      return getZoneForOffset(cd.o)?.key || null;
+    }
 
     svg.selectAll('.country')
       .data(countries.features)
       .join('path')
-      .attr('class','country')
+      .attr('class', 'country')
       .attr('data-id', d => d.id)
+      .attr('data-tzkey', d => offsetKey(d.id) || '')
       .attr('d', path)
       .attr('fill', d => {
         const cd = COUNTRY_DATA[d.id];
         return cd ? getColor(cd.o) : '#1a2a3a';
       })
-      .attr('opacity', 0.7)
+      .attr('opacity', 0.65)
+      .style('cursor', d => COUNTRY_DATA[d.id] ? 'pointer' : 'default')
       .on('mouseenter', function(event, d) {
-        const cd = COUNTRY_DATA[d.id];
-        if (!cd) return;
-        document.getElementById('tipCountry').textContent = cd.n;
-        document.getElementById('tipTz').textContent = `${cd.tz.replace('_',' ')} · UTC${cd.o >= 0 ? '+' : ''}${cd.o}`;
-        document.getElementById('tipTime').textContent = getLocalTime(cd.tz) + ' — Click to ' + (selectedZones.some(z => Math.abs(z.o - cd.o) < 0.6) ? 'remove' : 'add');
+        const tzKey = offsetKey(d.id);
+        if (!tzKey) return;
+        const zone = OFFSET_ZONES.find(z => z.key === tzKey);
+        if (!zone) return;
+
+        // Highlight entire timezone band
+        highlightBand(tzKey);
+
+        // Show tooltip for the band
+        const isSelected = selectedZones.some(z => z.key === tzKey);
+        const repTz = selectedZones.find(z => z.key === tzKey)?.tz
+          || Object.values(COUNTRY_DATA).find(cd => getZoneForOffset(cd.o)?.key === tzKey)?.tz
+          || 'UTC';
+
+        document.getElementById('tipCountry').textContent = `${zone.label}`;
+        document.getElementById('tipTz').textContent = getLocalTime(repTz) + ' · ' + repTz.replace(/_/g,' ');
+        document.getElementById('tipTime').textContent = isSelected ? '✓ Selected — click to remove' : 'Click to add this timezone';
         document.getElementById('mapTip').classList.add('show');
       })
       .on('mousemove', function(event) {
         const tip = document.getElementById('mapTip');
         const wrap = document.getElementById('worldMap').closest('.map-section');
         const rect = wrap.getBoundingClientRect();
-        let x = event.clientX - rect.left + 12;
-        let y = event.clientY - rect.top + 12;
-        if (x + 260 > rect.width) x -= 270;
-        if (y + 80 > rect.height) y -= 90;
+        let x = event.clientX - rect.left + 14;
+        let y = event.clientY - rect.top + 14;
+        if (x + 280 > rect.width) x -= 290;
+        if (y + 90 > rect.height) y -= 95;
         tip.style.left = x + 'px';
-        tip.style.top = y + 'px';
+        tip.style.top  = y + 'px';
       })
-      .on('mouseleave', function() {
+      .on('mouseleave', function(event, d) {
+        const tzKey = offsetKey(d.id);
+        // Only dim if not selected
+        if (tzKey && !selectedZones.some(z => z.key === tzKey)) {
+          dimBand(tzKey);
+        }
         document.getElementById('mapTip').classList.remove('show');
       })
       .on('click', function(event, d) {
-        addZone(d.id);
+        const tzKey = offsetKey(d.id);
+        if (!tzKey) return;
+        toggleBand(tzKey);
       });
 
-    // Country borders
+    // Country borders on top
     svg.append('path')
       .datum(topojson.mesh(world, world.objects.countries, (a,b) => a !== b))
       .attr('class','border')
       .attr('d', path);
 
-    // Auto-detect local
     autoDetect();
 
   } catch(e) {
@@ -718,13 +832,33 @@ async function buildMap() {
   }
 }
 
+// ── Band highlight / dim ──
+function highlightBand(tzKey) {
+  d3.selectAll('.country').each(function(d) {
+    const el = d3.select(this);
+    const key = el.attr('data-tzkey');
+    if (key === tzKey) {
+      el.attr('opacity', 1).raise(); // bring to front
+    }
+  });
+}
+
+function dimBand(tzKey) {
+  d3.selectAll('.country').each(function(d) {
+    const el = d3.select(this);
+    const key = el.attr('data-tzkey');
+    if (key === tzKey) {
+      el.attr('opacity', 0.65);
+    }
+  });
+}
+
 function updateMapColors() {
   d3.selectAll('.country').each(function(d) {
-    const cd = COUNTRY_DATA[d.id];
-    if (!cd) return;
-    const isSelected = selectedZones.some(z => Math.abs(z.o - cd.o) < 0.6);
-    d3.select(this)
-      .attr('opacity', isSelected ? 1 : 0.7)
+    const el = d3.select(this);
+    const tzKey = el.attr('data-tzkey');
+    const isSelected = tzKey && selectedZones.some(z => z.key === tzKey);
+    el.attr('opacity', isSelected ? 1 : 0.65)
       .classed('selected', isSelected);
   });
 }
@@ -740,27 +874,7 @@ function buildLegend() {
 }
 
 function toggleFromLegend(key) {
-  const zone = OFFSET_ZONES.find(z => z.key === key);
-  if (!zone) return;
-  const existing = selectedZones.findIndex(z => z.key === key);
-  if (existing >= 0) {
-    selectedZones.splice(existing, 1);
-  } else {
-    if (selectedZones.length >= 6) { alert('Maximum 6 time zones.'); return; }
-    // Find a representative timezone for this offset
-    const rep = Object.values(COUNTRY_DATA).find(cd => cd.o === zone.o);
-    selectedZones.push({
-      key: zone.key, label: zone.label,
-      tz: rep ? rep.tz : 'UTC',
-      o: zone.o, color: zone.color,
-      name: zone.label
-    });
-  }
-  updateMapColors();
-  renderLegend();
-  renderPills();
-  renderClocks();
-  renderOverlap();
+  toggleBand(key);
 }
 
 function renderLegend() {
