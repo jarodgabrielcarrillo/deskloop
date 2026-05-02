@@ -3,106 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Time Zone Overlap Finder — Interactive World Map | Deskloop</title>
-  <meta name="description" content="Find the best meeting time across multiple time zones. Hover the world map to see timezone bands, click to select them. Free, no signup, built for remote teams.">
-  <meta name="keywords" content="time zone overlap finder, world map time zone bands, best meeting time remote teams, UTC offset map, time zone selector map">
+  <title>Time Zone Overlap Finder — Interactive Timezone Map | Deskloop</title>
+  <meta name="description" content="Find the best meeting time across multiple time zones. Click colored timezone bands on an interactive world map. Free, no signup, built for remote teams.">
+  <meta name="keywords" content="time zone overlap finder, timezone map interactive, best meeting time remote teams, UTC offset map, click timezone world map">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/tools/timezone-overlap.html">
-  <meta property="og:title" content="Time Zone Overlap Finder — Interactive World Map">
-  <meta property="og:description" content="Hover timezone bands on a world map to find your team's best meeting window. Free, no signup.">
+  <meta property="og:title" content="Time Zone Overlap Finder — Interactive Timezone Map">
+  <meta property="og:description" content="Click timezone bands on a world map to find your team's best meeting window. Free, no signup.">
   <meta property="og:url" content="https://deskloop.work/tools/timezone-overlap.html">
   <meta property="og:type" content="website">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Time Zone Overlap Finder","url":"https://deskloop.work/tools/timezone-overlap.html","description":"Interactive world map time zone overlap finder for remote teams","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Time Zone Overlap Finder","url":"https://deskloop.work/tools/timezone-overlap.html","description":"Interactive timezone band world map overlap finder for remote teams","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
   <link rel="stylesheet" href="../styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
 
   <style>
-    /* ── Multi-timezone picker modal ── */
-    .picker-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(4px);
-    }
-
-    .picker-overlay.open { display: flex; }
-
-    .picker-box {
-      background: var(--bg2);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      width: min(440px, 92vw);
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-
-    .picker-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .picker-title {
-      font-family: var(--font-head);
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .picker-close {
-      background: none; border: none;
-      color: var(--text3); cursor: pointer;
-      font-size: 20px; padding: 4px;
-      line-height: 1; border-radius: 4px;
-      transition: color 0.15s;
-    }
-
-    .picker-close:hover { color: var(--text); }
-
-    .picker-sub {
-      font-size: 12px;
-      color: var(--text3);
-      margin-bottom: 18px;
-    }
-
-    .picker-opt {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      gap: 12px;
-    }
-
-    .picker-opt:hover { border-color: var(--accent); background: var(--accent-dim); }
-    .picker-opt:last-child { margin-bottom: 0; }
-
-    .picker-opt-left { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
-    .picker-opt-name { font-size: 14px; font-weight: 600; color: var(--text); }
-    .picker-opt-tz { font-size: 11px; color: var(--text3); }
-
-    .picker-opt-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
-    .picker-opt-time { font-family: var(--font-head); font-size: 16px; font-weight: 800; color: var(--accent); }
-    .picker-opt-utc { font-size: 11px; color: var(--text3); }
-
-    .picker-opt-swatch {
-      width: 10px; height: 10px;
-      border-radius: 50%; flex-shrink: 0;
-    }
-
     /* ── Map ── */
     .map-section {
-      background: #050d1a;
+      background: #1a2744;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
@@ -110,58 +27,50 @@
       margin-bottom: 16px;
     }
 
-    #worldMap {
-      width: 100%;
-      height: auto;
-      display: block;
-      cursor: crosshair;
-    }
+    #worldMap { width: 100%; height: auto; display: block; }
 
-    .country {
-      stroke: rgba(0,0,0,0.3);
-      stroke-width: 0.4;
+    /* Timezone band paths */
+    .tz-band {
       cursor: pointer;
-      transition: opacity 0.15s;
+      stroke: rgba(0,0,0,0.2);
+      stroke-width: 0.3;
+      opacity: 0.78;
+      transition: opacity 0.15s, stroke-width 0.15s;
     }
 
-    .country.selected { stroke: rgba(255,255,255,0.5); stroke-width: 0.8; }
-
-    .graticule { fill: none; stroke: rgba(255,255,255,0.04); stroke-width: 0.4; }
-    .sphere { fill: #050d1a; }
-    .border { fill: none; stroke: rgba(255,255,255,0.12); stroke-width: 0.6; }
-
-    /* Tooltip */
-    .map-tip {
-      position: absolute;
-      background: rgba(5,13,26,0.96);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 6px;
-      padding: 8px 14px;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.1s;
-      z-index: 30;
-      white-space: nowrap;
-      backdrop-filter: blur(8px);
+    .tz-band:hover {
+      opacity: 1;
+      stroke: rgba(255,255,255,0.5);
+      stroke-width: 0.8;
     }
 
-    .map-tip.show { opacity: 1; }
-    .tip-country { font-size: 13px; font-weight: 700; color: #fff; }
-    .tip-tz { font-size: 12px; color: var(--accent); font-family: var(--font-head); margin-top: 2px; }
-    .tip-time { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .tz-band.selected {
+      opacity: 1;
+      stroke: #fff;
+      stroke-width: 1.2;
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.3));
+    }
 
-    /* Map loading */
+    /* Country borders overlay */
+    .country-border { fill: none; stroke: rgba(0,0,0,0.35); stroke-width: 0.4; pointer-events: none; }
+    .graticule       { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 0.4; pointer-events: none; }
+    .sphere          { fill: #1a2744; }
+    .ocean-border    { fill: none; stroke: rgba(255,255,255,0.15); stroke-width: 1; pointer-events: none; }
+
+    /* Zone label on map */
+    .tz-label { font-size: 9px; font-weight: 700; fill: rgba(0,0,0,0.5); pointer-events: none; text-anchor: middle; font-family: sans-serif; }
+
+    /* Loading */
     .map-loading {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
       flex-direction: column; gap: 10px;
-      color: var(--text3); font-size: 13px;
-      background: #050d1a;
+      color: var(--text3); font-size: 13px; background: #1a2744;
     }
 
     .map-loading .spinner {
       width: 28px; height: 28px;
-      border: 2px solid var(--border);
+      border: 2px solid rgba(255,255,255,0.1);
       border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -169,85 +78,75 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Legend strip ── */
-    .tz-legend-wrap {
-      overflow-x: auto;
-      padding-bottom: 4px;
-      margin-bottom: 14px;
+    /* Tooltip */
+    .map-tip {
+      position: absolute;
+      background: rgba(5,13,26,0.96);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 10px 16px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s;
+      z-index: 30;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
     }
 
-    .tz-legend {
-      display: flex;
-      gap: 4px;
-      min-width: max-content;
-    }
+    .map-tip.show { opacity: 1; }
+    .tip-zone  { font-size: 14px; font-weight: 800; color: #fff; font-family: var(--font-head); letter-spacing: -0.3px; }
+    .tip-time  { font-size: 13px; color: var(--accent); font-family: var(--font-head); font-weight: 700; margin-top: 3px; }
+    .tip-cities{ font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .tip-action{ font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 4px; }
+
+    /* UTC legend strip */
+    .tz-legend-wrap { overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; }
+
+    .tz-legend { display: flex; gap: 3px; min-width: max-content; }
 
     .leg-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      cursor: pointer;
-      padding: 5px 8px;
-      border-radius: var(--radius-sm);
-      border: 1px solid transparent;
-      transition: all 0.15s;
-      min-width: 52px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      cursor: pointer; padding: 5px 7px;
+      border-radius: var(--radius-sm); border: 1px solid transparent;
+      transition: all 0.15s; min-width: 48px;
     }
 
-    .leg-item:hover { border-color: var(--border); background: var(--bg3); }
+    .leg-item:hover { border-color: rgba(255,255,255,0.2); background: var(--bg3); }
     .leg-item.selected { border-color: rgba(255,255,255,0.4); background: var(--bg3); }
 
-    .leg-swatch { width: 28px; height: 10px; border-radius: 3px; }
-    .leg-label { font-size: 9px; font-weight: 700; color: var(--text3); letter-spacing: 0.3px; white-space: nowrap; }
+    .leg-swatch { width: 26px; height: 12px; border-radius: 3px; }
+    .leg-label { font-size: 9px; font-weight: 700; color: var(--text3); white-space: nowrap; }
     .leg-item.selected .leg-label { color: var(--text); }
 
-    /* ── Zone pills ── */
-    .zones-row {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-bottom: 16px; min-height: 34px; align-items: center;
-    }
+    /* Zone pills */
+    .zones-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; min-height: 34px; align-items: center; }
 
     .zone-pill {
       display: inline-flex; align-items: center; gap: 7px;
       border-radius: 100px; padding: 6px 14px;
-      font-size: 13px; font-weight: 600; color: #000;
+      font-size: 13px; font-weight: 700; color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
     }
 
-    .zone-pill-time { font-family: var(--font-head); font-weight: 800; font-size: 13px; opacity: 0.65; }
-
-    .zone-pill-del {
-      background: none; border: none; color: rgba(0,0,0,0.45);
-      cursor: pointer; font-size: 14px; padding: 0 0 0 2px; line-height: 1;
-      transition: color 0.15s;
-    }
-
-    .zone-pill-del:hover { color: rgba(0,0,0,0.9); }
+    .zone-pill-time { font-family: var(--font-head); font-weight: 800; font-size: 13px; opacity: 0.75; }
+    .zone-pill-del { background: none; border: none; color: rgba(255,255,255,0.5); cursor: pointer; font-size: 14px; padding: 0 0 0 2px; line-height: 1; transition: color 0.15s; }
+    .zone-pill-del:hover { color: rgba(255,255,255,0.9); }
     .zones-empty { font-size: 13px; color: var(--text3); font-style: italic; }
 
-    /* ── Live clocks ── */
-    .clocks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px; margin-bottom: 20px;
-    }
+    /* Live clocks */
+    .clocks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
 
-    .clock-card {
-      background: var(--bg2); border-radius: var(--radius);
-      padding: 14px 16px; border-left: 3px solid;
-    }
-
-    .cc-tz   { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; opacity: 0.8; }
+    .clock-card { background: var(--bg2); border-radius: var(--radius); padding: 14px 16px; border-left: 3px solid; }
+    .cc-tz   { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
     .cc-name { font-size: 11px; color: var(--text3); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cc-time { font-family: var(--font-head); font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; }
     .cc-date { font-size: 11px; color: var(--text3); margin-top: 4px; }
     .cc-status { font-size: 10px; font-weight: 700; margin-top: 4px; }
-    .cc-status.work { color: var(--success); }
-    .cc-status.eve  { color: var(--accent); }
-    .cc-status.sleep{ color: var(--text3); }
+    .cc-status.work  { color: var(--success); }
+    .cc-status.eve   { color: var(--accent); }
+    .cc-status.sleep { color: var(--text3); }
 
-    /* ── Overlap grid ── */
-    .overlap-top { margin-bottom: 20px; }
+    /* Overlap */
     .ov-good { background: rgba(61,184,122,0.06); border: 1px solid rgba(61,184,122,0.25); border-radius: var(--radius); padding: 16px 20px; }
     .ov-none { background: rgba(224,85,85,0.06); border: 1px solid rgba(224,85,85,0.2); border-radius: var(--radius); padding: 16px 20px; }
     .ov-title { font-family: var(--font-head); font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
@@ -256,25 +155,23 @@
 
     .overlap-wrap { overflow-x: auto; margin-bottom: 8px; }
 
-    .grid-hdr-row { display: grid; grid-template-columns: 120px repeat(24,1fr); gap: 2px; margin-bottom: 4px; }
+    .grid-hdr-row { display: grid; grid-template-columns: 110px repeat(24,1fr); gap: 2px; margin-bottom: 4px; }
     .grid-hdr { font-size: 9px; color: var(--text3); text-align: center; font-weight: 600; }
-    .grid-row { display: grid; grid-template-columns: 120px repeat(24,1fr); gap: 2px; margin-bottom: 2px; }
-    .grid-lbl { font-size: 10px; font-weight: 600; color: var(--text2); display: flex; align-items: center; gap: 5px; overflow: hidden; padding-right: 4px; }
+    .grid-row { display: grid; grid-template-columns: 110px repeat(24,1fr); gap: 2px; margin-bottom: 2px; }
+    .grid-lbl { font-size: 10px; font-weight: 700; color: var(--text2); display: flex; align-items: center; gap: 5px; overflow: hidden; padding-right: 4px; }
     .grid-lbl .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .grid-lbl span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .hcell { height: 28px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
     .hcell.overlap { background: var(--success); color: #080808; }
-    .hcell.work    { background: rgba(61,184,122,0.18); }
-    .hcell.evening { background: rgba(232,160,32,0.12); }
+    .hcell.work    { background: rgba(61,184,122,0.2); }
+    .hcell.evening { background: rgba(232,160,32,0.15); }
     .hcell.sleep   { background: var(--bg3); }
 
-    /* Work hours */
     .wh-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--text2); margin-bottom: 16px; }
     .wh-row input { width: 58px; padding: 6px 8px; font-size: 13px; margin: 0; text-align: center; }
 
     @media (max-width: 640px) {
-      .grid-hdr-row, .grid-row { grid-template-columns: 80px repeat(24,1fr); }
-      .grid-lbl { font-size: 9px; }
+      .grid-hdr-row, .grid-row { grid-template-columns: 75px repeat(24,1fr); }
     }
   </style>
 </head>
@@ -301,34 +198,35 @@
   <div class="page-header">
     <a href="/" class="back-link">← All tools</a>
     <h1>Time Zone Overlap</h1>
-    <p>Hover the map to preview a timezone band — click to select it</p>
+    <p>Click a timezone band on the map — find your team's best meeting window instantly</p>
   </div>
 
   <div class="tool-wrap">
 
-    <!-- Map -->
-    <p class="section-title" style="margin-bottom:10px;">// Hover a region — click to add that timezone</p>
-    <div class="map-section" style="height:360px;">
+    <p class="section-title" style="margin-bottom:10px;">// Click any colored timezone band to add it</p>
+
+    <div class="map-section" style="min-height:320px;">
       <div class="map-loading" id="mapLoading">
         <div class="spinner"></div>
-        <span>Loading world map…</span>
+        <span>Building timezone map…</span>
       </div>
       <svg id="worldMap" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="map-tip" id="mapTip">
-        <div class="tip-country" id="tipCountry"></div>
-        <div class="tip-tz" id="tipTz"></div>
-        <div class="tip-time" id="tipTime"></div>
+        <div class="tip-zone"  id="tipZone"></div>
+        <div class="tip-time"  id="tipTime"></div>
+        <div class="tip-cities" id="tipCities"></div>
+        <div class="tip-action" id="tipAction"></div>
       </div>
     </div>
 
-    <!-- UTC legend strip -->
+    <!-- Legend -->
     <div class="tz-legend-wrap">
       <div class="tz-legend" id="tzLegend"></div>
     </div>
 
     <!-- Added zones -->
     <div class="zones-row" id="zonesRow">
-      <span class="zones-empty">No time zones added — click a country above</span>
+      <span class="zones-empty">No time zones added — click a band on the map above</span>
     </div>
 
     <!-- Work hours -->
@@ -336,17 +234,17 @@
       <span>Work hours:</span>
       <input type="number" id="workStart" value="9" min="0" max="23" onchange="renderOverlap()">
       <span style="color:var(--text3);">to</span>
-      <input type="number" id="workEnd" value="17" min="1" max="24" onchange="renderOverlap()">
+      <input type="number" id="workEnd"   value="17" min="1" max="24" onchange="renderOverlap()">
       <span style="color:var(--text3);font-size:12px;">(local time per zone)</span>
     </div>
 
-    <!-- Live clocks -->
+    <!-- Clocks -->
     <div class="clocks-grid" id="clocksGrid" style="display:none;"></div>
   </div>
 
-  <!-- Overlap section -->
+  <!-- Overlap -->
   <div class="tool-wrap" id="overlapSection" style="display:none;">
-    <div class="overlap-top" id="overlapTop"></div>
+    <div id="overlapTop" style="margin-bottom:20px;"></div>
     <p class="section-title" style="margin-bottom:6px;">// 24-hour overlap grid</p>
     <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">
       <span style="color:var(--success);font-weight:700;">Bright green</span> = everyone overlaps.
@@ -360,10 +258,9 @@
   </div>
 
   <div class="seo-block">
-    <h2>Interactive World Map Time Zone Overlap Finder</h2>
-    <p>The Deskloop Time Zone Overlap Finder renders an accurate world map using Natural Earth geographic data. Click any country to add its primary time zone, then instantly see which hours work for everyone on a 24-hour visual grid. Built for remote teams scheduling across multiple continents.</p>
-    <p>Countries are color-coded by UTC offset, making it easy to visualize geographic time differences at a glance. The overlap grid highlights the exact hours where all selected zones fall within standard work hours simultaneously.</p>
-    <p>Free, no signup, works entirely in your browser. No data is stored or transmitted.</p>
+    <h2>Interactive Timezone Band World Map</h2>
+    <p>The Deskloop Time Zone Overlap Finder renders an accurate world map with each timezone band as a distinct clickable region — similar to standard world time zone maps. Click any colored band to add it to your comparison, then instantly see which hours overlap for your entire team in the 24-hour grid below.</p>
+    <p>Country borders are rendered on top of the timezone bands for geographic reference. The timezone regions follow actual political boundaries using Natural Earth geographic data. Free, no signup, no data stored.</p>
   </div>
 
 </div>
@@ -378,344 +275,119 @@
   </div>
 </footer>
 
-<!-- D3 + TopoJSON -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
-
 <script>
-// ── UTC offset color scale ──
-const UTC_COLORS = {
-  '-12':'#0d1b4b','-11':'#0f2260','-10':'#133080',
-  '-9': '#1a4a9c','-8': '#1e5fba','-7': '#1a7abf',
-  '-6': '#1594b8','-5': '#0ea5a0','-4': '#0aab82',
-  '-3': '#0ea864','-2': '#2ab04a','-1': '#52b035',
-   '0': '#80aa22', '1': '#aaa015', '2': '#caa020',
-   '3': '#c88420', '4': '#c46620', '5': '#c04b25',
-  '5.5':'#bb3c2e','5.75':'#b83038',
-   '6': '#b02a42', '6.5':'#a82555',
-   '7': '#9e2068', '8': '#8e1d88',
-   '9': '#7a1ca0','9.5':'#6820b0',
-  '10': '#5026c0','10.5':'#3c2fcf',
-  '11': '#2840d5','12': '#1855db','13':'#0f6ce0',
-};
 
-// ── Country ISO numeric → {name, tz, utcOffset} ──
-// Using the most populous/representative timezone per country
-const COUNTRY_DATA = {
-  4:  {n:'Afghanistan',       tz:'Asia/Kabul',              o:4.5},
-  8:  {n:'Albania',           tz:'Europe/Tirane',            o:1},
-  12: {n:'Algeria',           tz:'Africa/Algiers',           o:1},
-  24: {n:'Angola',            tz:'Africa/Luanda',            o:1},
-  32: {n:'Argentina',         tz:'America/Argentina/Buenos_Aires', o:-3},
-  36: {n:'Australia',         tz:'Australia/Sydney',         o:10},
-  40: {n:'Austria',           tz:'Europe/Vienna',            o:1},
-  50: {n:'Bangladesh',        tz:'Asia/Dhaka',               o:6},
-  56: {n:'Belgium',           tz:'Europe/Brussels',          o:1},
-  64: {n:'Bhutan',            tz:'Asia/Thimphu',             o:6},
-  68: {n:'Bolivia',           tz:'America/La_Paz',           o:-4},
-  76: {n:'Brazil',            tz:'America/Sao_Paulo',        o:-3},
-  100:{n:'Bulgaria',          tz:'Europe/Sofia',             o:2},
-  104:{n:'Myanmar',           tz:'Asia/Rangoon',             o:6.5},
-  116:{n:'Cambodia',          tz:'Asia/Phnom_Penh',          o:7},
-  120:{n:'Cameroon',          tz:'Africa/Douala',            o:1},
-  124:{n:'Canada',            tz:'America/Toronto',          o:-5},
-  144:{n:'Sri Lanka',         tz:'Asia/Colombo',             o:5.5},
-  152:{n:'Chile',             tz:'America/Santiago',         o:-3},
-  156:{n:'China',             tz:'Asia/Shanghai',            o:8},
-  170:{n:'Colombia',          tz:'America/Bogota',           o:-5},
-  178:{n:'Congo',             tz:'Africa/Brazzaville',       o:1},
-  180:{n:'DR Congo',          tz:'Africa/Kinshasa',          o:1},
-  188:{n:'Costa Rica',        tz:'America/Costa_Rica',       o:-6},
-  191:{n:'Croatia',           tz:'Europe/Zagreb',            o:1},
-  192:{n:'Cuba',              tz:'America/Havana',           o:-5},
-  196:{n:'Cyprus',            tz:'Asia/Nicosia',             o:2},
-  203:{n:'Czechia',           tz:'Europe/Prague',            o:1},
-  208:{n:'Denmark',           tz:'Europe/Copenhagen',        o:1},
-  218:{n:'Ecuador',           tz:'America/Guayaquil',        o:-5},
-  818:{n:'Egypt',             tz:'Africa/Cairo',             o:2},
-  222:{n:'El Salvador',       tz:'America/El_Salvador',      o:-6},
-  231:{n:'Ethiopia',          tz:'Africa/Addis_Ababa',       o:3},
-  246:{n:'Finland',           tz:'Europe/Helsinki',          o:2},
-  250:{n:'France',            tz:'Europe/Paris',             o:1},
-  266:{n:'Gabon',             tz:'Africa/Libreville',        o:1},
-  276:{n:'Germany',           tz:'Europe/Berlin',            o:1},
-  288:{n:'Ghana',             tz:'Africa/Accra',             o:0},
-  300:{n:'Greece',            tz:'Europe/Athens',            o:2},
-  320:{n:'Guatemala',         tz:'America/Guatemala',        o:-6},
-  332:{n:'Haiti',             tz:'America/Port-au-Prince',   o:-5},
-  340:{n:'Honduras',          tz:'America/Tegucigalpa',      o:-6},
-  348:{n:'Hungary',           tz:'Europe/Budapest',          o:1},
-  356:{n:'India',             tz:'Asia/Kolkata',             o:5.5},
-  360:{n:'Indonesia',         tz:'Asia/Jakarta',             o:7},
-  364:{n:'Iran',              tz:'Asia/Tehran',              o:3.5},
-  368:{n:'Iraq',              tz:'Asia/Baghdad',             o:3},
-  372:{n:'Ireland',           tz:'Europe/Dublin',            o:0},
-  376:{n:'Israel',            tz:'Asia/Jerusalem',           o:2},
-  380:{n:'Italy',             tz:'Europe/Rome',              o:1},
-  388:{n:'Jamaica',           tz:'America/Jamaica',          o:-5},
-  392:{n:'Japan',             tz:'Asia/Tokyo',               o:9},
-  400:{n:'Jordan',            tz:'Asia/Amman',               o:2},
-  398:{n:'Kazakhstan',        tz:'Asia/Almaty',              o:6},
-  404:{n:'Kenya',             tz:'Africa/Nairobi',           o:3},
-  408:{n:'North Korea',       tz:'Asia/Pyongyang',           o:9},
-  410:{n:'South Korea',       tz:'Asia/Seoul',               o:9},
-  414:{n:'Kuwait',            tz:'Asia/Kuwait',              o:3},
-  418:{n:'Laos',              tz:'Asia/Vientiane',           o:7},
-  422:{n:'Lebanon',           tz:'Asia/Beirut',              o:2},
-  430:{n:'Liberia',           tz:'Africa/Monrovia',          o:0},
-  434:{n:'Libya',             tz:'Africa/Tripoli',           o:2},
-  440:{n:'Lithuania',         tz:'Europe/Vilnius',           o:2},
-  442:{n:'Luxembourg',        tz:'Europe/Luxembourg',        o:1},
-  450:{n:'Madagascar',        tz:'Indian/Antananarivo',      o:3},
-  454:{n:'Malawi',            tz:'Africa/Blantyre',          o:2},
-  458:{n:'Malaysia',          tz:'Asia/Kuala_Lumpur',        o:8},
-  466:{n:'Mali',              tz:'Africa/Bamako',            o:0},
-  484:{n:'Mexico',            tz:'America/Mexico_City',      o:-6},
-  496:{n:'Mongolia',          tz:'Asia/Ulaanbaatar',         o:8},
-  504:{n:'Morocco',           tz:'Africa/Casablanca',        o:1},
-  508:{n:'Mozambique',        tz:'Africa/Maputo',            o:2},
-  516:{n:'Namibia',           tz:'Africa/Windhoek',          o:2},
-  524:{n:'Nepal',             tz:'Asia/Kathmandu',           o:5.75},
-  528:{n:'Netherlands',       tz:'Europe/Amsterdam',         o:1},
-  554:{n:'New Zealand',       tz:'Pacific/Auckland',         o:12},
-  558:{n:'Nicaragua',         tz:'America/Managua',          o:-6},
-  562:{n:'Niger',             tz:'Africa/Niamey',            o:1},
-  566:{n:'Nigeria',           tz:'Africa/Lagos',             o:1},
-  578:{n:'Norway',            tz:'Europe/Oslo',              o:1},
-  512:{n:'Oman',              tz:'Asia/Muscat',              o:4},
-  586:{n:'Pakistan',          tz:'Asia/Karachi',             o:5},
-  591:{n:'Panama',            tz:'America/Panama',           o:-5},
-  598:{n:'Papua New Guinea',  tz:'Pacific/Port_Moresby',     o:10},
-  604:{n:'Peru',              tz:'America/Lima',             o:-5},
-  608:{n:'Philippines',       tz:'Asia/Manila',              o:8},
-  616:{n:'Poland',            tz:'Europe/Warsaw',            o:1},
-  620:{n:'Portugal',          tz:'Europe/Lisbon',            o:0},
-  630:{n:'Puerto Rico',       tz:'America/Puerto_Rico',      o:-4},
-  634:{n:'Qatar',             tz:'Asia/Qatar',               o:3},
-  642:{n:'Romania',           tz:'Europe/Bucharest',         o:2},
-  643:{n:'Russia',            tz:'Europe/Moscow',            o:3},
-  646:{n:'Rwanda',            tz:'Africa/Kigali',            o:2},
-  682:{n:'Saudi Arabia',      tz:'Asia/Riyadh',              o:3},
-  686:{n:'Senegal',           tz:'Africa/Dakar',             o:0},
-  694:{n:'Sierra Leone',      tz:'Africa/Freetown',          o:0},
-  703:{n:'Slovakia',          tz:'Europe/Bratislava',        o:1},
-  705:{n:'Slovenia',          tz:'Europe/Ljubljana',         o:1},
-  706:{n:'Somalia',           tz:'Africa/Mogadishu',         o:3},
-  710:{n:'South Africa',      tz:'Africa/Johannesburg',      o:2},
-  724:{n:'Spain',             tz:'Europe/Madrid',            o:1},
-  729:{n:'Sudan',             tz:'Africa/Khartoum',          o:3},
-  752:{n:'Sweden',            tz:'Europe/Stockholm',         o:1},
-  756:{n:'Switzerland',       tz:'Europe/Zurich',            o:1},
-  760:{n:'Syria',             tz:'Asia/Damascus',            o:2},
-  762:{n:'Tajikistan',        tz:'Asia/Dushanbe',            o:5},
-  764:{n:'Thailand',          tz:'Asia/Bangkok',             o:7},
-  788:{n:'Tunisia',           tz:'Africa/Tunis',             o:1},
-  792:{n:'Turkey',            tz:'Europe/Istanbul',          o:3},
-  800:{n:'Uganda',            tz:'Africa/Kampala',           o:3},
-  804:{n:'Ukraine',           tz:'Europe/Kiev',              o:2},
-  784:{n:'United Arab Emirates',tz:'Asia/Dubai',             o:4},
-  826:{n:'United Kingdom',    tz:'Europe/London',            o:0},
-  840:{n:'United States',     tz:'America/New_York',         o:-5},
-  858:{n:'Uruguay',           tz:'America/Montevideo',       o:-3},
-  860:{n:'Uzbekistan',        tz:'Asia/Tashkent',            o:5},
-  862:{n:'Venezuela',         tz:'America/Caracas',          o:-4},
-  704:{n:'Vietnam',           tz:'Asia/Ho_Chi_Minh',         o:7},
-  887:{n:'Yemen',             tz:'Asia/Aden',                o:3},
-  894:{n:'Zambia',            tz:'Africa/Lusaka',            o:2},
-  716:{n:'Zimbabwe',          tz:'Africa/Harare',            o:2},
-  // Additional
-  8:  {n:'Albania',           tz:'Europe/Tirane',            o:1},
-  51: {n:'Armenia',           tz:'Asia/Yerevan',             o:4},
-  31: {n:'Azerbaijan',        tz:'Asia/Baku',                o:4},
-  112:{n:'Belarus',           tz:'Europe/Minsk',             o:3},
-  70: {n:'Bosnia',            tz:'Europe/Sarajevo',          o:1},
-  268:{n:'Georgia',           tz:'Asia/Tbilisi',             o:4},
-  414:{n:'Kuwait',            tz:'Asia/Kuwait',              o:3},
-  428:{n:'Latvia',            tz:'Europe/Riga',              o:2},
-  417:{n:'Kyrgyzstan',        tz:'Asia/Bishkek',             o:6},
-  498:{n:'Moldova',           tz:'Europe/Chisinau',          o:2},
-  807:{n:'North Macedonia',   tz:'Europe/Skopje',            o:1},
-  496:{n:'Mongolia',          tz:'Asia/Ulaanbaatar',         o:8},
-  499:{n:'Montenegro',        tz:'Europe/Podgorica',         o:1},
-  364:{n:'Iran',              tz:'Asia/Tehran',              o:3.5},
-  688:{n:'Serbia',            tz:'Europe/Belgrade',          o:1},
-  702:{n:'Singapore',         tz:'Asia/Singapore',           o:8},
-  740:{n:'Suriname',          tz:'America/Paramaribo',       o:-3},
-  762:{n:'Tajikistan',        tz:'Asia/Dushanbe',            o:5},
-  795:{n:'Turkmenistan',      tz:'Asia/Ashgabat',            o:5},
-  780:{n:'Trinidad and Tobago',tz:'America/Port_of_Spain',   o:-4},
-  214:{n:'Dominican Republic',tz:'America/Santo_Domingo',    o:-4},
-  170:{n:'Colombia',          tz:'America/Bogota',           o:-5},
-  218:{n:'Ecuador',           tz:'America/Guayaquil',        o:-5},
-  132:{n:'Cape Verde',        tz:'Atlantic/Cape_Verde',      o:-1},
-  324:{n:'Guinea',            tz:'Africa/Conakry',           o:0},
-  624:{n:'Guinea-Bissau',     tz:'Africa/Bissau',            o:0},
-  384:{n:'Ivory Coast',       tz:'Africa/Abidjan',           o:0},
-  480:{n:'Mauritius',         tz:'Indian/Mauritius',         o:4},
-  174:{n:'Comoros',           tz:'Indian/Comoro',            o:3},
-  710:{n:'South Africa',      tz:'Africa/Johannesburg',      o:2},
-  426:{n:'Lesotho',           tz:'Africa/Maseru',            o:2},
-  748:{n:'Eswatini',          tz:'Africa/Mbabane',           o:2},
-  72: {n:'Botswana',          tz:'Africa/Gaborone',          o:2},
-  454:{n:'Malawi',            tz:'Africa/Blantyre',          o:2},
-  800:{n:'Uganda',            tz:'Africa/Kampala',           o:3},
-  108:{n:'Burundi',           tz:'Africa/Bujumbura',         o:2},
-  646:{n:'Rwanda',            tz:'Africa/Kigali',            o:2},
-  262:{n:'Djibouti',          tz:'Africa/Djibouti',          o:3},
-  232:{n:'Eritrea',           tz:'Africa/Asmara',            o:3},
-  706:{n:'Somalia',           tz:'Africa/Mogadishu',         o:3},
-  148:{n:'Chad',              tz:'Africa/Ndjamena',          o:1},
-  140:{n:'Central African Republic', tz:'Africa/Bangui',     o:1},
-  686:{n:'Senegal',           tz:'Africa/Dakar',             o:0},
-  270:{n:'Gambia',            tz:'Africa/Banjul',            o:0},
-  466:{n:'Mali',              tz:'Africa/Bamako',            o:0},
-  854:{n:'Burkina Faso',      tz:'Africa/Ouagadougou',       o:0},
-  204:{n:'Benin',             tz:'Africa/Porto-Novo',        o:1},
-  768:{n:'Togo',              tz:'Africa/Lome',              o:0},
-  288:{n:'Ghana',             tz:'Africa/Accra',             o:0},
-  694:{n:'Sierra Leone',      tz:'Africa/Freetown',          o:0},
-  430:{n:'Liberia',           tz:'Africa/Monrovia',          o:0},
-  598:{n:'Papua New Guinea',  tz:'Pacific/Port_Moresby',     o:10},
-  90: {n:'Solomon Islands',   tz:'Pacific/Guadalcanal',      o:11},
-  548:{n:'Vanuatu',           tz:'Pacific/Efate',            o:11},
-  242:{n:'Fiji',              tz:'Pacific/Fiji',             o:12},
-  776:{n:'Tonga',             tz:'Pacific/Tongatapu',        o:13},
-  882:{n:'Samoa',             tz:'Pacific/Apia',             o:13},
-  585:{n:'Palau',             tz:'Pacific/Palau',            o:9},
-  583:{n:'Micronesia',        tz:'Pacific/Chuuk',            o:10},
-  296:{n:'Kiribati',          tz:'Pacific/Tarawa',           o:12},
-  520:{n:'Nauru',             tz:'Pacific/Nauru',            o:12},
-  798:{n:'Tuvalu',            tz:'Pacific/Funafuti',         o:12},
-  340:{n:'Honduras',          tz:'America/Tegucigalpa',      o:-6},
-  84: {n:'Belize',            tz:'America/Belize',           o:-6},
-  558:{n:'Nicaragua',         tz:'America/Managua',          o:-6},
-  188:{n:'Costa Rica',        tz:'America/Costa_Rica',       o:-6},
-  591:{n:'Panama',            tz:'America/Panama',           o:-5},
-  630:{n:'Puerto Rico',       tz:'America/Puerto_Rico',      o:-4},
-  388:{n:'Jamaica',           tz:'America/Jamaica',          o:-5},
-  332:{n:'Haiti',             tz:'America/Port-au-Prince',   o:-5},
-  192:{n:'Cuba',              tz:'America/Havana',           o:-5},
-  214:{n:'Dominican Republic',tz:'America/Santo_Domingo',    o:-4},
-  862:{n:'Venezuela',         tz:'America/Caracas',          o:-4},
-  328:{n:'Guyana',            tz:'America/Guyana',           o:-4},
-  740:{n:'Suriname',          tz:'America/Paramaribo',       o:-3},
-  604:{n:'Peru',              tz:'America/Lima',             o:-5},
-  68: {n:'Bolivia',           tz:'America/La_Paz',           o:-4},
-  600:{n:'Paraguay',          tz:'America/Asuncion',         o:-4},
-  858:{n:'Uruguay',           tz:'America/Montevideo',       o:-3},
-  364:{n:'Iran',              tz:'Asia/Tehran',              o:3.5},
-  50: {n:'Bangladesh',        tz:'Asia/Dhaka',               o:6},
-  524:{n:'Nepal',             tz:'Asia/Kathmandu',           o:5.75},
-};
-
-// ── UTC offset zones (for legend + overlay) ──
-const OFFSET_ZONES = [
-  {key:'-12',label:'UTC−12',o:-12,color:'#0d1b4b'},
-  {key:'-11',label:'UTC−11',o:-11,color:'#0f2260'},
-  {key:'-10',label:'UTC−10',o:-10,color:'#133080'},
-  {key:'-9', label:'UTC−9', o:-9, color:'#1a4a9c'},
-  {key:'-8', label:'UTC−8', o:-8, color:'#1e5fba'},
-  {key:'-7', label:'UTC−7', o:-7, color:'#1a7abf'},
-  {key:'-6', label:'UTC−6', o:-6, color:'#1594b8'},
-  {key:'-5', label:'UTC−5', o:-5, color:'#0ea5a0'},
-  {key:'-4', label:'UTC−4', o:-4, color:'#0aab82'},
-  {key:'-3', label:'UTC−3', o:-3, color:'#0ea864'},
-  {key:'-2', label:'UTC−2', o:-2, color:'#2ab04a'},
-  {key:'-1', label:'UTC−1', o:-1, color:'#52b035'},
-  {key:'0',  label:'UTC±0', o:0,  color:'#80aa22'},
-  {key:'+1', label:'UTC+1', o:1,  color:'#aaa015'},
-  {key:'+2', label:'UTC+2', o:2,  color:'#caa020'},
-  {key:'+3', label:'UTC+3', o:3,  color:'#c88420'},
-  {key:'+4', label:'UTC+4', o:4,  color:'#c46620'},
-  {key:'+5', label:'UTC+5', o:5,  color:'#c04b25'},
-  {key:'+5.5',label:'UTC+5:30',o:5.5,color:'#bb3c2e'},
-  {key:'+6', label:'UTC+6', o:6,  color:'#b02a42'},
-  {key:'+7', label:'UTC+7', o:7,  color:'#9e2068'},
-  {key:'+8', label:'UTC+8', o:8,  color:'#8e1d88'},
-  {key:'+9', label:'UTC+9', o:9,  color:'#7a1ca0'},
-  {key:'+10',label:'UTC+10',o:10, color:'#5026c0'},
-  {key:'+11',label:'UTC+11',o:11, color:'#2840d5'},
-  {key:'+12',label:'UTC+12',o:12, color:'#1855db'},
+// ── Timezone zone definitions ──
+const ZONES = [
+  { key:'utc-12', label:'UTC−12', o:-12, tz:'Etc/GMT+12',              color:'#4a1942', cities:'Baker Is.' },
+  { key:'utc-11', label:'UTC−11', o:-11, tz:'Pacific/Pago_Pago',       color:'#6b2d6b', cities:'Samoa, Midway' },
+  { key:'utc-10', label:'UTC−10', o:-10, tz:'Pacific/Honolulu',        color:'#1a237e', cities:'Hawaii, Tahiti' },
+  { key:'utc-9',  label:'UTC−9',  o:-9,  tz:'America/Anchorage',       color:'#283593', cities:'Alaska' },
+  { key:'utc-8',  label:'UTC−8',  o:-8,  tz:'America/Los_Angeles',     color:'#1565c0', cities:'LA, Vancouver' },
+  { key:'utc-7',  label:'UTC−7',  o:-7,  tz:'America/Denver',          color:'#0277bd', cities:'Denver, Phoenix' },
+  { key:'utc-6',  label:'UTC−6',  o:-6,  tz:'America/Chicago',         color:'#006064', cities:'Chicago, Mexico City' },
+  { key:'utc-5',  label:'UTC−5',  o:-5,  tz:'America/New_York',        color:'#00695c', cities:'New York, Toronto, Lima' },
+  { key:'utc-4',  label:'UTC−4',  o:-4,  tz:'America/Halifax',         color:'#2e7d32', cities:'Halifax, Caracas' },
+  { key:'utc-3',  label:'UTC−3',  o:-3,  tz:'America/Sao_Paulo',       color:'#558b2f', cities:'São Paulo, Buenos Aires' },
+  { key:'utc-2',  label:'UTC−2',  o:-2,  tz:'America/Noronha',         color:'#827717', cities:'Mid-Atlantic' },
+  { key:'utc-1',  label:'UTC−1',  o:-1,  tz:'Atlantic/Azores',         color:'#e65100', cities:'Azores, Cape Verde' },
+  { key:'utc0',   label:'UTC±0',  o:0,   tz:'Europe/London',           color:'#bf360c', cities:'London, Lisbon, Accra' },
+  { key:'utc+1',  label:'UTC+1',  o:1,   tz:'Europe/Paris',            color:'#880e4f', cities:'Paris, Berlin, Rome, Lagos' },
+  { key:'utc+2',  label:'UTC+2',  o:2,   tz:'Europe/Helsinki',         color:'#4a148c', cities:'Helsinki, Cairo, Joburg' },
+  { key:'utc+3',  label:'UTC+3',  o:3,   tz:'Europe/Moscow',           color:'#311b92', cities:'Moscow, Nairobi, Riyadh' },
+  { key:'utc+4',  label:'UTC+4',  o:4,   tz:'Asia/Dubai',              color:'#1a237e', cities:'Dubai, Baku' },
+  { key:'utc+5',  label:'UTC+5',  o:5,   tz:'Asia/Karachi',            color:'#01579b', cities:'Karachi, Tashkent' },
+  { key:'utc+5h', label:'UTC+5:30',o:5.5,tz:'Asia/Kolkata',            color:'#006064', cities:'Mumbai, New Delhi' },
+  { key:'utc+6',  label:'UTC+6',  o:6,   tz:'Asia/Dhaka',              color:'#004d40', cities:'Dhaka, Almaty' },
+  { key:'utc+7',  label:'UTC+7',  o:7,   tz:'Asia/Bangkok',            color:'#1b5e20', cities:'Bangkok, Jakarta, Hanoi' },
+  { key:'utc+8',  label:'UTC+8',  o:8,   tz:'Asia/Singapore',          color:'#33691e', cities:'Singapore, Manila, Beijing' },
+  { key:'utc+9',  label:'UTC+9',  o:9,   tz:'Asia/Tokyo',              color:'#827717', cities:'Tokyo, Seoul' },
+  { key:'utc+10', label:'UTC+10', o:10,  tz:'Australia/Sydney',        color:'#e65100', cities:'Sydney, Vladivostok' },
+  { key:'utc+11', label:'UTC+11', o:11,  tz:'Pacific/Noumea',          color:'#bf360c', cities:'Solomon Islands' },
+  { key:'utc+12', label:'UTC+12', o:12,  tz:'Pacific/Auckland',        color:'#b71c1c', cities:'Auckland, Fiji' },
 ];
 
-function getColor(offset) {
-  const key = String(offset);
-  return UTC_COLORS[key] || '#2a3a5a';
-}
+// Country ISO numeric → UTC offset (primary)
+const COUNTRY_OFFSET = {
+  4:-1,8:1,12:1,24:1,32:-3,36:10,40:1,50:6,56:1,64:6,68:-4,76:-3,
+  100:2,104:6.5,116:7,120:1,124:-5,132:-1,140:1,144:5.5,148:1,
+  152:-3,156:8,170:-5,174:3,178:1,180:1,188:-6,191:1,192:-5,196:2,
+  203:1,204:1,208:1,214:-4,218:-5,231:3,232:3,242:12,246:2,250:1,
+  262:3,266:1,270:0,276:1,288:0,300:2,320:-6,324:0,328:-4,332:-5,
+  340:-6,348:1,356:5.5,360:7,364:3.5,368:3,372:0,376:2,380:1,
+  384:0,388:-5,392:9,400:2,398:6,404:3,408:9,410:9,414:3,417:6,
+  418:7,422:2,426:2,428:2,430:0,434:2,440:2,442:1,450:3,454:2,
+  458:8,466:0,480:4,484:-6,496:8,498:2,499:1,504:1,508:2,516:2,
+  520:12,524:5.75,528:1,548:11,554:12,558:-6,562:1,566:1,578:1,
+  512:4,586:5,591:-5,598:10,604:-5,608:8,616:1,620:0,624:0,630:-4,
+  634:3,642:2,643:3,646:2,682:3,686:0,694:0,703:1,705:1,706:3,
+  710:2,716:2,724:1,729:3,740:-3,748:2,752:1,756:1,760:2,762:5,
+  764:7,768:0,776:13,780:-4,784:4,788:1,792:3,795:5,798:12,800:3,
+  804:2,826:0,840:-5,854:0,858:-3,860:5,862:-4,882:13,887:3,894:2,
+  84:-6,90:11,108:2,112:3,192:-5,882:13,776:13,796:-5,28:-4,44:-5,
+  52:-4,188:-6,222:-6,312:-4,474:-4,659:-4,670:-4,44:-5,52:-4,188:-6,
+  84:-6,340:-6,222:-6,558:-6,320:-6,360:7,51:4,31:4,268:4,70:1,
+  807:1,706:3,694:0,288:0,204:1,768:0,430:0,686:0,
+};
 
 function getZoneForOffset(o) {
-  return OFFSET_ZONES.find(z => z.o === o) || OFFSET_ZONES.find(z => Math.abs(z.o - o) < 0.6);
+  // exact match first, then nearest
+  let best = ZONES.find(z => z.o === o);
+  if (!best) best = ZONES.reduce((a,b) => Math.abs(b.o-o) < Math.abs(a.o-o) ? b : a);
+  return best;
 }
 
 // ── State ──
-let selectedZones = []; // {key, label, tz, o, color, name}
-let clockInterval = null;
+let selectedZones = [];
+let clockInterval  = null;
 
 // ── Time helpers ──
 function getLocalTime(tz) {
   try { return new Date().toLocaleString('en-US',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:true}); }
   catch { return '--:--'; }
 }
-
 function getLocalDate(tz) {
   try { return new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'short',month:'short',day:'numeric'}).format(new Date()); }
   catch { return ''; }
 }
-
 function getLocalHour(tz) {
   try { return parseInt(new Date().toLocaleString('en-US',{timeZone:tz,hour:'numeric',hour12:false})) % 24; }
   catch { return 0; }
 }
-
-function localHourFromOffset(utcH, off) { return (((utcH + off) % 24) + 24) % 24; }
-
+function localHourFromOffset(utcH, o) { return (((utcH + o) % 24) + 24) % 24; }
 function fmtH(h) {
-  if (h === 0) return '12a'; if (h < 12) return h+'a';
-  if (h === 12) return '12p'; return (h-12)+'p';
+  if (h===0) return '12a'; if (h<12) return h+'a';
+  if (h===12) return '12p'; return (h-12)+'p';
 }
-
 function getStatus(h, ws, we) {
-  if (h >= ws && h < we) return 'work';
-  if (h >= we && h < we+3) return 'evening';
+  if (h>=ws && h<we) return 'work';
+  if (h>=we && h<we+3) return 'evening';
   return 'sleep';
 }
 
-// ── Toggle timezone band ──
-function toggleBand(tzKey) {
-  const zone = OFFSET_ZONES.find(z => z.key === tzKey);
+// ── Toggle zone ──
+function toggleZone(key) {
+  const zone = ZONES.find(z => z.key === key);
   if (!zone) return;
-  const existing = selectedZones.findIndex(z => z.key === tzKey);
-  if (existing >= 0) {
-    selectedZones.splice(existing, 1);
+  const idx = selectedZones.findIndex(z => z.key === key);
+  if (idx >= 0) {
+    selectedZones.splice(idx, 1);
   } else {
     if (selectedZones.length >= 6) { alert('Maximum 6 time zones.'); return; }
-    const rep = Object.values(COUNTRY_DATA).find(cd => getZoneForOffset(cd.o)?.key === tzKey);
-    selectedZones.push({
-      key: zone.key, label: zone.label,
-      tz: rep ? rep.tz : 'UTC',
-      o: zone.o, color: zone.color,
-      name: zone.label
-    });
+    selectedZones.push({ ...zone });
   }
-  updateMapColors();
+  updateBands();
   renderLegend();
   renderPills();
   renderClocks();
   renderOverlap();
 }
 
-// ── Add zone by country ID (used by autoDetect) ──
-function addZone(countryId) {
-  const cd = COUNTRY_DATA[countryId];
-  if (!cd) return;
-  const zone = getZoneForOffset(cd.o);
-  if (!zone) return;
-  toggleBand(zone.key);
-}
-
 function removeZone(key) {
   selectedZones = selectedZones.filter(z => z.key !== key);
-  updateMapColors();
+  updateBands();
   renderLegend();
   renderPills();
   renderClocks();
@@ -728,159 +400,128 @@ async function buildMap() {
     const world = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
     document.getElementById('mapLoading').style.display = 'none';
 
-    const svg = d3.select('#worldMap');
-    const width = 960, height = 500;
+    const svg    = d3.select('#worldMap');
+    const W = 960, H = 500;
+    const proj = d3.geoNaturalEarth1().scale(153).translate([W/2, H/2]);
+    const path = d3.geoPath().projection(proj);
 
-    const projection = d3.geoNaturalEarth1()
-      .scale(153)
-      .translate([width / 2, height / 2]);
-
-    const path = d3.geoPath().projection(projection);
-
-    // Sphere (ocean)
-    svg.append('path')
-      .datum({type:'Sphere'})
-      .attr('class','sphere')
-      .attr('d', path);
+    // Ocean
+    svg.append('path').datum({type:'Sphere'}).attr('class','sphere').attr('d', path);
 
     // Graticule
-    svg.append('path')
-      .datum(d3.geoGraticule()())
-      .attr('class','graticule')
-      .attr('d', path);
+    svg.append('path').datum(d3.geoGraticule()()).attr('class','graticule').attr('d', path);
 
-    // Countries — rendered as background, grouped by UTC offset
-    const countries = topojson.feature(world, world.objects.countries);
+    // ── Build merged timezone band geometries ──
+    // Group country geometries by their timezone zone key
+    const geomsByZone = {};
+    ZONES.forEach(z => geomsByZone[z.key] = []);
 
-    // Build offset key lookup
-    function offsetKey(id) {
-      const cd = COUNTRY_DATA[id];
-      if (!cd) return null;
-      return getZoneForOffset(cd.o)?.key || null;
-    }
+    world.objects.countries.geometries.forEach(geom => {
+      const offset = COUNTRY_OFFSET[geom.id];
+      if (offset === undefined) return;
+      const zone = getZoneForOffset(offset);
+      if (zone) geomsByZone[zone.key].push(geom);
+    });
 
-    svg.selectAll('.country')
-      .data(countries.features)
-      .join('path')
-      .attr('class', 'country')
-      .attr('data-id', d => d.id)
-      .attr('data-tzkey', d => offsetKey(d.id) || '')
-      .attr('d', path)
-      .attr('fill', d => {
-        const cd = COUNTRY_DATA[d.id];
-        return cd ? getColor(cd.o) : '#1a2a3a';
-      })
-      .attr('opacity', 0.65)
-      .style('cursor', d => COUNTRY_DATA[d.id] ? 'pointer' : 'default')
-      .on('mouseenter', function(event, d) {
-        const tzKey = offsetKey(d.id);
-        if (!tzKey) return;
-        const zone = OFFSET_ZONES.find(z => z.key === tzKey);
-        if (!zone) return;
+    // Render merged band per zone (from west to east)
+    ZONES.forEach(zone => {
+      const geoms = geomsByZone[zone.key];
+      if (!geoms.length) return;
 
-        // Highlight entire timezone band
-        highlightBand(tzKey);
+      // Merge all country geometries for this zone into one shape
+      const merged = topojson.merge(world, geoms);
 
-        // Show tooltip for the band
-        const isSelected = selectedZones.some(z => z.key === tzKey);
-        const repTz = selectedZones.find(z => z.key === tzKey)?.tz
-          || Object.values(COUNTRY_DATA).find(cd => getZoneForOffset(cd.o)?.key === tzKey)?.tz
-          || 'UTC';
+      const bandGroup = svg.append('g')
+        .attr('class', 'tz-band')
+        .attr('data-key', zone.key);
 
-        document.getElementById('tipCountry').textContent = `${zone.label}`;
-        document.getElementById('tipTz').textContent = getLocalTime(repTz) + ' · ' + repTz.replace(/_/g,' ');
-        document.getElementById('tipTime').textContent = isSelected ? '✓ Selected — click to remove' : 'Click to add this timezone';
-        document.getElementById('mapTip').classList.add('show');
-      })
-      .on('mousemove', function(event) {
-        const tip = document.getElementById('mapTip');
-        const wrap = document.getElementById('worldMap').closest('.map-section');
-        const rect = wrap.getBoundingClientRect();
-        let x = event.clientX - rect.left + 14;
-        let y = event.clientY - rect.top + 14;
-        if (x + 280 > rect.width) x -= 290;
-        if (y + 90 > rect.height) y -= 95;
-        tip.style.left = x + 'px';
-        tip.style.top  = y + 'px';
-      })
-      .on('mouseleave', function(event, d) {
-        const tzKey = offsetKey(d.id);
-        // Only dim if not selected
-        if (tzKey && !selectedZones.some(z => z.key === tzKey)) {
-          dimBand(tzKey);
+      bandGroup.append('path')
+        .datum(merged)
+        .attr('fill', zone.color)
+        .attr('d', path);
+
+      // Events on the group
+      bandGroup
+        .on('mouseenter', function(event) {
+          const isSelected = selectedZones.some(z => z.key === zone.key);
+          document.getElementById('tipZone').textContent    = zone.label;
+          document.getElementById('tipTime').textContent    = getLocalTime(zone.tz);
+          document.getElementById('tipCities').textContent  = zone.cities;
+          document.getElementById('tipAction').textContent  = isSelected ? '✓ Selected — click to remove' : 'Click to add this timezone';
+          document.getElementById('mapTip').classList.add('show');
+        })
+        .on('mousemove', function(event) {
+          const tip  = document.getElementById('mapTip');
+          const wrap = document.getElementById('worldMap').closest('.map-section');
+          const rect = wrap.getBoundingClientRect();
+          let x = event.clientX - rect.left + 14;
+          let y = event.clientY - rect.top  + 14;
+          if (x + 260 > rect.width)  x -= 270;
+          if (y + 100 > rect.height) y -= 105;
+          tip.style.left = x + 'px';
+          tip.style.top  = y + 'px';
+        })
+        .on('mouseleave', function() {
+          document.getElementById('mapTip').classList.remove('show');
+        })
+        .on('click', function() {
+          toggleZone(zone.key);
+        });
+
+      // Zone label in centroid
+      try {
+        const centroid = path.centroid(merged);
+        if (centroid && !isNaN(centroid[0]) && !isNaN(centroid[1])) {
+          svg.append('text')
+            .attr('class', 'tz-label')
+            .attr('x', centroid[0])
+            .attr('y', centroid[1] + 3)
+            .text(zone.label);
         }
-        document.getElementById('mapTip').classList.remove('show');
-      })
-      .on('click', function(event, d) {
-        const tzKey = offsetKey(d.id);
-        if (!tzKey) return;
-        toggleBand(tzKey);
-      });
+      } catch(e) {}
+    });
 
-    // Country borders on top
+    // Country border mesh on top
     svg.append('path')
       .datum(topojson.mesh(world, world.objects.countries, (a,b) => a !== b))
-      .attr('class','border')
+      .attr('class', 'country-border')
       .attr('d', path);
+
+    // Sphere outline
+    svg.append('path').datum({type:'Sphere'}).attr('class','ocean-border').attr('d', path);
 
     autoDetect();
 
   } catch(e) {
+    console.error(e);
     document.getElementById('mapLoading').innerHTML =
       '<span style="color:var(--text3);">Map failed to load. Try refreshing.</span>';
-    console.error(e);
   }
 }
 
-// ── Band highlight / dim ──
-function highlightBand(tzKey) {
-  d3.selectAll('.country').each(function(d) {
-    const el = d3.select(this);
-    const key = el.attr('data-tzkey');
-    if (key === tzKey) {
-      el.attr('opacity', 1).raise(); // bring to front
-    }
-  });
-}
-
-function dimBand(tzKey) {
-  d3.selectAll('.country').each(function(d) {
-    const el = d3.select(this);
-    const key = el.attr('data-tzkey');
-    if (key === tzKey) {
-      el.attr('opacity', 0.65);
-    }
-  });
-}
-
-function updateMapColors() {
-  d3.selectAll('.country').each(function(d) {
-    const el = d3.select(this);
-    const tzKey = el.attr('data-tzkey');
-    const isSelected = tzKey && selectedZones.some(z => z.key === tzKey);
-    el.attr('opacity', isSelected ? 1 : 0.65)
-      .classed('selected', isSelected);
+function updateBands() {
+  d3.selectAll('.tz-band').each(function() {
+    const key        = d3.select(this).attr('data-key');
+    const isSelected = selectedZones.some(z => z.key === key);
+    d3.select(this)
+      .classed('selected', isSelected)
+      .attr('opacity', isSelected ? 1 : 0.78);
   });
 }
 
 // ── Legend ──
 function buildLegend() {
   const el = document.getElementById('tzLegend');
-  el.innerHTML = OFFSET_ZONES.map(z => `
-    <div class="leg-item" data-key="${z.key}" onclick="toggleFromLegend('${z.key}')">
+  el.innerHTML = ZONES.map(z => `
+    <div class="leg-item" data-key="${z.key}" onclick="toggleZone('${z.key}')">
       <div class="leg-swatch" style="background:${z.color};"></div>
       <div class="leg-label">${z.label}</div>
     </div>`).join('');
 }
 
-function toggleFromLegend(key) {
-  toggleBand(key);
-}
-
 function renderLegend() {
   document.querySelectorAll('.leg-item').forEach(el => {
-    const key = el.getAttribute('data-key');
-    el.classList.toggle('selected', selectedZones.some(z => z.key === key));
+    el.classList.toggle('selected', selectedZones.some(z => z.key === el.getAttribute('data-key')));
   });
 }
 
@@ -888,29 +529,28 @@ function renderLegend() {
 function renderPills() {
   const el = document.getElementById('zonesRow');
   if (!selectedZones.length) {
-    el.innerHTML = '<span class="zones-empty">No time zones added — click a country above</span>';
+    el.innerHTML = '<span class="zones-empty">No time zones added — click a band on the map above</span>';
     return;
   }
   el.innerHTML = selectedZones.map(z => `
     <div class="zone-pill" style="background:${z.color};">
       <span>${z.label}</span>
-      <span style="font-size:11px;opacity:0.6;">${z.tz.split('/')[1]?.replace(/_/g,' ')||z.tz}</span>
       <span class="zone-pill-time">${getLocalTime(z.tz)}</span>
       <button class="zone-pill-del" onclick="removeZone('${z.key}')" title="Remove">✕</button>
     </div>`).join('');
 }
 
-// ── Render clocks ──
+// ── Live clocks ──
 function renderClocks() {
   const grid = document.getElementById('clocksGrid');
   if (!selectedZones.length) { grid.style.display = 'none'; return; }
   grid.style.display = 'grid';
   const ws = parseInt(document.getElementById('workStart').value) || 9;
-  const we = parseInt(document.getElementById('workEnd').value) || 17;
+  const we = parseInt(document.getElementById('workEnd').value)   || 17;
   grid.innerHTML = selectedZones.map(z => {
     const h = getLocalHour(z.tz);
     const s = getStatus(h, ws, we);
-    const sLabel = s==='work'?'● Working hours':s==='evening'?'◐ Evening':'○ Night / sleep';
+    const sLabel = s==='work' ? '● Working hours' : s==='evening' ? '◐ Evening' : '○ Night / sleep';
     return `
       <div class="clock-card" style="border-left-color:${z.color};">
         <div class="cc-tz" style="color:${z.color};">${z.label}</div>
@@ -922,14 +562,14 @@ function renderClocks() {
   }).join('');
 }
 
-// ── Render overlap ──
+// ── Overlap grid ──
 function renderOverlap() {
   const sec = document.getElementById('overlapSection');
-  if (selectedZones.length < 2) { sec.style.display='none'; return; }
+  if (selectedZones.length < 2) { sec.style.display = 'none'; return; }
   sec.style.display = 'block';
 
   const ws = parseInt(document.getElementById('workStart').value) || 9;
-  const we = parseInt(document.getElementById('workEnd').value) || 17;
+  const we = parseInt(document.getElementById('workEnd').value)   || 17;
 
   const hourData = Array.from({length:24}, (_,utcH) => {
     const lhs = selectedZones.map(z => localHourFromOffset(utcH, z.o));
@@ -938,32 +578,36 @@ function renderOverlap() {
 
   const overlapHours = hourData.map((d,i) => d.allWork ? i : -1).filter(i => i >= 0);
 
-  // Top summary
   const topEl = document.getElementById('overlapTop');
   if (overlapHours.length > 0) {
-    const base = selectedZones[0].o;
+    const base  = selectedZones[0].o;
     const slots = overlapHours.map(h => fmtH(localHourFromOffset(h, base)));
     topEl.innerHTML = `
       <div class="ov-good">
-        <div class="ov-title">✅ ${overlapHours.length} hour${overlapHours.length!==1?'s':''} of overlap — best meeting times <span style="color:var(--text3);font-size:12px;font-family:var(--font-body);font-weight:400;">(in ${selectedZones[0].label})</span></div>
+        <div class="ov-title">✅ ${overlapHours.length} hour${overlapHours.length!==1?'s':''} of overlap
+          <span style="color:var(--text3);font-size:12px;font-family:var(--font-body);font-weight:400;">— shown in ${selectedZones[0].label}</span>
+        </div>
         <div class="ov-slots">${slots.map(s=>`<span class="ov-pill">${s}</span>`).join('')}</div>
       </div>`;
   } else {
-    topEl.innerHTML = `<div class="ov-none"><div class="ov-title">⚠️ No full overlap — try adjusting work hours or selecting closer zones</div></div>`;
+    topEl.innerHTML = `
+      <div class="ov-none">
+        <div class="ov-title">⚠️ No overlap found — try adjusting work hours or selecting closer zones</div>
+      </div>`;
   }
 
-  // Grid
   let html = '<div class="grid-hdr-row"><div></div>';
   for (let h=0;h<24;h++) html += `<div class="grid-hdr">${fmtH(h)}</div>`;
   html += '</div>';
 
   selectedZones.forEach((z,zi) => {
-    html += `<div class="grid-row"><div class="grid-lbl"><div class="dot" style="background:${z.color};"></div><span>${z.label}</span></div>`;
+    html += `<div class="grid-row">
+      <div class="grid-lbl"><div class="dot" style="background:${z.color};"></div><span>${z.label}</span></div>`;
     for (let utcH=0;utcH<24;utcH++) {
-      const lh = hourData[utcH].lhs[zi];
+      const lh   = hourData[utcH].lhs[zi];
       const isOv = hourData[utcH].allWork;
-      const st = getStatus(lh, ws, we);
-      const cls = isOv ? 'overlap' : st==='work' ? 'work' : st==='evening' ? 'evening' : 'sleep';
+      const st   = getStatus(lh, ws, we);
+      const cls  = isOv ? 'overlap' : st==='work' ? 'work' : st==='evening' ? 'evening' : 'sleep';
       html += `<div class="hcell ${cls}" title="${z.label}: ${fmtH(lh)}">${isOv?'✓':''}</div>`;
     }
     html += '</div>';
@@ -978,28 +622,25 @@ function copyResult() {
   const oHours = Array.from({length:24},(_,h)=>h).filter(utcH =>
     selectedZones.every(z => { const lh=localHourFromOffset(utcH,z.o); return lh>=ws&&lh<we; })
   );
-  const base = selectedZones[0]?.o || 0;
+  const base  = selectedZones[0]?.o || 0;
   const slots = oHours.map(h=>fmtH(localHourFromOffset(h,base))).join(', ')||'No overlap';
-  const zList = selectedZones.map(z=>`${z.label} — ${z.tz} (${getLocalTime(z.tz)})`).join('\n');
+  const zList = selectedZones.map(z=>`${z.label} (${getLocalTime(z.tz)})`).join('\n');
   navigator.clipboard.writeText(`🌍 Time Zone Overlap\n\n${zList}\n\nBest meeting times: ${slots}\n\ndeskloop.work/tools/timezone-overlap.html`).then(()=>{
     const el = document.getElementById('copyConfirm');
     el.style.opacity='1'; el.textContent='Copied!';
-    setTimeout(()=>el.style.opacity='0',2000);
+    setTimeout(()=>el.style.opacity='0', 2000);
   });
 }
 
-// ── Auto-detect ──
+// ── Auto-detect local timezone ──
 function autoDetect() {
   try {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const found = Object.entries(COUNTRY_DATA).find(([,cd]) => cd.tz === tz);
-    if (found) { addZone(parseInt(found[0])); return; }
-    // Fallback: match by UTC offset
-    const now = new Date();
-    const off = -now.getTimezoneOffset() / 60;
-    const zoneMatch = OFFSET_ZONES.find(z => z.o === off) || OFFSET_ZONES.find(z => Math.abs(z.o-off) < 0.6);
-    if (zoneMatch) toggleFromLegend(zoneMatch.key);
-  } catch {}
+    const off = -(new Date().getTimezoneOffset()) / 60;
+    const zone = getZoneForOffset(off);
+    if (zone && !selectedZones.find(z => z.key === zone.key)) {
+      toggleZone(zone.key);
+    }
+  } catch(e) {}
 }
 
 // ── Init ──
