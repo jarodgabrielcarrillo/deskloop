@@ -1,8 +1,15 @@
 {
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/tools/timezone-overlap/:path*",
-      "destination": "/tools/timezone-overlap/index.html"
+      "src": "**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/tools/timezone-overlap/(.*)",
+      "dest": "/tools/timezone-overlap/index.html"
     }
   ]
 }
