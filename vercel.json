@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/tools/timezone-overlap/:path*",
+      "destination": "/tools/timezone-overlap/index.html"
+    }
+  ]
+}
