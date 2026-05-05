@@ -584,51 +584,98 @@ function toggle(offset) {
 }
 
 // ── Render map bands ──
-function renderBands() {
+// ── Build bands once, never destroy them ──
+function buildBands() {
   const g = document.getElementById('tzBands');
   g.innerHTML = '';
 
   TIMEZONES.forEach(tz => {
     const x = MAP_W/2 + tz.offset * TZ_W - TZ_W/2;
-    const isSel = selected.includes(tz.offset);
-    const isHov = hovered === tz.offset;
 
     const group = document.createElementNS('http://www.w3.org/2000/svg','g');
+    group.setAttribute('data-offset', tz.offset);
     group.style.cursor = 'pointer';
-    group.setAttribute('pointer-events', 'all');
 
+    // Background rect — always covers the full column
     const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
     rect.setAttribute('x', x);
     rect.setAttribute('y', 0);
     rect.setAttribute('width', TZ_W);
     rect.setAttribute('height', MAP_H);
-    rect.setAttribute('fill', isSel ? 'rgba(232,160,32,0.22)' : isHov ? 'rgba(232,160,32,0.14)' : 'transparent');
-    rect.setAttribute('stroke', isSel ? 'rgba(232,160,32,0.9)' : isHov ? 'rgba(232,160,32,0.6)' : 'transparent');
+    rect.setAttribute('fill', 'transparent');
+    rect.setAttribute('stroke', 'transparent');
     rect.setAttribute('stroke-width', '0.8');
     rect.setAttribute('pointer-events', 'all');
     rect.classList.add('tz-band-rect');
     group.appendChild(rect);
 
-    if (isSel || isHov) {
-      const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
-      txt.setAttribute('x', x + TZ_W/2);
-      txt.setAttribute('y', 14);
-      txt.setAttribute('text-anchor', 'middle');
-      txt.setAttribute('font-size', '8');
-      txt.setAttribute('font-family', 'JetBrains Mono, monospace');
-      txt.setAttribute('fill', '#e7eaf0');
-      txt.setAttribute('font-weight', '600');
-      txt.textContent = tz.label;
-      group.appendChild(txt);
-    }
-
-    group.addEventListener('mouseenter', () => { hovered = tz.offset; renderBands(); });
-    group.addEventListener('mouseleave', () => { hovered = null; renderBands(); });
-    group.addEventListener('click', () => toggle(tz.offset));
+    // Label (hidden by default, shown via updateBandVisuals)
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x', x + TZ_W/2);
+    txt.setAttribute('y', 14);
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('font-size', '8');
+    txt.setAttribute('font-family', 'JetBrains Mono, monospace');
+    txt.setAttribute('fill', '#e7eaf0');
+    txt.setAttribute('font-weight', '600');
+    txt.setAttribute('pointer-events', 'none');
+    txt.style.display = 'none';
+    txt.textContent = tz.label;
+    group.appendChild(txt);
 
     g.appendChild(group);
   });
+
+  // Single SVG-level mousemove + click handler — most reliable approach
+  const svg = document.getElementById('worldMapSvg');
+
+  svg.addEventListener('mousemove', (e) => {
+    const rect = svg.getBoundingClientRect();
+    const scaleX = MAP_W / rect.width;
+    const svgX = (e.clientX - rect.left) * scaleX;
+    const offsetIdx = Math.floor(svgX / TZ_W) - 12; // -12 to +11 = 24 bands
+    const tz = TIMEZONES.find(t => t.offset === offsetIdx);
+    const newHovered = tz ? tz.offset : null;
+    if (newHovered !== hovered) {
+      hovered = newHovered;
+      updateBandVisuals();
+    }
+  });
+
+  svg.addEventListener('mouseleave', () => {
+    hovered = null;
+    updateBandVisuals();
+  });
+
+  svg.addEventListener('click', (e) => {
+    const rect = svg.getBoundingClientRect();
+    const scaleX = MAP_W / rect.width;
+    const svgX = (e.clientX - rect.left) * scaleX;
+    const offsetIdx = Math.floor(svgX / TZ_W) - 12;
+    const tz = TIMEZONES.find(t => t.offset === offsetIdx);
+    if (tz) toggle(tz.offset);
+  });
 }
+
+function updateBandVisuals() {
+  TIMEZONES.forEach(tz => {
+    const x = MAP_W/2 + tz.offset * TZ_W - TZ_W/2;
+    const isSel = selected.includes(tz.offset);
+    const isHov = hovered === tz.offset;
+    const g = document.querySelector(`#tzBands g[data-offset="${tz.offset}"]`);
+    if (!g) return;
+    const rect = g.querySelector('.tz-band-rect');
+    const txt  = g.querySelector('text');
+    if (rect) {
+      rect.setAttribute('fill',   isSel ? 'rgba(232,160,32,0.22)' : isHov ? 'rgba(232,160,32,0.14)' : 'transparent');
+      rect.setAttribute('stroke', isSel ? 'rgba(232,160,32,0.9)'  : isHov ? 'rgba(232,160,32,0.6)'  : 'transparent');
+    }
+    if (txt) txt.style.display = (isSel || isHov) ? 'block' : 'none';
+  });
+}
+
+// renderBands now just refreshes visuals without rebuilding DOM
+function renderBands() { updateBandVisuals(); }
 
 // Land rendered inline via WORLD_PATH SVG
 
@@ -895,7 +942,7 @@ function autoDetect() {
 
 // ── Init ──
 updateRangeUI();
-
+buildBands();
 autoDetect();
 renderAll();
 </script>
