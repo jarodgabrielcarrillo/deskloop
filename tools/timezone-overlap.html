@@ -595,6 +595,7 @@ function renderBands() {
 
     const group = document.createElementNS('http://www.w3.org/2000/svg','g');
     group.style.cursor = 'pointer';
+    group.setAttribute('pointer-events', 'all');
 
     const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
     rect.setAttribute('x', x);
@@ -604,6 +605,7 @@ function renderBands() {
     rect.setAttribute('fill', isSel ? 'rgba(232,160,32,0.22)' : isHov ? 'rgba(232,160,32,0.14)' : 'transparent');
     rect.setAttribute('stroke', isSel ? 'rgba(232,160,32,0.9)' : isHov ? 'rgba(232,160,32,0.6)' : 'transparent');
     rect.setAttribute('stroke-width', '0.8');
+    rect.setAttribute('pointer-events', 'all');
     rect.classList.add('tz-band-rect');
     group.appendChild(rect);
 
