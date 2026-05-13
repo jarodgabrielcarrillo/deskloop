@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO 2026 -->
+  <title>Deskloop — Free Productivity Tools: Focus Timer, Habit Tracker & More | No Signup</title>
+  <meta name="description" content="Free browser-based productivity tools for focused work. Pomodoro timer, habit tracker, meeting cost calculator, time zone overlap & more. No account. No install. Works offline.">
+  <meta name="keywords" content="free productivity tools, focus timer no signup, habit tracker browser, meeting cost calculator, time zone overlap finder, deep work tracker, task decider">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://deskloop.work/">
+
+  <!-- OG -->
+  <meta property="og:title" content="Deskloop — Free Productivity Tools. No Signup.">
+  <meta property="og:description" content="Sharp, focused tools for deep work. Open, use, close. No friction.">
+  <meta property="og:url" content="https://deskloop.work/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Deskloop — Free Productivity Tools">
+  <meta name="twitter:description" content="Focus timer, habit tracker, meeting cost calculator & more. No signup required.">
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Deskloop",
+    "url": "https://deskloop.work",
+    "description": "Free browser-based productivity tools: focus timer, habit tracker, meeting cost calculator, time zone overlap finder, deep work tracker, task decider, work hours logger.",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": ["Focus Timer", "Habit Tracker", "Meeting Cost Calculator", "Time Zone Overlap", "Deep Work Tracker", "Task Decider", "Work Hours Logger"]
+  }
+  </script>
+
+  <!-- Google verification -->
+  <meta name="google-site-verification" content="KChKjtl0z6q2zocomb2y3UslhaPxiXZGXB3-vhp9am4">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='6' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESKLOOP DESIGN SYSTEM v1.0 — DARK MODE
+       ═══════════════════════════════════════════ */
+    :root {
+      --primary:      #60A5FA;
+      --primary-btn:  #1E40AF;
+      --accent:       #34D399;
+      --bg:           #0F172A;
+      --surface:      #1E2937;
+      --surface-2:    #243447;
+      --text:         #F1F5F9;
+      --text2:        #94A3B8;
+      --text3:        #64748B;
+      --border:       #334155;
+      --warning:      #F59E0B;
+      --danger:       #EF4444;
+      --radius:       12px;
+      --radius-sm:    8px;
+      --shadow-sm:    0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md:    0 10px 15px -3px rgba(0,0,0,0.4);
+      --transition:   200ms ease;
+      --sidebar-w:    256px;
+      --sidebar-w-sm: 64px;
+      --header-h:     64px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      grid-template-rows: var(--header-h) 1fr;
+      grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+    }
+
+    body.collapsed {
+      grid-template-columns: var(--sidebar-w-sm) 1fr;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      grid-area: sidebar;
+      position: fixed;
+      top: 0; left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: width var(--transition);
+      z-index: 200;
+    }
+
+    body.collapsed .sidebar { width: var(--sidebar-w-sm); }
+
+    /* Sidebar logo area */
+    .sidebar-logo {
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+      flex-shrink: 0;
+      text-decoration: none;
+      overflow: hidden;
+    }
+
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--primary-btn);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg { width: 18px; height: 18px; }
+
+    .logo-wordmark {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      opacity: 1;
+      transition: opacity var(--transition);
+    }
+
+    body.collapsed .logo-wordmark { opacity: 0; pointer-events: none; }
+
+    /* Nav sections */
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 16px 0;
+      scrollbar-width: none;
+    }
+
+    .sidebar-nav::-webkit-scrollbar { display: none; }
+
+    .nav-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text3);
+      padding: 8px 20px 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: opacity var(--transition);
+    }
+
+    body.collapsed .nav-section-label { opacity: 0; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px;
+      height: 48px;
+      text-decoration: none;
+      color: var(--text2);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      margin: 1px 8px;
+      transition: color var(--transition), background var(--transition);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .nav-item:hover {
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .nav-item.active {
+      color: #fff;
+      background: var(--primary-btn);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .nav-icon {
+      width: 20px; height: 20px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .nav-icon svg {
+      width: 18px; height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-label {
+      flex: 1;
+      transition: opacity var(--transition);
+    }
+
+    body.collapsed .nav-label { opacity: 0; }
+
+    .nav-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--accent);
+      color: #0F172A;
+      padding: 1px 6px;
+      border-radius: 100px;
+      transition: opacity var(--transition);
+    }
+
+    body.collapsed .nav-badge { opacity: 0; }
+
+    /* Sidebar footer */
+    .sidebar-footer {
+      padding: 12px 8px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer .nav-item {
+      margin: 0;
+    }
+
+    /* Collapse toggle */
+    .collapse-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px;
+      height: 40px;
+      background: none;
+      border: none;
+      color: var(--text3);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      width: 100%;
+      text-align: left;
+      margin-bottom: 4px;
+      transition: color var(--transition), background var(--transition);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .collapse-btn:hover { color: var(--text); background: var(--surface-2); }
+
+    .collapse-btn .collapse-label { transition: opacity var(--transition); }
+    body.collapsed .collapse-btn .collapse-label { opacity: 0; }
+
+    /* ── HEADER ── */
+    .header {
+      grid-area: header;
+      position: fixed;
+      top: 0;
+      left: var(--sidebar-w);
+      right: 0;
+      height: var(--header-h);
+      background: rgba(15,23,42,0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+      transition: left var(--transition);
+    }
+
+    body.collapsed .header { left: var(--sidebar-w-sm); }
+
+    /* Search */
+    .header-search {
+      position: relative;
+      flex: 1;
+      max-width: 360px;
+    }
+
+    .header-search input {
+      width: 100%;
+      height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 0 14px 0 38px;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .header-search input::placeholder { color: var(--text3); }
+
+    .header-search input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(96,165,250,0.12);
+    }
+
+    .header-search-icon {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text3);
+    }
+
+    .header-search-icon svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round;
+    }
+
+    /* Header right */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-btn {
+      width: 38px; height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text2);
+      transition: color var(--transition), border-color var(--transition), background var(--transition);
+      position: relative;
+    }
+
+    .header-btn:hover { color: var(--text); border-color: var(--primary); background: var(--surface); }
+
+    .header-btn svg {
+      width: 18px; height: 18px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round;
+    }
+
+    .notif-dot {
+      position: absolute;
+      top: 6px; right: 6px;
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 1.5px solid var(--surface);
+    }
+
+    .avatar {
+      width: 38px; height: 38px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--primary-btn), #3b82f6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: border-color var(--transition);
+    }
+
+    .avatar:hover { border-color: var(--primary); }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      width: 38px; height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text2);
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .theme-toggle:hover { color: var(--warning); border-color: rgba(245,158,11,0.4); }
+    .theme-toggle svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      grid-area: main;
+      margin-top: var(--header-h);
+      margin-left: var(--sidebar-w);
+      min-height: calc(100vh - var(--header-h));
+      transition: margin-left var(--transition);
+      padding: 0;
+    }
+
+    body.collapsed .main { margin-left: var(--sidebar-w-sm); }
+
+    /* Inner content max-width */
+    .content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 32px 64px;
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: rgba(96,165,250,0.05);
+      border: 1px solid rgba(96,165,250,0.15);
+      border-radius: var(--radius);
+      padding: 12px 24px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text2);
+      white-space: nowrap;
+    }
+
+    .trust-check {
+      width: 18px; height: 18px;
+      background: rgba(52,211,153,0.12);
+      border: 1px solid rgba(52,211,153,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ── HERO ── */
+    .hero { margin-bottom: 48px; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center; gap: 8px;
+      background: var(--primary-btn);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 0 24px;
+      height: 48px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      border: none; cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .btn-primary:hover { background: var(--primary); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center; gap: 8px;
+      background: transparent;
+      color: var(--text2);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 0 24px;
+      height: 48px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .btn-secondary:hover { color: var(--text); border-color: var(--primary); }
+
+    .btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-value span { color: var(--primary); }
+
+    /* ── SECTION HEADER ── */
+    .section-hdr {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-hdr h2 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .section-hdr-meta { font-size: 13px; color: var(--text3); }
+
+    /* ── FEATURED TOOL ── */
+    .tool-featured {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      display: grid;
+      grid-template-columns: 1fr 160px;
+      gap: 24px;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    .tool-featured::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-btn) 0%, var(--primary) 60%, transparent 100%);
+    }
+
+    .tool-featured:hover {
+      border-color: rgba(96,165,250,0.3);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .featured-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .featured-badge::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .tool-featured h3 {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .tool-featured p {
+      font-size: 15px;
+      color: var(--text2);
+      line-height: 1.65;
+      max-width: 480px;
+      margin-bottom: 20px;
+    }
+
+    .featured-tags { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .tag {
+      font-size: 12px;
+      color: var(--text3);
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    .tag::before {
+      content: '';
+      width: 3px; height: 3px;
+      background: var(--text3);
+      border-radius: 50%;
+    }
+
+    .featured-icon-wrap {
+      width: 88px; height: 88px;
+      background: rgba(96,165,250,0.08);
+      border: 1px solid rgba(96,165,250,0.15);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    /* ── TOOL GRID ── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    .tool-card:hover {
+      border-color: rgba(96,165,250,0.3);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .tool-card-icon { font-size: 22px; line-height: 1; }
+
+    .tool-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .tool-card p {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .tool-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+    }
+
+    .tool-cta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap var(--transition);
+    }
+
+    .tool-card:hover .tool-cta { gap: 8px; }
+
+    .tool-cta svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    .tool-tag-mini {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+
+    /* ── SEO BLOCK ── */
+    .seo-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .seo-block h2 {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .seo-block p {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.85;
+      margin-bottom: 12px;
+    }
+
+    .seo-block p:last-child { margin-bottom: 0; }
+
+    /* ── AD SLOT ── */
+    .ad-slot {
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text3);
+      margin: 32px 0;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── MOBILE OVERLAY ── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 150;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    /* ── TOOLTIP ── */
+    .nav-tooltip {
+      position: absolute;
+      left: calc(var(--sidebar-w-sm) + 8px);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: var(--shadow-sm);
+      z-index: 300;
+      transition: opacity var(--transition);
+    }
+
+    body.collapsed .nav-item:hover .nav-tooltip { opacity: 1; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      body { grid-template-columns: var(--sidebar-w-sm) 1fr; }
+      body .sidebar { width: var(--sidebar-w-sm); }
+      body .logo-wordmark,
+      body .nav-label,
+      body .nav-badge,
+      body .nav-section-label,
+      body .collapse-btn .collapse-label { opacity: 0; pointer-events: none; }
+      body .header { left: var(--sidebar-w-sm); }
+      body .main { margin-left: var(--sidebar-w-sm); }
+    }
+
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; grid-template-areas: "header" "main"; }
+      .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-w) !important;
+        transition: transform var(--transition);
+      }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .sidebar.mobile-open ~ .sidebar-overlay { display: block; opacity: 1; }
+      body .logo-wordmark, body .nav-label, body .nav-badge, body .nav-section-label, body .collapse-btn .collapse-label { opacity: 1; pointer-events: auto; }
+      .header { left: 0 !important; }
+      .main { margin-left: 0 !important; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .tool-featured { grid-template-columns: 1fr; }
+      .featured-icon-wrap { display: none; }
+      .content { padding: 24px 16px 48px; }
+      .mobile-menu-btn { display: flex !important; }
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      width: 38px; height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text2);
+      margin-right: 12px;
+    }
+
+    .mobile-menu-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+  </style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+
+  <a href="/" class="sidebar-logo" aria-label="Deskloop home">
+    <div class="logo-icon">
+      <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/>
+        <circle cx="9" cy="9" r="2" fill="white"/>
+      </svg>
+    </div>
+    <span class="logo-wordmark">Deskloop</span>
+  </a>
+
+  <nav class="sidebar-nav">
+
+    <div class="nav-section-label">Overview</div>
+
+    <a href="/" class="nav-item active" data-tooltip="Dashboard">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </span>
+      <span class="nav-label">Dashboard</span>
+      <span class="nav-tooltip">Dashboard</span>
+    </a>
+
+    <div class="nav-section-label" style="margin-top:8px;">Tools</div>
+
+    <a href="tools/focus-timer.html" class="nav-item" data-tooltip="Focus Timer">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M8.5 3.5l7 0"/><path d="M12 3v2"/></svg>
+      </span>
+      <span class="nav-label">Focus Timer</span>
+      <span class="nav-badge">Popular</span>
+      <span class="nav-tooltip">Focus Timer</span>
+    </a>
+
+    <a href="tools/habit-tracker.html" class="nav-item" data-tooltip="Habit Tracker">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      </span>
+      <span class="nav-label">Habit Tracker</span>
+      <span class="nav-tooltip">Habit Tracker</span>
+    </a>
+
+    <a href="tools/meeting-cost.html" class="nav-item" data-tooltip="Meeting Cost">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </span>
+      <span class="nav-label">Meeting Cost</span>
+      <span class="nav-tooltip">Meeting Cost</span>
+    </a>
+
+    <a href="tools/timezone-overlap.html" class="nav-item" data-tooltip="Time Zone Overlap">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+      </span>
+      <span class="nav-label">Time Zone Overlap</span>
+      <span class="nav-tooltip">Time Zone Overlap</span>
+    </a>
+
+    <a href="tools/deep-work-tracker.html" class="nav-item" data-tooltip="Deep Work Tracker">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </span>
+      <span class="nav-label">Deep Work Tracker</span>
+      <span class="nav-tooltip">Deep Work Tracker</span>
+    </a>
+
+    <a href="tools/task-decider.html" class="nav-item" data-tooltip="Task Decider">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.5" fill="currentColor" stroke="currentColor"/></svg>
+      </span>
+      <span class="nav-label">Task Decider</span>
+      <span class="nav-tooltip">Task Decider</span>
+    </a>
+
+    <a href="tools/work-hours-logger.html" class="nav-item" data-tooltip="Work Hours Logger">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </span>
+      <span class="nav-label">Work Hours Logger</span>
+      <span class="nav-tooltip">Work Hours Logger</span>
+    </a>
+
+    <div class="nav-section-label" style="margin-top:8px;">More</div>
+
+    <a href="#about" class="nav-item" data-tooltip="About">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      </span>
+      <span class="nav-label">About</span>
+      <span class="nav-tooltip">About</span>
+    </a>
+
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="collapse-btn" onclick="toggleSidebar()" aria-label="Collapse sidebar">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" id="collapseIcon"><path d="M15 18l-6-6 6-6"/></svg>
+      </span>
+      <span class="collapse-label">Collapse</span>
+    </button>
+  </div>
+
+</aside>
+
+<!-- Mobile overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+
+<!-- ── HEADER ── -->
+<header class="header" role="banner">
+
+  <!-- Mobile menu -->
+  <button class="mobile-menu-btn" onclick="openMobileSidebar()" aria-label="Open menu">
+    <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+
+  <!-- Search -->
+  <div class="header-search">
+    <span class="header-search-icon">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </span>
+    <input type="search" placeholder="Search tools…" aria-label="Search tools" id="searchInput">
+  </div>
+
+  <!-- Right controls -->
+  <div class="header-right">
+
+    <!-- Notifications -->
+    <button class="header-btn" aria-label="Notifications" title="Notifications">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+
+    <!-- Dark mode toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme" id="themeToggle">
+      <svg viewBox="0 0 24 24" id="themeIcon"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+
+    <!-- Avatar -->
+    <div class="avatar" role="button" tabindex="0" aria-label="User menu" title="User menu">JD</div>
+
+  </div>
+</header>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="main" id="main">
+  <div class="content">
+
+    <!-- Trust bar — above fold, prominent -->
+    <div class="trust-bar" role="complementary" aria-label="Trust signals">
+      <div class="trust-item"><span class="trust-check">✓</span> 100% Free</div>
+      <div class="trust-item"><span class="trust-check">✓</span> No Signup Required</div>
+      <div class="trust-item"><span class="trust-check">✓</span> Works Offline</div>
+      <div class="trust-item"><span class="trust-check">✓</span> Zero Data Collection</div>
+      <div class="trust-item"><span class="trust-check">✓</span> Mobile Friendly</div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        Free · No account · Browser-based
+      </div>
+      <h1 id="hero-heading">Your work,<br>without the friction.</h1>
+      <p class="hero-sub">A growing suite of sharp productivity tools. Open one, use it, close it. No accounts, no subscriptions, no noise — just focused work.</p>
+      <div class="hero-actions">
+        <a href="tools/focus-timer.html" class="btn-primary">
+          Start Focus Timer
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#tools" class="btn-secondary">Browse all tools</a>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-row" role="region" aria-label="Site statistics">
+      <div class="stat-card">
+        <div class="stat-label">Tools available</div>
+        <div class="stat-value">7<span>+</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Cost</div>
+        <div class="stat-value"><span>$</span>0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Signups needed</div>
+        <div class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Browser-based</div>
+        <div class="stat-value">100<span>%</span></div>
+      </div>
+    </div>
+
+    <!-- Ad slot -->
+    <div class="ad-slot" role="complementary" aria-label="Advertisement">
+      <!-- Google AdSense slot -->
+    </div>
+
+    <!-- Tools section -->
+    <section id="tools" aria-labelledby="tools-heading">
+      <div class="section-hdr">
+        <h2 id="tools-heading">All tools</h2>
+        <span class="section-hdr-meta">7 live · free forever</span>
+      </div>
+
+      <!-- Featured -->
+      <a href="tools/focus-timer.html" class="tool-featured" aria-label="Focus Timer — most used tool">
+        <div>
+          <div class="featured-badge">Most used</div>
+          <h3>Focus Timer</h3>
+          <p>Pomodoro-style deep work timer with custom intervals, ambient sounds, session logging, and browser notifications. Stay locked in, session after session.</p>
+          <div class="featured-tags">
+            <span class="tag">Custom intervals</span>
+            <span class="tag">Ambient sounds</span>
+            <span class="tag">Session tracking</span>
+            <span class="tag">Notifications</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;height:100%;gap:16px;flex-shrink:0;">
+          <div class="featured-icon-wrap">⏱</div>
+          <span class="btn-primary" style="pointer-events:none;white-space:nowrap;flex-shrink:0;">
+            Open timer
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Tool grid -->
+      <div class="tools-grid" id="toolsGrid">
+
+        <a href="tools/meeting-cost.html" class="tool-card">
+          <div class="tool-card-icon">💸</div>
+          <h3>Meeting Cost Calculator</h3>
+          <p>Real-time dollar counter for your meetings. Enter team size and average salary — watch the cost tick live.</p>
+          <div class="tool-card-footer">
+            <span class="tool-tag-mini">Real-time</span>
+            <span class="tool-cta">Open <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="tools/habit-tracker.html" class="tool-card">
+          <div class="tool-card-icon">📋</div>
+          <h3>Habit Tracker</h3>
+          <p>Track daily habits with streak protection and completion celebrations. Stored locally — no account needed.</p>
+          <div class="tool-card-footer">
+            <span class="tool-tag-mini">Local storage</span>
+            <span class="tool-cta">Open <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="tools/timezone-overlap.html" class="tool-card">
+          <div class="tool-card-icon">🌍</div>
+          <h3>Time Zone Overlap</h3>
+          <p>Find the ideal meeting window across multiple time zones instantly. Built for remote teams. Export to CSV or PDF.</p>
+          <div class="tool-card-footer">
+            <span class="tool-tag-mini">Export</span>
+            <span class="tool-cta">Open <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="tools/work-hours-logger.html" class="tool-card">
+          <div class="tool-card-icon">🕐</div>
+          <h3>Work Hours Logger</h3>
+          <p>Log sessions by project and see where your hours actually go. Weekly summaries. CSV export. Browser-only.</p>
+          <div class="tool-card-footer">
+            <span class="tool-tag-mini">CSV export</span>
+            <span class="tool-cta">Open <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="tools/task-decider.html" class="tool-card">
+          <div class="tool-card-icon">🎲</div>
+          <h3>Task Decider</h3>
+          <p>Decision paralysis solved. Add your tasks, spin the wheel, just start. Remove completed tasks with one click.</p>
+          <div class="tool-card-footer">
+            <span class="tool-tag-mini">Spin wheel</span>
+            <span class="tool-cta">Open <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+        <a href="tools/deep-work-tracker.html" class="tool-card">
+          <div class="tool-card-icon">📊</div>
+          <h3>Deep Work Tracker</h3>
+          <p>Weekly deep work stats, focus quality scores, and session history — all stored locally in your browser.</p>
+          <div class="tool-card-footer">
+            <span class="tool-tag-mini">Weekly stats</span>
+            <span class="tool-cta">Open <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Ad slot -->
+    <div class="ad-slot" role="complementary" aria-label="Advertisement">
+      <!-- Google AdSense slot -->
+    </div>
+
+    <!-- SEO / About -->
+    <section class="seo-block" id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">Built for people who actually work</h2>
+      <p>Deskloop is a free suite of browser-based productivity tools designed for focused, intentional work. Every tool loads instantly, requires no account, and solves one problem clearly — then gets out of your way.</p>
+      <p>The philosophy is simple: the best productivity tool disappears after you use it. No dashboards to manage, no onboarding flows, no upsells. Just the tool, doing exactly what it says it does.</p>
+      <p>New tools ship regularly. Everything on Deskloop is and will always remain completely free to use. Built by a solo maker who got tired of bloated productivity apps.</p>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  // ── Sidebar collapse ──
+  const body     = document.body;
+  const sidebar  = document.getElementById('sidebar');
+  const colIcon  = document.getElementById('collapseIcon');
+  let isCollapsed = false;
+
+  function toggleSidebar() {
+    isCollapsed = !isCollapsed;
+    body.classList.toggle('collapsed', isCollapsed);
+    colIcon.innerHTML = isCollapsed
+      ? '<path d="M9 18l6-6-6-6"/>'
+      : '<path d="M15 18l-6-6 6-6"/>';
+  }
+
+  // ── Mobile sidebar ──
+  const overlay = document.getElementById('sidebarOverlay');
+
+  function openMobileSidebar() {
+    sidebar.classList.add('mobile-open');
+    overlay.style.display = 'block';
+    overlay.style.opacity = '1';
+  }
+
+  function closeMobileSidebar() {
+    sidebar.classList.remove('mobile-open');
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.style.display = 'none', 200);
+  }
+
+  // ── Theme toggle (light / dark) ──
+  let isDark = true;
+  const themeIcon = document.getElementById('themeIcon');
+
+  function toggleTheme() {
+    isDark = !isDark;
+    if (!isDark) {
+      document.documentElement.style.setProperty('--bg',      '#F8FAFC');
+      document.documentElement.style.setProperty('--surface', '#FFFFFF');
+      document.documentElement.style.setProperty('--surface-2','#F1F5F9');
+      document.documentElement.style.setProperty('--text',    '#0F172A');
+      document.documentElement.style.setProperty('--text2',   '#64748B');
+      document.documentElement.style.setProperty('--text3',   '#94A3B8');
+      document.documentElement.style.setProperty('--border',  '#E2E8F0');
+      document.documentElement.style.setProperty('--primary', '#1E40AF');
+      themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+    } else {
+      document.documentElement.style.setProperty('--bg',      '#0F172A');
+      document.documentElement.style.setProperty('--surface', '#1E2937');
+      document.documentElement.style.setProperty('--surface-2','#243447');
+      document.documentElement.style.setProperty('--text',    '#F1F5F9');
+      document.documentElement.style.setProperty('--text2',   '#94A3B8');
+      document.documentElement.style.setProperty('--text3',   '#64748B');
+      document.documentElement.style.setProperty('--border',  '#334155');
+      document.documentElement.style.setProperty('--primary', '#60A5FA');
+      themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+    }
+  }
+
+  // ── Active nav item ──
+  const navItems = document.querySelectorAll('.nav-item');
+  const currentPath = window.location.pathname;
+  navItems.forEach(item => {
+    item.classList.remove('active');
+    const href = item.getAttribute('href');
+    if (href && (currentPath.endsWith(href) || (href === '/' && (currentPath === '/' || currentPath === '/index.html')))) {
+      item.classList.add('active');
+    }
+  });
+  if (!document.querySelector('.nav-item.active')) {
+    navItems[0].classList.add('active');
+  }
+
+  // ── Search ──
+  const searchInput = document.getElementById('searchInput');
+  const toolCards   = document.querySelectorAll('.tool-card, .tool-featured');
+  const tools = [
+    { name: 'Focus Timer',            url: 'tools/focus-timer.html' },
+    { name: 'Habit Tracker',          url: 'tools/habit-tracker.html' },
+    { name: 'Meeting Cost',           url: 'tools/meeting-cost.html' },
+    { name: 'Time Zone Overlap',      url: 'tools/timezone-overlap.html' },
+    { name: 'Deep Work Tracker',      url: 'tools/deep-work-tracker.html' },
+    { name: 'Task Decider',           url: 'tools/task-decider.html' },
+    { name: 'Work Hours Logger',      url: 'tools/work-hours-logger.html' },
+  ];
+
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const q = searchInput.value.trim().toLowerCase();
+      const match = tools.find(t => t.name.toLowerCase().includes(q));
+      if (match) window.location.href = match.url;
+    }
+  });
+
+  // Keyboard shortcut: Cmd/Ctrl+K to focus search
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+
+  // ── Keyboard: collapse on Tab ──
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '[' && (e.metaKey || e.ctrlKey)) toggleSidebar();
+  });
+</script>
+
+</body>
+</html>

@@ -3,719 +3,916 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Work Hours Logger Online — Track Time No Signup | Deskloop</title>
-  <meta name="description" content="Free online work hours logger. Track your sessions, calculate total hours worked, and see where your time goes — no account, no app, no install required.">
-  <meta name="keywords" content="work hours logger, time tracker online free, work hours tracker no signup, free time logger, browser time tracker, freelance hours tracker, log work hours online">
+  <title>Work Hours Logger Free — Deskloop | Deep Work Tracker No Signup</title>
+  <meta name="description" content="Free work hours logger and deep work tracker. Clock in, build streaks, track weekly totals — all in your browser. No signup, no account, works offline.">
+  <meta name="keywords" content="work hours logger free, deep work tracker free browser, work session timer online, clock in clock out no signup, streak work tracker">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/tools/work-hours-logger.html">
-  <meta property="og:title" content="Free Work Hours Logger — Track Time in Your Browser">
-  <meta property="og:description" content="Log work sessions and track total hours. No signup, no app, works in your browser.">
+  <meta property="og:title" content="Work Hours Logger Free — Deskloop | Deep Work Tracker">
+  <meta property="og:description" content="Clock in, build daily streaks, see weekly totals. Free, no signup, works offline. Data stays in your browser.">
   <meta property="og:url" content="https://deskloop.work/tools/work-hours-logger.html">
   <meta property="og:type" content="website">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Work Hours Logger",
-    "url": "https://deskloop.work/tools/work-hours-logger.html",
-    "description": "Free browser-based work hours logger with session tracking and daily totals",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-  }
-  </script>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕐</text></svg>">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Deskloop Work Hours Logger","url":"https://deskloop.work/tools/work-hours-logger.html","description":"Free browser-based work hours logger with streak tracking, session notes, weekly view, CSV export. No signup.","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Live clock-in timer","Day streak counter","Session notes","Project tags","Weekly bar chart","CSV export","No signup","Works offline"]}</script>
+  <meta name="google-site-verification" content="KChKjtl0z6q2zocomb2y3UslhaPxiXZGXB3-vhp9am4">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    /* ── Clock display ── */
-    .clock-display {
+    :root {
+      --primary:     #60A5FA;
+      --primary-btn: #1E40AF;
+      --accent:      #34D399;
+      --bg:          #0F172A;
+      --surface:     #1a2638;
+      --surface-2:   #1f2f43;
+      --surface-3:   #253648;
+      --text:        #EFF5FB;
+      --text2:       #90A8C0;
+      --text3:       #566F87;
+      --border:      #2A3F57;
+      --warning:     #F59E0B;
+      --danger:      #EF4444;
+      --radius:      13px;
+      --radius-sm:   8px;
+      --radius-lg:   18px;
+      --shadow:      0 1px 4px rgba(0,0,0,0.5);
+      --shadow-md:   0 8px 28px rgba(0,0,0,0.5);
+      --t:           190ms ease;
+      --max-w:       820px;
+      --mono:        'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      font-size: 16px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased; min-height: 100vh;
+    }
+
+    .W { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    .inner { max-width: var(--max-w); margin: 0 auto; }
+
+    /* ── NAV ── */
+    nav { position: sticky; top: 0; z-index: 200; background: rgba(15,23,42,0.96); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+    .ni { max-width: 1200px; margin: 0 auto; padding: 0 28px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .lm { width: 32px; height: 32px; background: var(--primary-btn); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .ln { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+    .nav-a { color: var(--text3); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: var(--radius-sm); transition: all var(--t); }
+    .nav-a:hover { color: var(--text2); background: var(--surface); }
+
+    /* ── PAGE HEADER ── */
+    .ph { padding: 48px 0 40px; }
+    .bk { display: inline-flex; align-items: center; gap: 5px; color: var(--text3); text-decoration: none; font-size: 12px; font-weight: 500; transition: color var(--t); margin-bottom: 18px; }
+    .bk:hover { color: var(--primary); }
+    .bk svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .ph h1 { font-size: 30px; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 8px; }
+    .ph p  { font-size: 14px; color: var(--text3); max-width: 480px; line-height: 1.75; }
+
+    /* ── HERO TIMER CARD ── */
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 52px 40px 44px;
       text-align: center;
-      padding: 36px 0 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .clock-status {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      transition: color 0.3s;
+    /* Subtle top accent line */
+    .hero-card::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 2px; border-radius: 0 0 2px 2px;
+      background: var(--primary-btn);
+      transition: background 0.4s ease, width 0.4s ease;
     }
 
-    .clock-status.running { color: var(--success); }
-    .clock-status.stopped { color: var(--text3); }
-
-    .clock-time {
-      font-family: var(--font-head);
-      font-size: clamp(56px, 14vw, 104px);
-      font-weight: 800;
-      letter-spacing: -4px;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 8px;
-      font-variant-numeric: tabular-nums;
-      transition: color 0.3s;
+    .hero-card.running::before { background: var(--accent); width: 140px; }
+    .hero-card.running {
+      border-color: rgba(52,211,153,0.22);
+      box-shadow: 0 0 60px rgba(52,211,153,0.07), var(--shadow);
     }
 
-    .clock-time.running { color: var(--success); }
+    /* Radial glow behind timer when running */
+    .hero-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 55%, rgba(52,211,153,0.06) 0%, transparent 70%);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+    .hero-card.running::after { opacity: 1; }
 
-    .clock-sub {
-      font-size: 13px;
-      color: var(--text3);
-      margin-bottom: 28px;
+    /* Status */
+    .hero-status {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      font-size: 10px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 28px;
+    }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--text3);
+      transition: background 0.3s ease;
+    }
+    .status-dot.on { background: var(--accent); animation: sdot 1.8s ease-in-out infinite; }
+    @keyframes sdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.7)} }
+
+    /* Big timer */
+    .timer-display {
+      font-family: var(--mono); font-size: 92px; font-weight: 700;
+      letter-spacing: -5px; color: var(--text);
+      line-height: 1; font-variant-numeric: tabular-nums;
+      transition: color 0.4s ease;
+      margin-bottom: 10px; user-select: none;
+    }
+    .timer-display.running { color: var(--accent); }
+
+    .timer-sub { font-size: 12px; color: var(--text3); font-family: var(--mono); margin-bottom: 0; min-height: 18px; }
+
+    /* ── CONTROLS CARD ── */
+    .controls-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px 32px;
+      margin-bottom: 16px; box-shadow: var(--shadow);
     }
 
-    .clock-controls {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    .ctrl-section { margin-bottom: 22px; }
+    .ctrl-section:last-child { margin-bottom: 0; }
+
+    .ctrl-label { font-size: 9px; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; display: block; }
+
+    .note-input {
+      width: 100%; height: 44px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      padding: 0 16px; outline: none;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .note-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(96,165,250,0.1); }
+    .note-input::placeholder { color: var(--text3); }
+
+    /* Tags */
+    .tags-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 13px; border-radius: 100px;
+      background: transparent; border: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+      color: var(--text3); cursor: pointer; transition: all var(--t);
+    }
+    .tag-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .tag-btn.active { color: var(--text); border-color: var(--text3); background: var(--surface-3); }
+    .tag-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Clock button */
+    .clock-btn {
+      width: 100%; height: 56px;
+      background: var(--primary-btn); color: #fff;
+      border: none; border-radius: var(--radius);
+      font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background var(--t), transform var(--t), box-shadow var(--t);
+      letter-spacing: -0.01em; box-shadow: var(--shadow);
+    }
+    .clock-btn:hover:not(:disabled) { background: var(--primary); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .clock-btn.out { background: var(--danger); }
+    .clock-btn.out:hover { background: #dc2626; }
+    .clock-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+      margin-bottom: 16px;
     }
 
-    /* ── Project tag ── */
-    .project-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      align-items: center;
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow);
     }
 
-    .project-row label {
-      white-space: nowrap;
-      margin: 0;
-      font-size: 11px;
-      color: var(--text3);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .stat-num { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 2px; transition: color var(--t); }
+    .stat-num.green { color: var(--accent); }
+    .stat-num.blue  { color: var(--primary); }
+    .stat-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text3); }
+
+    /* Streak card special */
+    .streak-card { position: relative; }
+    .streak-best { font-size: 10px; color: var(--text3); margin-top: 3px; font-family: var(--mono); }
+
+    /* ── TABS ── */
+    .tabs-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);
+      margin-bottom: 36px;
     }
 
-    .project-row input {
-      flex: 1;
-      margin: 0;
+    .tab-bar {
+      display: flex; border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.12);
     }
 
-    /* ── Session log ── */
-    .log-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
+    .tab-btn {
+      flex: 1; height: 48px; background: none; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+      color: var(--text3); position: relative;
+      transition: color var(--t), background var(--t);
+    }
+    .tab-btn:hover { color: var(--text2); }
+    .tab-btn.active { color: var(--text); }
+    .tab-btn.active::after {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%); width: 40px; height: 2px;
+      background: var(--primary); border-radius: 2px 2px 0 0;
     }
 
-    .session-table {
-      width: 100%;
-      border-collapse: collapse;
+    .tab-pane { display: none; padding: 28px 28px 32px; }
+    .tab-pane.active { display: block; }
+
+    /* ── SESSION CARDS ── */
+    .session-cards { display: flex; flex-direction: column; gap: 8px; }
+
+    .sess-card {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--surface-2); border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      padding: 14px 16px; transition: border-color var(--t);
+      overflow: hidden; position: relative;
+    }
+    .sess-card:hover { border-color: var(--border); }
+    .sess-card.active-card {
+      border-color: rgba(52,211,153,0.25);
+      background: rgba(52,211,153,0.04);
     }
 
-    .session-table th {
-      text-align: left;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--text3);
-      padding: 0 12px 10px;
-      border-bottom: 1px solid var(--border);
+    /* Colored left bar */
+    .sess-bar {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; border-radius: 0;
     }
 
-    .session-table th:last-child { text-align: right; }
+    .sess-body { flex: 1; min-width: 0; padding-left: 4px; }
+    .sess-time { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .sess-note { font-size: 12px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .session-table td {
-      padding: 12px;
-      font-size: 13px;
-      color: var(--text2);
-      border-bottom: 1px solid var(--border);
-      vertical-align: middle;
+    .sess-tag-badge {
+      font-size: 10px; font-weight: 500; color: var(--text3);
+      padding: 2px 8px; background: var(--surface-3); border-radius: 100px;
+      white-space: nowrap; flex-shrink: 0;
     }
 
-    .session-table tr:last-child td { border-bottom: none; }
+    .sess-dur { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text2); white-space: nowrap; flex-shrink: 0; }
 
-    .session-table .dur {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--text);
-      text-align: right;
-      white-space: nowrap;
+    .sess-del { background: none; border: none; color: var(--text3); cursor: pointer; padding: 6px; border-radius: var(--radius-sm); opacity: 0; transition: all var(--t); }
+    .sess-card:hover .sess-del { opacity: 1; }
+    .sess-del:hover { color: var(--danger); background: rgba(239,68,68,0.08); }
+    .sess-del svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    /* ── EMPTY STATES ── */
+    .empty-state { text-align: center; padding: 52px 24px; }
+    .empty-icon  { font-size: 44px; margin-bottom: 16px; line-height: 1; }
+    .empty-title { font-size: 16px; font-weight: 600; color: var(--text2); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .empty-sub   { font-size: 13px; color: var(--text3); line-height: 1.6; max-width: 280px; margin: 0 auto; }
+
+    /* ── WEEKLY BAR CHART ── */
+    .week-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 10px; }
+    .week-nav { display: flex; align-items: center; gap: 8px; }
+    .week-nav-btn { width: 30px; height: 30px; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text3); transition: all var(--t); }
+    .week-nav-btn:hover { color: var(--text); border-color: var(--primary); }
+    .week-nav-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .week-range { font-family: var(--mono); font-size: 12px; color: var(--text2); min-width: 130px; text-align: center; }
+
+    .bar-chart { display: grid; grid-template-columns: repeat(7,1fr); gap: 10px; margin-bottom: 28px; }
+
+    .bar-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+    .bar-track { width: 100%; height: 140px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .bar-fill {
+      width: 100%; border-radius: 4px 4px 0 0;
+      background: var(--surface-3); min-height: 3px;
+      transition: height 0.4s cubic-bezier(0.4,0,0.2,1), background 0.3s;
     }
+    .bar-fill.worked  { background: var(--primary-btn); }
+    .bar-fill.today   { background: var(--accent); box-shadow: 0 0 14px rgba(52,211,153,0.28); }
+    .bar-fill.future  { background: transparent; min-height: 0; }
 
-    .session-project {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-      background: var(--accent-dim);
-      border: 1px solid rgba(232,160,32,0.2);
-      padding: 2px 8px;
-      border-radius: 100px;
-      margin-top: 2px;
+    .bar-hrs { font-family: var(--mono); font-size: 10px; color: var(--text3); font-weight: 600; min-height: 14px; }
+    .bar-hrs.today-hrs { color: var(--accent); }
+
+    .bar-day { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); }
+    .bar-day.today-day { color: var(--text2); }
+
+    .bar-date { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+    .bar-date.today-date { color: var(--primary); font-weight: 600; }
+
+    /* Week footer */
+    .week-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+    .week-totals { display: flex; gap: 28px; }
+    .wt-item { display: flex; flex-direction: column; gap: 3px; }
+    .wt-val { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--accent); }
+    .wt-lbl { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); }
+
+    .export-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 36px; padding: 0 16px; background: transparent;
+      color: var(--text3); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); font-family: 'Inter', sans-serif;
+      font-size: 12px; font-weight: 500; cursor: pointer; transition: all var(--t);
     }
+    .export-btn:hover { color: var(--text); border-color: var(--primary); }
+    .export-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
 
-    .session-del {
-      background: none;
-      border: none;
-      color: var(--text3);
-      cursor: pointer;
-      font-size: 13px;
-      padding: 4px 6px;
-      border-radius: 4px;
-      transition: color 0.18s, background 0.18s;
-      opacity: 0;
+    /* Week session log */
+    .week-log { display: flex; flex-direction: column; gap: 4px; }
+    .wlog-day-hdr { display: flex; justify-content: space-between; padding: 10px 0 4px; border-bottom: 1px solid rgba(42,63,87,0.6); margin-bottom: 4px; }
+    .wlog-day-name { font-size: 12px; font-weight: 600; color: var(--text2); }
+    .wlog-day-total { font-family: var(--mono); font-size: 12px; color: var(--text3); }
+
+    /* ── TOAST ── */
+    .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(12px); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 11px 20px; font-size: 13px; color: var(--text2); box-shadow: var(--shadow-md); opacity: 0; transition: all 0.28s ease; z-index: 999; white-space: nowrap; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* AD / SEO / FOOTER */
+    .ad-slot { border: 1px dashed var(--border); border-radius: var(--radius); min-height: 90px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text3); margin: 32px 0; }
+    .seo { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 44px; margin-bottom: 44px; box-shadow: var(--shadow); }
+    .seo h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .seo h3 { font-size: 15px; font-weight: 500; color: var(--text2); margin: 16px 0 7px; }
+    .seo p  { font-size: 13px; color: var(--text3); line-height: 1.85; margin-bottom: 8px; }
+    .seo p:last-child { margin-bottom: 0; }
+    footer { border-top: 1px solid var(--border); padding: 28px 0 40px; }
+    .foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 11px; color: var(--text3); }
+    .foot a { color: var(--text3); text-decoration: none; transition: color var(--t); }
+    .foot a:hover { color: var(--primary); }
+
+    /* RESPONSIVE */
+    @media (max-width: 780px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .timer-display { font-size: 68px; letter-spacing: -3px; }
+      .hero-card { padding: 36px 24px 32px; }
+      .controls-card { padding: 22px 20px; }
+      .tab-pane { padding: 20px; }
     }
-
-    .session-table tr:hover .session-del { opacity: 1; }
-    .session-del:hover { color: var(--danger); background: rgba(224,85,85,0.08); }
-
-    /* ── Day groups ── */
-    .day-group-header {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text3);
-      padding: 14px 12px 6px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    @media (max-width: 520px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .timer-display { font-size: 52px; letter-spacing: -2px; }
+      .bar-chart { gap: 6px; }
+      .bar-track { height: 100px; }
+      .W { padding: 0 16px; }
+      .seo { padding: 24px; }
+      .ph h1 { font-size: 26px; }
     }
-
-    .day-total {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--accent);
-    }
-
-    /* ── Empty state ── */
-    .empty-log {
-      text-align: center;
-      padding: 40px 24px;
-      color: var(--text3);
-    }
-
-    .empty-log .icon { font-size: 36px; margin-bottom: 12px; }
-
-    .empty-log p { font-size: 13px; line-height: 1.7; color: var(--text3); }
-
-    /* ── Export ── */
-    .export-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    /* ── Progress bar ── */
-    .goal-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .goal-label { font-size: 12px; color: var(--text3); white-space: nowrap; }
-
-    .goal-bar {
-      flex: 1;
-      height: 6px;
-      background: var(--bg3);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-
-    .goal-fill {
-      height: 100%;
-      background: var(--success);
-      border-radius: 100px;
-      transition: width 0.5s var(--ease);
-    }
-
-    .goal-fill.over { background: var(--accent); }
-
-    .goal-pct { font-size: 12px; color: var(--text2); font-weight: 600; white-space: nowrap; }
-
-    @media (max-width: 600px) {
-      .project-row { flex-wrap: wrap; }
-      .session-del { opacity: 1; }
-    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 3px; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="nav-inner">
-      <a href="/" class="logo">
-        <div class="logo-mark">
-          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="7" cy="7" r="4" stroke="#080808" stroke-width="2.5"/>
-            <circle cx="7" cy="7" r="1.5" fill="#080808"/>
-          </svg>
+<!-- NAV -->
+<nav>
+  <div class="ni">
+    <a href="/" class="logo"><div class="lm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="ln">Deskloop</span></a>
+    <a href="/" class="nav-a">← All tools</a>
+  </div>
+</nav>
+
+<div class="W">
+  <div class="inner">
+
+    <!-- PAGE HEADER -->
+    <div class="ph">
+      <a href="/" class="bk"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>All tools</a>
+      <h1>Work Hours Logger</h1>
+      <p>Clock in and out, build daily streaks, track weekly totals — all in your browser. No account, no cloud.</p>
+    </div>
+
+    <!-- HERO TIMER -->
+    <div class="hero-card" id="heroCard">
+      <div class="hero-status">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Ready to clock in</span>
+      </div>
+      <div class="timer-display" id="timerDisplay" aria-live="polite" aria-atomic="true">00:00:00</div>
+      <div class="timer-sub" id="timerSub">&nbsp;</div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls-card">
+      <div class="ctrl-section">
+        <label class="ctrl-label" for="noteInput">What are you working on?</label>
+        <input type="text" class="note-input" id="noteInput" placeholder="Add a note (optional)" maxlength="80" aria-label="Session note">
+      </div>
+      <div class="ctrl-section">
+        <span class="ctrl-label">Tag</span>
+        <div class="tags-row" role="group" aria-label="Session tag" id="tagsRow">
+          <button class="tag-btn active" data-tag="deep" onclick="setTag(this)">
+            <span class="tag-dot" style="background:#1E40AF;"></span>🧠 Deep work
+          </button>
+          <button class="tag-btn" data-tag="meet" onclick="setTag(this)">
+            <span class="tag-dot" style="background:#F59E0B;"></span>🗣 Meeting
+          </button>
+          <button class="tag-btn" data-tag="admin" onclick="setTag(this)">
+            <span class="tag-dot" style="background:#566F87;"></span>📋 Admin
+          </button>
+          <button class="tag-btn" data-tag="learn" onclick="setTag(this)">
+            <span class="tag-dot" style="background:#A78BFA;"></span>📚 Learning
+          </button>
+          <button class="tag-btn" data-tag="break" onclick="setTag(this)">
+            <span class="tag-dot" style="background:#34D399;"></span>☕ Break
+          </button>
         </div>
-        <span class="logo-text">Deskloop</span>
-      </a>
-      <div class="nav-right">
-        <a href="/#tools" class="nav-link">Tools</a>
-        <a href="/#about" class="nav-link">About</a>
+      </div>
+      <div class="ctrl-section">
+        <button class="clock-btn" id="clockBtn" onclick="toggleClock()" aria-label="Clock in">
+          <svg id="clockIcon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg>
+          <span id="clockBtnLabel">Clock In</span>
+        </button>
       </div>
     </div>
-  </header>
 
-  <main>
-    <div class="container">
-
-      <div class="page-header">
-        <a href="/" class="back-link">← All tools</a>
-        <h1>Work Hours Logger</h1>
-        <p>Track work sessions and see where your time actually goes</p>
+    <!-- STATS ROW (includes streak) -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num green" id="statToday">0h 0m</div>
+        <div class="stat-lbl">Today</div>
       </div>
-
-      <!-- Timer -->
-      <div class="tool-wrap">
-        <div class="clock-display">
-          <div class="clock-status stopped" id="clockStatus">READY TO TRACK</div>
-          <div class="clock-time" id="clockTime">00:00:00</div>
-          <div class="clock-sub" id="clockSub">Start a session to begin logging</div>
-          <div class="clock-controls">
-            <button class="btn btn-primary" id="startBtn" onclick="toggleSession()">Start Session</button>
-            <button class="btn btn-ghost" onclick="logManual()">+ Log manually</button>
-          </div>
-        </div>
-
-        <div class="project-row">
-          <label for="projectInput">Project</label>
-          <input type="text" id="projectInput" placeholder="e.g. Client work, Admin, Deep work…" maxlength="40">
-        </div>
-
-        <!-- Daily goal progress -->
-        <div class="goal-row" style="margin-top:20px;">
-          <span class="goal-label">Daily goal (hrs)</span>
-          <div class="goal-bar"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
-          <span class="goal-pct" id="goalPct">0 / 8h</span>
-          <input type="number" id="goalHours" value="8" min="1" max="24" step="0.5"
-            onchange="updateGoal()"
-            style="width:70px;padding:6px 10px;font-size:12px;text-align:center;" title="Set your daily hour goal">
-        </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statWeek">0h 0m</div>
+        <div class="stat-lbl">This week</div>
       </div>
-
-      <!-- Stats -->
-      <div class="metrics-grid">
-        <div class="metric">
-          <div class="metric-label">Today</div>
-          <div class="metric-value accent" id="statToday">0h 0m</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">This week</div>
-          <div class="metric-value" id="statWeek">0h 0m</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Sessions today</div>
-          <div class="metric-value" id="statSessions">0</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Avg session</div>
-          <div class="metric-value" id="statAvg">—</div>
-        </div>
+      <div class="stat-card streak-card">
+        <div class="stat-num green" id="statStreak">0 🔥</div>
+        <div class="stat-lbl">Day streak</div>
+        <div class="streak-best" id="streakBest">Best: 0 days</div>
       </div>
-
-      <!-- Weekly project summary -->
-      <div class="tool-wrap" id="weeklySummary" style="display:none;">
-        <p class="section-title" style="margin-bottom:14px;">// This week by project</p>
-        <div id="projectBreakdown"></div>
-      </div>
-
-      <!-- Session log -->
-      <div class="tool-wrap">
-        <div class="log-header">
-          <p class="section-title">// Session log</p>
-          <div class="export-row" style="margin:0;">
-            <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px;" onclick="exportCSV()">Export CSV</button>
-            <button class="btn btn-danger" style="font-size:12px;padding:6px 12px;" onclick="clearAll()">Clear all</button>
-          </div>
-        </div>
-
-        <div id="logContainer">
-          <div class="empty-log">
-            <div class="icon">⏳</div>
-            <p>No sessions logged yet.<br>Start a session above to begin tracking your work hours.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Manual entry modal -->
-      <div id="manualPanel" style="display:none;" class="tool-wrap">
-        <p class="section-title" style="margin-bottom:16px;">// Log a past session</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
-          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
-            <label>Date</label>
-            <input type="date" id="manDate">
-          </div>
-          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
-            <label>Start time</label>
-            <input type="time" id="manStart">
-          </div>
-          <div class="input-group" style="display:flex;flex-direction:column;gap:6px;">
-            <label>End time</label>
-            <input type="time" id="manEnd">
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <input type="text" id="manProject" placeholder="Project (optional)" style="flex:1;">
-          <button class="btn btn-primary" onclick="saveManual()">Save</button>
-          <button class="btn btn-ghost" onclick="closeManual()">Cancel</button>
-        </div>
-      </div>
-
-      <!-- SEO block -->
-      <div class="seo-block">
-        <h2>Free Online Work Hours Logger — No Account Required</h2>
-        <p>The Deskloop Work Hours Logger lets you track work sessions directly in your browser with zero setup. Start a session timer, tag it with a project name, and build a complete log of where your working hours go — all stored locally on your device.</p>
-        <p>Whether you're a freelancer tracking billable hours, a remote worker logging your day, or a student managing study sessions, this tool gives you a clear picture of how your time is actually spent. Export your log to CSV at any time for invoicing or reporting.</p>
-        <p>Your session data is saved privately in your browser using local storage. No account, no subscription, no data sent to any server. Works on desktop and mobile.</p>
-      </div>
-
-    </div>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-copy">
-        <span>© 2025 Deskloop.work — Free productivity tools</span>
-        <span style="color:var(--text3);font-size:11px;">No cookies · No tracking · No nonsense</span>
+      <div class="stat-card">
+        <div class="stat-num blue" id="statSessions">0</div>
+        <div class="stat-lbl">Sessions</div>
       </div>
     </div>
-  </footer>
 
-  <script>
-    // ── State ──
-    let sessions = [];
-    let activeStart = null;
-    let activeTick = null;
-    let activeElapsed = 0;
+    <!-- TABS -->
+    <div class="tabs-card">
+      <div class="tab-bar" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" id="tab-today" onclick="switchTab('today')">Today's Sessions</button>
+        <button class="tab-btn" role="tab" aria-selected="false" id="tab-week" onclick="switchTab('week')">This Week</button>
+      </div>
 
-    function renderWeeklySummary() {
-      const weekAgo = Date.now() - 7 * 86400000;
-      const weekSessions = sessions.filter(s => s.start >= weekAgo);
-      const wrap = document.getElementById('weeklySummary');
-      const el = document.getElementById('projectBreakdown');
+      <!-- TODAY TAB -->
+      <div class="tab-pane active" id="pane-today" role="tabpanel" aria-labelledby="tab-today">
+        <div class="session-cards" id="todayCards"></div>
+        <div class="empty-state" id="emptyToday">
+          <div class="empty-icon">🎯</div>
+          <div class="empty-title">No sessions logged yet</div>
+          <div class="empty-sub">Clock in above to start tracking your work. Sessions appear here as you go.</div>
+        </div>
+      </div>
 
-      if (!weekSessions.length) { wrap.style.display = 'none'; return; }
-      wrap.style.display = 'block';
-
-      // Group by project
-      const projects = {};
-      weekSessions.forEach(s => {
-        if (!projects[s.project]) projects[s.project] = 0;
-        projects[s.project] += s.duration;
-      });
-
-      const total = Object.values(projects).reduce((a,b) => a+b, 0);
-      const sorted = Object.entries(projects).sort((a,b) => b[1]-a[1]);
-
-      el.innerHTML = sorted.map(([name, ms]) => {
-        const pct = Math.round((ms / total) * 100);
-        return `
-          <div style="margin-bottom:12px;">
-            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-              <span style="font-size:13px;font-weight:600;color:var(--text);">${escHtml(name)}</span>
-              <span style="font-size:13px;color:var(--text2);">${fmtDuration(ms,true)} <span style="color:var(--text3);">(${pct}%)</span></span>
-            </div>
-            <div style="height:6px;background:var(--bg3);border-radius:100px;overflow:hidden;">
-              <div style="height:100%;width:${pct}%;background:var(--accent);border-radius:100px;transition:width 0.5s;"></div>
-            </div>
-          </div>`;
-      }).join('');
-    }
-
-    // ── Storage ──
-    function save() { localStorage.setItem('dl_workhours_v1', JSON.stringify(sessions)); }
-    function load() {
-      try { sessions = JSON.parse(localStorage.getItem('dl_workhours_v1')) || []; }
-      catch { sessions = []; }
-    }
-
-    // ── Helpers ──
-    function pad(n) { return String(n).padStart(2,'0'); }
-
-    function fmtDuration(ms, short = false) {
-      const totalSec = Math.floor(ms / 1000);
-      const h = Math.floor(totalSec / 3600);
-      const m = Math.floor((totalSec % 3600) / 60);
-      const s = totalSec % 60;
-      if (short) return h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
-      return `${pad(h)}:${pad(m)}:${pad(s)}`;
-    }
-
-    function fmtTime(ts) {
-      const d = new Date(ts);
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function dateKey(ts) {
-      const d = new Date(ts);
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-    }
-
-    function friendlyDate(key) {
-      const today = dateKey(Date.now());
-      const yesterday = dateKey(Date.now() - 86400000);
-      if (key === today) return 'Today';
-      if (key === yesterday) return 'Yesterday';
-      const d = new Date(key);
-      return d.toLocaleDateString([], { weekday: 'long', month: 'short', day: 'numeric' });
-    }
-
-    function getProject() {
-      return document.getElementById('projectInput').value.trim() || 'General';
-    }
-
-    function getGoalMs() {
-      return parseInt(document.getElementById('goalHours').value) * 3600000;
-    }
-
-    // ── Session control ──
-    function toggleSession() {
-      if (activeStart) {
-        stopSession();
-      } else {
-        startSession();
-      }
-    }
-
-    function startSession() {
-      activeStart = Date.now();
-      activeElapsed = 0;
-      document.getElementById('startBtn').textContent = 'Stop Session';
-      document.getElementById('clockStatus').textContent = 'SESSION RUNNING';
-      document.getElementById('clockStatus').className = 'clock-status running';
-      document.getElementById('clockTime').className = 'clock-time running';
-      document.getElementById('clockSub').textContent = getProject();
-      document.title = '● Recording — Work Hours Logger | Deskloop';
-
-      activeTick = setInterval(() => {
-        activeElapsed = Date.now() - activeStart;
-        document.getElementById('clockTime').textContent = fmtDuration(activeElapsed);
-        updateGoal();
-      }, 1000);
-    }
-
-    function stopSession() {
-      clearInterval(activeTick);
-      const end = Date.now();
-      const duration = end - activeStart;
-
-      if (duration < 10000) {
-        // Ignore sessions under 10 seconds
-        resetClock();
-        return;
-      }
-
-      sessions.unshift({
-        id: end,
-        start: activeStart,
-        end,
-        duration,
-        project: getProject()
-      });
-
-      save();
-      resetClock();
-      render();
-    }
-
-    function resetClock() {
-      activeStart = null;
-      activeElapsed = 0;
-      document.getElementById('startBtn').textContent = 'Start Session';
-      document.getElementById('clockStatus').textContent = 'READY TO TRACK';
-      document.getElementById('clockStatus').className = 'clock-status stopped';
-      document.getElementById('clockTime').className = 'clock-time';
-      document.getElementById('clockTime').textContent = '00:00:00';
-      document.getElementById('clockSub').textContent = 'Start a session to begin logging';
-      document.title = 'Work Hours Logger | Deskloop';
-    }
-
-    function deleteSession(id) {
-      sessions = sessions.filter(s => s.id !== id);
-      save();
-      render();
-    }
-
-    function clearAll() {
-      if (!sessions.length) return;
-      if (!confirm('Clear all logged sessions? This cannot be undone.')) return;
-      sessions = [];
-      save();
-      render();
-    }
-
-    // ── Manual entry ──
-    function logManual() {
-      const panel = document.getElementById('manualPanel');
-      panel.style.display = 'block';
-      const now = new Date();
-      document.getElementById('manDate').value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-      document.getElementById('manStart').value = `${pad(now.getHours()-1)}:00`;
-      document.getElementById('manEnd').value = `${pad(now.getHours())}:00`;
-      panel.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function saveManual() {
-      const date = document.getElementById('manDate').value;
-      const start = document.getElementById('manStart').value;
-      const end = document.getElementById('manEnd').value;
-      const project = document.getElementById('manProject').value.trim() || 'General';
-
-      if (!date || !start || !end) return;
-
-      const startTs = new Date(`${date}T${start}`).getTime();
-      const endTs = new Date(`${date}T${end}`).getTime();
-
-      if (endTs <= startTs) { alert('End time must be after start time.'); return; }
-
-      sessions.unshift({
-        id: Date.now(),
-        start: startTs,
-        end: endTs,
-        duration: endTs - startTs,
-        project,
-        manual: true
-      });
-
-      sessions.sort((a,b) => b.start - a.start);
-      save();
-      closeManual();
-      render();
-    }
-
-    function closeManual() {
-      document.getElementById('manualPanel').style.display = 'none';
-      document.getElementById('manProject').value = '';
-    }
-
-    // ── Stats ──
-    function calcStats() {
-      const todayKey = dateKey(Date.now());
-      const weekAgo = Date.now() - 7 * 86400000;
-
-      const todaySessions = sessions.filter(s => dateKey(s.start) === todayKey);
-      const weekSessions = sessions.filter(s => s.start >= weekAgo);
-
-      const todayMs = todaySessions.reduce((a,s) => a + s.duration, 0);
-      const weekMs  = weekSessions.reduce((a,s) => a + s.duration, 0);
-      const avgMs   = todaySessions.length
-        ? todaySessions.reduce((a,s) => a + s.duration, 0) / todaySessions.length
-        : 0;
-
-      // Include active session in today total
-      const liveMs = activeStart ? (Date.now() - activeStart) : 0;
-
-      return { todayMs: todayMs + liveMs, weekMs, todayCount: todaySessions.length, avgMs };
-    }
-
-    function updateGoal() {
-      const { todayMs } = calcStats();
-      const goalMs = getGoalMs();
-      const pct = Math.min((todayMs / goalMs) * 100, 100);
-      const over = todayMs > goalMs;
-
-      document.getElementById('goalFill').style.width = pct + '%';
-      document.getElementById('goalFill').className = 'goal-fill' + (over ? ' over' : '');
-      document.getElementById('goalPct').textContent =
-        `${fmtDuration(todayMs, true)} / ${document.getElementById('goalHours').value}h`;
-    }
-
-    // ── Render ──
-    function render() {
-      const { todayMs, weekMs, todayCount, avgMs } = calcStats();
-
-      document.getElementById('statToday').textContent    = fmtDuration(todayMs, true);
-      document.getElementById('statWeek').textContent     = fmtDuration(weekMs, true);
-      document.getElementById('statSessions').textContent = todayCount;
-      document.getElementById('statAvg').textContent      = avgMs ? fmtDuration(avgMs, true) : '—';
-
-      updateGoal();
-      renderWeeklySummary();
-      renderLog();
-    }
-
-    function renderLog() {
-      const container = document.getElementById('logContainer');
-      if (!sessions.length) {
-        container.innerHTML = `
-          <div class="empty-log">
-            <div class="icon">⏳</div>
-            <p>No sessions logged yet.<br>Start a session above to begin tracking your work hours.</p>
-          </div>`;
-        return;
-      }
-
-      // Group by day
-      const groups = {};
-      sessions.forEach(s => {
-        const key = dateKey(s.start);
-        if (!groups[key]) groups[key] = [];
-        groups[key].push(s);
-      });
-
-      let html = '<table class="session-table"><thead><tr><th>Session</th><th>Time</th><th>Duration</th><th></th></tr></thead><tbody>';
-
-      Object.keys(groups).sort((a,b) => b.localeCompare(a)).forEach(key => {
-        const daySessions = groups[key];
-        const dayTotal = daySessions.reduce((a,s) => a + s.duration, 0);
-
-        html += `<tr><td colspan="4" style="padding:0;">
-          <div class="day-group-header">
-            <span>${friendlyDate(key)}</span>
-            <span class="day-total">${fmtDuration(dayTotal, true)}</span>
+      <!-- WEEK TAB -->
+      <div class="tab-pane" id="pane-week" role="tabpanel" aria-labelledby="tab-week">
+        <div class="week-hdr">
+          <span style="font-size:9px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;color:var(--text3);">// Weekly overview</span>
+          <div class="week-nav">
+            <button class="week-nav-btn" onclick="navWeek(-1)" aria-label="Previous week"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <span class="week-range" id="weekRange">—</span>
+            <button class="week-nav-btn" onclick="navWeek(1)" aria-label="Next week"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
           </div>
-        </td></tr>`;
+        </div>
 
-        daySessions.forEach(s => {
-          html += `<tr>
-            <td>
-              <div style="font-weight:600;color:var(--text);font-size:14px;">${s.project}</div>
-              ${s.manual ? '<span style="font-size:10px;color:var(--text3);">manually logged</span>' : ''}
-            </td>
-            <td style="color:var(--text3);font-size:12px;">${fmtTime(s.start)} – ${fmtTime(s.end)}</td>
-            <td class="dur">${fmtDuration(s.duration, true)}</td>
-            <td><button class="session-del" onclick="deleteSession(${s.id})" title="Delete">✕</button></td>
-          </tr>`;
-        });
-      });
+        <!-- Bar chart -->
+        <div class="bar-chart" id="barChart" role="img" aria-label="Weekly hours bar chart"></div>
 
-      html += '</tbody></table>';
-      container.innerHTML = html;
-    }
+        <!-- Session log for week -->
+        <div class="week-log" id="weekLog"></div>
 
-    // ── Export CSV ──
-    function exportCSV() {
-      if (!sessions.length) { alert('No sessions to export.'); return; }
-      const rows = [['Date','Project','Start','End','Duration (h)','Duration (min)']];
-      sessions.forEach(s => {
-        const d = new Date(s.start);
-        const dateStr = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-        const durH = (s.duration / 3600000).toFixed(2);
-        const durM = Math.round(s.duration / 60000);
-        rows.push([dateStr, s.project, fmtTime(s.start), fmtTime(s.end), durH, durM]);
-      });
-      const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `deskloop-hours-${dateKey(Date.now())}.csv`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
+        <!-- Footer -->
+        <div class="week-footer">
+          <div class="week-totals">
+            <div class="wt-item"><div class="wt-val" id="weekTotal">0h 00m</div><div class="wt-lbl">Week total</div></div>
+            <div class="wt-item"><div class="wt-val" id="weekAvg">0h 00m</div><div class="wt-lbl">Daily avg</div></div>
+          </div>
+          <button class="export-btn" onclick="exportCSV()" aria-label="Export to CSV">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+        </div>
+      </div>
+    </div>
 
-    // ── Init ──
-    load();
-    render();
+    <div class="ad-slot"><!-- Google AdSense --></div>
 
-    // Update live stats every 30s if session running
-    setInterval(() => { if (activeStart) render(); }, 30000);
-  </script>
+    <div class="seo">
+      <h2>Work Hours Logger Free — Deep Work Tracker with Streak Counter</h2>
+      <p>The Deskloop Work Hours Logger is a free, browser-based tool for tracking your work sessions with a prominent live timer, daily streak counter, and weekly view. Clock in when you start, add a note and tag, then clock out. Every session is stored locally — no account required, works offline, data never leaves your browser.</p>
+      <h3>Daily streak counter</h3>
+      <p>The streak counter tracks consecutive days you clock in. Missing a day resets the streak to zero. Your best-ever streak is preserved separately, so you can always see your personal record. The streak logic uses a simple check: if you clocked in yesterday and clock in again today, your streak increments by one.</p>
+      <h3>Deep work tracking with tags</h3>
+      <p>Tag every session as Deep Work, Meeting, Admin, Learning, or Break. Each tag has a distinct color accent on the session card. Over time, the weekly view reveals exactly how your hours are actually distributed — how much is focused work versus meetings versus administrative overhead.</p>
+      <h3>Weekly bar chart and CSV export</h3>
+      <p>The weekly view shows a bar chart of hours per day, with today's bar highlighted in emerald. Navigate back through previous weeks. Export any week to CSV for payroll, invoicing, or spreadsheet analysis.</p>
+    </div>
+  </div>
+</div>
 
+<footer>
+  <div class="W">
+    <div class="inner">
+      <div class="foot">
+        <span>© 2025 <a href="/">Deskloop.work</a> — Free productivity tools. No signup, no tracking.</span>
+        <span>Data stored locally · Works offline</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ── Constants ─────────────────────────────────────────────────────────────── */
+const SESS_KEY   = 'dl_hours_v2';
+const STREAK_KEY = 'dl_streak_v2';
+
+const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const TAG_META = {
+  deep:  { label:'Deep Work', color:'#1E40AF', emoji:'🧠' },
+  meet:  { label:'Meeting',   color:'#F59E0B', emoji:'🗣' },
+  admin: { label:'Admin',     color:'#566F87', emoji:'📋' },
+  learn: { label:'Learning',  color:'#A78BFA', emoji:'📚' },
+  break: { label:'Break',     color:'#34D399', emoji:'☕' },
+};
+
+/* ── State ─────────────────────────────────────────────────────────────────── */
+let sessions    = [];
+let clockedIn   = false;
+let clockStart  = null;
+let tickTimer   = null;
+let activeTag   = 'deep';
+let weekOffset  = 0;
+let activeTab   = 'today';
+
+/* ── Persist sessions ───────────────────────────────────────────────────────── */
+function loadSessions() {
+  try { sessions = JSON.parse(localStorage.getItem(SESS_KEY) || '[]'); } catch(e) { sessions = []; }
+}
+function saveSessions() {
+  try { localStorage.setItem(SESS_KEY, JSON.stringify(sessions.slice(-1000))); } catch(e) {}
+}
+
+/* ── Persist streak ─────────────────────────────────────────────────────────── */
+function loadStreak() {
+  try { return JSON.parse(localStorage.getItem(STREAK_KEY) || '{"lastDate":null,"current":0,"best":0}'); }
+  catch(e) { return { lastDate: null, current: 0, best: 0 }; }
+}
+
+function updateStreak() {
+  const today = todayKey();
+  const s     = loadStreak();
+  if (s.lastDate === today) return s; // already counted today
+
+  const yest = dateKey(new Date(Date.now() - 86400000));
+  if (s.lastDate === yest) {
+    s.current = (s.current || 0) + 1;
+  } else {
+    s.current = 1; // missed a day or first ever
+  }
+  s.best     = Math.max(s.best || 0, s.current);
+  s.lastDate = today;
+  try { localStorage.setItem(STREAK_KEY, JSON.stringify(s)); } catch(e) {}
+  return s;
+}
+
+/* ── Time helpers ───────────────────────────────────────────────────────────── */
+function dur(ms) {
+  const s = Math.floor(Math.abs(ms) / 1000);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sc = s % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+}
+
+function durShort(ms) {
+  const s = Math.floor(Math.abs(ms) / 1000);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  if (ms < 60000) return '< 1m';
+  return h > 0 ? `${h}h ${String(m).padStart(2,'0')}m` : `${m}m`;
+}
+
+function fmt12(date) {
+  let h = date.getHours(), m = date.getMinutes();
+  const ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return `${h}:${String(m).padStart(2,'0')} ${ap}`;
+}
+
+function dateKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function todayKey() { return dateKey(new Date()); }
+
+function weekStart(offset = 0) {
+  const d = new Date(); d.setHours(0,0,0,0);
+  d.setDate(d.getDate() - d.getDay() + offset * 7);
+  return d;
+}
+
+/* ── Clock in/out ───────────────────────────────────────────────────────────── */
+function toggleClock() {
+  clockedIn ? clockOut() : clockIn();
+}
+
+function clockIn() {
+  clockedIn  = true;
+  clockStart = new Date();
+  const note = document.getElementById('noteInput').value.trim();
+  const sess = { id: Date.now(), start: clockStart.toISOString(), end: null, note, tag: activeTag };
+  sessions.push(sess);
+  saveSessions();
+
+  const streak = updateStreak();
+  startTick();
+  setClockUI(true);
+  renderAll();
+
+  const msg = streak.current > 1
+    ? `Clocked in · 🔥 ${streak.current} day streak!`
+    : 'Clocked in ✓';
+  showToast(msg);
+}
+
+function clockOut() {
+  const now    = new Date();
+  const inProg = sessions.find(s => !s.end);
+  if (inProg) {
+    inProg.end  = now.toISOString();
+    inProg.note = document.getElementById('noteInput').value.trim() || inProg.note;
+  }
+  clockedIn  = false;
+  clockStart = null;
+  clearInterval(tickTimer); tickTimer = null;
+
+  saveSessions();
+  setClockUI(false);
+  document.getElementById('timerDisplay').textContent = '00:00:00';
+  document.getElementById('timerSub').textContent     = '\u00A0';
+  document.getElementById('noteInput').value          = '';
+  renderAll();
+
+  const ms = inProg ? new Date(inProg.end) - new Date(inProg.start) : 0;
+  showToast(`Session saved · ${durShort(ms)}`);
+}
+
+function startTick() {
+  clearInterval(tickTimer);
+  tickTimer = setInterval(() => {
+    const ms = Date.now() - clockStart.getTime();
+    document.getElementById('timerDisplay').textContent = dur(ms);
+    document.getElementById('timerSub').textContent     = `Started at ${fmt12(clockStart)}`;
+    refreshStatNums(); // live today/week update
+  }, 1000);
+}
+
+function setClockUI(running) {
+  const hero = document.getElementById('heroCard');
+  const dot  = document.getElementById('statusDot');
+  const stxt = document.getElementById('statusText');
+  const disp = document.getElementById('timerDisplay');
+  const btn  = document.getElementById('clockBtn');
+  const icon = document.getElementById('clockIcon');
+  const lbl  = document.getElementById('clockBtnLabel');
+
+  hero.classList.toggle('running', running);
+  dot.classList.toggle('on', running);
+  stxt.textContent = running ? 'Session in progress' : 'Ready to clock in';
+  disp.classList.toggle('running', running);
+  btn.classList.toggle('out', running);
+  btn.setAttribute('aria-label', running ? 'Clock out' : 'Clock in');
+  icon.innerHTML = running
+    ? '<rect x="6" y="4" width="4" height="16" fill="currentColor" stroke="none"/><rect x="14" y="4" width="4" height="16" fill="currentColor" stroke="none"/>'
+    : '<polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>';
+  lbl.textContent = running ? 'Clock Out' : 'Clock In';
+}
+
+/* ── Tag ────────────────────────────────────────────────────────────────────── */
+function setTag(btn) {
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeTag = btn.dataset.tag;
+  const inProg = sessions.find(s => !s.end);
+  if (inProg) { inProg.tag = activeTag; saveSessions(); }
+}
+
+/* ── Render all ─────────────────────────────────────────────────────────────── */
+function renderAll() {
+  refreshStatNums();
+  renderTodayTab();
+  renderWeekTab();
+}
+
+/* ── Stats ──────────────────────────────────────────────────────────────────── */
+function refreshStatNums() {
+  const tk     = todayKey();
+  const todays = sessions.filter(s => s.start.startsWith(tk));
+  const todayMs= todays.reduce((a,s) => { const e = s.end ? new Date(s.end) : new Date(); return a + (e - new Date(s.start)); }, 0);
+
+  const ws   = weekStart(0);
+  const we   = new Date(ws); we.setDate(ws.getDate() + 7);
+  const weekMs = sessions
+    .filter(s => { const d = new Date(s.start); return d >= ws && d < we; })
+    .reduce((a,s) => { const e = s.end ? new Date(s.end) : new Date(); return a + (e - new Date(s.start)); }, 0);
+
+  const totalSess = sessions.filter(s => s.end).length + (clockedIn ? 1 : 0);
+  const streak    = loadStreak();
+
+  document.getElementById('statToday').textContent    = durShort(todayMs);
+  document.getElementById('statWeek').textContent     = durShort(weekMs);
+  document.getElementById('statSessions').textContent = totalSess;
+  document.getElementById('statStreak').textContent   = streak.current > 0 ? `${streak.current} 🔥` : '0';
+  document.getElementById('streakBest').textContent   = `Best: ${streak.best || 0} day${streak.best !== 1 ? 's' : ''}`;
+}
+
+/* ── Today tab ──────────────────────────────────────────────────────────────── */
+function renderTodayTab() {
+  const tk     = todayKey();
+  const todays = sessions.filter(s => s.start.startsWith(tk));
+  const cards  = document.getElementById('todayCards');
+  const empty  = document.getElementById('emptyToday');
+
+  cards.innerHTML = '';
+  empty.style.display = todays.length ? 'none' : 'block';
+
+  [...todays].reverse().forEach(s => buildSessionCard(cards, s, true));
+}
+
+function buildSessionCard(container, s, showDel) {
+  const start   = new Date(s.start);
+  const end     = s.end ? new Date(s.end) : null;
+  const ms      = (end || new Date()) - start;
+  const meta    = TAG_META[s.tag] || TAG_META.deep;
+  const isActive= !s.end;
+
+  const card = document.createElement('div');
+  card.className = 'sess-card' + (isActive ? ' active-card' : '');
+
+  card.innerHTML = `
+    <div class="sess-bar" style="background:${meta.color};"></div>
+    <div class="sess-body">
+      <div class="sess-time">${fmt12(start)}${end ? ' – ' + fmt12(end) : ' – now'}</div>
+      <div class="sess-note">${escHtml(s.note || '—')}</div>
+    </div>
+    <span class="sess-tag-badge">${meta.emoji} ${meta.label}</span>
+    <div class="sess-dur">${durShort(ms)}</div>
+    ${showDel && !isActive ? `<button class="sess-del" onclick="deleteSession(${s.id})" aria-label="Delete"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>` : '<div style="width:25px;"></div>'}`;
+  container.appendChild(card);
+}
+
+function deleteSession(id) {
+  sessions = sessions.filter(s => s.id !== id);
+  saveSessions(); renderAll();
+  showToast('Session deleted');
+}
+
+/* ── Week tab ───────────────────────────────────────────────────────────────── */
+function renderWeekTab() {
+  const ws    = weekStart(weekOffset);
+  const we    = new Date(ws); we.setDate(ws.getDate() + 7);
+  const today = todayKey();
+
+  const label = `${MONTHS[ws.getMonth()]} ${ws.getDate()} – ${MONTHS[new Date(we-1).getMonth()]} ${new Date(we-1).getDate()}`;
+  document.getElementById('weekRange').textContent = label;
+
+  const days = Array.from({length:7}, (_,i) => {
+    const d = new Date(ws); d.setDate(ws.getDate() + i);
+    const k = dateKey(d);
+    const daySess = sessions.filter(s => s.start.startsWith(k));
+    const ms = daySess.reduce((a,s) => { const e = s.end ? new Date(s.end) : (weekOffset===0 && !s.end ? new Date() : new Date(s.start)); return a + (e - new Date(s.start)); }, 0);
+    return { date: d, key: k, sessions: daySess, ms, isToday: k === today, isFuture: d > new Date() && k !== today };
+  });
+
+  const maxMs  = Math.max(...days.map(d => d.ms), 1);
+  const weekMs = days.reduce((a,d) => a + d.ms, 0);
+  const workedDays = days.filter(d => d.ms > 0).length;
+  const avgMs  = workedDays > 0 ? weekMs / workedDays : 0;
+
+  document.getElementById('weekTotal').textContent = durShort(weekMs);
+  document.getElementById('weekAvg').textContent   = workedDays > 0 ? durShort(avgMs) : '—';
+
+  // Bar chart
+  const chart = document.getElementById('barChart');
+  chart.innerHTML = '';
+  days.forEach(d => {
+    const pct = d.isFuture ? 0 : Math.round((d.ms / maxMs) * 100);
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    const barClass = d.isFuture ? 'future' : d.isToday ? 'today' : d.ms > 0 ? 'worked' : '';
+    col.innerHTML = `
+      <div class="bar-hrs${d.isToday?' today-hrs':''}">${d.ms > 60000 ? durShort(d.ms) : ''}</div>
+      <div class="bar-track"><div class="bar-fill ${barClass}" style="height:${pct}%;" aria-label="${DAYS[d.date.getDay()]}: ${durShort(d.ms)}"></div></div>
+      <div class="bar-day${d.isToday?' today-day':''}">${DAYS[d.date.getDay()]}</div>
+      <div class="bar-date${d.isToday?' today-date':''}">${d.date.getDate()}</div>`;
+    chart.appendChild(col);
+  });
+
+  // Session log
+  const log = document.getElementById('weekLog');
+  log.innerHTML = '';
+  const withSess = days.filter(d => d.sessions.length > 0);
+  if (!withSess.length) {
+    log.innerHTML = `<div class="empty-state" style="padding:36px 0;"><div class="empty-icon">📊</div><div class="empty-title">No sessions this week</div><div class="empty-sub">Clock in to start building your weekly log.</div></div>`;
+    return;
+  }
+
+  [...withSess].reverse().forEach(d => {
+    const grp = document.createElement('div');
+    grp.innerHTML = `<div class="wlog-day-hdr"><span class="wlog-day-name">${DAYS[d.date.getDay()]}, ${MONTHS[d.date.getMonth()]} ${d.date.getDate()}</span><span class="wlog-day-total">${durShort(d.ms)}</span></div>`;
+    [...d.sessions].reverse().forEach(s => buildSessionCard(grp, s, false));
+    log.appendChild(grp);
+  });
+}
+
+function navWeek(dir) {
+  weekOffset = Math.min(0, weekOffset + dir);
+  renderWeekTab();
+}
+
+/* ── Tabs ───────────────────────────────────────────────────────────────────── */
+function switchTab(id) {
+  ['today','week'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t===id);
+    document.getElementById('tab-'+t).setAttribute('aria-selected', t===id);
+    document.getElementById('pane-'+t).classList.toggle('active', t===id);
+  });
+  activeTab = id;
+}
+
+/* ── Export ─────────────────────────────────────────────────────────────────── */
+function exportCSV() {
+  const ws = weekStart(weekOffset);
+  const we = new Date(ws); we.setDate(ws.getDate() + 7);
+  const subs = sessions.filter(s => { const d = new Date(s.start); return d >= ws && d < we && s.end; });
+  if (!subs.length) { showToast('No completed sessions this week'); return; }
+
+  const rows = ['Date,Day,Start,End,Duration (mins),Note,Tag'];
+  subs.forEach(s => {
+    const start = new Date(s.start), end = new Date(s.end);
+    const mins  = Math.round((end-start)/60000);
+    rows.push([dateKey(start), DAYS[start.getDay()], fmt12(start), fmt12(end), mins,
+      `"${(s.note||'').replace(/"/g,'""')}"`, s.tag||'deep'].join(','));
+  });
+
+  const b = new Blob([rows.join('\n')],{type:'text/csv'});
+  const u = URL.createObjectURL(b);
+  const a = document.createElement('a'); a.href = u;
+  a.download = `hours-${dateKey(ws)}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(u);
+  showToast('CSV downloaded ✓');
+}
+
+/* ── Toast ──────────────────────────────────────────────────────────────────── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ── Helpers ────────────────────────────────────────────────────────────────── */
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ── Restore session from reload ────────────────────────────────────────────── */
+function restoreSession() {
+  const inProg = sessions.find(s => !s.end);
+  if (!inProg) return;
+  clockedIn  = true;
+  clockStart = new Date(inProg.start);
+  activeTag  = inProg.tag || 'deep';
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === activeTag));
+  document.getElementById('noteInput').value = inProg.note || '';
+  startTick();
+  setClockUI(true);
+  document.getElementById('timerDisplay').textContent = dur(Date.now() - clockStart.getTime());
+}
+
+/* ── Enter key ──────────────────────────────────────────────────────────────── */
+document.getElementById('noteInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); toggleClock(); }
+});
+
+/* ── Init ───────────────────────────────────────────────────────────────────── */
+loadSessions();
+restoreSession();
+renderAll();
+</script>
 </body>
 </html>

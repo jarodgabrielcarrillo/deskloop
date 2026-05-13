@@ -3,645 +3,991 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meeting Cost Calculator — Real-Time Team Cost in Any Currency | Deskloop</title>
-  <meta name="description" content="Calculate the real cost of your meetings in real time. Supports USD, EUR, GBP, AUD, CAD, PHP, INR, SGD, AED, JPY and more. No signup needed.">
-  <meta name="keywords" content="meeting cost calculator, how much does a meeting cost, meeting cost per minute, team meeting calculator, free meeting cost tool, meeting cost in pesos, meeting cost calculator UK">
+  <title>Meeting Cost Calculator Free Online — Deskloop | Real-Time Dollar Counter</title>
+  <meta name="description" content="Free meeting cost calculator online. See the real-time dollar cost of your meeting as it happens. Enter team size and salary — watch the counter tick live. No signup required.">
+  <meta name="keywords" content="meeting cost calculator free online, cost of meeting calculator, real-time meeting cost, how much does a meeting cost, meeting roi calculator, free meeting tracker">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/tools/meeting-cost.html">
-  <meta property="og:title" content="Meeting Cost Calculator — See What Your Meeting Really Costs">
-  <meta property="og:description" content="Real-time meeting cost calculator with live currency conversion. Works in USD, EUR, GBP, PHP and 15+ currencies.">
+  <meta property="og:title" content="Meeting Cost Calculator Free Online — Deskloop">
+  <meta property="og:description" content="Real-time dollar cost of your meeting. Enter team size and salary — watch the counter tick live. Free, no signup.">
   <meta property="og:url" content="https://deskloop.work/tools/meeting-cost.html">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Meeting Cost Calculator",
+    "@type": "SoftwareApplication",
+    "name": "Deskloop Meeting Cost Calculator",
     "url": "https://deskloop.work/tools/meeting-cost.html",
-    "description": "Real-time calculator showing the true cost of a meeting in any currency",
+    "description": "Free real-time meeting cost calculator. Track the live dollar cost of meetings by team size and salary. No signup required.",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": ["Real-time cost counter","17 currencies","Meeting history","Share result card","No signup","Works offline"]
   }
   </script>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💸</text></svg>">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How is meeting cost calculated?", "acceptedAnswer": { "@type": "Answer", "text": "Cost = (attendees × average hourly rate × duration in hours). The calculator updates in real-time as the meeting runs." } },
+      { "@type": "Question", "name": "Is this meeting cost calculator free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. 100% free, no signup, no account, works offline." } },
+      { "@type": "Question", "name": "What currencies are supported?", "acceptedAnswer": { "@type": "Answer", "text": "USD, EUR, GBP, JPY, CAD, AUD, CHF, CNY, INR, PHP, SGD, HKD, KRW, BRL, MXN, ZAR, and AED." } }
+    ]
+  }
+  </script>
+  <meta name="google-site-verification" content="KChKjtl0z6q2zocomb2y3UslhaPxiXZGXB3-vhp9am4">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    .cost-display {
+    :root {
+      --primary:     #60A5FA;
+      --primary-btn: #1E40AF;
+      --accent:      #34D399;
+      --bg:          #0F172A;
+      --surface:     #1E2937;
+      --surface-2:   #243447;
+      --text:        #F1F5F9;
+      --text2:       #94A3B8;
+      --text3:       #64748B;
+      --border:      #334155;
+      --warning:     #F59E0B;
+      --danger:      #EF4444;
+      --radius:      12px;
+      --radius-sm:   8px;
+      --radius-lg:   16px;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md:   0 10px 15px -3px rgba(0,0,0,0.4);
+      --transition:  200ms ease;
+      --max-w:       1280px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      font-size: 16px; line-height: 1.6; min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 34px; height: 34px; background: var(--primary-btn); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; }
+    .logo-mark svg { width: 17px; height: 17px; }
+    .logo-name { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+    .nav-link { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 500; padding: 7px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-link:hover { color: var(--text); background: var(--surface); }
+
+    /* ── PAGE HEADER ── */
+    .page-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--text3); text-decoration: none; font-size: 13px; font-weight: 500; transition: color var(--transition); margin-bottom: 16px; }
+    .back-link:hover { color: var(--primary); }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .page-header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
+    .page-header p { font-size: 15px; color: var(--text2); max-width: 520px; }
+
+    /* ── LAYOUT ── */
+    .tool-layout { display: grid; grid-template-columns: 1fr 380px; gap: 24px; margin-bottom: 40px; }
+
+    /* ── MAIN COUNTER CARD ── */
+    .counter-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Cost display header */
+    .cost-header {
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 40px 36px;
       text-align: center;
-      padding: 36px 0 28px;
+      position: relative;
+    }
+
+    .cost-header::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--primary-btn), var(--primary) 60%, transparent);
     }
 
     .cost-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text2);
-      margin-bottom: 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 16px;
     }
 
-    .cost-number {
-      font-family: var(--font-head);
-      font-size: clamp(52px, 12vw, 96px);
-      font-weight: 800;
-      letter-spacing: -3px;
-      color: var(--accent);
-      line-height: 1;
+    .cost-display {
+      font-size: 80px; font-weight: 700;
+      letter-spacing: -4px; color: var(--text);
+      line-height: 1; font-variant-numeric: tabular-nums;
+      font-family: 'Inter', system-ui, monospace;
+      transition: color 0.4s ease;
       margin-bottom: 8px;
+    }
+
+    .cost-display.running { color: var(--warning); }
+    .cost-display.finished { color: var(--accent); }
+
+    .cost-currency-label {
+      font-size: 13px; color: var(--text3); margin-bottom: 24px;
+    }
+
+    /* Per-minute / per-second row */
+    .cost-meta {
+      display: flex; justify-content: center; gap: 32px;
+      font-size: 13px; color: var(--text2);
+    }
+
+    .cost-meta-item { text-align: center; }
+    .cost-meta-val { font-size: 18px; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+
+    /* Controls */
+    .counter-controls { padding: 28px 40px; display: flex; flex-direction: column; gap: 24px; }
+
+    /* Input grid */
+    .inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .input-group label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; color: var(--text3);
+    }
+
+    .input-wrap { position: relative; }
+
+    .input-prefix, .input-suffix {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      font-size: 14px; font-weight: 500; color: var(--text3);
+      pointer-events: none;
+    }
+
+    .input-prefix { left: 14px; }
+    .input-suffix { right: 14px; }
+
+    .input-wrap input, .input-wrap select {
+      width: 100%; height: 48px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500;
+      padding: 0 14px; outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      -moz-appearance: textfield;
+    }
+
+    .input-wrap input::-webkit-outer-spin-button,
+    .input-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .input-wrap input:focus, .input-wrap select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(96,165,250,0.12);
+    }
+
+    .has-prefix input { padding-left: 32px; }
+    .has-suffix input { padding-right: 48px; }
+
+    /* Attendee stepper */
+    .stepper {
+      display: flex; align-items: center;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); overflow: hidden; height: 48px;
+    }
+
+    .stepper-btn {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: none; border: none; color: var(--text2);
+      font-size: 20px; cursor: pointer;
+      transition: color var(--transition), background var(--transition);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .stepper-btn:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+
+    .stepper-val {
+      flex: 1; text-align: center;
+      font-size: 18px; font-weight: 600; color: var(--text);
       font-variant-numeric: tabular-nums;
-      transition: color 0.4s;
     }
 
-    .cost-number.warning { color: #e08a00; }
-    .cost-number.danger  { color: var(--danger); }
+    /* Currency select */
+    .currency-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
-    .cost-sub {
-      font-size: 13px;
-      color: var(--text3);
-      min-height: 20px;
+    .currency-chip {
+      padding: 6px 12px; background: transparent;
+      border: 1px solid var(--border); border-radius: 100px;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+      color: var(--text3); cursor: pointer;
+      transition: all var(--transition);
     }
 
-    .timer-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 28px;
-      flex-wrap: wrap;
+    .currency-chip:hover { border-color: var(--primary); color: var(--primary); }
+    .currency-chip.active { background: rgba(96,165,250,0.1); border-color: var(--primary); color: var(--primary); }
+
+    /* Action buttons */
+    .action-row { display: flex; gap: 10px; }
+
+    .btn-start {
+      flex: 1; height: 52px; background: var(--primary-btn); color: #fff;
+      border: none; border-radius: var(--radius); cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      white-space: nowrap; transition: background var(--transition), transform var(--transition);
+      box-shadow: var(--shadow-sm);
     }
 
-    .elapsed {
-      font-family: var(--font-head);
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text2);
-      letter-spacing: -1px;
+    .btn-start:hover { background: var(--primary); transform: translateY(-1px); }
+    .btn-start.running { background: var(--danger); }
+    .btn-start.running:hover { background: #dc2626; }
+    .btn-start svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+
+    .btn-reset {
+      height: 52px; padding: 0 20px;
+      background: transparent; color: var(--text2);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 500;
+      transition: all var(--transition); white-space: nowrap;
     }
 
-    .inputs-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 24px;
+    .btn-reset:hover { color: var(--text); border-color: var(--primary); }
+
+    .btn-share {
+      height: 52px; padding: 0 20px;
+      background: transparent; color: var(--text2);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 500;
+      transition: all var(--transition); white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
     }
 
-    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .btn-share:hover { color: var(--accent); border-color: rgba(52,211,153,0.4); }
+    .btn-share svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
 
-    .currency-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 16px;
+    /* Progress bar */
+    .timer-bar-wrap { background: var(--surface-2); border-radius: 100px; height: 6px; overflow: hidden; }
+    .timer-bar { height: 100%; background: var(--primary-btn); border-radius: 100px; width: 0; transition: width 1s linear; }
+
+    .timer-display {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; color: var(--text3);
     }
 
-    .symbol-input {
-      position: relative;
+    .timer-elapsed { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--text2); }
+
+    /* ── SIDEBAR ── */
+    .sidebar-col { display: flex; flex-direction: column; gap: 16px; }
+
+    .side-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm);
     }
 
-    .symbol-input .sym {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text2);
+    .side-card-title {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 16px;
+    }
+
+    /* Cost breakdown */
+    .breakdown-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
       font-size: 14px;
-      pointer-events: none;
-      font-weight: 600;
     }
 
-    .symbol-input input { padding-left: 28px; }
+    .breakdown-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .breakdown-row:first-child { padding-top: 0; }
 
-    /* Currency selector */
-    .currency-select-wrap {
-      position: relative;
-    }
+    .breakdown-label { color: var(--text2); }
+    .breakdown-val { font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+    .breakdown-val.accent { color: var(--primary); }
+    .breakdown-val.warning { color: var(--warning); }
 
-    .currency-flag {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      pointer-events: none;
-    }
-
-    select#currency {
-      padding-left: 36px;
-      font-weight: 600;
-    }
-
-    /* Rate badge */
-    .rate-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--text3);
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 4px 12px;
-      margin-top: 12px;
-    }
-
-    .rate-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--success);
-      animation: ratePulse 2s ease-in-out infinite;
-    }
-
-    .rate-dot.loading { background: var(--accent); }
-    .rate-dot.error   { background: var(--danger); animation: none; }
-
-    @keyframes ratePulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    /* Breakdown table */
-    .breakdown-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 8px;
-    }
-
-    .breakdown-table th {
-      text-align: left;
-      padding: 8px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text3);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .breakdown-table td {
+    /* Context benchmarks */
+    .benchmark {
+      display: flex; align-items: center; gap: 12px;
       padding: 10px 12px;
-      color: var(--text2);
-      border-bottom: 1px solid var(--border);
+      background: var(--surface-2); border-radius: var(--radius-sm);
+      margin-bottom: 8px; font-size: 13px;
     }
 
-    .breakdown-table tr:last-child td { border-bottom: none; }
+    .benchmark:last-child { margin-bottom: 0; }
+    .benchmark-icon { font-size: 20px; flex-shrink: 0; }
+    .benchmark-label { color: var(--text2); flex: 1; }
+    .benchmark-status { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 100px; white-space: nowrap; }
+    .status-ok   { background: rgba(52,211,153,0.1); color: var(--accent); }
+    .status-warn { background: rgba(245,158,11,0.1); color: var(--warning); }
+    .status-bad  { background: rgba(239,68,68,0.1); color: var(--danger); }
 
-    .breakdown-table .val {
-      text-align: right;
-      font-family: var(--font-head);
-      font-weight: 700;
-      color: var(--text);
-      font-size: 14px;
+    /* Meeting history */
+    .history-list { display: flex; flex-direction: column; gap: 8px; max-height: 360px; overflow-y: auto; }
+    .history-list::-webkit-scrollbar { width: 4px; }
+    .history-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .history-item {
+      background: var(--surface-2); border-radius: var(--radius-sm);
+      padding: 12px 14px; cursor: default;
     }
 
-    .copy-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
+    .history-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 4px;
     }
 
-    .copy-confirm {
-      font-size: 12px;
-      color: var(--success);
-      opacity: 0;
-      transition: opacity 0.3s;
+    .history-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .history-cost { font-size: 16px; font-weight: 700; color: var(--warning); font-variant-numeric: tabular-nums; }
+
+    .history-meta { font-size: 11px; color: var(--text3); }
+
+    .history-empty { text-align: center; padding: 28px 0; font-size: 13px; color: var(--text3); font-style: italic; }
+
+    .clear-btn { background: none; border: none; color: var(--text3); font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; padding: 4px 0; transition: color var(--transition); }
+    .clear-btn:hover { color: var(--danger); }
+
+    /* Share card modal */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none; align-items: center; justify-content: center;
     }
 
+    .modal-overlay.show { display: flex; }
+
+    .share-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 36px 32px;
+      width: min(480px, 92vw);
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .share-card-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--primary);
+      text-align: center; margin-bottom: 12px;
+    }
+
+    .share-cost {
+      font-size: 64px; font-weight: 700;
+      letter-spacing: -3px; color: var(--warning);
+      text-align: center; line-height: 1;
+      font-variant-numeric: tabular-nums; margin-bottom: 8px;
+    }
+
+    .share-subtitle { text-align: center; font-size: 14px; color: var(--text2); margin-bottom: 24px; }
+
+    .share-stats {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      overflow: hidden; margin-bottom: 24px;
+    }
+
+    .share-stat { background: var(--surface-2); padding: 14px; text-align: center; }
+    .share-stat-val { font-size: 18px; font-weight: 700; color: var(--text); }
+    .share-stat-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+    .share-footer { text-align: center; font-size: 11px; color: var(--text3); margin-bottom: 20px; }
+
+    .share-actions { display: flex; gap: 10px; }
+
+    .btn-copy {
+      flex: 1; height: 44px; background: var(--primary-btn); color: #fff;
+      border: none; border-radius: var(--radius-sm); cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+      transition: background var(--transition);
+    }
+
+    .btn-copy:hover { background: var(--primary); }
+
+    .btn-close-modal {
+      height: 44px; padding: 0 20px;
+      background: transparent; color: var(--text2);
+      border: 1px solid var(--border); border-radius: var(--radius-sm);
+      cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px;
+      transition: all var(--transition);
+    }
+
+    .btn-close-modal:hover { color: var(--text); border-color: var(--primary); }
+
+    .copy-confirm { font-size: 12px; color: var(--accent); text-align: center; margin-top: 8px; min-height: 18px; }
+
+    /* ── AD SLOT ── */
+    .ad-slot { border: 1px dashed var(--border); border-radius: var(--radius); min-height: 90px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text3); margin: 32px 0; }
+
+    /* ── SEO ── */
+    .seo-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow-sm); margin-bottom: 40px; }
+    .seo-block h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 16px; }
+    .seo-block h3 { font-size: 18px; font-weight: 500; color: var(--text); margin: 20px 0 8px; }
+    .seo-block p  { font-size: 14px; color: var(--text2); line-height: 1.85; margin-bottom: 10px; }
+    .seo-block p:last-child { margin-bottom: 0; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 32px 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--text3); }
+    .footer-inner a { color: var(--text3); text-decoration: none; transition: color var(--transition); }
+    .footer-inner a:hover { color: var(--primary); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) { .tool-layout { grid-template-columns: 1fr; } }
     @media (max-width: 600px) {
+      .cost-display { font-size: 56px; letter-spacing: -2px; }
+      .cost-header { padding: 28px 24px 24px; }
+      .counter-controls { padding: 20px 24px; }
       .inputs-grid { grid-template-columns: 1fr; }
-      .currency-row { grid-template-columns: 1fr; }
-      .timer-row { gap: 8px; }
+      .action-row { flex-wrap: wrap; }
+      .btn-start { width: 100%; }
+      .page-header h1 { font-size: 26px; }
+      .container { padding: 0 16px; }
+      .seo-block { padding: 24px; }
     }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="nav-inner">
-      <a href="/" class="logo">
-        <div class="logo-mark">
-          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="7" cy="7" r="4" stroke="#080808" stroke-width="2.5"/>
-            <circle cx="7" cy="7" r="1.5" fill="#080808"/>
-          </svg>
-        </div>
-        <span class="logo-text">Deskloop</span>
-      </a>
-      <div class="nav-right">
-        <a href="/#tools" class="nav-link">Tools</a>
-        <a href="/#about" class="nav-link">About</a>
+<!-- ── NAV ── -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Deskloop home">
+      <div class="logo-mark">
+        <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg>
       </div>
-    </div>
-  </header>
+      <span class="logo-name">Deskloop</span>
+    </a>
+    <a href="/" class="nav-link">All tools</a>
+  </div>
+</nav>
 
-  <main>
-    <div class="container">
+<!-- ── PAGE HEADER ── -->
+<div class="container">
+  <div class="page-header">
+    <a href="/" class="back-link">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      All tools
+    </a>
+    <h1>Meeting Cost Calculator</h1>
+    <p>See the real-time dollar cost of your meeting as it happens. Enter team size and average salary — watch the counter tick live.</p>
+  </div>
+</div>
 
-      <div class="page-header">
-        <a href="/" class="back-link">← All tools</a>
-        <h1>Meeting Cost Calculator</h1>
-        <p>Real-time dollar cost of your meeting — in any currency</p>
+<!-- ── TOOL ── -->
+<div class="container">
+  <div class="tool-layout">
+
+    <!-- ── LEFT: COUNTER ── -->
+    <div class="counter-card">
+
+      <!-- Cost display -->
+      <div class="cost-header">
+        <div class="cost-label" id="costLabel">Total meeting cost</div>
+        <div class="cost-display" id="costDisplay" aria-live="polite" aria-atomic="true">$0.00</div>
+        <div class="cost-currency-label" id="currencyLabel">USD · Click Start to begin</div>
+        <div class="cost-meta">
+          <div class="cost-meta-item">
+            <div class="cost-meta-val" id="perMinDisplay">$0.00</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;">per minute</div>
+          </div>
+          <div class="cost-meta-item">
+            <div class="cost-meta-val" id="perSecDisplay">$0.00</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;">per second</div>
+          </div>
+          <div class="cost-meta-item">
+            <div class="cost-meta-val" id="perHourDisplay">$0.00</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;">per hour</div>
+          </div>
+        </div>
       </div>
 
-      <!-- Main tool -->
-      <div class="tool-wrap">
+      <!-- Controls -->
+      <div class="counter-controls">
 
-        <div class="cost-display">
-          <div class="cost-label">Total meeting cost</div>
-          <div class="cost-number" id="costDisplay">–</div>
-          <div class="cost-sub" id="costSub">Set your team details and start the clock</div>
-          <div style="display:flex;justify-content:center;margin-top:8px;">
-            <div class="rate-badge">
-              <div class="rate-dot loading" id="rateDot"></div>
-              <span id="rateLabel">Loading exchange rate…</span>
-            </div>
+        <!-- Timer bar -->
+        <div>
+          <div class="timer-display" style="margin-bottom:8px;">
+            <span>Elapsed time</span>
+            <span class="timer-elapsed" id="elapsedDisplay">00:00:00</span>
           </div>
-          <div class="timer-row">
-            <div class="elapsed" id="elapsed">00:00:00</div>
-            <div style="display:flex;gap:8px;">
-              <button class="btn btn-primary" id="startBtn" onclick="toggleMeeting()">Start Meeting</button>
-              <button class="btn btn-danger" onclick="resetMeeting()">Reset</button>
-            </div>
+          <div class="timer-bar-wrap">
+            <div class="timer-bar" id="timerBar"></div>
           </div>
         </div>
 
-        <!-- Inputs -->
+        <!-- Attendees -->
+        <div class="input-group">
+          <label>Number of attendees</label>
+          <div class="stepper" role="group" aria-label="Attendee count">
+            <button class="stepper-btn" onclick="changeAttendees(-1)" aria-label="Decrease">−</button>
+            <div class="stepper-val" id="attendeesVal" aria-live="polite">6</div>
+            <button class="stepper-btn" onclick="changeAttendees(1)" aria-label="Increase">+</button>
+          </div>
+        </div>
+
+        <!-- Salary + duration -->
         <div class="inputs-grid">
           <div class="input-group">
-            <label for="attendees">Number of attendees</label>
-            <input type="number" id="attendees" value="6" min="1" max="500" onchange="recalc()">
-          </div>
-          <div class="input-group">
-            <label for="salaryUSD">Avg annual salary (in selected currency)</label>
-            <div class="symbol-input">
-              <span class="sym" id="salarySymbol">$</span>
-              <input type="number" id="salaryUSD" value="80000" min="1000" step="1000" onchange="recalc()">
-            </div>
-          </div>
-        </div>
-
-        <div class="currency-row">
-          <div class="input-group">
-            <label for="currency">Display currency</label>
-            <div class="currency-select-wrap">
-              <span class="currency-flag" id="currencyFlag">🇺🇸</span>
-              <select id="currency" onchange="onCurrencyChange()">
-                <option value="USD">USD — US Dollar</option>
-                <option value="EUR">EUR — Euro</option>
-                <option value="GBP">GBP — British Pound</option>
-                <option value="AUD">AUD — Australian Dollar</option>
-                <option value="CAD">CAD — Canadian Dollar</option>
-                <option value="PHP">PHP — Philippine Peso</option>
-                <option value="INR">INR — Indian Rupee</option>
-                <option value="SGD">SGD — Singapore Dollar</option>
-                <option value="AED">AED — UAE Dirham</option>
-                <option value="JPY">JPY — Japanese Yen</option>
-                <option value="MYR">MYR — Malaysian Ringgit</option>
-                <option value="NZD">NZD — New Zealand Dollar</option>
-                <option value="CHF">CHF — Swiss Franc</option>
-                <option value="KRW">KRW — South Korean Won</option>
-                <option value="BRL">BRL — Brazilian Real</option>
-                <option value="MXN">MXN — Mexican Peso</option>
-                <option value="ZAR">ZAR — South African Rand</option>
-              </select>
+            <label for="salaryInput">Avg annual salary</label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="salaryInput" value="80000" min="0" step="1000" oninput="recalcRates()" aria-label="Annual salary">
+              <span class="input-suffix" id="salaryUnit">/ yr</span>
             </div>
           </div>
           <div class="input-group">
-            <label for="workHours">Working hours per year</label>
-            <input type="number" id="workHours" value="2080" min="100" max="8760" step="10" onchange="recalc()" placeholder="e.g. 2080">
-            <div style="font-size:11px;color:var(--text3);margin-top:5px;">
-              Common: 2,080 (US) · 1,800 (EU) · 2,000 (general)
+            <label for="durationInput">Planned duration</label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="durationInput" value="60" min="1" max="480" oninput="updateDurationBar()" aria-label="Meeting duration in minutes">
+              <span class="input-suffix">min</span>
             </div>
           </div>
         </div>
 
-      </div>
-
-      <!-- Stats -->
-      <div class="metrics-grid">
-        <div class="metric">
-          <div class="metric-label">Cost per minute</div>
-          <div class="metric-value accent" id="perMinute">–</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Cost per hour</div>
-          <div class="metric-value" id="perHour">–</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Attendees</div>
-          <div class="metric-value" id="statAttendees">6</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Avg hourly rate</div>
-          <div class="metric-value" id="statHourly">–</div>
-        </div>
-      </div>
-
-      <!-- Breakdown -->
-      <div class="tool-wrap">
-        <p class="section-title" style="margin-bottom:14px;">// Cost breakdown</p>
-        <table class="breakdown-table">
-          <thead>
-            <tr>
-              <th>Timeframe</th>
-              <th class="val">Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Per second</td>      <td class="val" id="bPerSec">–</td></tr>
-            <tr><td>Per minute</td>      <td class="val" id="bPerMin">–</td></tr>
-            <tr><td>Per 30 minutes</td>  <td class="val" id="bPer30">–</td></tr>
-            <tr><td>Per 1 hour</td>      <td class="val" id="bPerHour">–</td></tr>
-            <tr><td>Per 2 hours</td>     <td class="val" id="bPer2Hour">–</td></tr>
-            <tr><td>Per day (8hr)</td>   <td class="val" id="bPerDay">–</td></tr>
-          </tbody>
-        </table>
-
-        <div class="copy-row">
-          <button class="btn btn-ghost" style="font-size:13px;" onclick="shareResult()">📋 Copy result</button>
-          <button class="btn btn-ghost" style="font-size:13px;" onclick="showCard()">🖼 Share card</button>
-          <span class="copy-confirm" id="copyConfirm">Copied to clipboard!</span>
-        </div>
-
-        <!-- Share card -->
-        <div id="shareCard" style="display:none;margin-top:16px;background:linear-gradient(135deg,#1a1400,#0f0f0f);border:1px solid rgba(232,160,32,0.3);border-radius:var(--radius-lg);padding:28px;text-align:center;">
-          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">MEETING COST REPORT</div>
-          <div style="font-family:var(--font-head);font-size:48px;font-weight:800;color:var(--accent);letter-spacing:-2px;margin-bottom:8px;" id="cardCost">$0.00</div>
-          <div style="font-size:14px;color:var(--text2);margin-bottom:16px;" id="cardDetails">—</div>
-          <div style="display:flex;justify-content:center;gap:24px;margin-bottom:20px;">
-            <div style="text-align:center;">
-              <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--text);" id="cardTime">00:00</div>
-              <div style="font-size:11px;color:var(--text3);">Duration</div>
-            </div>
-            <div style="width:1px;background:var(--border);"></div>
-            <div style="text-align:center;">
-              <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--text);" id="cardPeople">—</div>
-              <div style="font-size:11px;color:var(--text3);">Attendees</div>
-            </div>
-            <div style="width:1px;background:var(--border);"></div>
-            <div style="text-align:center;">
-              <div style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--text);" id="cardPerMin">—</div>
-              <div style="font-size:11px;color:var(--text3);">Per minute</div>
-            </div>
+        <!-- Working hours -->
+        <div class="input-group">
+          <label for="workHoursInput">Working hours per year</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="workHoursInput" value="2080" min="100" max="5000" step="10" oninput="recalcRates()" aria-label="Working hours per year">
+            <span class="input-suffix">hrs</span>
           </div>
-          <div style="font-size:11px;color:var(--text3);">deskloop.work/tools/meeting-cost.html</div>
-          <button class="btn btn-primary" style="margin-top:14px;font-size:13px;" onclick="copyCard()">📋 Copy as text</button>
+        </div>
+
+        <!-- Currency -->
+        <div class="input-group">
+          <label>Currency</label>
+          <div class="currency-row" role="group" aria-label="Currency selection" id="currencyRow">
+            <button class="currency-chip active" data-currency="USD" data-symbol="$" onclick="setCurrency(this)">USD</button>
+            <button class="currency-chip" data-currency="EUR" data-symbol="€" onclick="setCurrency(this)">EUR</button>
+            <button class="currency-chip" data-currency="GBP" data-symbol="£" onclick="setCurrency(this)">GBP</button>
+            <button class="currency-chip" data-currency="JPY" data-symbol="¥" onclick="setCurrency(this)">JPY</button>
+            <button class="currency-chip" data-currency="CAD" data-symbol="C$" onclick="setCurrency(this)">CAD</button>
+            <button class="currency-chip" data-currency="AUD" data-symbol="A$" onclick="setCurrency(this)">AUD</button>
+            <button class="currency-chip" data-currency="PHP" data-symbol="₱" onclick="setCurrency(this)">PHP</button>
+            <button class="currency-chip" data-currency="SGD" data-symbol="S$" onclick="setCurrency(this)">SGD</button>
+            <button class="currency-chip" data-currency="INR" data-symbol="₹" onclick="setCurrency(this)">INR</button>
+            <button class="currency-chip" data-currency="CNY" data-symbol="¥" onclick="setCurrency(this)">CNY</button>
+            <button class="currency-chip" data-currency="KRW" data-symbol="₩" onclick="setCurrency(this)">KRW</button>
+            <button class="currency-chip" data-currency="BRL" data-symbol="R$" onclick="setCurrency(this)">BRL</button>
+            <button class="currency-chip" data-currency="MXN" data-symbol="MX$" onclick="setCurrency(this)">MXN</button>
+            <button class="currency-chip" data-currency="ZAR" data-symbol="R" onclick="setCurrency(this)">ZAR</button>
+            <button class="currency-chip" data-currency="AED" data-symbol="د.إ" onclick="setCurrency(this)">AED</button>
+            <button class="currency-chip" data-currency="CHF" data-symbol="CHF" onclick="setCurrency(this)">CHF</button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-row">
+          <button class="btn-start" id="startBtn" onclick="toggleMeeting()" aria-label="Start meeting">
+            <svg id="startIcon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg>
+            <span id="startLabel">Start Meeting</span>
+          </button>
+          <button class="btn-reset" onclick="resetMeeting()" aria-label="Reset">Reset</button>
+          <button class="btn-share" onclick="showShareCard()" aria-label="Share result">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Share
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── RIGHT SIDEBAR ── -->
+    <div class="sidebar-col">
+
+      <!-- Cost breakdown -->
+      <div class="side-card">
+        <div class="side-card-title">// Cost breakdown</div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Hourly rate (avg)</span>
+          <span class="breakdown-val" id="bdHourly">$38.46</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Attendees</span>
+          <span class="breakdown-val" id="bdAttendees">6 people</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Team rate / hour</span>
+          <span class="breakdown-val" id="bdTeamRate">$230.77</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Cost per minute</span>
+          <span class="breakdown-val" id="bdPerMin">$3.85</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Planned duration cost</span>
+          <span class="breakdown-val accent" id="bdPlanned">$230.77</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Live cost</span>
+          <span class="breakdown-val warning" id="bdLive">$0.00</span>
         </div>
       </div>
 
-      <!-- SEO Block -->
-      <div class="seo-block">
-        <h2>How Much Does Your Meeting Really Cost?</h2>
-        <p>The Deskloop Meeting Cost Calculator converts your team's combined time into real money — updated every second from the moment you start the clock. It supports live currency conversion across 17 currencies including USD, EUR, GBP, PHP, INR, SGD, and more, powered by real-time exchange rates from the European Central Bank.</p>
-        <p>Studies consistently show that unnecessary meetings are one of the largest hidden costs in modern organizations. A 1-hour meeting with 8 people at an average salary of $80,000/year costs over $307 — before accounting for the time it takes to mentally re-engage with focused work afterward.</p>
-        <p>Use this tool before scheduling a recurring meeting, or run it live during a meeting to create a shared sense of urgency around staying on-agenda and finishing on time.</p>
+      <!-- Context benchmarks -->
+      <div class="side-card">
+        <div class="side-card-title">// Is this meeting worth it?</div>
+        <div id="benchmarkList">
+          <div class="benchmark">
+            <div class="benchmark-icon">☕</div>
+            <div class="benchmark-label">Cost of team coffee run</div>
+            <div class="benchmark-status status-ok" id="bmCoffee">—</div>
+          </div>
+          <div class="benchmark">
+            <div class="benchmark-icon">🍕</div>
+            <div class="benchmark-label">Cost of team lunch</div>
+            <div class="benchmark-status status-ok" id="bmLunch">—</div>
+          </div>
+          <div class="benchmark">
+            <div class="benchmark-icon">✈️</div>
+            <div class="benchmark-label">Domestic flight ticket</div>
+            <div class="benchmark-status status-ok" id="bmFlight">—</div>
+          </div>
+          <div class="benchmark">
+            <div class="benchmark-icon">👩‍💻</div>
+            <div class="benchmark-label">Freelancer day rate</div>
+            <div class="benchmark-status status-ok" id="bmFreelancer">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meeting history -->
+      <div class="side-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <div class="side-card-title" style="margin:0;">// Meeting log</div>
+          <button class="clear-btn" onclick="clearHistory()" aria-label="Clear history">Clear all</button>
+        </div>
+        <div class="history-list" id="historyList">
+          <div class="history-empty">No meetings logged yet. Start one above.</div>
+        </div>
       </div>
 
     </div>
-  </main>
+  </div>
 
-  <footer>
-    <div class="container">
-      <div class="footer-copy">
-        <span>© 2025 Deskloop.work — Free productivity tools</span>
-        <span style="color:var(--text3);font-size:11px;">No cookies · No tracking · No nonsense</span>
+  <!-- Ad slot -->
+  <div class="ad-slot" role="complementary"><!-- Google AdSense --></div>
+
+  <!-- SEO block -->
+  <div class="seo-block">
+    <h2>Meeting Cost Calculator Free Online — How Much Do Your Meetings Cost?</h2>
+    <p>The Deskloop Meeting Cost Calculator shows you the real-time dollar cost of your meeting as it runs. Enter your team size and average salary, hit Start, and watch the counter tick up every second. It's a simple, visceral way to understand whether your meetings are worth the time they consume.</p>
+
+    <h3>How is meeting cost calculated?</h3>
+    <p>Meeting cost is calculated as: <strong>number of attendees × average hourly rate × duration in hours</strong>. The hourly rate is derived from the annual salary divided by working hours per year (default 2,080 hours, which is 52 weeks × 40 hours). For a 6-person team with an $80,000 average salary, a 60-minute meeting costs approximately $231.</p>
+
+    <h3>Why does meeting cost matter?</h3>
+    <p>Research by Harvard Business School and MIT consistently shows that meeting overload is one of the largest hidden costs in modern organizations. The average knowledge worker spends over 30% of their working hours in meetings. Making that cost visible — as a live, ticking dollar figure — changes how teams approach scheduling, agenda-setting, and participation.</p>
+
+    <h3>When to use this calculator</h3>
+    <p>Use it before scheduling a recurring meeting to sanity-check its annual cost. Use it live during a meeting that's running long. Use it to make the case for async communication over synchronous meetings. Share the result card with your team to start a conversation about meeting culture.</p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span>© 2025 <a href="/">Deskloop.work</a> — Free productivity tools</span>
+      <span>No cookies · No tracking · No nonsense</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Share card modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="share-card" role="dialog" aria-modal="true" aria-label="Share meeting cost result">
+    <div class="share-card-title">Meeting Cost Report</div>
+    <div class="share-cost" id="shareCost">$0.00</div>
+    <div class="share-subtitle" id="shareSubtitle">—</div>
+    <div class="share-stats">
+      <div class="share-stat">
+        <div class="share-stat-val" id="shareTime">0:00</div>
+        <div class="share-stat-label">Duration</div>
+      </div>
+      <div class="share-stat">
+        <div class="share-stat-val" id="sharePeople">—</div>
+        <div class="share-stat-label">Attendees</div>
+      </div>
+      <div class="share-stat">
+        <div class="share-stat-val" id="sharePerMin">—</div>
+        <div class="share-stat-label">Per minute</div>
       </div>
     </div>
-  </footer>
+    <div class="share-footer">Generated at deskloop.work/tools/meeting-cost.html</div>
+    <div class="share-actions">
+      <button class="btn-copy" onclick="copyShareCard()">📋 Copy as text</button>
+      <button class="btn-close-modal" onclick="closeModal()">Close</button>
+    </div>
+    <div class="copy-confirm" id="copyConfirm"></div>
+  </div>
+</div>
 
-  <script>
-    // ── Currency config ──
-    const CURRENCIES = {
-      USD: { symbol: '$',  flag: '🇺🇸', name: 'USD',  decimals: 2 },
-      EUR: { symbol: '€',  flag: '🇪🇺', name: 'EUR',  decimals: 2 },
-      GBP: { symbol: '£',  flag: '🇬🇧', name: 'GBP',  decimals: 2 },
-      AUD: { symbol: 'A$', flag: '🇦🇺', name: 'AUD',  decimals: 2 },
-      CAD: { symbol: 'C$', flag: '🇨🇦', name: 'CAD',  decimals: 2 },
-      PHP: { symbol: '₱',  flag: '🇵🇭', name: 'PHP',  decimals: 0 },
-      INR: { symbol: '₹',  flag: '🇮🇳', name: 'INR',  decimals: 0 },
-      SGD: { symbol: 'S$', flag: '🇸🇬', name: 'SGD',  decimals: 2 },
-      AED: { symbol: 'د.إ',flag: '🇦🇪', name: 'AED',  decimals: 2 },
-      JPY: { symbol: '¥',  flag: '🇯🇵', name: 'JPY',  decimals: 0 },
-      MYR: { symbol: 'RM', flag: '🇲🇾', name: 'MYR',  decimals: 2 },
-      NZD: { symbol: 'NZ$',flag: '🇳🇿', name: 'NZD',  decimals: 2 },
-      CHF: { symbol: 'Fr', flag: '🇨🇭', name: 'CHF',  decimals: 2 },
-      KRW: { symbol: '₩',  flag: '🇰🇷', name: 'KRW',  decimals: 0 },
-      BRL: { symbol: 'R$', flag: '🇧🇷', name: 'BRL',  decimals: 2 },
-      MXN: { symbol: 'MX$',flag: '🇲🇽', name: 'MXN',  decimals: 2 },
-      ZAR: { symbol: 'R',  flag: '🇿🇦', name: 'ZAR',  decimals: 2 },
-    };
+<script>
+'use strict';
 
-    // Fallback rates relative to USD (used if API fails)
-    const FALLBACK_RATES = {
-      USD:1, EUR:0.92, GBP:0.79, AUD:1.54, CAD:1.36,
-      PHP:58.5, INR:83.5, SGD:1.34, AED:3.67, JPY:149.5,
-      MYR:4.72, NZD:1.63, CHF:0.89, KRW:1330, BRL:5.05,
-      MXN:17.2, ZAR:18.7
-    };
+// ── State ──
+let running       = false;
+let elapsed       = 0;          // seconds
+let tickInterval  = null;
+let totalCost     = 0;
+let costPerSecond = 0;
+let attendees     = 6;
+let currency      = 'USD';
+let currencySymbol= '$';
+let history       = [];
 
-    // ── State ──
-    let isRunning = false;
-    let elapsedSeconds = 0;
-    let interval = null;
-    let costPerSecondUSD = 0;
-    let exchangeRate = 1;
-    let currentCurrency = 'USD';
-    let rateLoaded = false;
+// ── Load history ──
+(function init() {
+  try { history = JSON.parse(localStorage.getItem('dl_meeting_v2') || '[]'); } catch(e) {}
+  recalcRates();
+  renderHistory();
+})();
 
-    // ── Fetch exchange rate ──
-    async function fetchRate(toCurrency) {
-      const dot  = document.getElementById('rateDot');
-      const label = document.getElementById('rateLabel');
-      dot.className = 'rate-dot loading';
-      label.textContent = 'Fetching live rate…';
+// ── Rates ──
+function recalcRates() {
+  const salary    = parseFloat(document.getElementById('salaryInput').value)    || 80000;
+  const workHours = parseFloat(document.getElementById('workHoursInput').value) || 2080;
+  const hourly    = salary / workHours;
+  const teamHourly= hourly * attendees;
+  costPerSecond   = teamHourly / 3600;
 
-      if (toCurrency === 'USD') {
-        exchangeRate = 1;
-        rateLoaded = true;
-        dot.className = 'rate-dot';
-        label.textContent = 'Base currency (USD)';
-        recalc();
-        return;
-      }
+  document.getElementById('bdHourly').textContent    = fmt(hourly);
+  document.getElementById('bdAttendees').textContent = `${attendees} ${attendees === 1 ? 'person' : 'people'}`;
+  document.getElementById('bdTeamRate').textContent  = fmt(teamHourly);
+  document.getElementById('bdPerMin').textContent    = fmt(costPerSecond * 60);
+  document.getElementById('perMinDisplay').textContent  = fmt(costPerSecond * 60);
+  document.getElementById('perSecDisplay').textContent  = fmt(costPerSecond);
+  document.getElementById('perHourDisplay').textContent = fmt(teamHourly);
 
-      try {
-        const res = await fetch(`https://api.frankfurter.app/latest?from=USD&to=${toCurrency}`);
-        if (!res.ok) throw new Error('API error');
-        const data = await res.json();
-        exchangeRate = data.rates[toCurrency];
-        rateLoaded = true;
-        dot.className = 'rate-dot';
-        label.textContent = `1 USD = ${exchangeRate.toFixed(4)} ${toCurrency} · Live rate`;
-      } catch {
-        exchangeRate = FALLBACK_RATES[toCurrency] || 1;
-        rateLoaded = true;
-        dot.className = 'rate-dot error';
-        label.textContent = `Approx. rate (offline fallback)`;
-      }
-      recalc();
-    }
+  const planned = parseFloat(document.getElementById('durationInput').value) || 60;
+  document.getElementById('bdPlanned').textContent = fmt(costPerSecond * 60 * planned);
 
-    // ── Helpers ──
-    function getAttendees()  { return Math.max(1, parseInt(document.getElementById('attendees').value) || 1); }
-    function getSalary()     { return Math.max(1, parseFloat(document.getElementById('salaryUSD').value) || 80000); }
-    function getWorkHours()  { return parseInt(document.getElementById('workHours').value) || 2080; }
-    function getCurrencyConfig() { return CURRENCIES[currentCurrency] || CURRENCIES.USD; }
+  document.getElementById('currencyLabel').textContent = `${currency} · ${running ? 'Running…' : 'Click Start to begin'}`;
+  updateBenchmarks(totalCost || costPerSecond * 60 * planned);
+}
 
-    function fmt(amountUSD, forceDec) {
-      const cfg = getCurrencyConfig();
-      const converted = amountUSD * exchangeRate;
-      const dec = forceDec !== undefined ? forceDec : cfg.decimals;
-      const formatted = converted.toLocaleString('en-US', {
-        minimumFractionDigits: dec,
-        maximumFractionDigits: dec
-      });
-      return cfg.symbol + formatted;
-    }
+function updateDurationBar() { recalcRates(); }
 
-    function fmtTime(s) {
-      const h = Math.floor(s / 3600);
-      const m = Math.floor((s % 3600) / 60);
-      const sec = s % 60;
-      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
-    }
+function changeAttendees(delta) {
+  attendees = Math.max(1, Math.min(100, attendees + delta));
+  document.getElementById('attendeesVal').textContent = attendees;
+  recalcRates();
+}
 
-    function calcCostPerSecondUSD() {
-      const hourlyRate = getSalary() / getWorkHours();
-      return (hourlyRate * getAttendees()) / 3600;
-    }
+// ── Currency ──
+function setCurrency(btn) {
+  document.querySelectorAll('.currency-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currency       = btn.dataset.currency;
+  currencySymbol = btn.dataset.symbol;
+  recalcRates();
+  updateCostDisplay();
+}
 
-    function recalc() {
-      if (!rateLoaded) return;
-      costPerSecondUSD = calcCostPerSecondUSD();
-      const cfg = getCurrencyConfig();
+// ── Format ──
+function fmt(v) {
+  const abs  = Math.abs(v);
+  const sym  = currencySymbol;
+  const isJPY = currency === 'JPY' || currency === 'KRW';
+  if (isJPY) return sym + Math.round(v).toLocaleString();
+  return sym + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 
-      const perMin  = costPerSecondUSD * 60;
-      const perHour = costPerSecondUSD * 3600;
-      const hourlyAvg = getSalary() / getWorkHours();
+function fmtTime(s) {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sc = s % 60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+}
 
-      document.getElementById('perMinute').textContent   = fmt(perMin);
-      document.getElementById('perHour').textContent     = fmt(perHour);
-      document.getElementById('statAttendees').textContent = getAttendees();
-      document.getElementById('statHourly').textContent  = fmt(hourlyAvg);
+// ── Counter ──
+function toggleMeeting() {
+  running ? stopMeeting() : startMeeting();
+}
 
-      document.getElementById('bPerSec').textContent    = fmt(costPerSecondUSD, Math.max(cfg.decimals, 3));
-      document.getElementById('bPerMin').textContent    = fmt(perMin);
-      document.getElementById('bPer30').textContent     = fmt(costPerSecondUSD * 1800);
-      document.getElementById('bPerHour').textContent   = fmt(perHour);
-      document.getElementById('bPer2Hour').textContent  = fmt(costPerSecondUSD * 7200);
-      document.getElementById('bPerDay').textContent    = fmt(costPerSecondUSD * 28800);
+function startMeeting() {
+  running = true;
+  document.getElementById('startBtn').classList.add('running');
+  document.getElementById('startIcon').innerHTML = '<rect x="6" y="4" width="4" height="16" fill="currentColor" stroke="none"/><rect x="14" y="4" width="4" height="16" fill="currentColor" stroke="none"/>';
+  document.getElementById('startLabel').textContent = 'End Meeting';
+  document.getElementById('startBtn').setAttribute('aria-label','End meeting');
+  document.getElementById('costDisplay').classList.add('running');
+  document.getElementById('currencyLabel').textContent = `${currency} · Running…`;
 
-      document.getElementById('salarySymbol').textContent = cfg.symbol;
-      updateCostDisplay();
-    }
+  tickInterval = setInterval(() => {
+    elapsed++;
+    totalCost = costPerSecond * elapsed;
+    updateCostDisplay();
+    updateTimerBar();
+  }, 1000);
+}
 
-    function updateCostDisplay() {
-      if (!rateLoaded) return;
-      const total = costPerSecondUSD * elapsedSeconds;
-      const el = document.getElementById('costDisplay');
-      el.textContent = fmt(total);
+function stopMeeting() {
+  clearInterval(tickInterval);
+  running = false;
 
-      const totalUSD = total;
-      if (totalUSD >= 1000)      { el.className = 'cost-number danger'; }
-      else if (totalUSD >= 300)  { el.className = 'cost-number warning'; }
-      else                       { el.className = 'cost-number'; }
+  // Log to history
+  if (elapsed > 0) {
+    const salary = parseFloat(document.getElementById('salaryInput').value) || 80000;
+    history.unshift({
+      id:        Date.now(),
+      cost:      totalCost,
+      currency,
+      symbol:    currencySymbol,
+      elapsed,
+      attendees,
+      salary,
+      date:      new Date().toLocaleDateString(),
+      time:      new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }),
+    });
+    saveHistory();
+    renderHistory();
+  }
 
-      const perMin = costPerSecondUSD * 60;
-      document.getElementById('costSub').textContent = isRunning
-        ? `${fmt(perMin)} per minute · ${getAttendees()} attendees`
-        : elapsedSeconds > 0
-          ? `Meeting paused at ${fmtTime(elapsedSeconds)}`
-          : 'Set your team details and start the clock';
-    }
+  document.getElementById('startBtn').classList.remove('running');
+  document.getElementById('startIcon').innerHTML = '<polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>';
+  document.getElementById('startLabel').textContent = 'Start Meeting';
+  document.getElementById('startBtn').setAttribute('aria-label','Start meeting');
+  document.getElementById('costDisplay').classList.remove('running');
+  document.getElementById('costDisplay').classList.add('finished');
+  document.getElementById('currencyLabel').textContent = `${currency} · Meeting ended`;
+}
 
-    function onCurrencyChange() {
-      const sel = document.getElementById('currency');
-      currentCurrency = sel.value;
-      const cfg = CURRENCIES[currentCurrency];
-      document.getElementById('currencyFlag').textContent = cfg.flag;
-      rateLoaded = false;
-      fetchRate(currentCurrency);
-    }
+function resetMeeting() {
+  clearInterval(tickInterval);
+  running   = false; elapsed = 0; totalCost = 0;
+  document.getElementById('startBtn').classList.remove('running');
+  document.getElementById('startIcon').innerHTML = '<polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>';
+  document.getElementById('startLabel').textContent = 'Start Meeting';
+  document.getElementById('costDisplay').classList.remove('running','finished');
+  document.getElementById('costDisplay').textContent = `${currencySymbol}0.00`;
+  document.getElementById('elapsedDisplay').textContent = '00:00:00';
+  document.getElementById('timerBar').style.width = '0';
+  document.getElementById('bdLive').textContent = fmt(0);
+  document.getElementById('currencyLabel').textContent = `${currency} · Click Start to begin`;
+  updateBenchmarks(costPerSecond * 60 * (parseFloat(document.getElementById('durationInput').value) || 60));
+}
 
-    function tick() {
-      elapsedSeconds++;
-      document.getElementById('elapsed').textContent = fmtTime(elapsedSeconds);
-      updateCostDisplay();
-      const total = costPerSecondUSD * elapsedSeconds;
-      document.title = `${fmt(total)} — Meeting Cost | Deskloop`;
-    }
+function updateCostDisplay() {
+  document.getElementById('costDisplay').textContent = fmt(totalCost);
+  document.getElementById('elapsedDisplay').textContent = fmtTime(elapsed);
+  document.getElementById('bdLive').textContent = fmt(totalCost);
+  updateBenchmarks(totalCost);
+}
 
-    function toggleMeeting() {
-      if (isRunning) {
-        clearInterval(interval);
-        isRunning = false;
-        document.getElementById('startBtn').textContent = 'Resume';
-      } else {
-        isRunning = true;
-        interval = setInterval(tick, 1000);
-        document.getElementById('startBtn').textContent = 'Pause';
-      }
-    }
+function updateTimerBar() {
+  const planned = (parseFloat(document.getElementById('durationInput').value) || 60) * 60;
+  const pct = Math.min((elapsed / planned) * 100, 100);
+  const bar = document.getElementById('timerBar');
+  bar.style.width = pct + '%';
+  bar.style.background = pct > 100 ? 'var(--danger)' : pct > 75 ? 'var(--warning)' : 'var(--primary-btn)';
+}
 
-    function resetMeeting() {
-      clearInterval(interval);
-      isRunning = false;
-      elapsedSeconds = 0;
-      document.getElementById('elapsed').textContent = '00:00:00';
-      document.getElementById('startBtn').textContent = 'Start Meeting';
-      document.title = 'Meeting Cost Calculator | Deskloop';
-      updateCostDisplay();
-    }
+// ── Benchmarks ──
+function updateBenchmarks(cost) {
+  const coffeePerPerson = 5;
+  const coffee  = attendees * coffeePerPerson;
+  const lunch   = attendees * 15;
+  const flight  = 350;
+  const freelancer = 400;
 
-    function showCard() {
-      const total = costPerSecondUSD * elapsedSeconds;
-      const mins = Math.floor(elapsedSeconds / 60);
-      const secs = elapsedSeconds % 60;
-      document.getElementById('cardCost').textContent = fmt(total);
-      document.getElementById('cardDetails').textContent = `${getAttendees()} people · avg ${fmt(getSalary())} salary · ${currentCurrency}`;
-      document.getElementById('cardTime').textContent = `${mins}:${String(secs).padStart(2,'0')}`;
-      document.getElementById('cardPeople').textContent = getAttendees();
-      document.getElementById('cardPerMin').textContent = fmt(costPerSecondUSD * 60);
-      document.getElementById('shareCard').style.display = 'block';
-      document.getElementById('shareCard').scrollIntoView({ behavior: 'smooth' });
-    }
+  setBenchmark('bmCoffee',     cost, coffee,     `${currencySymbol}${coffee}`);
+  setBenchmark('bmLunch',      cost, lunch,       `${currencySymbol}${lunch}`);
+  setBenchmark('bmFlight',     cost, flight,      `${currencySymbol}${flight}`);
+  setBenchmark('bmFreelancer', cost, freelancer,  `${currencySymbol}${freelancer}`);
+}
 
-    function copyCard() {
-      const total = costPerSecondUSD * elapsedSeconds;
-      const mins = Math.floor(elapsedSeconds / 60);
-      const text = [
-        '📊 MEETING COST REPORT',
-        `💸 Total cost: ${fmt(total)} (${currentCurrency})`,
-        `⏱ Duration: ${mins} minutes`,
-        `👥 Attendees: ${getAttendees()}`,
-        `📈 Cost per minute: ${fmt(costPerSecondUSD * 60)}`,
-        '',
-        'Generated at deskloop.work/tools/meeting-cost.html'
-      ].join('\n');
-      navigator.clipboard.writeText(text).then(() => {
-        const el = document.getElementById('copyConfirm');
-        el.textContent = 'Card copied!';
-        el.style.opacity = '1';
-        setTimeout(() => { el.style.opacity = '0'; }, 2500);
-      });
-    }
+function setBenchmark(id, meetingCost, threshold, label) {
+  const el = document.getElementById(id);
+  if (meetingCost < threshold * 0.5) {
+    el.className = 'benchmark-status status-ok';   el.textContent = `< ${label}`;
+  } else if (meetingCost < threshold) {
+    el.className = 'benchmark-status status-warn';  el.textContent = `≈ ${label}`;
+  } else {
+    el.className = 'benchmark-status status-bad';   el.textContent = `> ${label}`;
+  }
+}
 
-    function shareResult() {
-      const total = costPerSecondUSD * elapsedSeconds;
-      const mins = Math.floor(elapsedSeconds / 60);
-      const text = `Our ${mins}-minute meeting with ${getAttendees()} people just cost ${fmt(total)} (${currentCurrency}). Free calculator: deskloop.work/tools/meeting-cost.html`;
-      navigator.clipboard.writeText(text).then(() => {
-        const el = document.getElementById('copyConfirm');
-        el.style.opacity = '1';
-        setTimeout(() => { el.style.opacity = '0'; }, 2500);
-      });
-    }
+// ── History ──
+function saveHistory() {
+  try { localStorage.setItem('dl_meeting_v2', JSON.stringify(history.slice(0,50))); } catch(e) {}
+}
 
-    // ── Init ──
-    fetchRate('USD');
-  </script>
+function renderHistory() {
+  const el = document.getElementById('historyList');
+  if (!history.length) {
+    el.innerHTML = '<div class="history-empty">No meetings logged yet. Start one above.</div>';
+    return;
+  }
+  el.innerHTML = history.slice(0,20).map(h => `
+    <div class="history-item">
+      <div class="history-top">
+        <div class="history-name">${h.attendees} people · ${fmtTime(h.elapsed)}</div>
+        <div class="history-cost">${h.symbol}${h.cost.toFixed(2)}</div>
+      </div>
+      <div class="history-meta">${h.date} at ${h.time} · ${h.currency}</div>
+    </div>`).join('');
+}
 
+function clearHistory() {
+  if (!history.length) return;
+  if (!confirm('Clear all meeting history?')) return;
+  history = [];
+  saveHistory();
+  renderHistory();
+}
+
+// ── Share card ──
+function showShareCard() {
+  document.getElementById('shareCost').textContent    = fmt(totalCost);
+  document.getElementById('shareSubtitle').textContent =
+    `${attendees} attendees · avg ${fmt(parseFloat(document.getElementById('salaryInput').value)||80000)} salary`;
+  document.getElementById('shareTime').textContent    = fmtTime(elapsed);
+  document.getElementById('sharePeople').textContent  = attendees;
+  document.getElementById('sharePerMin').textContent  = fmt(costPerSecond * 60);
+  document.getElementById('copyConfirm').textContent  = '';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+function copyShareCard() {
+  const text = [
+    '📊 MEETING COST REPORT',
+    `💸 Total cost: ${fmt(totalCost)} (${currency})`,
+    `⏱ Duration: ${fmtTime(elapsed)}`,
+    `👥 Attendees: ${attendees}`,
+    `📈 Cost per minute: ${fmt(costPerSecond * 60)}`,
+    '',
+    'Generated at deskloop.work/tools/meeting-cost.html',
+  ].join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const el = document.getElementById('copyConfirm');
+    el.textContent = '✓ Copied to clipboard!';
+    setTimeout(() => el.textContent = '', 2500);
+  });
+}
+
+// Keyboard: Escape closes modal
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
 </body>
 </html>

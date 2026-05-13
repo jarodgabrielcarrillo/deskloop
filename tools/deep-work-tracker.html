@@ -3,859 +3,930 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Deep Work Tracker — Weekly Focus Stats No Signup | Deskloop</title>
-  <meta name="description" content="Track your weekly deep work hours and focus scores in your browser. No account, no app. See your session history, daily totals, and consistency streaks — all stored locally.">
-  <meta name="keywords" content="deep work tracker, focus tracker online, weekly deep work hours, focus session tracker, free productivity tracker, deep work log no signup">
+  <title>Deep Work Tracker Free — Deskloop | Flow State Session Timer</title>
+  <meta name="description" content="Free deep work tracker. Calm, immersive session timer with energy and focus ratings, day streaks, weekly stats. No signup, no cloud — everything stays local.">
+  <meta name="keywords" content="deep work tracker free, flow state timer, focus session tracker, concentration log browser, deep work streak counter no signup">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/tools/deep-work-tracker.html">
-  <meta property="og:title" content="Free Deep Work Tracker — Weekly Focus Stats">
-  <meta property="og:description" content="Track deep work sessions, weekly hours, and focus scores. No signup, browser-based.">
+  <meta property="og:title" content="Deep Work Tracker Free — Deskloop">
+  <meta property="og:description" content="Calm, immersive deep work timer with energy ratings, streaks, and weekly overview. Free, no signup.">
   <meta property="og:url" content="https://deskloop.work/tools/deep-work-tracker.html">
   <meta property="og:type" content="website">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Deep Work Tracker",
-    "url": "https://deskloop.work/tools/deep-work-tracker.html",
-    "description": "Free browser-based deep work tracker with weekly stats, focus scores, and session history",
-    "applicationCategory": "ProductivityApplication",
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-  }
-  </script>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Deskloop Deep Work Tracker","url":"https://deskloop.work/tools/deep-work-tracker.html","description":"Free deep work tracker with focus ratings, streak counter, weekly stats. No signup required.","applicationCategory":"ProductivityApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <meta name="google-site-verification" content="KChKjtl0z6q2zocomb2y3UslhaPxiXZGXB3-vhp9am4">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    /* ── Timer ── */
-    .timer-display {
+    :root {
+      --primary:     #60A5FA;
+      --primary-btn: #1E40AF;
+      --accent:      #34D399;
+      --bg:          #0C1520;
+      --surface:     #111d2b;
+      --surface-2:   #162233;
+      --surface-3:   #1c2c3e;
+      --text:        #EDF2F9;
+      --text2:       #7fa5c2;
+      --text3:       #486070;
+      --border:      #1e3048;
+      --warning:     #F59E0B;
+      --danger:      #EF4444;
+      --purple:      #A78BFA;
+      --pink:        #F472B6;
+      --radius:      13px;
+      --radius-sm:   8px;
+      --radius-lg:   18px;
+      --shadow:      0 1px 4px rgba(0,0,0,0.6);
+      --shadow-md:   0 8px 32px rgba(0,0,0,0.55);
+      --t:           200ms ease;
+      --max-w:       860px;
+      --mono:        'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      font-size: 16px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased; min-height: 100vh;
+    }
+
+    .W    { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    .inner{ max-width: var(--max-w); margin: 0 auto; }
+
+    /* ── NAV ── */
+    nav { position: sticky; top: 0; z-index: 200; background: rgba(12,21,32,0.97); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+    .ni  { max-width: 1200px; margin: 0 auto; padding: 0 28px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .logo{ display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .lm  { width: 32px; height: 32px; background: var(--primary-btn); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .ln  { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+    .na  { color: var(--text3); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: var(--radius-sm); transition: all var(--t); }
+    .na:hover { color: var(--text2); background: var(--surface-2); }
+
+    /* ── PAGE HEADER ── */
+    .ph  { padding: 52px 0 44px; }
+    .bk  { display: inline-flex; align-items: center; gap: 5px; color: var(--text3); text-decoration: none; font-size: 12px; font-weight: 500; transition: color var(--t); margin-bottom: 18px; }
+    .bk:hover { color: var(--primary); }
+    .bk svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .ph h1 { font-size: 30px; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 8px; }
+    .ph p  { font-size: 14px; color: var(--text3); max-width: 480px; line-height: 1.75; }
+
+    /* ── HERO TIMER ── */
+    .hero-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 56px 48px 48px;
       text-align: center;
-      padding: 32px 0 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+      transition: border-color 0.5s ease, box-shadow 0.5s ease;
     }
 
-    .timer-mode-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text3);
-      margin-bottom: 12px;
+    /* Breathing glow — only when running */
+    .hero-wrap.running {
+      border-color: rgba(52,211,153,0.22);
+      animation: breathe 4s ease-in-out infinite;
     }
 
-    .timer-clock {
-      font-family: var(--font-head);
-      font-size: clamp(64px, 14vw, 108px);
-      font-weight: 800;
-      letter-spacing: -4px;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 6px;
-      font-variant-numeric: tabular-nums;
-      transition: color 0.3s;
+    @keyframes breathe {
+      0%,100% { box-shadow: var(--shadow); }
+      50%      { box-shadow: 0 0 80px rgba(52,211,153,0.09), 0 0 0 1px rgba(52,211,153,0.08), var(--shadow); }
     }
 
-    .timer-clock.active { color: var(--accent); }
+    /* Radial glow overlay behind timer */
+    .hero-wrap::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 65% 55% at 50% 60%, rgba(52,211,153,0.055) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.6s ease;
+    }
+    .hero-wrap.running::after { opacity: 1; }
 
-    .timer-sub {
-      font-size: 13px;
-      color: var(--text3);
-      margin-bottom: 24px;
-      min-height: 20px;
+    /* Status pill */
+    .hero-status {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 10px; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 32px;
+    }
+    .sdot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); transition: background 0.3s; }
+    .sdot.on { background: var(--accent); animation: sdot 2s ease-in-out infinite; }
+    @keyframes sdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.5)} }
+
+    /* The timer itself */
+    .timer-val {
+      font-family: var(--mono); font-size: 100px; font-weight: 700;
+      letter-spacing: -6px; line-height: 1; color: var(--text);
+      font-variant-numeric: tabular-nums; transition: color 0.45s ease;
+      margin-bottom: 14px; position: relative; z-index: 1; user-select: none;
+    }
+    .timer-val.running { color: var(--accent); }
+
+    .timer-note-live {
+      font-size: 13px; color: var(--text3); font-family: var(--mono);
+      letter-spacing: 0.2px; min-height: 20px; position: relative; z-index: 1;
     }
 
-    .timer-btns {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    /* Streak under timer */
+    .streak-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 20px; margin-top: 28px; padding-top: 24px;
+      border-top: 1px solid var(--border);
     }
+    .streak-main { display: flex; align-items: baseline; gap: 6px; }
+    .streak-num  { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+    .streak-lbl  { font-size: 12px; font-weight: 500; color: var(--text3); }
+    .streak-best { font-size: 12px; color: var(--text3); padding-left: 16px; border-left: 1px solid var(--border); }
+    .streak-best span { color: var(--text2); font-weight: 600; font-family: var(--mono); }
 
-    /* ── Focus quality ── */
-    .quality-row {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    /* ── CONTROLS CARD ── */
+    .ctrl-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 16px; box-shadow: var(--shadow); }
+
+    .ctrl-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.4px; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; display: block; }
+
+    .note-inp {
+      width: 100%; height: 44px;
+      background: var(--surface-3); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 14px;
+      padding: 0 16px; outline: none; transition: border-color var(--t);
+      margin-bottom: 20px;
     }
+    .note-inp:focus { border-color: var(--primary); }
+    .note-inp::placeholder { color: var(--text3); }
 
-    .quality-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text3);
-      white-space: nowrap;
+    /* Category pills */
+    .cat-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+    .cat-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 100px;
+      background: transparent; border: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+      color: var(--text3); cursor: pointer; transition: all var(--t);
     }
+    .cat-pill:hover { border-color: var(--text2); color: var(--text2); }
+    .cat-pill.on { border-color: currentColor; font-weight: 600; }
+    .cat-pip { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 
-    .quality-stars {
-      display: flex;
-      gap: 6px;
+    /* Main button */
+    .main-btn {
+      width: 100%; height: 56px;
+      background: var(--primary-btn); color: #fff; border: none;
+      border-radius: var(--radius); font-family: 'Inter', sans-serif;
+      font-size: 16px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background var(--t), transform var(--t), box-shadow var(--t);
+      letter-spacing: -0.01em;
     }
+    .main-btn:hover { background: var(--primary); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(30,64,175,0.35); }
+    .main-btn.stop  { background: var(--danger); }
+    .main-btn.stop:hover { background: #dc2626; box-shadow: 0 8px 24px rgba(220,38,38,0.3); }
+    .main-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
 
-    .star-btn {
-      font-size: 22px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      opacity: 0.25;
-      transition: opacity 0.15s, transform 0.15s;
-      line-height: 1;
-      padding: 0;
+    /* ── RATING CARD ── */
+    .rating-card { background: var(--surface); border: 1px solid rgba(52,211,153,0.18); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 16px; box-shadow: var(--shadow); display: none; }
+    .rating-card.show { display: block; }
+
+    .rc-title  { font-size: 18px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; margin-bottom: 6px; }
+    .rc-sub    { font-size: 13px; color: var(--text3); margin-bottom: 28px; }
+
+    .rating-section { margin-bottom: 24px; }
+    .rating-section:last-of-type { margin-bottom: 0; }
+
+    .rating-q   { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
+    .emoji-row  { display: flex; gap: 8px; }
+    .emoji-btn  {
+      flex: 1; height: 52px; border-radius: var(--radius-sm);
+      background: var(--surface-3); border: 1px solid var(--border);
+      cursor: pointer; font-size: 22px; transition: all var(--t);
+      display: flex; align-items: center; justify-content: center;
     }
+    .emoji-btn:hover  { background: var(--surface-2); border-color: var(--text3); transform: scale(1.06); }
+    .emoji-btn.picked { background: rgba(52,211,153,0.1); border-color: var(--accent); transform: scale(1.06); }
 
-    .star-btn.active { opacity: 1; }
-    .star-btn:hover  { opacity: 0.8; transform: scale(1.15); }
+    .emoji-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text3); margin-top: 5px; margin-bottom: 16px; }
 
-    .quality-desc {
-      font-size: 12px;
-      color: var(--text3);
-      font-style: italic;
+    .rc-note { width: 100%; height: 72px; background: var(--surface-3); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; padding: 12px 14px; outline: none; resize: none; transition: border-color var(--t); margin-bottom: 20px; }
+    .rc-note:focus { border-color: var(--primary); }
+    .rc-note::placeholder { color: var(--text3); }
+
+    .rc-actions { display: flex; gap: 10px; }
+    .rc-save { flex: 1; height: 48px; background: var(--accent); color: #0C1520; border: none; border-radius: var(--radius-sm); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity var(--t), transform var(--t); }
+    .rc-save:hover { opacity: 0.88; transform: translateY(-1px); }
+    .rc-skip { height: 48px; padding: 0 20px; background: transparent; color: var(--text3); border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'Inter', sans-serif; font-size: 13px; cursor: pointer; transition: all var(--t); white-space: nowrap; }
+    .rc-skip:hover { color: var(--text2); border-color: var(--text3); }
+
+    /* ── STATS ROW ── */
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+    .sc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow); }
+    .sc-num { font-family: var(--mono); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 4px; transition: color var(--t); }
+    .sc-num.green  { color: var(--accent); }
+    .sc-num.blue   { color: var(--primary); }
+    .sc-num.purple { color: var(--purple); }
+    .sc-lbl { font-size: 9px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text3); }
+    .sc-sub { font-size: 10px; color: var(--text3); margin-top: 3px; font-family: var(--mono); }
+
+    /* ── TABS ── */
+    .tabs-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 36px; box-shadow: var(--shadow); }
+
+    .tab-bar { display: flex; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.1); }
+    .tab-btn { flex: 1; height: 48px; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--text3); position: relative; transition: color var(--t); }
+    .tab-btn:hover { color: var(--text2); }
+    .tab-btn.on { color: var(--text); }
+    .tab-btn.on::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:36px; height:2px; background:var(--primary); border-radius:2px 2px 0 0; }
+
+    .tab-pane { display: none; padding: 28px 28px 32px; }
+    .tab-pane.on { display: block; }
+
+    /* ── SESSION CARDS ── */
+    .sess-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .sess-card {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--surface-2); border-radius: var(--radius-sm);
+      padding: 14px 16px 14px 14px; border: 1px solid transparent;
+      position: relative; overflow: hidden; transition: border-color var(--t);
     }
+    .sess-card:hover { border-color: var(--border); }
 
-    /* ── Task input ── */
-    .task-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-      align-items: center;
+    .sess-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+
+    .sess-body { flex: 1; min-width: 0; padding-left: 4px; }
+    .sess-row1 { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+    .sess-time { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); }
+    .sess-cat-badge { font-size: 10px; font-weight: 500; padding: 2px 8px; background: var(--surface-3); border-radius: 100px; color: var(--text3); white-space: nowrap; }
+    .sess-note { font-size: 12px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 6px; }
+
+    .sess-ratings { display: flex; gap: 8px; flex-wrap: wrap; }
+    .rating-badge { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text3); }
+
+    .sess-right { flex-shrink: 0; text-align: right; }
+    .sess-dur { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text2); }
+    .sess-del { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 12px; padding: 4px; border-radius: 4px; opacity: 0; transition: all var(--t); margin-top: 4px; display: block; margin-left: auto; }
+    .sess-card:hover .sess-del { opacity: 1; }
+    .sess-del:hover { color: var(--danger); }
+
+    /* Empty state */
+    .empty { text-align: center; padding: 56px 24px; }
+    .empty-icon  { font-size: 48px; margin-bottom: 16px; line-height: 1; }
+    .empty-title { font-size: 17px; font-weight: 600; color: var(--text2); letter-spacing: -0.01em; margin-bottom: 8px; }
+    .empty-sub   { font-size: 13px; color: var(--text3); line-height: 1.7; max-width: 280px; margin: 0 auto; }
+
+    /* ── WEEKLY BAR CHART ── */
+    .week-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 10px; }
+    .week-nav { display: flex; align-items: center; gap: 8px; }
+    .wnb { width: 30px; height: 30px; background: transparent; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text3); transition: all var(--t); }
+    .wnb:hover { color: var(--text); border-color: var(--primary); }
+    .wnb svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .week-range { font-family: var(--mono); font-size: 12px; color: var(--text2); min-width: 120px; text-align: center; }
+
+    .bar-chart  { display: grid; grid-template-columns: repeat(7,1fr); gap: 10px; margin-bottom: 24px; }
+    .bar-col    { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .bar-track  { width: 100%; height: 140px; display: flex; flex-direction: column; justify-content: flex-end; }
+    .bar-fill   { width: 100%; border-radius: 5px 5px 0 0; min-height: 3px; background: var(--surface-3); transition: height 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .bf-today   { background: var(--accent); box-shadow: 0 0 16px rgba(52,211,153,0.28); }
+    .bf-great   { background: var(--accent); }
+    .bf-good    { background: var(--primary); }
+    .bf-ok      { background: var(--warning); }
+    .bf-worked  { background: var(--primary-btn); }
+    .bar-hrs    { font-family: var(--mono); font-size: 9px; color: var(--text3); font-weight: 600; min-height: 12px; }
+    .bar-hrs.th { color: var(--accent); }
+    .bar-day    { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); }
+    .bar-day.td { color: var(--text2); }
+    .bar-date   { font-family: var(--mono); font-size: 9px; color: var(--text3); }
+    .bar-date.td{ color: var(--primary); font-weight: 700; }
+
+    .week-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+    .wf-stat { display: flex; flex-direction: column; gap: 3px; }
+    .wf-val  { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent); }
+    .wf-lbl  { font-size: 9px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text3); }
+    .wf-vals { display: flex; gap: 32px; }
+
+    .export-btn { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; background: transparent; color: var(--text3); border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all var(--t); }
+    .export-btn:hover { color: var(--text); border-color: var(--primary); }
+    .export-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    /* AD / SEO / FOOTER */
+    .ad-slot { border: 1px dashed var(--border); border-radius: var(--radius); min-height: 90px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text3); margin: 32px 0; }
+    .seo { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 44px; margin-bottom: 44px; box-shadow: var(--shadow); }
+    .seo h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .seo h3 { font-size: 15px; font-weight: 500; color: var(--text2); margin: 16px 0 7px; }
+    .seo p  { font-size: 13px; color: var(--text3); line-height: 1.85; margin-bottom: 8px; }
+    .seo p:last-child { margin-bottom: 0; }
+    footer { border-top: 1px solid var(--border); padding: 28px 0 40px; }
+    .foot  { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 11px; color: var(--text3); }
+    .foot a { color: var(--text3); text-decoration: none; transition: color var(--t); }
+    .foot a:hover { color: var(--primary); }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 20px; font-size: 13px; color: var(--text2); box-shadow: var(--shadow-md); opacity: 0; transition: all 0.26s ease; z-index: 999; white-space: nowrap; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 780px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .timer-val { font-size: 72px; letter-spacing: -4px; }
+      .hero-wrap { padding: 40px 24px 36px; }
+      .ctrl-card { padding: 22px 20px; }
+      .tab-pane  { padding: 20px; }
     }
-
-    .task-row label {
-      white-space: nowrap;
-      margin: 0;
-      font-size: 11px;
-      color: var(--text3);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    @media (max-width: 480px) {
+      .timer-val { font-size: 54px; letter-spacing: -2px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .streak-row { flex-direction: column; gap: 10px; }
+      .streak-best { border-left: none; padding-left: 0; }
+      .W { padding: 0 16px; }
+      .seo { padding: 24px; }
+      .ph h1 { font-size: 24px; }
+      .emoji-btn { font-size: 18px; }
     }
-
-    .task-row input { flex: 1; margin: 0; }
-
-    /* ── Weekly bar chart ── */
-    .week-chart {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      height: 120px;
-      margin: 8px 0 4px;
-    }
-
-    .bar-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      height: 100%;
-      justify-content: flex-end;
-    }
-
-    .bar-fill {
-      width: 100%;
-      border-radius: 4px 4px 0 0;
-      background: var(--accent);
-      min-height: 3px;
-      transition: height 0.4s var(--ease);
-      position: relative;
-    }
-
-    .bar-fill.today { background: var(--success); }
-    .bar-fill.empty { background: var(--bg3); min-height: 3px; }
-
-    .bar-label {
-      font-size: 10px;
-      color: var(--text3);
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .bar-val {
-      font-size: 10px;
-      color: var(--text2);
-      font-weight: 600;
-      text-align: center;
-    }
-
-    /* ── Session log ── */
-    .session-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .session-item:last-child { border-bottom: none; }
-
-    .session-quality {
-      font-size: 14px;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
-    .session-info { flex: 1; min-width: 0; }
-
-    .session-task {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .session-meta {
-      font-size: 11px;
-      color: var(--text3);
-      margin-top: 2px;
-    }
-
-    .session-dur {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--text);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .session-del {
-      background: none;
-      border: none;
-      color: var(--text3);
-      cursor: pointer;
-      font-size: 13px;
-      padding: 4px 6px;
-      border-radius: 4px;
-      transition: color 0.18s, background 0.18s;
-      opacity: 0;
-      flex-shrink: 0;
-    }
-
-    .session-item:hover .session-del { opacity: 1; }
-    .session-del:hover { color: var(--danger); background: rgba(224,85,85,0.08); }
-
-    /* ── Score ring ── */
-    .score-display {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 16px 0;
-    }
-
-    .score-ring {
-      position: relative;
-      width: 72px;
-      height: 72px;
-      flex-shrink: 0;
-    }
-
-    .score-ring svg { transform: rotate(-90deg); }
-
-    .score-text {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .score-num {
-      font-family: var(--font-head);
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .score-lbl { font-size: 8px; color: var(--text3); letter-spacing: 0.5px; }
-
-    .score-breakdown { flex: 1; }
-
-    .score-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      color: var(--text2);
-      padding: 3px 0;
-    }
-
-    .score-val {
-      font-family: var(--font-head);
-      font-weight: 700;
-      color: var(--text);
-      font-size: 14px;
-    }
-
-    /* ── Day group ── */
-    .day-group { margin-bottom: 4px; }
-
-    .day-group-hdr {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text3);
-      padding: 12px 0 6px;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .day-total-badge {
-      font-family: var(--font-head);
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .empty-sessions {
-      text-align: center;
-      padding: 36px;
-      color: var(--text3);
-      font-size: 13px;
-    }
-
-    .empty-sessions .icon { font-size: 32px; margin-bottom: 12px; }
-
-    @media (max-width: 600px) {
-      .quality-row { flex-direction: column; align-items: flex-start; }
-      .session-del { opacity: 1; }
-    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 3px; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="nav-inner">
-      <a href="/" class="logo">
-        <div class="logo-mark">
-          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="7" cy="7" r="4" stroke="#080808" stroke-width="2.5"/>
-            <circle cx="7" cy="7" r="1.5" fill="#080808"/>
-          </svg>
+<!-- NAV -->
+<nav>
+  <div class="ni">
+    <a href="/" class="logo"><div class="lm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="ln">Deskloop</span></a>
+    <a href="/" class="na">← All tools</a>
+  </div>
+</nav>
+
+<div class="W">
+  <div class="inner">
+
+    <!-- PAGE HEADER -->
+    <div class="ph">
+      <a href="/" class="bk"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>All tools</a>
+      <h1>Deep Work Tracker</h1>
+      <p>Enter your flow state. Log sessions, rate your energy and focus, and build a picture of when you do your best thinking.</p>
+    </div>
+
+    <!-- HERO TIMER -->
+    <div class="hero-wrap" id="heroWrap">
+      <div class="hero-status">
+        <div class="sdot" id="sdot"></div>
+        <span id="statusTxt">Ready to focus</span>
+      </div>
+      <div class="timer-val" id="timerVal">00:00:00</div>
+      <div class="timer-note-live" id="noteLive">&nbsp;</div>
+      <div class="streak-row">
+        <div class="streak-main">
+          <span class="streak-num" id="streakNum">0</span>
+          <span style="font-size:20px;">🔥</span>
+          <span class="streak-lbl">day streak</span>
         </div>
-        <span class="logo-text">Deskloop</span>
-      </a>
-      <div class="nav-right">
-        <a href="/#tools" class="nav-link">Tools</a>
-        <a href="/#about" class="nav-link">About</a>
+        <div class="streak-best">Best: <span id="streakBest">0</span> days</div>
       </div>
     </div>
-  </header>
 
-  <main>
-    <div class="container">
+    <!-- CONTROLS -->
+    <div class="ctrl-card" id="ctrlCard">
+      <label class="ctrl-lbl" for="noteInp">What will you focus on?</label>
+      <input type="text" class="note-inp" id="noteInp" placeholder="Give this session a purpose…" maxlength="80" aria-label="Session note">
 
-      <div class="page-header">
-        <a href="/" class="back-link">← All tools</a>
-        <h1>Deep Work Tracker</h1>
-        <p>Log focus sessions, track weekly hours, and measure your consistency</p>
+      <span class="ctrl-lbl" style="margin-bottom:12px;">Category</span>
+      <div class="cat-row" role="group" aria-label="Session category" id="catRow">
+        <button class="cat-pill on" data-cat="deep"  onclick="setCat(this)" style="color:#60A5FA;border-color:#60A5FA;"><span class="cat-pip" style="background:#60A5FA;"></span>🧠 Deep Focus</button>
+        <button class="cat-pill"    data-cat="write" onclick="setCat(this)"><span class="cat-pip" style="background:#A78BFA;"></span>✍️ Writing</button>
+        <button class="cat-pill"    data-cat="code"  onclick="setCat(this)"><span class="cat-pip" style="background:#34D399;"></span>💻 Coding</button>
+        <button class="cat-pill"    data-cat="read"  onclick="setCat(this)"><span class="cat-pip" style="background:#F59E0B;"></span>📚 Reading</button>
+        <button class="cat-pill"    data-cat="plan"  onclick="setCat(this)"><span class="cat-pip" style="background:#F472B6;"></span>🗺 Planning</button>
+        <button class="cat-pill"    data-cat="learn" onclick="setCat(this)"><span class="cat-pip" style="background:#38bdf8;"></span>🎓 Learning</button>
       </div>
 
-      <!-- Timer -->
-      <div class="tool-wrap">
-        <div class="timer-display">
-          <div class="timer-mode-label" id="timerLabel">DEEP WORK SESSION</div>
-          <div class="timer-clock" id="timerClock">00:00:00</div>
-          <div class="timer-sub" id="timerSub">Start a session to begin tracking</div>
-          <div class="timer-btns">
-            <button class="btn btn-primary" id="startBtn" onclick="toggleSession()">Start Session</button>
-            <button class="btn btn-ghost" onclick="saveAndStop()" id="saveBtn" style="display:none;">Save & Stop</button>
-            <button class="btn btn-danger" onclick="discardSession()" id="discardBtn" style="display:none;">Discard</button>
-          </div>
-        </div>
-
-        <!-- Task + quality -->
-        <div class="task-row">
-          <label>Working on</label>
-          <input type="text" id="taskInput" placeholder="What are you working on?" maxlength="60">
-        </div>
-
-        <div class="quality-row">
-          <span class="quality-label">Focus quality</span>
-          <div class="quality-stars" id="qualityStars">
-            <button class="star-btn active" data-q="1" onclick="setQuality(1)" title="Distracted">⭐</button>
-            <button class="star-btn" data-q="2" onclick="setQuality(2)" title="Okay">⭐</button>
-            <button class="star-btn" data-q="3" onclick="setQuality(3)" title="Good">⭐</button>
-            <button class="star-btn" data-q="4" onclick="setQuality(4)" title="Great">⭐</button>
-            <button class="star-btn" data-q="5" onclick="setQuality(5)" title="Flow state">⭐</button>
-          </div>
-          <span class="quality-desc" id="qualityDesc">Distracted</span>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="metrics-grid">
-        <div class="metric">
-          <div class="metric-label">Today</div>
-          <div class="metric-value accent" id="statToday">0h 0m</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">This week</div>
-          <div class="metric-value" id="statWeek">0h 0m</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Sessions today</div>
-          <div class="metric-value" id="statCount">0</div>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Avg quality</div>
-          <div class="metric-value" id="statQuality">—</div>
-        </div>
-      </div>
-
-      <!-- Weekly chart + focus score -->
-      <div class="tool-wrap">
-        <p class="section-title" style="margin-bottom:16px;">// Weekly overview</p>
-
-        <div class="score-display">
-          <div class="score-ring">
-            <svg width="72" height="72" viewBox="0 0 72 72">
-              <circle cx="36" cy="36" r="28" fill="none" stroke="#1c1c1c" stroke-width="7"/>
-              <circle cx="36" cy="36" r="28" fill="none" stroke="#E8A020" stroke-width="7"
-                stroke-dasharray="176" stroke-dashoffset="176"
-                stroke-linecap="round" id="scoreRing"/>
-            </svg>
-            <div class="score-text">
-              <div class="score-num" id="scoreNum">0</div>
-              <div class="score-lbl">SCORE</div>
-            </div>
-          </div>
-          <div class="score-breakdown">
-            <div class="score-item">
-              <span>Weekly hours</span>
-              <span class="score-val" id="scoreHours">0h</span>
-            </div>
-            <div class="score-item">
-              <span>Sessions this week</span>
-              <span class="score-val" id="scoreSessions">0</span>
-            </div>
-            <div class="score-item">
-              <span>Avg focus quality</span>
-              <span class="score-val" id="scoreAvgQ">—</span>
-            </div>
-            <div class="score-item">
-              <span>Days active</span>
-              <span class="score-val" id="scoreDays">0 / 7</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="week-chart" id="weekChart"></div>
-        <div style="display:flex;gap:20px;margin-top:6px;">
-          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);">
-            <div style="width:10px;height:10px;border-radius:2px;background:var(--success);"></div> Today
-          </div>
-          <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);">
-            <div style="width:10px;height:10px;border-radius:2px;background:var(--accent);"></div> Past days
-          </div>
-        </div>
-      </div>
-
-      <!-- Score history -->
-      <div class="tool-wrap">
-        <p class="section-title" style="margin-bottom:16px;">// Focus score history (4 weeks)</p>
-        <div style="position:relative;height:100px;" id="scoreChartWrap">
-          <canvas id="scoreChart" style="width:100%;height:100px;"></canvas>
-          <div id="scoreChartEmpty" style="text-align:center;padding:28px;color:var(--text3);font-size:13px;">Log sessions across multiple weeks to see your score trend.</div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--text3);" id="scoreChartLabels"></div>
-      </div>
-
-      <!-- Session history -->
-      <div class="tool-wrap">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-          <p class="section-title">// Session history</p>
-          <button class="btn btn-danger" style="font-size:12px;padding:6px 12px;" onclick="clearAll()">Clear all</button>
-        </div>
-        <div id="sessionHistory">
-          <div class="empty-sessions">
-            <div class="icon">🎯</div>
-            <p>No sessions yet. Start your first deep work session above.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- SEO block -->
-      <div class="seo-block">
-        <h2>Free Deep Work Tracker — No Account Required</h2>
-        <p>The Deskloop Deep Work Tracker helps you measure and improve the quality of your focused work time. Log sessions with a live timer, rate your focus quality from 1–5 stars, and track your weekly deep work hours on a visual chart — all stored privately in your browser.</p>
-        <p>Deep work, a concept popularized by Cal Newport, refers to cognitively demanding tasks performed in a state of distraction-free concentration. Research consistently shows that tracking these sessions increases both the quantity and quality of focused work over time.</p>
-        <p>Your focus score is calculated from your weekly hours, session count, average quality rating, and consistency across days — giving you a single number that reflects how well your week is going. No account, no subscription, no data sent to any server.</p>
-      </div>
-
+      <button class="main-btn" id="mainBtn" onclick="toggleSession()">
+        <svg id="mainIcon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg>
+        <span id="mainLbl">Start Deep Work</span>
+      </button>
     </div>
-  </main>
 
-  <footer>
-    <div class="container">
-      <div class="footer-copy">
-        <span>© 2025 Deskloop.work — Free productivity tools</span>
-        <span style="color:var(--text3);font-size:11px;">No cookies · No tracking · No nonsense</span>
+    <!-- RATING CARD -->
+    <div class="rating-card" id="ratingCard">
+      <div class="rc-title">How was that session?</div>
+      <div class="rc-sub" id="rcSub">Take 10 seconds to reflect — it compounds over time.</div>
+
+      <div class="rating-section">
+        <div class="rating-q">Energy level</div>
+        <div class="emoji-row" id="energyRow" role="group" aria-label="Rate energy level">
+          <button class="emoji-btn" data-grp="energy" data-v="1" onclick="pickRating(this)">💤</button>
+          <button class="emoji-btn" data-grp="energy" data-v="2" onclick="pickRating(this)">🥱</button>
+          <button class="emoji-btn" data-grp="energy" data-v="3" onclick="pickRating(this)">😐</button>
+          <button class="emoji-btn" data-grp="energy" data-v="4" onclick="pickRating(this)">😊</button>
+          <button class="emoji-btn" data-grp="energy" data-v="5" onclick="pickRating(this)">⚡</button>
+        </div>
+        <div class="emoji-labels"><span>Exhausted</span><span>High energy</span></div>
+      </div>
+
+      <div class="rating-section">
+        <div class="rating-q">Focus quality</div>
+        <div class="emoji-row" id="focusRow" role="group" aria-label="Rate focus quality">
+          <button class="emoji-btn" data-grp="focus" data-v="1" onclick="pickRating(this)">😕</button>
+          <button class="emoji-btn" data-grp="focus" data-v="2" onclick="pickRating(this)">😑</button>
+          <button class="emoji-btn" data-grp="focus" data-v="3" onclick="pickRating(this)">🙂</button>
+          <button class="emoji-btn" data-grp="focus" data-v="4" onclick="pickRating(this)">😌</button>
+          <button class="emoji-btn" data-grp="focus" data-v="5" onclick="pickRating(this)">✨</button>
+        </div>
+        <div class="emoji-labels"><span>Scattered</span><span>Deep flow ✨</span></div>
+      </div>
+
+      <textarea class="rc-note" id="rcNote" placeholder="Any reflection on this session? (optional)" rows="2" aria-label="Session reflection"></textarea>
+
+      <div class="rc-actions">
+        <button class="rc-save" onclick="saveRating()">Save session</button>
+        <button class="rc-skip" onclick="skipRating()">Skip rating</button>
       </div>
     </div>
-  </footer>
 
-  <script>
-    function renderScoreChart() {
-      const canvas = document.getElementById('scoreChart');
-      const empty = document.getElementById('scoreChartEmpty');
-      const labels = document.getElementById('scoreChartLabels');
-      const ctx = canvas.getContext('2d');
+    <!-- STATS ROW -->
+    <div class="stats-row">
+      <div class="sc">
+        <div class="sc-num green" id="statToday">0h 0m</div>
+        <div class="sc-lbl">Today</div>
+        <div class="sc-sub" id="statTodaySub">0 sessions</div>
+      </div>
+      <div class="sc">
+        <div class="sc-num blue" id="statWeek">0h 0m</div>
+        <div class="sc-lbl">This week</div>
+        <div class="sc-sub" id="statWeekSub">0 sessions</div>
+      </div>
+      <div class="sc">
+        <div class="sc-num purple" id="statFocus">—</div>
+        <div class="sc-lbl">Avg focus</div>
+        <div class="sc-sub" id="statFocusSub">No rated sessions</div>
+      </div>
+      <div class="sc">
+        <div class="sc-num green" id="statStreakCard">0 🔥</div>
+        <div class="sc-lbl">Streak</div>
+        <div class="sc-sub" id="statStreakSub">Best: 0 days</div>
+      </div>
+    </div>
 
-      // Build 4 weekly buckets
-      const weeks = [];
-      for (let w = 3; w >= 0; w--) {
-        const start = Date.now() - (w + 1) * 7 * 86400000;
-        const end   = Date.now() - w * 7 * 86400000;
-        const wSessions = sessions.filter(s => s.start >= start && s.start < end);
-        const wMs = wSessions.reduce((a,s) => a + s.duration, 0);
-        weeks.push({ score: calcScore(wSessions, wMs), label: w === 0 ? 'This week' : `${w}w ago` });
-      }
+    <!-- TABS -->
+    <div class="tabs-card">
+      <div class="tab-bar" role="tablist">
+        <button class="tab-btn on" id="tab-hist" role="tab" aria-selected="true" onclick="switchTab('hist')">Session History</button>
+        <button class="tab-btn"    id="tab-week" role="tab" aria-selected="false" onclick="switchTab('week')">Weekly Overview</button>
+      </div>
 
-      const hasData = weeks.some(w => w.score > 0);
-      canvas.style.display = hasData ? 'block' : 'none';
-      empty.style.display  = hasData ? 'none' : 'block';
-      if (!hasData) { labels.innerHTML = ''; return; }
+      <!-- HISTORY TAB -->
+      <div class="tab-pane on" id="pane-hist" role="tabpanel">
+        <div class="sess-list" id="sessList">
+          <div class="empty" id="emptyState">
+            <div class="empty-icon">🧠</div>
+            <div class="empty-title">Your first session awaits</div>
+            <div class="empty-sub">Start a deep work session above. Each one builds your streak and your history appears here.</div>
+          </div>
+        </div>
+      </div>
 
-      const W = canvas.offsetWidth || 600;
-      const H = 100;
-      canvas.width = W;
-      canvas.height = H;
-      ctx.clearRect(0, 0, W, H);
+      <!-- WEEKLY TAB -->
+      <div class="tab-pane" id="pane-week" role="tabpanel">
+        <div class="week-hdr">
+          <span style="font-size:9px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--text3);">// Weekly overview</span>
+          <div class="week-nav">
+            <button class="wnb" onclick="navWeek(-1)" aria-label="Previous week"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <span class="week-range" id="weekRange">—</span>
+            <button class="wnb" onclick="navWeek(1)"  aria-label="Next week"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+        </div>
 
-      const max = Math.max(...weeks.map(w => w.score), 1);
-      const pad = 20;
-      const chartW = W - pad * 2;
-      const step = chartW / (weeks.length - 1);
+        <div class="bar-chart" id="barChart" role="img" aria-label="Weekly deep work hours"></div>
 
-      const points = weeks.map((w, i) => ({
-        x: pad + i * step,
-        y: H - pad - ((w.score / max) * (H - pad * 2))
-      }));
+        <div class="week-footer">
+          <div class="wf-vals">
+            <div class="wf-stat"><div class="wf-val" id="weekTotalVal">0h 0m</div><div class="wf-lbl">Week total</div></div>
+            <div class="wf-stat"><div class="wf-val" id="weekAvgFocus">—</div><div class="wf-lbl">Avg focus</div></div>
+          </div>
+          <button class="export-btn" onclick="exportCSV()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+        </div>
+      </div>
+    </div>
 
-      // Fill area
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, H - pad);
-      points.forEach(p => ctx.lineTo(p.x, p.y));
-      ctx.lineTo(points[points.length-1].x, H - pad);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(232,160,32,0.08)';
-      ctx.fill();
+    <div class="ad-slot"><!-- Google AdSense --></div>
 
-      // Line
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
-      points.forEach(p => ctx.lineTo(p.x, p.y));
-      ctx.strokeStyle = '#E8A020';
-      ctx.lineWidth = 2;
-      ctx.lineJoin = 'round';
-      ctx.stroke();
+    <div class="seo">
+      <h2>Deep Work Tracker Free — Flow State Sessions with Energy &amp; Focus Ratings</h2>
+      <p>The Deskloop Deep Work Tracker is a free, browser-based tool for logging focused work sessions with genuine self-reflection built in. Clock into a session, choose your category, and when you end it, rate your energy level and focus quality on simple 1–5 emoji scales. Over time this builds a personal dataset of when and how you do your best thinking.</p>
+      <h3>Energy and focus ratings</h3>
+      <p>Two lightweight ratings after every session — Energy Level (💤 Exhausted → ⚡ High Energy) and Focus Quality (😕 Scattered → ✨ Deep Flow) — take under 10 seconds and reveal patterns invisible to raw time tracking. Maybe you focus best at low energy. Maybe high-energy mornings scatter you. The data shows what the clock can't.</p>
+      <h3>Day streak counter</h3>
+      <p>The streak counter tracks consecutive days you complete at least one deep work session. Missing a day resets to zero. Your best-ever streak is preserved permanently. The streak is visible on the hero timer so it's part of the daily ritual — not buried in a dashboard.</p>
+      <h3>Weekly bar chart</h3>
+      <p>The weekly chart colors each day's bar by average focus quality — emerald for deep flow sessions, blue for good work, amber for scattered days. Navigate back through previous weeks to see your consistency over time.</p>
+    </div>
 
-      // Dots + labels
-      points.forEach((p, i) => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = '#E8A020';
-        ctx.fill();
-        ctx.fillStyle = '#8a8578';
-        ctx.font = '10px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(weeks[i].score, p.x, p.y - 8);
-      });
+  </div>
+</div>
 
-      labels.innerHTML = weeks.map(w => `<span>${w.label}</span>`).join('');
-    }
+<footer>
+  <div class="W"><div class="inner">
+    <div class="foot">
+      <span>© 2025 <a href="/">Deskloop.work</a> — Free productivity tools. No signup.</span>
+      <span>Data stays local · Works offline</span>
+    </div>
+  </div></div>
+</footer>
 
-    // ── Constants ──
-    const QUALITY_LABELS = ['', 'Distracted', 'Okay', 'Good', 'Great', 'Flow state 🔥'];
-    const DAYS_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+<div class="toast" id="toast"></div>
 
-    // ── State ──
-    let sessions = [];
-    let activeStart = null;
-    let activeTick = null;
-    let activeElapsed = 0;
-    let selectedQuality = 1;
+<script>
+'use strict';
 
-    // ── Storage ──
-    function save() { localStorage.setItem('dl_deepwork_v1', JSON.stringify(sessions)); }
-    function load() {
-      try { sessions = JSON.parse(localStorage.getItem('dl_deepwork_v1')) || []; }
-      catch { sessions = []; }
-    }
+/* ── Data ──────────────────────────────────────────────────────────────────── */
+const STORE  = 'dl_dwt_v2';
+const SKEY   = 'dl_dwt_streak_v1';
 
-    // ── Helpers ──
-    function pad(n) { return String(n).padStart(2,'0'); }
+const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-    function fmtClock(ms) {
-      const s = Math.floor(ms/1000);
-      return `${pad(Math.floor(s/3600))}:${pad(Math.floor((s%3600)/60))}:${pad(s%60)}`;
-    }
+const CATS = {
+  deep:  { label:'Deep Focus', color:'#60A5FA', emoji:'🧠' },
+  write: { label:'Writing',    color:'#A78BFA', emoji:'✍️' },
+  code:  { label:'Coding',     color:'#34D399', emoji:'💻' },
+  read:  { label:'Reading',    color:'#F59E0B', emoji:'📚' },
+  plan:  { label:'Planning',   color:'#F472B6', emoji:'🗺' },
+  learn: { label:'Learning',   color:'#38bdf8', emoji:'🎓' },
+};
 
-    function fmtShort(ms) {
-      const h = Math.floor(ms/3600000);
-      const m = Math.floor((ms%3600000)/60000);
-      return h > 0 ? `${h}h ${m}m` : `${m}m`;
-    }
+const ENERGY_LABELS = ['','💤 Exhausted','🥱 Low','😐 Neutral','😊 Good','⚡ High energy'];
+const FOCUS_LABELS  = ['','😕 Scattered','😑 Unfocused','🙂 Okay','😌 Focused','✨ Deep flow'];
 
-    function dateKey(ts) {
-      const d = new Date(ts);
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-    }
+/* ── State ─────────────────────────────────────────────────────────────────── */
+let sessions    = [];
+let running     = false;
+let sessStart   = null;
+let ticker      = null;
+let activeCat   = 'deep';
+let pendingId   = null;
+let weekOff     = 0;
+let rEnergy     = 0;
+let rFocus      = 0;
+let activeTab   = 'hist';
 
-    function todayKey() { return dateKey(Date.now()); }
+/* ── Persist ────────────────────────────────────────────────────────────────── */
+function load() { try { sessions = JSON.parse(localStorage.getItem(STORE)||'[]'); } catch(e) { sessions=[]; } }
+function save() { try { localStorage.setItem(STORE, JSON.stringify(sessions.slice(-1000))); } catch(e){} }
 
-    function friendlyDate(key) {
-      const today = todayKey();
-      const yesterday = dateKey(Date.now() - 86400000);
-      if (key === today) return 'Today';
-      if (key === yesterday) return 'Yesterday';
-      const d = new Date(key);
-      return `${DAYS_SHORT[d.getDay()]}, ${MONTHS[d.getMonth()]} ${d.getDate()}`;
-    }
+/* ── Streak ─────────────────────────────────────────────────────────────────── */
+function getStreak() { try { return JSON.parse(localStorage.getItem(SKEY)||'{"last":null,"cur":0,"best":0}'); } catch(e){return{last:null,cur:0,best:0};} }
+function bumpStreak() {
+  const td=dk(new Date()), s=getStreak();
+  if(s.last===td) return s;
+  const yd=dk(new Date(Date.now()-86400000));
+  s.cur = s.last===yd ? s.cur+1 : 1;
+  s.best = Math.max(s.best,s.cur);
+  s.last = td;
+  try { localStorage.setItem(SKEY,JSON.stringify(s)); } catch(e){}
+  return s;
+}
 
-    function fmtTime(ts) {
-      return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
+/* ── Helpers ────────────────────────────────────────────────────────────────── */
+function dk(d) { return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; }
+function tdKey() { return dk(new Date()); }
+function p2(n) { return String(Math.floor(n)).padStart(2,'0'); }
+function durFmt(ms) { const s=Math.floor(Math.abs(ms)/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sc=s%60; return `${p2(h)}:${p2(m)}:${p2(sc)}`; }
+function durShort(ms) { const s=Math.floor(Math.abs(ms)/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60); return ms<60000?'< 1m':h>0?`${h}h ${p2(m)}m`:`${m}m`; }
+function fmt12(d) { let h=d.getHours(),m=d.getMinutes(),ap=h>=12?'PM':'AM'; h=h%12||12; return `${h}:${p2(m)} ${ap}`; }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function weekStart(off=0) { const d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()-d.getDay()+off*7); return d; }
+function barColorClass(avgFocus, isToday) {
+  if (isToday) return 'bf-today';
+  if (!avgFocus) return 'bf-worked';
+  if (avgFocus >= 4.5) return 'bf-great';
+  if (avgFocus >= 3.5) return 'bf-good';
+  if (avgFocus >= 2.5) return 'bf-ok';
+  return 'bf-worked';
+}
 
-    // ── Quality ──
-    function setQuality(q) {
-      selectedQuality = q;
-      document.querySelectorAll('.star-btn').forEach(b => {
-        b.classList.toggle('active', parseInt(b.dataset.q) <= q);
-      });
-      document.getElementById('qualityDesc').textContent = QUALITY_LABELS[q];
-    }
+/* ── Session lifecycle ──────────────────────────────────────────────────────── */
+function toggleSession() { running ? endSession() : beginSession(); }
 
-    // ── Session control ──
-    function toggleSession() {
-      if (activeStart) {
-        saveAndStop();
-      } else {
-        startSession();
-      }
-    }
+function beginSession() {
+  running   = true;
+  sessStart = new Date();
+  const s   = { id:Date.now(), start:sessStart.toISOString(), end:null, note:document.getElementById('noteInp').value.trim(), cat:activeCat, energy:null, focus:null, reflection:'' };
+  sessions.push(s);
+  save();
+  bumpStreak();
+  startTick();
+  setRunUI(true);
+  renderStats();
+  showToast('Session started — enter your flow state 🧠');
+}
 
-    function startSession() {
-      activeStart = Date.now();
-      activeElapsed = 0;
-      document.getElementById('startBtn').textContent = 'Running…';
-      document.getElementById('startBtn').disabled = true;
-      document.getElementById('saveBtn').style.display = 'inline-flex';
-      document.getElementById('discardBtn').style.display = 'inline-flex';
-      document.getElementById('timerClock').classList.add('active');
-      document.getElementById('timerSub').textContent = document.getElementById('taskInput').value.trim() || 'Deep work in progress…';
-      document.title = '● Recording — Deep Work Tracker | Deskloop';
+function endSession() {
+  const now = new Date();
+  const s   = sessions.find(x=>!x.end);
+  if (s) { s.end = now.toISOString(); s.note = document.getElementById('noteInp').value.trim() || s.note; pendingId = s.id; }
+  clearInterval(ticker); ticker = null;
+  running   = false;
+  sessStart = null;
+  save();
+  setRunUI(false);
+  renderStats();
+  renderHistory();
+  showRatingCard(s);
+}
 
-      activeTick = setInterval(() => {
-        activeElapsed = Date.now() - activeStart;
-        document.getElementById('timerClock').textContent = fmtClock(activeElapsed);
-        renderStats();
-      }, 1000);
-    }
+function startTick() {
+  clearInterval(ticker);
+  ticker = setInterval(() => {
+    const ms = Date.now() - sessStart.getTime();
+    document.getElementById('timerVal').textContent  = durFmt(ms);
+    const note = document.getElementById('noteInp').value.trim() || CATS[activeCat].label;
+    document.getElementById('noteLive').textContent  = fmt12(sessStart) + ' · ' + note;
+    renderStats(true);
+  }, 1000);
+}
 
-    function saveAndStop() {
-      if (!activeStart) return;
-      clearInterval(activeTick);
+function restoreSession() {
+  const s = sessions.find(x=>!x.end);
+  if (!s) return;
+  running   = true;
+  sessStart = new Date(s.start);
+  activeCat = s.cat || 'deep';
+  document.querySelectorAll('.cat-pill').forEach(b => {
+    const on = b.dataset.cat === activeCat;
+    b.classList.toggle('on', on);
+    if (on) { b.style.color=CATS[activeCat].color; b.style.borderColor=CATS[activeCat].color; }
+    else    { b.style.color=''; b.style.borderColor=''; }
+  });
+  document.getElementById('noteInp').value = s.note || '';
+  startTick();
+  setRunUI(true);
+}
 
-      if (activeElapsed < 60000) {
-        if (!confirm('Session is under 1 minute. Save anyway?')) { resumeAfterCancel(); return; }
-      }
+/* ── UI ─────────────────────────────────────────────────────────────────────── */
+function setRunUI(on) {
+  const hero = document.getElementById('heroWrap');
+  const tv   = document.getElementById('timerVal');
+  const dot  = document.getElementById('sdot');
+  const stxt = document.getElementById('statusTxt');
+  const btn  = document.getElementById('mainBtn');
+  const icon = document.getElementById('mainIcon');
+  const lbl  = document.getElementById('mainLbl');
+  const nl   = document.getElementById('noteLive');
 
-      const task = document.getElementById('taskInput').value.trim() || 'Deep work';
-      sessions.unshift({
-        id: Date.now(),
-        start: activeStart,
-        end: Date.now(),
-        duration: activeElapsed,
-        task,
-        quality: selectedQuality
-      });
+  hero.classList.toggle('running', on);
+  tv.classList.toggle('running', on);
+  dot.classList.toggle('on', on);
+  stxt.textContent = on ? 'Session in progress' : 'Ready to focus';
+  btn.classList.toggle('stop', on);
+  btn.setAttribute('aria-label', on ? 'End session' : 'Start session');
+  icon.innerHTML   = on
+    ? '<rect x="6" y="4" width="4" height="16" fill="currentColor" stroke="none"/><rect x="14" y="4" width="4" height="16" fill="currentColor" stroke="none"/>'
+    : '<polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>';
+  lbl.textContent  = on ? 'End Session' : 'Start Deep Work';
 
-      save();
-      resetTimer();
-      render();
-    }
+  if (!on) {
+    document.getElementById('timerVal').textContent = '00:00:00';
+    nl.innerHTML = '&nbsp;';
+    document.getElementById('noteInp').value = '';
+  }
 
-    function discardSession() {
-      if (!confirm('Discard this session?')) return;
-      clearInterval(activeTick);
-      resetTimer();
-    }
+  document.getElementById('ctrlCard').style.display = !on ? 'block' : 'block';
+  if (!on) hideRatingCard();
+}
 
-    function resumeAfterCancel() {
-      activeTick = setInterval(() => {
-        activeElapsed = Date.now() - activeStart;
-        document.getElementById('timerClock').textContent = fmtClock(activeElapsed);
-      }, 1000);
-    }
+/* ── Category ───────────────────────────────────────────────────────────────── */
+function setCat(btn) {
+  document.querySelectorAll('.cat-pill').forEach(b => { b.classList.remove('on'); b.style.color=''; b.style.borderColor=''; });
+  btn.classList.add('on');
+  activeCat = btn.dataset.cat;
+  btn.style.color       = CATS[activeCat].color;
+  btn.style.borderColor = CATS[activeCat].color;
+  const s = sessions.find(x=>!x.end);
+  if (s) { s.cat = activeCat; save(); }
+}
 
-    function resetTimer() {
-      activeStart = null;
-      activeElapsed = 0;
-      clearInterval(activeTick);
-      document.getElementById('timerClock').textContent = '00:00:00';
-      document.getElementById('timerClock').classList.remove('active');
-      document.getElementById('timerSub').textContent = 'Start a session to begin tracking';
-      document.getElementById('startBtn').textContent = 'Start Session';
-      document.getElementById('startBtn').disabled = false;
-      document.getElementById('saveBtn').style.display = 'none';
-      document.getElementById('discardBtn').style.display = 'none';
-      document.title = 'Deep Work Tracker | Deskloop';
-    }
+/* ── Rating card ────────────────────────────────────────────────────────────── */
+function showRatingCard(s) {
+  rEnergy = 0; rFocus = 0;
+  document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('picked'));
+  document.getElementById('rcNote').value = '';
+  if (s) {
+    const ms = new Date(s.end) - new Date(s.start);
+    document.getElementById('rcSub').textContent = `${durShort(ms)} · ${CATS[s.cat]?.label||''} · ${fmt12(new Date(s.start))}`;
+  }
+  document.getElementById('ctrlCard').style.display  = 'none';
+  document.getElementById('ratingCard').classList.add('show');
+}
 
-    function deleteSession(id) {
-      sessions = sessions.filter(s => s.id !== id);
-      save();
-      render();
-    }
+function hideRatingCard() {
+  document.getElementById('ratingCard').classList.remove('show');
+  document.getElementById('ctrlCard').style.display = '';
+}
 
-    function clearAll() {
-      if (!sessions.length) return;
-      if (!confirm('Clear all sessions? This cannot be undone.')) return;
-      sessions = [];
-      save();
-      render();
-    }
+function pickRating(btn) {
+  const grp = btn.dataset.grp, v = parseInt(btn.dataset.v);
+  document.querySelectorAll(`.emoji-btn[data-grp="${grp}"]`).forEach(b => b.classList.remove('picked'));
+  btn.classList.add('picked');
+  if (grp === 'energy') rEnergy = v;
+  else                  rFocus  = v;
+}
 
-    // ── Focus score (0-100) ──
-    function calcScore(weekSessions, weekMs) {
-      if (!weekSessions.length) return 0;
-      const TARGET_HOURS = 20;
-      const hoursScore = Math.min((weekMs / 3600000) / TARGET_HOURS, 1) * 40;
-      const avgQ = weekSessions.reduce((a,s) => a + s.quality, 0) / weekSessions.length;
-      const qualityScore = ((avgQ - 1) / 4) * 30;
-      const days = new Set(weekSessions.map(s => dateKey(s.start))).size;
-      const consistencyScore = (days / 7) * 30;
-      return Math.round(hoursScore + qualityScore + consistencyScore);
-    }
+function saveRating() {
+  const s = sessions.find(x=>x.id===pendingId);
+  if (s) {
+    s.energy     = rEnergy || null;
+    s.focus      = rFocus  || null;
+    s.reflection = document.getElementById('rcNote').value.trim();
+    save();
+  }
+  pendingId = null;
+  hideRatingCard();
+  renderStats();
+  renderHistory();
+  const msg = rFocus >= 4 ? 'Excellent session saved ✨' : rFocus >= 3 ? 'Session saved 🙂' : 'Session saved';
+  showToast(msg);
+}
 
-    // ── Render ──
-    function renderStats() {
-      const today = todayKey();
-      const weekAgo = Date.now() - 7 * 86400000;
+function skipRating() {
+  pendingId = null;
+  hideRatingCard();
+  renderHistory();
+  showToast('Session saved');
+}
 
-      const todaySessions = sessions.filter(s => dateKey(s.start) === today);
-      const weekSessions = sessions.filter(s => s.start >= weekAgo);
+/* ── Stats ──────────────────────────────────────────────────────────────────── */
+function renderStats(live=false) {
+  const tk      = tdKey();
+  const todaySS = sessions.filter(s=>s.start.startsWith(tk)&&s.end);
+  const liveAdd = running ? Date.now()-sessStart.getTime() : 0;
+  const todayMs = todaySS.reduce((a,s)=>a+(new Date(s.end)-new Date(s.start)),0)+liveAdd;
+  const todayCnt= todaySS.length + (running?1:0);
 
-      const liveMs = activeStart ? activeElapsed : 0;
-      const todayMs = todaySessions.reduce((a,s) => a+s.duration, 0) + liveMs;
-      const weekMs  = weekSessions.reduce((a,s) => a+s.duration, 0) + liveMs;
-      const avgQ = todaySessions.length
-        ? (todaySessions.reduce((a,s) => a+s.quality, 0) / todaySessions.length).toFixed(1)
-        : null;
+  document.getElementById('statToday').textContent    = durShort(todayMs);
+  document.getElementById('statTodaySub').textContent = `${todayCnt} session${todayCnt!==1?'s':''}`;
 
-      document.getElementById('statToday').textContent   = fmtShort(todayMs);
-      document.getElementById('statWeek').textContent    = fmtShort(weekMs);
-      document.getElementById('statCount').textContent   = todaySessions.length;
-      document.getElementById('statQuality').textContent = avgQ ? `${avgQ} ⭐` : '—';
+  const ws  = weekStart(0), we = new Date(ws); we.setDate(ws.getDate()+7);
+  const wss = sessions.filter(s=>{const d=new Date(s.start);return d>=ws&&d<we&&s.end;});
+  const wMs = wss.reduce((a,s)=>a+(new Date(s.end)-new Date(s.start)),0)+liveAdd;
+  const wCnt= wss.length+(running?1:0);
+  document.getElementById('statWeek').textContent    = durShort(wMs);
+  document.getElementById('statWeekSub').textContent = `${wCnt} session${wCnt!==1?'s':''}`;
 
-      // Score
-      const score = calcScore(weekSessions, weekMs);
-      document.getElementById('scoreNum').textContent = score;
-      document.getElementById('scoreRing').style.strokeDashoffset = 176 - (176 * score / 100);
-      document.getElementById('scoreHours').textContent = fmtShort(weekMs);
-      document.getElementById('scoreSessions').textContent = weekSessions.length;
-      const wAvgQ = weekSessions.length
-        ? (weekSessions.reduce((a,s) => a+s.quality,0) / weekSessions.length).toFixed(1)
-        : null;
-      document.getElementById('scoreAvgQ').textContent = wAvgQ ? `${wAvgQ} ⭐` : '—';
-      const activeDays = new Set(weekSessions.map(s => dateKey(s.start))).size;
-      document.getElementById('scoreDays').textContent = `${activeDays} / 7`;
-    }
+  const rated = sessions.filter(s=>s.end&&s.focus);
+  const avgF  = rated.length ? (rated.reduce((a,s)=>a+s.focus,0)/rated.length) : 0;
+  document.getElementById('statFocus').textContent   = avgF ? avgF.toFixed(1)+'/5' : '—';
+  document.getElementById('statFocusSub').textContent= avgF ? `from ${rated.length} rated session${rated.length!==1?'s':''}` : 'No rated sessions yet';
 
-    function renderWeekChart() {
-      const el = document.getElementById('weekChart');
-      const today = new Date();
-      const bars = [];
+  const st = getStreak();
+  document.getElementById('streakNum').textContent      = st.cur;
+  document.getElementById('streakBest').textContent     = st.best;
+  document.getElementById('statStreakCard').textContent = `${st.cur} 🔥`;
+  document.getElementById('statStreakSub').textContent  = `Best: ${st.best} day${st.best!==1?'s':''}`;
 
-      // Last 7 days
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date(today);
-        d.setDate(d.getDate() - i);
-        const key = dateKey(d.getTime());
-        const isToday = i === 0;
-        const dayMs = sessions
-          .filter(s => dateKey(s.start) === key)
-          .reduce((a,s) => a+s.duration, 0) + (isToday && activeStart ? activeElapsed : 0);
-        bars.push({ label: DAYS_SHORT[d.getDay()], ms: dayMs, isToday });
-      }
+  if (!live) { renderWeekChart(); }
+}
 
-      const maxMs = Math.max(...bars.map(b => b.ms), 3600000); // min scale 1h
+/* ── History ────────────────────────────────────────────────────────────────── */
+function renderHistory() {
+  const list  = document.getElementById('sessList');
+  const empty = document.getElementById('emptyState');
+  const done  = sessions.filter(s=>s.end).sort((a,b)=>new Date(b.start)-new Date(a.start)).slice(0,60);
 
-      el.innerHTML = bars.map(b => {
-        const pct = Math.max((b.ms / maxMs) * 100, b.ms > 0 ? 3 : 0);
-        const cls = b.isToday ? 'today' : b.ms === 0 ? 'empty' : '';
-        return `
-          <div class="bar-col">
-            <div class="bar-val">${b.ms > 0 ? fmtShort(b.ms) : ''}</div>
-            <div class="bar-fill ${cls}" style="height:${pct}%;"></div>
-            <div class="bar-label" style="${b.isToday?'color:var(--success);':''}">${b.label}</div>
-          </div>`;
-      }).join('');
-    }
+  list.querySelectorAll('.sess-card').forEach(el=>el.remove());
+  empty.style.display = done.length ? 'none' : 'block';
 
-    function renderHistory() {
-      const el = document.getElementById('sessionHistory');
-      if (!sessions.length) {
-        el.innerHTML = `<div class="empty-sessions"><div class="icon">🎯</div><p>No sessions yet. Start your first deep work session above.</p></div>`;
-        return;
-      }
+  done.forEach(s => {
+    const start = new Date(s.start), end = new Date(s.end);
+    const ms    = end - start;
+    const meta  = CATS[s.cat] || CATS.deep;
+    const el    = document.createElement('div');
+    el.className = 'sess-card';
 
-      // Group by day
-      const groups = {};
-      sessions.forEach(s => {
-        const key = dateKey(s.start);
-        if (!groups[key]) groups[key] = [];
-        groups[key].push(s);
-      });
+    const eLbl = s.energy ? ENERGY_LABELS[s.energy] : null;
+    const fLbl = s.focus  ? FOCUS_LABELS[s.focus]   : null;
+    const ratingHtml = (eLbl||fLbl) ? `
+      <div class="sess-ratings">
+        ${eLbl ? `<span class="rating-badge">${eLbl}</span>` : ''}
+        ${fLbl ? `<span class="rating-badge">${fLbl}</span>` : ''}
+      </div>` : '';
+    const reflHtml = s.reflection ? `<div class="sess-note" style="color:var(--text2);margin-top:3px;font-style:italic;">"${esc(s.reflection)}"</div>` : '';
 
-      el.innerHTML = Object.keys(groups).sort((a,b) => b.localeCompare(a)).map(key => {
-        const daySessions = groups[key];
-        const dayMs = daySessions.reduce((a,s) => a+s.duration, 0);
-        const items = daySessions.map(s => `
-          <div class="session-item">
-            <div class="session-quality">${'⭐'.repeat(s.quality)}</div>
-            <div class="session-info">
-              <div class="session-task">${escHtml(s.task)}</div>
-              <div class="session-meta">${fmtTime(s.start)} – ${fmtTime(s.end)}</div>
-            </div>
-            <div class="session-dur">${fmtShort(s.duration)}</div>
-            <button class="session-del" onclick="deleteSession(${s.id})" title="Delete">✕</button>
-          </div>`).join('');
+    el.innerHTML = `
+      <div class="sess-bar" style="background:${meta.color};"></div>
+      <div class="sess-body">
+        <div class="sess-row1">
+          <span class="sess-time">${fmt12(start)} – ${fmt12(end)}</span>
+          <span class="sess-cat-badge">${meta.emoji} ${meta.label}</span>
+        </div>
+        ${s.note ? `<div class="sess-note">${esc(s.note)}</div>` : ''}
+        ${ratingHtml}
+        ${reflHtml}
+      </div>
+      <div class="sess-right">
+        <div class="sess-dur">${durShort(ms)}</div>
+        <button class="sess-del" onclick="deleteSession(${s.id})" aria-label="Delete">✕</button>
+      </div>`;
+    list.insertBefore(el, empty);
+  });
+}
 
-        return `
-          <div class="day-group">
-            <div class="day-group-hdr">
-              <span>${friendlyDate(key)}</span>
-              <span class="day-total-badge">${fmtShort(dayMs)}</span>
-            </div>
-            ${items}
-          </div>`;
-      }).join('');
-    }
+function deleteSession(id) {
+  sessions = sessions.filter(s=>s.id!==id);
+  save(); renderStats(); renderHistory();
+  showToast('Session deleted');
+}
 
-    function render() {
-      renderStats();
-      renderWeekChart();
-      renderScoreChart();
-      renderHistory();
-    }
+/* ── Weekly chart ───────────────────────────────────────────────────────────── */
+function renderWeekChart() {
+  const ws    = weekStart(weekOff);
+  const we    = new Date(ws); we.setDate(ws.getDate()+7);
+  const today = tdKey();
 
-    function escHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
+  document.getElementById('weekRange').textContent = `${MONTHS[ws.getMonth()]} ${ws.getDate()} – ${MONTHS[new Date(we-1).getMonth()]} ${new Date(we-1).getDate()}`;
 
-    // ── Init ──
-    load();
-    setQuality(1);
-    render();
-  </script>
+  const days = Array.from({length:7},(_,i) => {
+    const d  = new Date(ws); d.setDate(ws.getDate()+i);
+    const k  = dk(d);
+    const ss = sessions.filter(s=>s.start.startsWith(k)&&s.end);
+    const ms = ss.reduce((a,s)=>a+(new Date(s.end)-new Date(s.start)),0)+(weekOff===0&&k===today&&running?Date.now()-sessStart.getTime():0);
+    const focused = ss.filter(s=>s.focus);
+    const avgF = focused.length ? focused.reduce((a,s)=>a+s.focus,0)/focused.length : 0;
+    return { d, k, ms, avgF, isToday:k===today, isFuture:d>new Date()&&k!==today };
+  });
 
+  const maxMs  = Math.max(...days.map(d=>d.ms), 1);
+  const weekMs = days.reduce((a,d)=>a+d.ms, 0);
+  const wFoc   = days.reduce((a,d,_,arr)=>{const r=arr.filter(x=>x.avgF>0);return r.length?r.reduce((s,x)=>s+x.avgF,0)/r.length:0;},0);
+
+  document.getElementById('weekTotalVal').textContent = durShort(weekMs);
+  document.getElementById('weekAvgFocus').textContent = wFoc ? wFoc.toFixed(1)+'/5' : '—';
+
+  const chart = document.getElementById('barChart');
+  chart.innerHTML = '';
+  days.forEach(day => {
+    const pct = day.isFuture ? 0 : Math.round((day.ms/maxMs)*100);
+    const cls = barColorClass(day.avgF, day.isToday);
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    col.innerHTML = `
+      <div class="bar-hrs${day.isToday?' th':''}">${day.ms>60000?durShort(day.ms):''}</div>
+      <div class="bar-track"><div class="bar-fill ${cls}" style="height:${pct}%;"></div></div>
+      <div class="bar-day${day.isToday?' td':''}">${DAYS[day.d.getDay()]}</div>
+      <div class="bar-date${day.isToday?' td':''}">${day.d.getDate()}</div>`;
+    chart.appendChild(col);
+  });
+}
+
+function navWeek(dir) { weekOff = Math.min(0, weekOff+dir); renderWeekChart(); }
+
+/* ── Tabs ───────────────────────────────────────────────────────────────────── */
+function switchTab(id) {
+  ['hist','week'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('on', t===id);
+    document.getElementById('tab-'+t).setAttribute('aria-selected', t===id);
+    document.getElementById('pane-'+t).classList.toggle('on', t===id);
+  });
+  activeTab = id;
+}
+
+/* ── Export CSV ─────────────────────────────────────────────────────────────── */
+function exportCSV() {
+  const ws  = weekStart(weekOff), we = new Date(ws); we.setDate(ws.getDate()+7);
+  const wss = sessions.filter(s=>{const d=new Date(s.start);return d>=ws&&d<we&&s.end;});
+  if (!wss.length) { showToast('No sessions this week to export'); return; }
+  const rows = ['Date,Day,Start,End,Duration(min),Category,Note,Energy(1-5),Focus(1-5),Reflection'];
+  wss.forEach(s => {
+    const st=new Date(s.start),en=new Date(s.end),mins=Math.round((en-st)/60000);
+    rows.push([dk(st),DAYS[st.getDay()],fmt12(st),fmt12(en),mins,CATS[s.cat]?.label||s.cat,
+      `"${(s.note||'').replace(/"/g,'""')}"`,s.energy||'',s.focus||'',
+      `"${(s.reflection||'').replace(/"/g,'""')}"`].join(','));
+  });
+  const b=new Blob([rows.join('\n')],{type:'text/csv'});
+  const u=URL.createObjectURL(b), a=document.createElement('a');
+  a.href=u; a.download=`deepwork-${dk(ws)}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(u);
+  showToast('CSV downloaded');
+}
+
+/* ── Toast ──────────────────────────────────────────────────────────────────── */
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+/* ── Enter key ──────────────────────────────────────────────────────────────── */
+document.getElementById('noteInp').addEventListener('keydown', e=>{ if(e.key==='Enter'){e.preventDefault();toggleSession();} });
+
+/* ── Init ───────────────────────────────────────────────────────────────────── */
+load();
+restoreSession();
+renderStats();
+renderHistory();
+
+setInterval(()=>{ if(!running){renderStats();} }, 60000);
+</script>
 </body>
 </html>

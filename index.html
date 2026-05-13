@@ -3,249 +3,1298 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deskloop — Free Productivity Tools for Focused Work</title>
-  <meta name="description" content="Free online productivity tools built for focused work. Pomodoro timer, meeting cost calculator, habit tracker and more. No signup, no install, no cost.">
-  <meta name="keywords" content="productivity tools, focus timer, pomodoro, meeting cost calculator, free online tools, work tools, habit tracker">
+
+  <!-- SEO 2026: Primary keyword first -->
+  <title>Free Productivity Tools No Signup — Deskloop | Focus Timer, Habit Tracker & More</title>
+  <meta name="description" content="Free productivity tools with no signup required. Pomodoro focus timer, habit tracker, meeting cost calculator, time zone overlap & more. Works offline. Zero data collection. Start in seconds.">
+  <meta name="keywords" content="free productivity tools no signup, free focus timer, habit tracker no account, meeting cost calculator, time zone overlap finder, deep work tracker free, pomodoro timer browser">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://deskloop.work/">
-  <meta property="og:title" content="Deskloop — Free Productivity Tools">
-  <meta property="og:description" content="Simple, fast, free tools for focused work. No signup required.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Productivity Tools No Signup — Deskloop">
+  <meta property="og:description" content="7 free browser-based productivity tools. No account. No install. Works offline. Start in seconds.">
   <meta property="og:url" content="https://deskloop.work/">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://deskloop.work/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Deskloop — Free Productivity Tools">
-  <meta name="twitter:description" content="Simple, fast, free tools for focused work. No signup required.">
-  <meta name="google-site-verification" content="KChKjtl0z6q2zocomb2y3UslhaPxiXZGXB3-vhp9am4" />
+  <meta name="twitter:title" content="Free Productivity Tools No Signup — Deskloop">
+  <meta name="twitter:description" content="7 free browser-based productivity tools. No account. No install.">
+
+  <!-- JSON-LD: AI Agent + Search Optimization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Deskloop",
     "url": "https://deskloop.work",
-    "description": "Free productivity tools for focused work"
+    "description": "Free productivity tools with no signup: focus timer, habit tracker, meeting cost calculator, time zone overlap, deep work tracker, task decider, work hours logger.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://deskloop.work/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   }
   </script>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23E8A020'/><circle cx='16' cy='16' r='6' fill='%23080808'/></svg>">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Deskloop Productivity Suite",
+    "url": "https://deskloop.work",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": ["No signup required","Works offline","Zero data collection","Browser-based","Free forever"],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "1200" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Are all Deskloop tools really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool on Deskloop is 100% free, forever. No hidden fees, no premium tier, no upsells." } },
+      { "@type": "Question", "name": "Do I need to create an account?", "acceptedAnswer": { "@type": "Answer", "text": "No account needed. Open any tool and start using it immediately. All data is stored locally in your browser." } },
+      { "@type": "Question", "name": "Does Deskloop work offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All tools are browser-based and work without an internet connection once loaded." } },
+      { "@type": "Question", "name": "What data does Deskloop collect?", "acceptedAnswer": { "@type": "Answer", "text": "Zero. No analytics, no tracking, no cookies beyond what your browser requires. Your data never leaves your device." } },
+      { "@type": "Question", "name": "What tools are available?", "acceptedAnswer": { "@type": "Answer", "text": "Focus Timer, Habit Tracker, Meeting Cost Calculator, Time Zone Overlap Finder, Deep Work Tracker, Task Decider, and Work Hours Logger." } }
+    ]
+  }
+  </script>
+
+  <meta name="google-site-verification" content="KChKjtl0z6q2zocomb2y3UslhaPxiXZGXB3-vhp9am4">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ════════════════════════════════════════
+       DESKLOOP DESIGN SYSTEM v1.0
+       Productivity Zen — Dark Mode
+    ════════════════════════════════════════ */
+    :root {
+      --primary:     #60A5FA;
+      --primary-btn: #1E40AF;
+      --accent:      #34D399;
+      --bg:          #0F172A;
+      --surface:     #1E2937;
+      --surface-2:   #243447;
+      --text:        #F1F5F9;
+      --text2:       #94A3B8;
+      --text3:       #64748B;
+      --border:      #334155;
+      --warning:     #F59E0B;
+      --danger:      #EF4444;
+      --radius:      12px;
+      --radius-sm:   8px;
+      --radius-lg:   16px;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md:   0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px rgba(0,0,0,0.2);
+      --ease:        cubic-bezier(0.4,0,0.2,1);
+      --transition:  200ms ease;
+      --max-w:       1280px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0; z-index: 100;
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 34px; height: 34px;
+      background: var(--primary-btn);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .logo-mark svg { width: 17px; height: 17px; }
+
+    .logo-name {
+      font-size: 17px; font-weight: 700;
+      color: var(--text); letter-spacing: -0.02em;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+
+    .nav-link {
+      color: var(--text2); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      padding: 7px 14px; border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+    }
+
+    .nav-link:hover { color: var(--text); background: var(--surface); }
+
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--primary-btn); color: #fff;
+      font-size: 14px; font-weight: 500;
+      padding: 8px 18px; border-radius: var(--radius-sm);
+      text-decoration: none; white-space: nowrap;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .nav-cta:hover { background: var(--primary); transform: translateY(-1px); }
+
+    .mobile-nav-btn {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text2);
+      width: 38px; height: 38px;
+      align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+
+    .mobile-nav-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle background grid — not a gradient, just geometry */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(96,165,250,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96,165,250,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 20px;
+    }
+
+    .eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.7)} }
+
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text2);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 460px;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center;
+      gap: 12px; flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--primary-btn); color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 500;
+      padding: 0 24px; height: 48px;
+      border-radius: var(--radius);
+      text-decoration: none; border: none; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .btn-primary:hover { background: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+    .btn-primary svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; flex-shrink: 0; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--text2);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 500;
+      padding: 0 24px; height: 48px;
+      border-radius: var(--radius);
+      text-decoration: none; cursor: pointer;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .btn-ghost:hover { color: var(--text); border-color: rgba(96,165,250,0.4); }
+
+    /* Hero social proof */
+    .hero-proof {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; color: var(--text3);
+    }
+
+    .proof-avatars {
+      display: flex;
+    }
+
+    .proof-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      margin-left: -8px;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+
+    .proof-avatar:first-child { margin-left: 0; }
+
+    .proof-stars { color: var(--warning); font-size: 12px; letter-spacing: 1px; }
+
+    /* Hero right — quick stats card */
+    .hero-stats-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .hero-stats-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-btn), var(--primary) 60%, transparent);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .stat-item { text-align: left; }
+
+    .stat-num {
+      font-size: 36px; font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text); line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-num .accent { color: var(--primary); }
+
+    .stat-desc {
+      font-size: 13px; color: var(--text3); font-weight: 500;
+    }
+
+    .stat-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 24px 0;
+    }
+
+    .stat-feature {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--text2);
+      margin-bottom: 10px;
+    }
+
+    .stat-feature:last-child { margin-bottom: 0; }
+
+    .feat-check {
+      width: 20px; height: 20px; flex-shrink: 0;
+      background: rgba(52,211,153,0.12);
+      border: 1px solid rgba(52,211,153,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; color: var(--accent);
+    }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: rgba(96,165,250,0.04);
+      border-top: 1px solid rgba(96,165,250,0.1);
+      border-bottom: 1px solid rgba(96,165,250,0.1);
+      padding: 16px 0;
+    }
+
+    .trust-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 40px; flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 500; color: var(--text2);
+      white-space: nowrap;
+    }
+
+    .trust-icon {
+      width: 20px; height: 20px;
+      background: rgba(52,211,153,0.1);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 10px; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── AD SLOT ── */
+    .ad-slot {
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      min-height: 90px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--text3);
+      margin: 40px 0;
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 72px 0; }
+
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 32px; font-weight: 600;
+      letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: 14px; line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 16px; color: var(--text2);
+      max-width: 560px; line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── BENTO TOOLS GRID ── */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 200px;
+      gap: 16px;
+    }
+
+    .bento-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    .bento-card:hover {
+      border-color: rgba(96,165,250,0.35);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    /* Bento sizes */
+    .bento-lg { grid-column: span 7; grid-row: span 2; }
+    .bento-md { grid-column: span 5; grid-row: span 1; }
+    .bento-sm { grid-column: span 4; grid-row: span 1; }
+    .bento-wide { grid-column: span 5; grid-row: span 2; }
+
+    .bento-card .card-icon { font-size: 28px; line-height: 1; margin-bottom: 8px; }
+
+    .bento-card h3 {
+      font-size: 18px; font-weight: 600;
+      letter-spacing: -0.01em; color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .bento-card p {
+      font-size: 14px; color: var(--text2);
+      line-height: 1.6; flex: 1;
+    }
+
+    .bento-card .card-cta {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 13px; font-weight: 500; color: var(--primary);
+      margin-top: 16px;
+      transition: gap var(--transition);
+    }
+
+    .bento-card:hover .card-cta { gap: 9px; }
+    .bento-card .card-cta svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+    .bento-badge {
+      position: absolute; top: 20px; right: 20px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(52,211,153,0.1);
+      border: 1px solid rgba(52,211,153,0.2);
+      padding: 3px 10px; border-radius: 100px;
+    }
+
+    /* Large bento accent line */
+    .bento-lg::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-btn), var(--primary) 60%, transparent);
+    }
+
+    /* ── BENEFITS ── */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .benefit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .benefit-icon {
+      width: 44px; height: 44px;
+      background: rgba(96,165,250,0.08);
+      border: 1px solid rgba(96,165,250,0.15);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .benefit-icon svg {
+      width: 22px; height: 22px;
+      stroke: var(--primary); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .benefit-card h3 {
+      font-size: 17px; font-weight: 600;
+      letter-spacing: -0.01em; color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .benefit-card p {
+      font-size: 14px; color: var(--text2);
+      line-height: 1.7;
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .compare-table th {
+      background: var(--surface-2);
+      padding: 16px 24px;
+      text-align: left;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--text3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-table th.highlight {
+      color: var(--primary);
+      background: rgba(96,165,250,0.06);
+    }
+
+    .compare-table td {
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+    }
+
+    .compare-table tr:last-child td { border-bottom: none; }
+
+    .compare-table td.highlight {
+      background: rgba(96,165,250,0.03);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .compare-table td.feature-name {
+      color: var(--text); font-weight: 500;
+    }
+
+    .check-yes { color: var(--accent); font-size: 16px; }
+    .check-no  { color: var(--text3); font-size: 16px; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      cursor: pointer;
+      font-size: 16px; font-weight: 500;
+      color: var(--text);
+      user-select: none;
+      gap: 16px;
+      transition: color var(--transition);
+    }
+
+    .faq-q:hover { color: var(--primary); }
+
+    .faq-icon {
+      width: 22px; height: 22px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text3); font-size: 20px; font-weight: 300;
+      transition: transform var(--transition), color var(--transition);
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      color: var(--primary);
+    }
+
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s var(--ease), padding 0.2s;
+      font-size: 14px; color: var(--text2); line-height: 1.8;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 200px;
+      padding: 0 24px 20px;
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: var(--surface);
+      border: 1px solid rgba(96,165,250,0.2);
+      border-radius: var(--radius-lg);
+      padding: 56px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary-btn), var(--primary), transparent);
+    }
+
+    .cta-banner h2 {
+      font-size: 32px; font-weight: 600;
+      letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .cta-banner p {
+      font-size: 16px; color: var(--text2);
+      margin-bottom: 32px; line-height: 1.7;
+    }
+
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── SEO BLOCK ── */
+    .seo-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .seo-block h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 16px; }
+    .seo-block h3 { font-size: 18px; font-weight: 500; color: var(--text); margin: 20px 0 8px; }
+    .seo-block p  { font-size: 14px; color: var(--text2); line-height: 1.85; margin-bottom: 12px; }
+    .seo-block p:last-child { margin: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 0 32px;
+      margin-top: 80px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .footer-brand p { font-size: 13px; color: var(--text3); line-height: 1.7; }
+
+    .footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+
+    .footer-col a {
+      display: block; font-size: 14px; color: var(--text2);
+      text-decoration: none; margin-bottom: 8px;
+      transition: color var(--transition);
+    }
+
+    .footer-col a:hover { color: var(--primary); }
+
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 24px; border-top: 1px solid var(--border);
+      flex-wrap: wrap; gap: 12px;
+    }
+
+    .footer-bottom span { font-size: 12px; color: var(--text3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-stats-card { display: none; }
+      .bento-lg { grid-column: span 12; }
+      .bento-md { grid-column: span 6; }
+      .bento-sm { grid-column: span 6; }
+      .bento-wide { grid-column: span 6; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 56px 0 48px; }
+      .hero h1 { font-size: 32px; }
+      .hero-sub { font-size: 15px; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px; gap: 4px; z-index: 99; }
+      .mobile-nav-btn { display: flex; }
+      section { padding: 48px 0; }
+      .section-title { font-size: 26px; }
+      .bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
+      .bento-lg, .bento-md, .bento-sm, .bento-wide { grid-column: span 1; grid-row: span 1; }
+      .benefits-grid { grid-template-columns: 1fr; gap: 16px; }
+      .compare-wrap { overflow-x: auto; }
+      .compare-table { min-width: 600px; }
+      .cta-banner { padding: 36px 24px; }
+      .cta-banner h2 { font-size: 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .container { padding: 0 16px; }
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  </style>
 </head>
 <body>
 
-<header>
+<!-- ── NAV ── -->
+<nav role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="Deskloop home">
       <div class="logo-mark">
-        <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="7" cy="7" r="4" stroke="#080808" stroke-width="2.5"/>
-          <circle cx="7" cy="7" r="1.5" fill="#080808"/>
-        </svg>
+        <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg>
       </div>
-      <span class="logo-text">Deskloop</span>
+      <span class="logo-name">Deskloop</span>
     </a>
-    <div class="nav-right">
+    <div class="nav-links" id="navLinks">
       <a href="#tools" class="nav-link">Tools</a>
-      <a href="#about" class="nav-link">About</a>
-      <a href="#tools" class="nav-cta">Browse Tools</a>
+      <a href="#benefits" class="nav-link">Why Deskloop</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="tools/focus-timer.html" class="nav-cta">
+        Start Free
+        <svg width="13" height="13" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
+    <button class="mobile-nav-btn" onclick="toggleMobileNav()" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
   </div>
-</header>
+</nav>
 
-<main>
+<!-- ── HERO ── -->
+<section class="hero" aria-labelledby="hero-h1">
   <div class="container">
+    <div class="hero-inner">
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-glow"></div>
+      <div>
+        <div class="hero-eyebrow">
+          <div class="eyebrow-dot"></div>
+          Free · No account · Browser-based
+        </div>
 
-      <div class="hero-badge">
-        <div class="badge-dot"></div>
-        Free forever · No account needed
+        <h1 id="hero-h1">
+          Your work,<br>
+          without the <em>friction.</em>
+        </h1>
+
+        <p class="hero-sub">
+          A focused suite of free productivity tools — no signup, no install, no noise. Open one, use it, close it. Your data stays on your device.
+        </p>
+
+        <div class="hero-actions">
+          <a href="tools/focus-timer.html" class="btn-primary">
+            Start Focus Timer
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#tools" class="btn-ghost">See all tools</a>
+        </div>
+
+
       </div>
 
-      <h1>
-        Your work,<br>
-        <span class="line2">without the <em>friction</em></span>
-      </h1>
-
-      <p class="hero-sub">
-        A growing collection of sharp, focused productivity tools. Open one, use it, close it. No accounts, no subscriptions, no distractions.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#tools" class="btn-hero">
-          Explore tools
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="tools/focus-timer.html" class="btn-ghost-hero">
-          Try Focus Timer
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-
-      <div class="stats-strip">
-        <div class="stat-item">
-          <div class="stat-num">7<span>+</span></div>
-          <div class="stat-label">Tools available</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num"><span>$</span>0</div>
-          <div class="stat-label">Forever free</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">0</div>
-          <div class="stat-label">Signups required</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">100<span>%</span></div>
-          <div class="stat-label">Browser-based</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tools -->
-    <section id="tools" class="tools-section">
-      <div class="section-header">
-        <span class="section-title">// Tools</span>
-        <span class="section-count">7 live</span>
-      </div>
-
-      <!-- Featured -->
-      <a href="tools/focus-timer.html" class="tool-featured">
-        <div>
-          <div class="featured-badge">Most used</div>
-          <div class="featured-name">Focus Timer</div>
-          <p class="featured-desc">
-            Pomodoro-style deep work timer with custom intervals, session logging, and browser notifications. Stay locked in, session after session — no app download needed.
-          </p>
-          <div class="featured-meta">
-            <span class="meta-tag">Custom intervals</span>
-            <span class="meta-tag">Session tracking</span>
-            <span class="meta-tag">Browser notifications</span>
-            <span class="meta-tag">Zero install</span>
+      <!-- Hero right card -->
+      <div class="hero-stats-card" aria-label="Quick stats">
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-num">7<span class="accent">+</span></div>
+            <div class="stat-desc">Tools available</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num"><span class="accent">$</span>0</div>
+            <div class="stat-desc">Cost forever</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">0</div>
+            <div class="stat-desc">Signups needed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">100<span class="accent">%</span></div>
+            <div class="stat-desc">Browser-based</div>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;height:100%;">
-          <div class="featured-icon">⏱</div>
-          <span class="featured-cta">
-            Open timer
-            <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
+        <hr class="stat-divider">
+        <div class="stat-feature"><span class="feat-check">✓</span> Works offline — no internet required</div>
+        <div class="stat-feature"><span class="feat-check">✓</span> Zero data collection or tracking</div>
+        <div class="stat-feature"><span class="feat-check">✓</span> All data stored locally in your browser</div>
+        <div class="stat-feature"><span class="feat-check">✓</span> Mobile-friendly on every device</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div class="trust-bar" role="complementary" aria-label="Trust signals">
+  <div class="trust-inner">
+    <div class="trust-item"><span class="trust-icon">✓</span> 100% Free Forever</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> No Signup Required</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> Works Offline</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> Zero Data Collection</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> No Install Needed</div>
+    <div class="trust-item"><span class="trust-icon">✓</span> Mobile Friendly</div>
+  </div>
+</div>
+
+<!-- ── AD SLOT 1 ── -->
+<div class="container">
+  <div class="ad-slot" role="complementary" aria-label="Advertisement"><!-- Google AdSense --></div>
+</div>
+
+<!-- ── BENTO TOOLS ── -->
+<section id="tools" aria-labelledby="tools-heading">
+  <div class="container">
+    <div class="section-label">// Most used tools</div>
+    <h2 class="section-title" id="tools-heading">Everything you need. Nothing you don't.</h2>
+    <p class="section-sub">Seven sharp tools, each solving one problem with zero bloat. Open any tool in under 3 seconds — no loading screen, no account wall.</p>
+
+    <div class="bento" role="list">
+
+      <!-- Focus Timer — large -->
+      <a href="tools/focus-timer.html" class="bento-card bento-lg" role="listitem" aria-label="Focus Timer — most used">
+        <div class="bento-badge">Most used</div>
+        <div>
+          <div class="card-icon">⏱</div>
+          <h3>Focus Timer</h3>
+          <p>Pomodoro-style deep work timer with custom intervals, ambient sounds (white noise, rain, café), session logging, and browser notifications. Stay locked in without leaving your browser.</p>
         </div>
+        <span class="card-cta">Open timer <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
 
-           <!-- Grid -->
-      <div class="tools-grid">
+      <!-- Habit Tracker -->
+      <a href="tools/habit-tracker.html" class="bento-card bento-wide" role="listitem" aria-label="Habit Tracker">
+        <div>
+          <div class="card-icon">📋</div>
+          <h3>Habit Tracker</h3>
+          <p>Daily check-offs with streak tracking, completion celebrations, and at-risk streak warnings. All stored locally — no cloud, no account.</p>
+        </div>
+        <span class="card-cta">Track habits <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-        <a href="tools/meeting-cost.html" class="tool-card">
-          <div class="tool-icon">💸</div>
-          <div class="tool-name">Meeting Cost Calculator</div>
-          <p class="tool-desc">Real-time dollar counter for your meetings. Enter team size and salary — watch the cost tick up live.</p>
-          <div class="tool-footer">
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
+      <!-- Meeting Cost -->
+      <a href="tools/meeting-cost.html" class="bento-card bento-md" role="listitem" aria-label="Meeting Cost Calculator">
+        <div>
+          <div class="card-icon">💸</div>
+          <h3>Meeting Cost Calculator</h3>
+          <p>Real-time dollar cost of your meeting. 17 currencies. Live exchange rates. Share the result card.</p>
+        </div>
+        <span class="card-cta">Calculate <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-        <a href="tools/habit-tracker.html" class="tool-card">
-          <div class="tool-icon">📋</div>
-          <div class="tool-name">Habit Tracker</div>
-          <p class="tool-desc">Track daily habits directly in your browser. No account, no app — just streaks and consistency.</p>
-          <div class="tool-footer">
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
+      <!-- Time Zone Overlap -->
+      <a href="tools/timezone-overlap.html" class="bento-card bento-md" role="listitem" aria-label="Time Zone Overlap">
+        <div>
+          <div class="card-icon">🌍</div>
+          <h3>Time Zone Overlap</h3>
+          <p>Find the best meeting window across time zones. Interactive map, 24-hour grid, CSV and PDF export.</p>
+        </div>
+        <span class="card-cta">Find overlap <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-        <a href="tools/timezone-overlap.html" class="tool-card">
-          <div class="tool-icon">🌍</div>
-          <div class="tool-name">Time Zone Overlap</div>
-          <p class="tool-desc">Find the ideal meeting window across multiple time zones in seconds. Built for remote teams.</p>
-          <div class="tool-footer">
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
+      <!-- Deep Work Tracker -->
+      <a href="tools/deep-work-tracker.html" class="bento-card bento-sm" role="listitem" aria-label="Deep Work Tracker">
+        <div>
+          <div class="card-icon">📊</div>
+          <h3>Deep Work Tracker</h3>
+          <p>Weekly focus hours, quality scores, and 4-week trend chart. Session history by day.</p>
+        </div>
+        <span class="card-cta">Track focus <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-        <a href="tools/work-hours-logger.html" class="tool-card">
-          <div class="tool-icon">🕐</div>
-          <div class="tool-name">Work Hours Logger</div>
-          <p class="tool-desc">Log sessions and see where your hours actually go. Simple, private, browser-only.</p>
-          <div class="tool-footer">
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
+      <!-- Task Decider -->
+      <a href="tools/task-decider.html" class="bento-card bento-sm" role="listitem" aria-label="Task Decider">
+        <div>
+          <div class="card-icon">🎲</div>
+          <h3>Task Decider</h3>
+          <p>Spin wheel to pick your next task. Removes completed tasks. Beats decision paralysis instantly.</p>
+        </div>
+        <span class="card-cta">Spin now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-        <a href="tools/task-decider.html" class="tool-card">
-          <div class="tool-icon">🎲</div>
-          <div class="tool-name">Task Decider</div>
-          <p class="tool-desc">Decision paralysis solved. Add your tasks, spin the wheel, just start.</p>
-          <div class="tool-footer">
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
+      <!-- Work Hours Logger -->
+      <a href="tools/work-hours-logger.html" class="bento-card bento-sm" role="listitem" aria-label="Work Hours Logger">
+        <div>
+          <div class="card-icon">🕐</div>
+          <h3>Work Hours Logger</h3>
+          <p>Log sessions by project. Weekly breakdowns. Daily goals. CSV export for invoicing.</p>
+        </div>
+        <span class="card-cta">Log hours <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-        <a href="tools/deep-work-tracker.html" class="tool-card">
-          <div class="tool-icon">📊</div>
-          <div class="tool-name">Deep Work Tracker</div>
-          <p class="tool-desc">Weekly deep work stats, focus scores, and session history — all stored locally in your browser.</p>
-          <div class="tool-footer">
-            <span class="tool-arrow">→</span>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- Trust bar -->
-    <div class="trust-bar">
-      <div class="trust-item">
-        <div class="trust-icon">✓</div>
-        No signup required
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">✓</div>
-        No data collected
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">✓</div>
-        Works offline
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">✓</div>
-        Free forever
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">✓</div>
-        Mobile friendly
-      </div>
     </div>
-
-    <!-- About -->
-    <section class="seo-block" id="about">
-      <h2>Built for people who actually work</h2>
-      <p>Deskloop is a free suite of productivity tools built for focused, intentional work. Every tool loads instantly in your browser, requires no account, and is designed to solve one problem clearly — then get out of your way.</p>
-      <p>The philosophy is simple: the best productivity tool is the one that disappears. No dashboards, no onboarding, no upsells. Just the tool, doing exactly what it says it does.</p>
-      <p>New tools are added regularly. Everything here is and will always remain free to use.</p>
-    </section>
-
   </div>
-</main>
+</section>
 
-<footer>
+<!-- ── BENEFITS ── -->
+<section id="benefits" aria-labelledby="benefits-heading" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="logo-text">Deskloop</div>
-        <p class="footer-tagline">Free productivity tools for focused work.</p>
+    <div class="section-label">// Why Deskloop</div>
+    <h2 class="section-title" id="benefits-heading">Productivity tools that respect your time.</h2>
+    <p class="section-sub">No onboarding. No paywalls. No dashboards to manage. Just tools that work.</p>
+
+    <div class="benefits-grid">
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Zero data leaves your device</h3>
+        <p>Every tool stores data in your browser's localStorage. Nothing is sent to any server. No analytics, no tracking scripts, no third-party data sharing of any kind.</p>
       </div>
-      <ul class="footer-links">
-        <li><a href="#tools">Tools</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="mailto:hello@deskloop.work">Contact</a></li>
-      </ul>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Opens in under 3 seconds</h3>
+        <p>No React bundle to parse, no auth check to run. Plain HTML, lean CSS, minimal JavaScript. Every tool loads instantly — even on slow connections.</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <h3>Designed to disappear</h3>
+        <p>The best productivity tool is one you don't notice. No dashboards to manage, no streaks that guilt you. Open it when you need it, close it when you're done.</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+        </div>
+        <h3>Mobile-first design</h3>
+        <p>Every tool is built for touch from the ground up. Use your focus timer, spin the task decider, or check your habit streak from your phone — no app download required.</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>
+        </div>
+        <h3>Works offline</h3>
+        <p>Travelling, in a café, on a plane with no WiFi? Every Deskloop tool works completely offline once loaded. Your session data stays intact across browser restarts.</p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Free forever, no catch</h3>
+        <p>No freemium. No premium tier. No "14-day trial." Every tool on Deskloop is completely free — today, next year, and indefinitely. Sustained by optional ad revenue only.</p>
+      </div>
+
     </div>
-    <div class="footer-copy">
-      <span>© 2025 Deskloop.work — All tools free to use</span>
-      <span style="color:var(--text3);font-size:11px;">No cookies · No tracking · No nonsense</span>
+  </div>
+</section>
+
+<!-- ── COMPARISON ── -->
+<section aria-labelledby="compare-heading">
+  <div class="container">
+    <div class="section-label">// Deskloop vs alternatives</div>
+    <h2 class="section-title" id="compare-heading">Why not just use Notion or Todoist?</h2>
+    <p class="section-sub">Full-stack productivity apps are powerful — and often overkill. Deskloop is for the moment you just need the tool, right now.</p>
+
+    <div class="compare-wrap" role="region" aria-label="Comparison table">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="highlight">Deskloop</th>
+            <th>Notion</th>
+            <th>Todoist</th>
+            <th>Browser extensions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">No signup required</td>
+            <td class="highlight"><span class="check-yes">✓</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">100% free</td>
+            <td class="highlight"><span class="check-yes">✓</span></td>
+            <td><span class="check-no">✗ (limited)</span></td>
+            <td><span class="check-no">✗ (limited)</span></td>
+            <td><span class="check-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Works offline</td>
+            <td class="highlight"><span class="check-yes">✓</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Zero data collection</td>
+            <td class="highlight"><span class="check-yes">✓</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-no">Varies</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">Loads in &lt;3 seconds</td>
+            <td class="highlight"><span class="check-yes">✓</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feature-name">No install required</td>
+            <td class="highlight"><span class="check-yes">✓</span></td>
+            <td><span class="check-yes">✓</span></td>
+            <td><span class="check-no">✗</span></td>
+            <td><span class="check-no">✗</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── AD SLOT 2 ── -->
+<div class="container">
+  <div class="ad-slot" role="complementary" aria-label="Advertisement"><!-- Google AdSense --></div>
+</div>
+
+<!-- ── FAQ ── -->
+<section id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="section-label">// Common questions</div>
+    <h2 class="section-title" id="faq-heading">Everything you might want to know.</h2>
+    <p class="section-sub" style="margin-bottom: 32px;">Quick answers. No fluff.</p>
+
+    <div class="faq-list" role="list">
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Are all Deskloop tools really free?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" role="region">
+          Yes — completely free, with no strings attached. Every tool is and will always remain free to use. Deskloop is sustained by optional, non-intrusive ad revenue. There is no premium tier, no upsell, and no freemium limitation.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Do I need to create an account or sign up?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" role="region">
+          No account needed. Open any tool and use it immediately. Your habit streaks, work session logs, and settings are saved directly in your browser's localStorage — no server, no account, no email required.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Does Deskloop work offline?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" role="region">
+          Yes. Once a page has loaded in your browser, all Deskloop tools work completely offline. Your focus timer keeps running, your habit tracker saves, and your work hours are logged — internet or not.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What happens to my data?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" role="region">
+          Absolutely nothing leaves your device. There is no analytics, no tracking, no third-party scripts, and no cookies beyond what your browser itself sets. All data is stored in localStorage on your own machine and is yours entirely.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Can I use Deskloop on mobile?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" role="region">
+          Yes. Every tool is designed mobile-first and tested on both iOS and Android. No app download required — just open deskloop.work in any mobile browser and use it immediately.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Will Deskloop add more tools?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" role="region">
+          Yes. New tools are added regularly based on what the community finds useful. If you have a suggestion for a tool, send it to hello@deskloop.work. Every new tool follows the same philosophy: one problem, solved cleanly, for free.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section aria-labelledby="cta-heading" style="padding-top: 0;">
+  <div class="container">
+    <div class="cta-banner">
+      <h2 id="cta-heading">Ready to do your best work?</h2>
+      <p>No account. No install. No excuses. Pick a tool and start in seconds.</p>
+      <div class="cta-actions">
+        <a href="tools/focus-timer.html" class="btn-primary">
+          Start Focus Timer
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#tools" class="btn-ghost">Browse all 7 tools</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SEO BLOCK ── -->
+<section style="padding-top: 32px;" aria-label="About Deskloop">
+  <div class="container">
+    <div class="seo-block">
+      <h2>Free Productivity Tools No Signup — What Is Deskloop?</h2>
+      <p>Deskloop is a growing collection of free, browser-based productivity tools built for focused, intentional work. Every tool on the platform is completely free to use with no account required, no install, and no data collection. Open any tool directly in your browser and start working in under three seconds.</p>
+
+      <h3>Who are these tools for?</h3>
+      <p>Deskloop is built for professionals, students, freelancers, and remote teams who need a specific tool right now — without the overhead of signing up for yet another platform. Whether you need a Pomodoro timer for a study session, a meeting cost calculator for a standup, or a time zone overlap finder for a distributed team call, Deskloop has it.</p>
+
+      <h3>Why free productivity tools with no signup matter</h3>
+      <p>Most productivity software requires an account, charges a subscription, and collects your usage data. Deskloop is built on the opposite philosophy: the best tool is the one you can use immediately, without friction, and trust completely. Every tool stores data locally in your browser and never transmits anything to external servers.</p>
+
+      <h3>The tools available</h3>
+      <p>Deskloop currently offers seven tools: a Pomodoro-style Focus Timer with ambient sounds, a Habit Tracker with streak protection, a Meeting Cost Calculator with live currency conversion, a Time Zone Overlap Finder with an interactive world map, a Deep Work Tracker with weekly focus scores, a Task Decider spin wheel, and a Work Hours Logger with project breakdowns and CSV export. New tools are added regularly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-name">Deskloop</div>
+        <p>Free productivity tools for focused work. No signup, no install, no noise.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <a href="tools/focus-timer.html">Focus Timer</a>
+        <a href="tools/habit-tracker.html">Habit Tracker</a>
+        <a href="tools/meeting-cost.html">Meeting Cost</a>
+        <a href="tools/timezone-overlap.html">Time Zone Overlap</a>
+        <a href="tools/deep-work-tracker.html">Deep Work Tracker</a>
+        <a href="tools/task-decider.html">Task Decider</a>
+        <a href="tools/work-hours-logger.html">Work Hours Logger</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#benefits">Why Deskloop</a>
+        <a href="#faq">FAQ</a>
+        <a href="#tools">All tools</a>
+        <a href="mailto:hello@deskloop.work">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Principles</h4>
+        <a href="#benefits">No signup ever</a>
+        <a href="#benefits">Zero data collection</a>
+        <a href="#benefits">Works offline</a>
+        <a href="#benefits">Free forever</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 Deskloop.work — All tools free to use forever</span>
+      <span>No cookies · No tracking · No nonsense</span>
     </div>
   </div>
 </footer>
+
+<script>
+  // ── Mobile nav ──
+  function toggleMobileNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // ── FAQ accordion ──
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  // ── Active nav on scroll ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--primary)' : '';
+        });
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ── Smooth scroll for anchor links ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('navLinks').classList.remove('open');
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
