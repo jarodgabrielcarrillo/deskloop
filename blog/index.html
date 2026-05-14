@@ -3,110 +3,645 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Blog — Productivity Tips &amp; Guides | Deskloop</title>
-<meta name="description" content="Practical guides on focus, deep work, habit building, remote team scheduling, and getting more done. From the team behind Deskloop's free productivity tools.">
+<title>Guides & Articles — Deep Work, Focus & Productivity | Deskloop</title>
+<meta name="description" content="Free, in-depth guides on deep work, the Pomodoro Technique, habit building, remote team scheduling, and focus. Practical productivity articles from Deskloop.">
+<meta name="keywords" content="deep work guides,productivity articles free,pomodoro technique guide,habit building tips,remote work time zones,focus timer guide">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://deskloop.work/blog/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--ac:#10B981;--ac-lt:#34D399;--blue-d:#1E40AF;--bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--tx:#EEF6FF;--tx2:#7BACC4;--tx3:#3E5E78;--bd:#142032;--bd2:#1A2D44;--r:12px;--rl:20px;--t:200ms ease}
+:root{
+  --ac:#10B981;--ac-lt:#34D399;--ac-dk:#059669;
+  --blue:#3B82F6;--blue-d:#1E40AF;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;
+  --tx:#EEF6FF;--tx2:#7BACC4;--tx3:#3E5E78;
+  --bd:#142032;--bd2:#1A2D44;
+  --warn:#F59E0B;--pur:#A78BFA;--pink:#F472B6;--teal:#38bdf8;
+  --r:12px;--rl:20px;--t:200ms ease;--mono:'JetBrains Mono',monospace;--max:1200px;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.W{max-width:900px;margin:0 auto;padding:0 28px}
-nav{position:sticky;top:0;z-index:300;background:rgba(6,12,24,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--bd)}
-.nav-in{max-width:1200px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-m{width:34px;height:34px;background:var(--blue-d);border-radius:8px;display:flex;align-items:center;justify-content:center}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.W{max-width:var(--max);margin:0 auto;padding:0 32px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:400;background:rgba(6,12,24,.92);backdrop-filter:blur(28px) saturate(1.6);border-bottom:1px solid rgba(20,32,50,.8)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-m{width:36px;height:36px;background:var(--blue-d);border-radius:9px;display:flex;align-items:center;justify-content:center}
 .logo-t{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.03em}
+.nav-r{display:flex;align-items:center;gap:6px}
 .nav-a{color:var(--tx3);text-decoration:none;font-size:14px;font-weight:500;padding:7px 13px;border-radius:var(--r);transition:all var(--t)}
 .nav-a:hover{color:var(--tx2);background:rgba(255,255,255,.04)}
-.page{padding:72px 0 100px}
-.tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ac);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.tag::before{content:'';width:22px;height:2px;background:var(--ac);border-radius:1px}
-h1{font-size:48px;font-weight:800;letter-spacing:-.04em;line-height:1.05;margin-bottom:14px}
-.lead{font-size:17px;color:var(--tx2);line-height:1.72;margin-bottom:56px;padding-bottom:44px;border-bottom:1px solid var(--bd2)}
-.articles{display:flex;flex-direction:column;gap:16px}
-.art-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:28px 32px;text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:all .28s ease;position:relative;overflow:hidden}
-.art-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac-lt) 50%,transparent);opacity:0;transition:opacity .3s}
-.art-card:hover{border-color:rgba(16,185,129,.28);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.4)}
-.art-card:hover::before{opacity:1}
-.art-meta{display:flex;gap:12px;flex-wrap:wrap}
-.art-tag-pill{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.18);border-radius:100px;padding:3px 10px}
-.art-date{font-size:12px;color:var(--tx3)}
-.art-read{font-size:12px;color:var(--tx3)}
-.art-title{font-size:20px;font-weight:700;letter-spacing:-.025em;color:var(--tx);line-height:1.3}
-.art-desc{font-size:14px;color:var(--tx2);line-height:1.65}
-.art-link{font-size:13px;font-weight:600;color:var(--ac);display:flex;align-items:center;gap:5px;margin-top:4px;transition:gap var(--t)}
-.art-card:hover .art-link{gap:8px}
-.art-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
-footer{border-top:1px solid var(--bd);padding:36px 0;text-align:center;font-size:12px;color:var(--tx3)}
-footer a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
-footer a:hover{color:var(--tx2)}
-@media(max-width:600px){h1{font-size:34px}.W{padding:0 18px}.art-card{padding:20px}}
+.nav-cta{background:var(--ac);color:#fff;border:none;border-radius:var(--r);font:600 14px/1 'Inter',sans-serif;padding:10px 20px;cursor:pointer;text-decoration:none;transition:all var(--t)}
+.nav-cta:hover{background:var(--ac-lt);transform:translateY(-1px)}
+
+/* PAGE HEADER */
+.page-hdr{padding:120px 0 52px;text-align:center;position:relative}
+.page-hdr::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(16,185,129,.07) 0%,transparent 70%);pointer-events:none}
+.ph-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:6px 14px;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--ac-lt);margin-bottom:24px}
+.ph-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:glow 2.2s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:1}55%{opacity:.2}}
+.ph-h1{font-size:60px;font-weight:900;letter-spacing:-.045em;line-height:1.02;margin-bottom:18px;position:relative}
+.ph-h1 em{font-style:normal;background:linear-gradient(125deg,var(--ac) 0%,var(--ac-lt) 40%,var(--blue) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ph-sub{font-size:17px;color:var(--tx2);max-width:520px;margin:0 auto;line-height:1.72}
+
+/* CONTROLS */
+.controls{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:0 0 40px;position:relative;z-index:10}
+.search-wrap{position:relative}
+.search-inp{width:280px;height:44px;background:var(--s1);border:1px solid var(--bd2);border-radius:var(--r);color:var(--tx);font:500 14px/1 'Inter',sans-serif;padding:0 16px 0 42px;outline:none;transition:border-color var(--t)}
+.search-inp:focus{border-color:rgba(16,185,129,.4)}
+.search-inp::placeholder{color:var(--tx3)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round;pointer-events:none}
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap}
+.fp{height:36px;padding:0 14px;background:transparent;border:1px solid var(--bd2);border-radius:100px;font:500 12px/1 'Inter',sans-serif;color:var(--tx3);cursor:pointer;transition:all var(--t);white-space:nowrap}
+.fp:hover{border-color:var(--tx3);color:var(--tx2)}
+.fp.on{border-color:var(--ac);color:var(--ac);background:rgba(16,185,129,.08)}
+
+/* SPHERE */
+.sphere-section{position:relative;padding:0 0 72px}
+.sphere-wrap{
+  position:relative;width:100%;height:600px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:grab;overflow:hidden;
+}
+.sphere-wrap:active{cursor:grabbing}
+.sphere-bg{position:absolute;width:480px;height:200px;border-radius:50%;background:radial-gradient(ellipse,rgba(16,185,129,.055) 0%,transparent 70%);pointer-events:none}
+.sphere-center{position:relative;width:0;height:0}
+
+/* Article cards */
+.s-card{
+  position:absolute;width:200px;
+  background:var(--s1);border:1px solid var(--bd);border-radius:16px;
+  padding:18px 16px 16px;cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+  will-change:transform,opacity;
+  transition:box-shadow .3s ease,border-color .3s ease;
+  pointer-events:auto;touch-action:none;
+}
+.sc-tag{display:inline-flex;align-items:center;gap:4px;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:3px 8px;border-radius:100px;margin-bottom:10px}
+.sc-title{font-size:13px;font-weight:700;letter-spacing:-.02em;line-height:1.35;color:var(--tx);margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sc-meta{display:flex;align-items:center;justify-content:space-between}
+.sc-time{font-size:10px;color:var(--tx3);font-family:var(--mono)}
+.sc-arrow{font-size:10px;font-weight:700;color:var(--ac);opacity:0;transition:opacity .2s}
+.s-card:hover .sc-arrow,.s-card.front .sc-arrow{opacity:1}
+
+/* Filler elements base */
+.fe{
+  position:absolute;pointer-events:none;user-select:none;
+  -webkit-user-select:none;will-change:transform,opacity;
+  transform:translate(-50%,-50%);
+}
+/* Emoji */
+.fe-emoji{line-height:1;display:flex;align-items:center;justify-content:center}
+/* Keyword tag */
+.fe-kw{
+  font-family:var(--mono);font-size:8px;font-weight:700;
+  letter-spacing:1.1px;text-transform:uppercase;
+  padding:3px 9px;border-radius:100px;
+  border:1px solid currentColor;white-space:nowrap;
+  background:rgba(0,0,0,.3);
+}
+/* Orb */
+.fe-orb{border-radius:50%}
+/* Shape */
+.fe-shape{display:flex;align-items:center;justify-content:center}
+
+/* Hint */
+.sphere-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--tx3);display:flex;align-items:center;gap:6px;pointer-events:none;animation:fadeHint 5s ease-in-out forwards 1.5s;opacity:0}
+@keyframes fadeHint{0%{opacity:0}15%{opacity:1}75%{opacity:1}100%{opacity:0}}
+.hint-icon{width:14px;height:14px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round}
+.auto-badge{position:absolute;top:20px;right:32px;display:flex;align-items:center;gap:5px;font-size:10px;color:var(--tx3)}
+.auto-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:glow 2s ease-in-out infinite}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;z-index:500;background:rgba(6,12,24,.9);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.modal-bg.open{opacity:1;pointer-events:auto}
+.modal{background:var(--s1);border:1px solid var(--bd2);border-radius:24px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;padding:40px 44px;position:relative;transform:scale(.96) translateY(12px);transition:transform .35s ease;box-shadow:0 32px 80px rgba(0,0,0,.6)}
+.modal-bg.open .modal{transform:scale(1) translateY(0)}
+.modal::-webkit-scrollbar{width:3px}
+.modal::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+.modal-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--bd);color:var(--tx3);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t);line-height:1}
+.modal-close:hover{color:var(--tx);border-color:var(--tx3)}
+.modal-tag{display:inline-flex;align-items:center;font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-bottom:16px}
+.modal h2{font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:12px}
+.modal-meta{font-size:13px;color:var(--tx3);margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--bd)}
+.modal-body p{font-size:15px;color:var(--tx2);line-height:1.82;margin-bottom:18px}
+.modal-body h3{font-size:18px;font-weight:700;color:var(--tx);margin:28px 0 12px;letter-spacing:-.02em}
+.modal-body ul{margin:0 0 18px 20px;color:var(--tx2);font-size:15px;line-height:1.8}
+.modal-body li{margin-bottom:6px}
+.modal-body strong{color:var(--tx);font-weight:600}
+.modal-cta{display:inline-flex;align-items:center;gap:8px;background:var(--ac);color:#fff;text-decoration:none;border-radius:var(--r);padding:13px 22px;font-size:14px;font-weight:600;margin-top:28px;transition:all var(--t)}
+.modal-cta:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.modal-cta svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* FALLBACK GRID */
+.grid-section{padding:20px 0 80px}
+.grid-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tx3);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.grid-label::before{content:'';width:20px;height:2px;background:var(--tx3);border-radius:1px}
+.art-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ag-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:26px;text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:all .28s ease;position:relative;overflow:hidden}
+.ag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.ag-card:hover{border-color:rgba(16,185,129,.25);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.ag-card:hover::before{opacity:1}
+.ag-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ag-pill{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:3px 9px;border-radius:100px}
+.ag-time{font-size:11px;color:var(--tx3);font-family:var(--mono)}
+.ag-title{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--tx);line-height:1.3}
+.ag-desc{font-size:13px;color:var(--tx2);line-height:1.62}
+.ag-link{font-size:12px;font-weight:600;color:var(--ac);display:flex;align-items:center;gap:4px;margin-top:auto;transition:gap var(--t)}
+.ag-card:hover .ag-link{gap:7px}
+.ag-link svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* AD + FOOTER */
+.ad-slot{border:1px dashed var(--bd2);border-radius:var(--r);min-height:90px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx3);margin:0 0 24px}
+footer{border-top:1px solid var(--bd);padding:44px 0 52px}
+.foot-in{max-width:var(--max);margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-l{display:flex;align-items:center;gap:10px;text-decoration:none}
+.foot-m{width:30px;height:30px;background:var(--blue-d);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.foot-n{font-size:15px;font-weight:800;color:var(--tx);letter-spacing:-.03em}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap}
+.foot-a{color:var(--tx3);text-decoration:none;font-size:13px;transition:color var(--t)}
+.foot-a:hover{color:var(--tx2)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .ph-h1{font-size:44px}
+  .sphere-wrap{height:520px}
+  .art-grid{grid-template-columns:1fr 1fr}
+  .modal{padding:28px 24px}
+  .modal h2{font-size:22px}
+}
+@media(max-width:600px){
+  .ph-h1{font-size:34px}
+  .sphere-wrap{height:460px}
+  .s-card{width:166px;padding:14px 12px 12px}
+  .sc-title{font-size:12px}
+  .art-grid{grid-template-columns:1fr}
+  .W{padding:0 18px}
+  .nav-r .nav-a{display:none}
+  .search-inp{width:220px}
+}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:3px}
 </style>
 </head>
 <body>
-<nav>
+
+<nav class="nav">
 <div class="nav-in">
-  <a href="/" class="logo"><div class="logo-m"><svg width="17" height="17" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="logo-t">Deskloop</span></a>
-  <a href="/" class="nav-a">&larr; Back to tools</a>
+  <a href="/" class="logo"><div class="logo-m"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.4"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="logo-t">Deskloop</span></a>
+  <div class="nav-r">
+    <a href="/" class="nav-a">Tools</a>
+    <a href="/blog/" class="nav-a" style="color:var(--ac)">Blog</a>
+    <a href="/tools/focus-timer.html" class="nav-cta">Start Free &rarr;</a>
+  </div>
 </div>
 </nav>
 
-<div class="page">
-<div class="W">
-  <div class="tag">Blog</div>
-  <h1>Guides &amp; Articles</h1>
-  <p class="lead">Practical writing on focus, habits, deep work, and remote collaboration &mdash; from the person building Deskloop.</p>
+<div class="page-hdr">
+  <div class="ph-tag"><div class="ph-dot"></div>Productivity Articles</div>
+  <h1 class="ph-h1">Guides &amp; <em>Articles</em></h1>
+  <p class="ph-sub">Practical writing on deep work, focus, habits, and remote collaboration. Drag the sphere to explore &mdash; click any card to read.</p>
+</div>
 
-  <div class="articles">
-
-    <a href="/blog/what-is-deep-work.html" class="art-card">
-      <div class="art-meta"><span class="art-tag-pill">Deep Work</span><span class="art-date">May 2026</span><span class="art-read">8 min read</span></div>
-      <div class="art-title">What Is Deep Work and Why Most People Never Do It</div>
-      <div class="art-desc">Cal Newport's concept of deep work is one of the most valuable ideas in modern productivity. Here's what it means, why it matters, and how to actually do it.</div>
-      <div class="art-link">Read article <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/blog/pomodoro-technique.html" class="art-card">
-      <div class="art-meta"><span class="art-tag-pill">Focus</span><span class="art-date">May 2026</span><span class="art-read">7 min read</span></div>
-      <div class="art-title">The Pomodoro Technique: Does the Science Actually Back It Up?</div>
-      <div class="art-desc">Millions of people swear by 25-minute work intervals. But what does the research actually say about timed focus sessions and cognitive performance?</div>
-      <div class="art-link">Read article <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/blog/streak-habits.html" class="art-card">
-      <div class="art-meta"><span class="art-tag-pill">Habits</span><span class="art-date">May 2026</span><span class="art-read">6 min read</span></div>
-      <div class="art-title">How to Build a Streak Habit That Actually Sticks</div>
-      <div class="art-desc">Streaks are one of the most effective habit-building tools available. Here's the psychology behind why they work and how to use them without burning out.</div>
-      <div class="art-link">Read article <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/blog/meeting-cost.html" class="art-card">
-      <div class="art-meta"><span class="art-tag-pill">Meetings</span><span class="art-date">May 2026</span><span class="art-read">6 min read</span></div>
-      <div class="art-title">The True Cost of a One-Hour Meeting</div>
-      <div class="art-desc">A one-hour meeting with 6 people doesn't cost one hour &mdash; it costs six. Here's how to calculate the real dollar cost of any meeting and why the number is usually shocking.</div>
-      <div class="art-link">Read article <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/blog/remote-team-time-zones.html" class="art-card">
-      <div class="art-meta"><span class="art-tag-pill">Remote Work</span><span class="art-date">May 2026</span><span class="art-read">7 min read</span></div>
-      <div class="art-title">Best Time Zones for Remote Team Standups (And How to Find Them)</div>
-      <div class="art-desc">Finding a meeting time that works across multiple time zones is harder than it looks. A practical guide to scheduling remote standups fairly and efficiently.</div>
-      <div class="art-link">Read article <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
+<div class="controls W">
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input class="search-inp" type="search" id="searchInp" placeholder="Search articles&hellip;" aria-label="Search articles">
   </div>
+  <div class="filter-pills" role="group">
+    <button class="fp on" data-cat="all">All</button>
+    <button class="fp" data-cat="Deep Work">Deep Work</button>
+    <button class="fp" data-cat="Focus">Focus</button>
+    <button class="fp" data-cat="Habits">Habits</button>
+    <button class="fp" data-cat="Meetings">Meetings</button>
+    <button class="fp" data-cat="Remote Work">Remote Work</button>
+  </div>
+</div>
+
+<section class="sphere-section">
+<div class="sphere-wrap" id="sphereWrap">
+  <div class="sphere-bg"></div>
+  <div class="auto-badge"><div class="auto-dot"></div>Live</div>
+  <div class="sphere-center" id="sphereCenter"></div>
+  <div class="sphere-hint">
+    <svg class="hint-icon" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 00-4 0v1"/><path d="M14 10V4a2 2 0 00-4 0v2"/><path d="M10 10.5V6a2 2 0 00-4 0v8"/><path d="M6 14c0 4 3 6 6 6s6-2 6-6v-2H6v2z"/></svg>
+    Drag to rotate &nbsp;&bull;&nbsp; Click to read
+  </div>
+</div>
+</section>
+
+<section class="grid-section">
+<div class="W">
+  <div class="grid-label">// All articles</div>
+  <div class="art-grid" id="artGrid"></div>
+</div>
+</section>
+
+<div class="W"><div class="ad-slot"><!-- Google AdSense --></div></div>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
+<div class="modal" id="modal">
+  <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+  <div id="modalContent"></div>
 </div>
 </div>
 
 <footer>
-<div class="W" style="max-width:1200px">
-  <a href="/">&larr; Back to Deskloop</a> &middot; <a href="/about.html">About</a> &middot; <a href="/privacy.html">Privacy</a> &middot; &copy; 2026 Deskloop.work
+<div class="foot-in">
+  <a href="/" class="foot-l"><div class="foot-m"><svg width="15" height="15" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="foot-n">Deskloop</span></a>
+  <nav class="foot-links">
+    <a href="/" class="foot-a">Tools</a>
+    <a href="/about.html" class="foot-a">About</a>
+    <a href="/privacy.html" class="foot-a">Privacy</a>
+    <a href="/contact.html" class="foot-a">Contact</a>
+    <a href="mailto:hello@deskloop.work" class="foot-a">hello@deskloop.work</a>
+  </nav>
 </div>
 </footer>
+
+<script>
+'use strict';
+
+/* ── Articles ──────────────────────────────────────────────────────────── */
+const ARTICLES = [
+  { id:0, title:'What Is Deep Work and Why Most People Never Do It', category:'Deep Work', readTime:'8 min', color:'#A78BFA', bg:'rgba(167,139,250,.1)', url:'/blog/what-is-deep-work.html', excerpt:'Cal Newport\'s framework for distraction-free concentration that creates real value — and why most knowledge workers get almost none of it.', body:`<p>Cal Newport defines deep work as <strong>professional activity performed in a state of distraction-free concentration that pushes your cognitive capabilities to their limit</strong>. The opposite — shallow work — is email, meetings, and everything that keeps the machine running without advancing it.</p><h3>Why it has become rare and valuable simultaneously</h3><p>The modern work environment is almost perfectly designed to prevent deep work. Open offices, Slack, email, back-to-back meetings — together they make sustained focus genuinely difficult. Newport argues this creates a paradox: deep work is becoming rarer exactly as it becomes more valuable.</p><h3>The attention residue problem</h3><p>Researcher Sophie Leroy found that when you switch tasks, part of your attention stays with the previous task. Constant task-switching means you're never fully present on anything — a hidden but significant performance cost.</p><h3>How to start</h3><ul><li>Choose a consistent daily time block for deep work (morning is usually best)</li><li>Phone in another room, not face-down on the desk</li><li>Define a specific task, not just a vague intention</li><li>Set a clear end time — Parkinson's Law applies here</li><li>Even 90 minutes daily compounds significantly over a year</li></ul>` },
+  { id:1, title:'The Pomodoro Technique: Does the Science Actually Back It Up?', category:'Focus', readTime:'7 min', color:'#60A5FA', bg:'rgba(96,165,250,.1)', url:'/blog/pomodoro-technique.html', excerpt:'Millions swear by 25-minute work intervals. Here\'s what the research actually says — and where the technique genuinely falls short.', body:`<p>The Pomodoro Technique was named after a tomato-shaped kitchen timer Francesco Cirillo used in the late 1980s. The method: work for 25 minutes, take a 5-minute break, repeat. Every four cycles, take a longer 15–30 minute break.</p><h3>What the research actually shows</h3><p>Sustained attention degrades measurably after 20–45 minutes of continuous focused work. A Draugiem Group study found their most productive workers averaged <strong>52 minutes of work followed by 17-minute breaks</strong> — not exactly 25:5, but the same underlying principle.</p><h3>Where it genuinely falls short</h3><ul><li>It interrupts flow states — which are valuable and fragile</li><li>The 5-minute breaks are often spent on email — not actual recovery</li><li>Some tasks need longer periods to build real momentum</li></ul><h3>How to adapt it</h3><p>Treat it as a starting framework, not a rigid rule. Override the timer when you're in genuine flow. Use shorter intervals (20 min) for tasks you're dreading. Take real breaks — stand up, walk, look at something distant.</p>` },
+  { id:2, title:'How to Build a Streak Habit That Actually Sticks', category:'Habits', readTime:'6 min', color:'#34D399', bg:'rgba(52,211,153,.1)', url:'/blog/streak-habits.html', excerpt:'The psychology of streaks, why loss aversion makes them work, and the two mistakes that kill them every time.', body:`<p>Jerry Seinfeld's method: get a big wall calendar, put a red X on every day you write, and <em>don't break the chain</em>. The goal stops being "write good jokes" and becomes "don't break the chain."</p><h3>Why streaks work</h3><p>Streaks exploit several psychological mechanisms: <strong>loss aversion</strong> (you feel losses more acutely than gains), <strong>identity reinforcement</strong> (each day you vote for who you are), and <strong>reduced decision fatigue</strong> (the streak removes the daily choice).</p><h3>The two mistakes that kill streaks</h3><ul><li><strong>Setting the bar too high.</strong> A 1-minute meditation streak beats a failed 30-minute streak. Make the minimum achievable on your worst day.</li><li><strong>Treating a broken streak as failure.</strong> "Never miss twice" is more useful than "never miss once."</li></ul><h3>How long until automatic</h3><p>A 2010 UCL study found habits took 18–254 days to become automatic, with an average of <strong>66 days</strong> — not the popular 21-day myth.</p>` },
+  { id:3, title:'The True Cost of a One-Hour Meeting', category:'Meetings', readTime:'6 min', color:'#F59E0B', bg:'rgba(245,158,11,.1)', url:'/blog/meeting-cost.html', excerpt:'A one-hour meeting with 6 people costs 6 hours. Here\'s the full math — including the cognitive cost nobody calculates.', body:`<p>A one-hour meeting with six people doesn't cost one hour — it costs six. At $80k average salary ($38/hr), six people for one hour is <strong>$228 in salary alone</strong>. Add benefits overhead and you're at $300–500 for a single meeting.</p><h3>The hidden cost: cognitive interruption</h3><p>UC Irvine research found it takes an average of <strong>23 minutes to return to deep focus after an interruption</strong>. A 10am meeting doesn't cost one hour — it costs the hour plus recovery time on either side.</p><h3>Practical reductions</h3><ul><li>Default to 25 or 50 minutes instead of 30 or 60</li><li>Require an agenda before any meeting gets scheduled</li><li>Invite fewer people — every attendee multiplies the cost</li><li>Batch meetings on specific days to protect deep work blocks</li></ul>` },
+  { id:4, title:'Best Time Zones for Remote Team Standups', category:'Remote Work', readTime:'7 min', color:'#38bdf8', bg:'rgba(56,189,248,.1)', url:'/blog/remote-team-time-zones.html', excerpt:'Finding meeting times across time zones is harder than it looks. The math, the fairness problem, and how to solve it.', body:`<p>Scheduling a daily standup for a global team sounds simple until you try it. NY + London: manageable. Add Singapore and you're spanning 13 hours. Add San Francisco and you've run out of business hours entirely.</p><h3>Common combinations</h3><ul><li><strong>NY + London:</strong> 9am–12pm NY / 2pm–5pm London — very workable</li><li><strong>SF + Warsaw:</strong> 7am–9am SF / 4pm–6pm Warsaw — tight long-term</li><li><strong>London + Singapore:</strong> 8am–10am London / 4pm–6pm Singapore — someone always sacrifices</li></ul><h3>When there's no good overlap</h3><ul><li><strong>Async standups:</strong> short text or voice note at day start</li><li><strong>Rotating meeting times:</strong> distribute inconvenience fairly</li><li><strong>Designated overlap hours:</strong> 2–3 hours everyone commits to</li></ul>` }
+];
+
+/* ── Filler elements ────────────────────────────────────────────────────── */
+const FILLERS = [
+  // Emojis — 18 total
+  { type:'emoji', emoji:'📖', size:24, rMult:.92, maxOp:.52 },
+  { type:'emoji', emoji:'⏱️', size:20, rMult:1.10, maxOp:.48 },
+  { type:'emoji', emoji:'🧠', size:22, rMult:.88, maxOp:.50 },
+  { type:'emoji', emoji:'🎯', size:18, rMult:1.14, maxOp:.45 },
+  { type:'emoji', emoji:'🌱', size:20, rMult:.96, maxOp:.48 },
+  { type:'emoji', emoji:'💡', size:22, rMult:1.08, maxOp:.50 },
+  { type:'emoji', emoji:'✨', size:16, rMult:1.18, maxOp:.42 },
+  { type:'emoji', emoji:'📚', size:20, rMult:.86, maxOp:.46 },
+  { type:'emoji', emoji:'⚡', size:16, rMult:1.06, maxOp:.44 },
+  { type:'emoji', emoji:'🔥', size:18, rMult:.94, maxOp:.40 },
+  { type:'emoji', emoji:'🎓', size:20, rMult:1.20, maxOp:.44 },
+  { type:'emoji', emoji:'🏃', size:18, rMult:.80, maxOp:.42 },
+  { type:'emoji', emoji:'🧘', size:22, rMult:1.04, maxOp:.46 },
+  { type:'emoji', emoji:'📝', size:16, rMult:.90, maxOp:.44 },
+  { type:'emoji', emoji:'🕐', size:20, rMult:1.16, maxOp:.40 },
+  { type:'emoji', emoji:'💪', size:18, rMult:.84, maxOp:.42 },
+  { type:'emoji', emoji:'🗂️', size:16, rMult:1.22, maxOp:.38 },
+  { type:'emoji', emoji:'🌙', size:20, rMult:.76, maxOp:.44 },
+  // Keywords — 16 total
+  { type:'kw', text:'Deep Work',    color:'#A78BFA', rMult:.90, maxOp:.38 },
+  { type:'kw', text:'Flow State',   color:'#10B981', rMult:1.12, maxOp:.34 },
+  { type:'kw', text:'Focus',        color:'#60A5FA', rMult:.97, maxOp:.36 },
+  { type:'kw', text:'Habits',       color:'#34D399', rMult:1.07, maxOp:.33 },
+  { type:'kw', text:'Clarity',      color:'#38bdf8', rMult:1.02, maxOp:.35 },
+  { type:'kw', text:'Streak',       color:'#F59E0B', rMult:.93, maxOp:.32 },
+  { type:'kw', text:'Presence',     color:'#A78BFA', rMult:1.16, maxOp:.30 },
+  { type:'kw', text:'Energy',       color:'#10B981', rMult:.87, maxOp:.34 },
+  { type:'kw', text:'Momentum',     color:'#60A5FA', rMult:1.24, maxOp:.30 },
+  { type:'kw', text:'Discipline',   color:'#34D399', rMult:.82, maxOp:.32 },
+  { type:'kw', text:'No Meetings',  color:'#F59E0B', rMult:1.10, maxOp:.28 },
+  { type:'kw', text:'Rest',         color:'#38bdf8', rMult:.95, maxOp:.33 },
+  { type:'kw', text:'Single Task',  color:'#A78BFA', rMult:1.18, maxOp:.28 },
+  { type:'kw', text:'Morning',      color:'#10B981', rMult:.78, maxOp:.32 },
+  { type:'kw', text:'Deep Focus',   color:'#60A5FA', rMult:1.06, maxOp:.30 },
+  { type:'kw', text:'Intention',    color:'#34D399', rMult:.88, maxOp:.30 },
+  // Orbs — 14 total
+  { type:'orb', size:10, color:'#10B981', rMult:.78, maxOp:.55 },
+  { type:'orb', size:7,  color:'#60A5FA', rMult:1.22, maxOp:.50 },
+  { type:'orb', size:14, color:'#34D399', rMult:.91, maxOp:.38 },
+  { type:'orb', size:5,  color:'#A78BFA', rMult:1.15, maxOp:.55 },
+  { type:'orb', size:9,  color:'#10B981', rMult:1.05, maxOp:.42 },
+  { type:'orb', size:6,  color:'#38bdf8', rMult:.83, maxOp:.48 },
+  { type:'orb', size:12, color:'#34D399', rMult:1.10, maxOp:.32 },
+  { type:'orb', size:4,  color:'#10B981', rMult:.70, maxOp:.60 },
+  { type:'orb', size:8,  color:'#60A5FA', rMult:1.28, maxOp:.44 },
+  { type:'orb', size:11, color:'#A78BFA', rMult:.86, maxOp:.40 },
+  { type:'orb', size:5,  color:'#38bdf8', rMult:1.18, maxOp:.50 },
+  { type:'orb', size:16, color:'#10B981', rMult:.75, maxOp:.28 },
+  { type:'orb', size:7,  color:'#34D399', rMult:1.08, maxOp:.46 },
+  { type:'orb', size:9,  color:'#60A5FA', rMult:.94, maxOp:.38 },
+  // Shapes — 12 total
+  { type:'shape', shape:'diamond', size:13, color:'#10B981', rMult:1.09, maxOp:.32 },
+  { type:'shape', shape:'ring',    size:18, color:'#60A5FA', rMult:.93, maxOp:.28 },
+  { type:'shape', shape:'diamond', size:9,  color:'#34D399', rMult:1.19, maxOp:.30 },
+  { type:'shape', shape:'ring',    size:13, color:'#A78BFA', rMult:.85, maxOp:.26 },
+  { type:'shape', shape:'cross',   size:11, color:'#10B981', rMult:1.13, maxOp:.28 },
+  { type:'shape', shape:'diamond', size:7,  color:'#38bdf8', rMult:.79, maxOp:.32 },
+  { type:'shape', shape:'ring',    size:22, color:'#34D399', rMult:1.22, maxOp:.20 },
+  { type:'shape', shape:'cross',   size:8,  color:'#A78BFA', rMult:.88, maxOp:.28 },
+  { type:'shape', shape:'diamond', size:11, color:'#60A5FA', rMult:1.06, maxOp:.28 },
+  { type:'shape', shape:'ring',    size:16, color:'#10B981', rMult:.82, maxOp:.24 },
+  { type:'shape', shape:'cross',   size:13, color:'#38bdf8', rMult:1.16, maxOp:.26 },
+  { type:'shape', shape:'diamond', size:15, color:'#34D399', rMult:.97, maxOp:.24 },
+];
+
+/* ── Fibonacci sphere ───────────────────────────────────────────────────── */
+function fibSphere(n) {
+  const pts=[], phi=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<n;i++){
+    const y=1-(i/(Math.max(n-1,1)))*2;
+    const r=Math.sqrt(Math.max(0,1-y*y));
+    const t=phi*i;
+    pts.push({x:Math.cos(t)*r, y, z:Math.sin(t)*r});
+  }
+  return pts;
+}
+
+const ART_POS    = fibSphere(ARTICLES.length);
+const FILLER_POS = fibSphere(FILLERS.length);
+
+/* ── State ─────────────────────────────────────────────────────────────── */
+let rotX=.25, rotY=0, velX=0, velY=0;
+let isDragging=false, hasMoved=false;
+let lastPX=0, lastPY=0, prevPX=0, prevPY=0;
+let autoRotate=true, autoResumeTimer=null;
+let sphereR=225;
+let activeFilter='all', searchQ='';
+
+/* ── Rotation ───────────────────────────────────────────────────────────── */
+function rotPt(p, rx, ry) {
+  rx = rx ?? rotX; ry = ry ?? rotY;
+  const x1 = p.x*Math.cos(ry) - p.z*Math.sin(ry);
+  const z1 = p.x*Math.sin(ry) + p.z*Math.cos(ry);
+  const y2 = p.y*Math.cos(rx) - z1*Math.sin(rx);
+  const z2 = p.y*Math.sin(rx) + z1*Math.cos(rx);
+  return {x:x1, y:y2, z:z2};
+}
+function getR() { const w=window.innerWidth; return w<480?150:w<720?185:225; }
+
+/* ── Build article cards ────────────────────────────────────────────────── */
+const center   = document.getElementById('sphereCenter');
+const cardEls  = [];
+
+ARTICLES.forEach(art => {
+  const el = document.createElement('div');
+  el.className = 's-card';
+  el.dataset.id = art.id;
+  el.innerHTML = `
+    <div class="sc-tag" style="background:${art.bg};color:${art.color}">${art.category}</div>
+    <div class="sc-title">${art.title}</div>
+    <div class="sc-meta"><span class="sc-time">${art.readTime} read</span><span class="sc-arrow">Read &rarr;</span></div>`;
+  center.appendChild(el);
+  cardEls.push(el);
+  el.addEventListener('click', () => { if(!hasMoved) openArticle(art.id); });
+});
+
+/* ── Build filler elements ─────────────────────────────────────────────── */
+const fillerObjs = [];
+
+function shapeHTML(f) {
+  const c = f.color, s = f.size;
+  if (f.shape === 'diamond') return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}"><polygon points="${s/2},1 ${s-1},${s/2} ${s/2},${s-1} 1,${s/2}" fill="${c}22" stroke="${c}" stroke-width="1" opacity=".9"/></svg>`;
+  if (f.shape === 'ring')    return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}"><circle cx="${s/2}" cy="${s/2}" r="${s/2-1.5}" fill="none" stroke="${c}" stroke-width="1.2" opacity=".85"/></svg>`;
+  if (f.shape === 'cross')   return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}"><line x1="${s/2}" y1="1.5" x2="${s/2}" y2="${s-1.5}" stroke="${c}" stroke-width="1.5" stroke-linecap="round" opacity=".9"/><line x1="1.5" y1="${s/2}" x2="${s-1.5}" y2="${s/2}" stroke="${c}" stroke-width="1.5" stroke-linecap="round" opacity=".9"/></svg>`;
+  return '';
+}
+
+FILLERS.forEach((f, i) => {
+  const el = document.createElement('div');
+  el.className = 'fe';
+  el.style.pointerEvents = 'none';
+
+  if (f.type === 'emoji') {
+    el.classList.add('fe-emoji');
+    el.style.fontSize = f.size + 'px';
+    el.textContent = f.emoji;
+  } else if (f.type === 'kw') {
+    el.classList.add('fe-kw');
+    el.style.color = f.color;
+    el.style.borderColor = f.color + '55';
+    el.textContent = f.text;
+  } else if (f.type === 'orb') {
+    el.classList.add('fe-orb');
+    const s = f.size;
+    el.style.width = el.style.height = s + 'px';
+    el.style.background = `radial-gradient(circle at 38% 38%, ${f.color} 0%, ${f.color}44 45%, transparent 72%)`;
+  } else if (f.type === 'shape') {
+    el.classList.add('fe-shape');
+    el.innerHTML = shapeHTML(f);
+  }
+
+  center.appendChild(el);
+  fillerObjs.push({ el, f, basePos: FILLER_POS[i] });
+});
+
+/* ── Update scene ───────────────────────────────────────────────────────── */
+const hidden = new Set();
+
+function updateScene() {
+  sphereR = getR();
+
+  // Article cards
+  ARTICLES.forEach((art, i) => {
+    const isHidden = hidden.has(i);
+    const pos = rotPt(ART_POS[i]);
+    const depth = (pos.z + 1) / 2;
+    const sc  = 0.62 + depth * 0.48;
+    const op  = isHidden ? 0 : 0.38 + depth * 0.62;
+    const sx  = pos.x * sphereR;
+    const sy  = pos.y * sphereR * 0.76;
+    const z   = 100 + Math.round(depth * 100);
+    const el  = cardEls[i];
+
+    el.style.zIndex = z;
+    el.style.pointerEvents = isHidden ? 'none' : 'auto';
+
+    if (!el.dataset.tilted) {
+      el.style.transform = `translate(${sx}px,${sy}px) translate(-50%,-50%) scale(${sc})`;
+      el.style.opacity   = op;
+    }
+
+    const g = Math.max(0, (depth - 0.84) / 0.16);
+    if (g > 0 && !isHidden) {
+      el.style.boxShadow   = `0 0 ${(g*38)|0}px rgba(16,185,129,${(g*.24).toFixed(2)}),0 8px 24px rgba(0,0,0,.5)`;
+      el.style.borderColor = `rgba(16,185,129,${(g*.62).toFixed(2)})`;
+      el.classList.add('front');
+    } else {
+      el.style.boxShadow   = '0 4px 16px rgba(0,0,0,.45)';
+      el.style.borderColor = '';
+      el.classList.remove('front');
+    }
+  });
+
+  // Filler elements
+  fillerObjs.forEach(({ el, f, basePos }) => {
+    const pos   = rotPt(basePos);
+    const depth = (pos.z + 1) / 2;
+    // Fillers are smaller and more transparent than article cards
+    const sc  = (0.38 + depth * 0.5) * 1;
+    const op  = f.maxOp * (0.18 + depth * 0.82);
+    const r   = sphereR * f.rMult;
+    const sx  = pos.x * r;
+    const sy  = pos.y * r * 0.76;
+    const z   = Math.round(depth * 90); // always below article cards (100-200)
+
+    el.style.transform = `translate(${sx}px,${sy}px) translate(-50%,-50%) scale(${sc})`;
+    el.style.opacity   = Math.min(op, f.maxOp).toFixed(3);
+    el.style.zIndex    = z;
+  });
+}
+
+/* ── Animation loop ─────────────────────────────────────────────────────── */
+function tick() {
+  if (!isDragging) {
+    if (autoRotate) rotY += 0.003;
+    velX *= 0.93; velY *= 0.93;
+    if (!autoRotate) { rotX += velX; rotY += velY; }
+  }
+  rotX = Math.max(-Math.PI/2.2, Math.min(Math.PI/2.2, rotX));
+  updateScene();
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ── Pointer events ─────────────────────────────────────────────────────── */
+const wrap = document.getElementById('sphereWrap');
+
+wrap.addEventListener('pointerdown', e => {
+  if(e.pointerType==='touch' && !e.isPrimary) return;
+  isDragging=true; hasMoved=false; autoRotate=false;
+  if(autoResumeTimer) clearTimeout(autoResumeTimer);
+  lastPX=prevPX=e.clientX; lastPY=prevPY=e.clientY;
+  wrap.setPointerCapture(e.pointerId);
+  e.preventDefault();
+}, {passive:false});
+
+wrap.addEventListener('pointermove', e => {
+  if(!isDragging) return;
+  const dx=e.clientX-lastPX, dy=e.clientY-lastPY;
+  if(Math.abs(dx)+Math.abs(dy)>4) hasMoved=true;
+  prevPX=lastPX; prevPY=lastPY; lastPX=e.clientX; lastPY=e.clientY;
+  velY=dx*.009; velX=dy*.009;
+  rotY+=dx*.009; rotX+=dy*.009;
+  e.preventDefault();
+}, {passive:false});
+
+wrap.addEventListener('pointerup', e => {
+  if(!isDragging) return;
+  isDragging=false;
+  velY=(lastPX-prevPX)*.013; velX=(lastPY-prevPY)*.013;
+  autoResumeTimer=setTimeout(()=>{autoRotate=true;},3200);
+});
+wrap.addEventListener('pointercancel', ()=>{ isDragging=false; });
+wrap.addEventListener('contextmenu', e=>e.preventDefault());
+
+/* ── Pinch-to-zoom ─────────────────────────────────────────────────────── */
+let touches={}, pinchD0=0, pinchR0=225;
+wrap.addEventListener('touchstart', e=>{
+  Array.from(e.touches).forEach(t=>{touches[t.identifier]=t;});
+  if(Object.keys(touches).length===2){
+    const [a,b]=Object.values(touches);
+    pinchD0=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);
+    pinchR0=sphereR; isDragging=false;
+  }
+},{passive:true});
+wrap.addEventListener('touchmove', e=>{
+  Array.from(e.touches).forEach(t=>{touches[t.identifier]=t;});
+  if(Object.keys(touches).length===2){
+    const [a,b]=Object.values(touches);
+    const d=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);
+    const base=getR();
+    sphereR=Math.max(base*.5,Math.min(base*1.8,pinchR0*(d/pinchD0)));
+    e.preventDefault();
+  }
+},{passive:false});
+wrap.addEventListener('touchend', e=>{
+  Array.from(e.changedTouches).forEach(t=>{delete touches[t.identifier];});
+},{passive:true});
+
+/* ── 3D tilt on hover ───────────────────────────────────────────────────── */
+cardEls.forEach((el, i) => {
+  el.addEventListener('mouseenter', ()=>{ el.dataset.tilted='1'; el.style.transition='box-shadow .3s ease,border-color .3s ease'; });
+  el.addEventListener('mouseleave', ()=>{ delete el.dataset.tilted; el.style.transition='transform .45s ease,opacity .3s ease,box-shadow .3s ease,border-color .3s ease'; });
+  el.addEventListener('mousemove', e=>{
+    const r=el.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+    const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+    const pos=rotPt(ART_POS[i]);
+    const sc=(.62+((pos.z+1)/2)*.48)*1.08;
+    const sx=pos.x*sphereR, sy=pos.y*sphereR*.76;
+    el.style.transform=`translate(${sx}px,${sy}px) translate(-50%,-50%) scale(${sc}) perspective(520px) rotateX(${-dy*13}deg) rotateY(${dx*13}deg)`;
+  });
+});
+
+/* ── Auto-center & modal ────────────────────────────────────────────────── */
+function openArticle(id) {
+  const art=ARTICLES[id];
+  autoRotate=false;
+  if(autoResumeTimer) clearTimeout(autoResumeTimer);
+  const bp=ART_POS[id];
+  const tY=-Math.atan2(bp.x, bp.z);
+  const tX=-Math.atan2(bp.y, Math.sqrt(bp.x*bp.x+bp.z*bp.z))*.55;
+  const sX=rotX, sY=rotY, t0=performance.now();
+  function anim(now){
+    const t=Math.min((now-t0)/680,1);
+    const e=1-Math.pow(1-t,3);
+    rotX=sX+(tX-sX)*e; rotY=sY+(tY-sY)*e;
+    updateScene();
+    if(t<1){requestAnimationFrame(anim);}else{showModal(art);}
+  }
+  requestAnimationFrame(anim);
+}
+
+function showModal(art) {
+  document.getElementById('modalContent').innerHTML=`
+    <div class="modal-tag" style="background:${art.bg};color:${art.color}">${art.category}</div>
+    <h2>${art.title}</h2>
+    <div class="modal-meta">&#128197; May 2026 &nbsp;&middot;&nbsp; &#9200; ${art.readTime} read</div>
+    <div class="modal-body">${art.body}</div>
+    <a href="${art.url}" class="modal-cta">Read full article <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>`;
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('open');
+  document.body.style.overflow='';
+  autoResumeTimer=setTimeout(()=>{autoRotate=true;},1500);
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalBg').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ── Filter & search ────────────────────────────────────────────────────── */
+function applyFilter(){
+  hidden.clear();
+  ARTICLES.forEach((a,i)=>{
+    const ok=(activeFilter==='all'||a.category===activeFilter)&&(!searchQ||a.title.toLowerCase().includes(searchQ));
+    if(!ok) hidden.add(i);
+  });
+  renderGrid(); updateScene();
+}
+
+function renderGrid(){
+  const grid=document.getElementById('artGrid');
+  const list=ARTICLES.filter((_,i)=>!hidden.has(i));
+  grid.innerHTML=list.map(a=>`
+    <a href="${a.url}" class="ag-card">
+      <style>.ag-card:hover::before{background:linear-gradient(90deg,${a.color},transparent)}</style>
+      <div class="ag-meta"><span class="ag-pill" style="background:${a.bg};color:${a.color}">${a.category}</span><span class="ag-time">${a.readTime}</span></div>
+      <div class="ag-title">${a.title}</div>
+      <div class="ag-desc">${a.excerpt}</div>
+      <div class="ag-link">Read article <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+    </a>`).join('')||'<p style="color:var(--tx3);font-size:14px;padding:20px 0">No articles match your search.</p>';
+}
+renderGrid();
+
+document.querySelectorAll('.fp').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fp').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on'); activeFilter=btn.dataset.cat; applyFilter();
+  });
+});
+document.getElementById('searchInp').addEventListener('input',e=>{ searchQ=e.target.value.trim().toLowerCase(); applyFilter(); });
+window.addEventListener('resize', updateScene, {passive:true});
+</script>
 </body>
 </html>
