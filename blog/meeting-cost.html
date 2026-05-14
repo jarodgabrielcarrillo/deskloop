@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The True Cost of a One-Hour Meeting (And How to Calculate It) — Deskloop</title>
+<meta name="description" content="A one-hour meeting with 6 people doesn't cost one hour. It costs six. Here's how to calculate the real dollar cost of any meeting and why it matters.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://deskloop.work/blog/meeting-cost.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<style>
+:root{--ac:#10B981;--ac-lt:#34D399;--blue-d:#1E40AF;--bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;--tx:#EEF6FF;--tx2:#7BACC4;--tx3:#3E5E78;--bd:#142032;--bd2:#1A2D44;--r:12px;--rl:20px;--t:200ms ease}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.W{max-width:740px;margin:0 auto;padding:0 28px}
+nav{position:sticky;top:0;z-index:300;background:rgba(6,12,24,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--bd)}
+.nav-in{max-width:1200px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-m{width:34px;height:34px;background:var(--blue-d);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-t{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.03em}
+.nav-a{color:var(--tx3);text-decoration:none;font-size:14px;font-weight:500;padding:7px 13px;border-radius:var(--r);transition:all var(--t)}
+.nav-a:hover{color:var(--tx2);background:rgba(255,255,255,.04)}
+.article{padding:72px 0 100px}
+.art-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ac);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.art-tag::before{content:'';width:22px;height:2px;background:var(--ac);border-radius:1px}
+h1{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1.06;margin-bottom:18px}
+.art-meta{font-size:13px;color:var(--tx3);margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--bd2);display:flex;gap:16px;flex-wrap:wrap}
+.art-meta span{display:flex;align-items:center;gap:5px}
+h2{font-size:24px;font-weight:700;letter-spacing:-.025em;margin:44px 0 16px;color:var(--tx)}
+h3{font-size:18px;font-weight:600;letter-spacing:-.02em;margin:28px 0 12px;color:var(--tx)}
+p{font-size:16px;color:var(--tx2);line-height:1.82;margin-bottom:20px}
+ul,ol{margin:0 0 20px 22px;color:var(--tx2);font-size:16px;line-height:1.82}
+li{margin-bottom:8px}
+strong{color:var(--tx);font-weight:600}
+em{color:var(--ac-lt);font-style:italic}
+blockquote{border-left:3px solid var(--ac);padding:16px 20px;margin:28px 0;background:rgba(16,185,129,.05);border-radius:0 var(--r) var(--r) 0}
+blockquote p{margin:0;color:var(--tx2);font-style:italic}
+.cta-box{background:var(--s1);border:1px solid var(--bd2);border-radius:var(--rl);padding:36px;margin:48px 0;text-align:center;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac-lt) 50%,transparent)}
+.cta-box h3{margin:0 0 10px;font-size:20px}
+.cta-box p{margin:0 0 20px;font-size:14px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--ac);color:#fff;text-decoration:none;border-radius:var(--r);padding:13px 24px;font-size:14px;font-weight:600;transition:all var(--t)}
+.cta-btn:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.cta-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.key-point{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:var(--r);padding:18px 22px;margin:24px 0}
+.key-point p{margin:0;font-size:15px}
+footer{border-top:1px solid var(--bd);padding:36px 0;text-align:center;font-size:12px;color:var(--tx3)}
+footer a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
+footer a:hover{color:var(--tx2)}
+@media(max-width:600px){h1{font-size:32px}.W{padding:0 18px}}
+</style>
+</head>
+<body>
+<nav>
+<div class="nav-in">
+  <a href="/" class="logo"><div class="logo-m"><svg width="17" height="17" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="logo-t">Deskloop</span></a>
+  <a href="/blog/" class="nav-a">&larr; All articles</a>
+</div>
+</nav>
+<div class="article">
+<div class="W">
+  <div class="art-tag">Productivity</div>
+  <h1>The True Cost of a One-Hour Meeting</h1>
+  <div class="art-meta">
+    <span>&#128197; May 2026</span>
+    <span>&#9200; 6 min read</span>
+    <span>&#128172; Meetings &amp; focus</span>
+  </div>
+
+  <p>A one-hour meeting with six people doesn&rsquo;t cost one hour. It costs six. That&rsquo;s the first thing most people get wrong about meetings &mdash; they calculate time linearly when the actual cost compounds with every person in the room.</p>
+
+  <p>If each person earns $80,000 a year, that&rsquo;s roughly $38 per hour per person. Six people times $38 times one hour equals <strong>$228</strong>. Add benefits, overhead, and lost productivity from interrupting deep work, and a single one-hour meeting at a mid-sized company routinely costs $300&ndash;500 in real terms.</p>
+
+  <p>Most people have never thought about it this way. And most companies have dozens of these meetings every week.</p>
+
+  <h2>Why the math is worse than you think</h2>
+
+  <p>The dollar cost of salaries is only part of the picture. The larger cost is <strong>cognitive interruption</strong>. Research from the University of California Irvine found that it takes an average of 23 minutes to return to deep focus after an interruption. A meeting doesn&rsquo;t cost one hour of productivity &mdash; it costs the hour plus the recovery time on either side.</p>
+
+  <p>A 10am meeting effectively destroys the morning for anyone who needs deep work time to do their best thinking. The two hours before the meeting are spent in anticipation. The hour after is spent recovering. One meeting, three hours of diminished output.</p>
+
+  <div class="key-point">
+    <p><strong>The real formula:</strong> Meeting cost = (hourly rate per person &times; attendees &times; duration) + (average recovery time &times; attendees &times; hourly rate)</p>
+  </div>
+
+  <h2>How to calculate the cost of your meetings</h2>
+
+  <p>The simplest approach is to use an average hourly rate for your team and multiply:</p>
+
+  <ol>
+    <li>Take annual salary and divide by 2,080 (working hours in a year) to get hourly rate</li>
+    <li>Multiply by the number of attendees</li>
+    <li>Multiply by the meeting duration in hours</li>
+    <li>Add 20&ndash;30% for benefits and overhead</li>
+  </ol>
+
+  <p>For a quick real-time calculation during a meeting, you can use a meeting cost calculator that ticks up as the meeting runs &mdash; which has the added psychological effect of making everyone feel the clock.</p>
+
+  <div class="cta-box">
+    <h3>See your meeting cost in real time</h3>
+    <p>Enter your team size and average salary. The counter ticks up every second.</p>
+    <a href="/tools/meeting-cost.html" class="cta-btn">Open Meeting Cost Calculator <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+
+  <h2>Which meetings are worth the cost</h2>
+
+  <p>Not all meetings are bad. The question is whether the output of the meeting justifies its cost. A $300 meeting that produces a clear decision saving $10,000 in wasted work is an excellent investment. A $300 meeting that produces a vague action item no one follows up on is just waste.</p>
+
+  <p>A useful test before scheduling any meeting: <em>Could this be an email, a shared document, or a recorded video?</em> If yes, it probably should be. Meetings are for things that genuinely require real-time discussion &mdash; brainstorming, conflict resolution, complex decisions where rapid back-and-forth is necessary.</p>
+
+  <h2>Practical ways to reduce meeting costs</h2>
+
+  <ul>
+    <li><strong>Set a default duration of 25 or 50 minutes</strong> instead of 30 or 60. The shorter constraint forces focus.</li>
+    <li><strong>Require an agenda</strong> before any meeting goes on the calendar. No agenda, no meeting.</li>
+    <li><strong>Invite fewer people.</strong> Every additional attendee multiplies the cost. If someone doesn&rsquo;t need to participate, they can read the notes.</li>
+    <li><strong>End early when the objective is met.</strong> A meeting booked for an hour doesn&rsquo;t need to use the full hour.</li>
+    <li><strong>Batch meetings together</strong> on specific days to protect deep work blocks on other days.</li>
+  </ul>
+
+  <h2>The $15,000 weekly meeting</h2>
+
+  <p>A common pattern in growing companies is the weekly all-hands or department meeting. Thirty people, one hour, every week. At $40 average hourly rate, that&rsquo;s $1,200 per meeting. Fifty weeks a year: <strong>$60,000 in salary cost alone</strong>, not counting overhead or lost focus time.</p>
+
+  <p>That doesn&rsquo;t mean the meeting is wrong. But it means it should be treated with the same seriousness as any other $60,000 annual expenditure. Is it delivering $60,000 worth of alignment, culture, and decisions? If not, it&rsquo;s worth redesigning.</p>
+
+  <p>The next time someone proposes a meeting, it&rsquo;s worth running the math first. Not to avoid all meetings, but to make sure the ones you have are genuinely worth having.</p>
+
+</div>
+</div>
+<footer>
+<div class="W" style="max-width:1200px">
+  <a href="/">&larr; Deskloop home</a> &middot; <a href="/blog/">All articles</a> &middot; <a href="/privacy.html">Privacy</a> &middot; &copy; 2026 Deskloop.work
+</div>
+</footer>
+</body>
+</html>

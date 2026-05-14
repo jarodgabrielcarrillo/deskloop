@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Best Time Zones for Remote Team Standups (And How to Find Them) — Deskloop</title>
+<meta name="description" content="Finding a meeting time that works across multiple time zones is harder than it looks. Here's a practical guide to scheduling remote standups fairly and efficiently.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://deskloop.work/blog/remote-team-time-zones.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<style>
+:root{--ac:#10B981;--ac-lt:#34D399;--blue-d:#1E40AF;--bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;--tx:#EEF6FF;--tx2:#7BACC4;--tx3:#3E5E78;--bd:#142032;--bd2:#1A2D44;--r:12px;--rl:20px;--t:200ms ease}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.W{max-width:740px;margin:0 auto;padding:0 28px}
+nav{position:sticky;top:0;z-index:300;background:rgba(6,12,24,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--bd)}
+.nav-in{max-width:1200px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-m{width:34px;height:34px;background:var(--blue-d);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-t{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.03em}
+.nav-a{color:var(--tx3);text-decoration:none;font-size:14px;font-weight:500;padding:7px 13px;border-radius:var(--r);transition:all var(--t)}
+.nav-a:hover{color:var(--tx2);background:rgba(255,255,255,.04)}
+.article{padding:72px 0 100px}
+.art-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ac);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.art-tag::before{content:'';width:22px;height:2px;background:var(--ac);border-radius:1px}
+h1{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1.06;margin-bottom:18px}
+.art-meta{font-size:13px;color:var(--tx3);margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--bd2);display:flex;gap:16px;flex-wrap:wrap}
+.art-meta span{display:flex;align-items:center;gap:5px}
+h2{font-size:24px;font-weight:700;letter-spacing:-.025em;margin:44px 0 16px;color:var(--tx)}
+h3{font-size:18px;font-weight:600;letter-spacing:-.02em;margin:28px 0 12px;color:var(--tx)}
+p{font-size:16px;color:var(--tx2);line-height:1.82;margin-bottom:20px}
+ul,ol{margin:0 0 20px 22px;color:var(--tx2);font-size:16px;line-height:1.82}
+li{margin-bottom:8px}
+strong{color:var(--tx);font-weight:600}
+em{color:var(--ac-lt);font-style:italic}
+blockquote{border-left:3px solid var(--ac);padding:16px 20px;margin:28px 0;background:rgba(16,185,129,.05);border-radius:0 var(--r) var(--r) 0}
+blockquote p{margin:0;color:var(--tx2);font-style:italic}
+.cta-box{background:var(--s1);border:1px solid var(--bd2);border-radius:var(--rl);padding:36px;margin:48px 0;text-align:center;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac-lt) 50%,transparent)}
+.cta-box h3{margin:0 0 10px;font-size:20px}
+.cta-box p{margin:0 0 20px;font-size:14px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--ac);color:#fff;text-decoration:none;border-radius:var(--r);padding:13px 24px;font-size:14px;font-weight:600;transition:all var(--t)}
+.cta-btn:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.cta-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.key-point{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:var(--r);padding:18px 22px;margin:24px 0}
+.key-point p{margin:0;font-size:15px}
+footer{border-top:1px solid var(--bd);padding:36px 0;text-align:center;font-size:12px;color:var(--tx3)}
+footer a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
+footer a:hover{color:var(--tx2)}
+@media(max-width:600px){h1{font-size:32px}.W{padding:0 18px}}
+</style>
+</head>
+<body>
+<nav>
+<div class="nav-in">
+  <a href="/" class="logo"><div class="logo-m"><svg width="17" height="17" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="logo-t">Deskloop</span></a>
+  <a href="/blog/" class="nav-a">&larr; All articles</a>
+</div>
+</nav>
+<div class="article">
+<div class="W">
+  <div class="art-tag">Remote Work</div>
+  <h1>Best Time Zones for Remote Team Standups (And How to Find Them)</h1>
+  <div class="art-meta">
+    <span>&#128197; May 2026</span>
+    <span>&#9200; 7 min read</span>
+    <span>&#128172; Remote teams &amp; scheduling</span>
+  </div>
+
+  <p>Scheduling a daily standup for a team spread across multiple time zones is one of those problems that sounds simple until you try to actually solve it. New York and London have a 5-hour gap that&rsquo;s manageable. Add Singapore and you&rsquo;re spanning 13 hours. Add San Francisco and you&rsquo;ve run out of business hours entirely.</p>
+
+  <p>There is no perfect solution when a team is genuinely global. But there are better and worse approaches, and understanding the tradeoffs makes the decision clearer.</p>
+
+  <h2>The most common time zone combinations and their overlap windows</h2>
+
+  <p>For teams with members in two or three time zones, there&rsquo;s usually a workable overlap window during standard business hours. Here are the most common combinations:</p>
+
+  <h3>US East Coast + Western Europe (New York + London)</h3>
+  <p>This is one of the more manageable combinations. With a 5-hour gap (6 during US daylight saving time), there&rsquo;s solid overlap from <strong>2pm&ndash;5pm London / 9am&ndash;12pm New York</strong>. A 9am Eastern standup works well for both sides &mdash; it&rsquo;s mid-afternoon in London but still a reasonable working hour.</p>
+
+  <h3>US West Coast + Eastern Europe (San Francisco + Warsaw)</h3>
+  <p>The gap here is 9&ndash;10 hours, which makes overlap tight. The only workable window is roughly <strong>4pm&ndash;6pm Warsaw / 7am&ndash;9am San Francisco</strong>. This means either early mornings in California or late afternoons in Poland. Neither is comfortable long-term.</p>
+
+  <h3>Europe + Asia Pacific (London + Singapore)</h3>
+  <p>An 8-hour gap with limited overlap. The viable window is approximately <strong>9am&ndash;11am Singapore / 1am&ndash;3am London</strong> &mdash; which only works asynchronously. For a synchronous standup, someone will always be outside normal hours. The least bad option is <strong>4pm&ndash;6pm Singapore / 8am&ndash;10am London</strong>, which requires Singapore to take a late-day call.</p>
+
+  <h3>Full global spread (New York + London + Singapore)</h3>
+  <p>With three continents, there is no window that falls within business hours for all three. You have two realistic options: find the window that&rsquo;s least bad for the majority and compensate the outlier, or rotate the meeting time so the burden is shared.</p>
+
+  <div class="key-point">
+    <p><strong>Rule of thumb:</strong> Two time zones almost always have overlap. Three is manageable. Four or more almost always requires asynchronous communication to carry the load.</p>
+  </div>
+
+  <h2>How Daylight Saving Time complicates everything</h2>
+
+  <p>Most countries that observe Daylight Saving Time don&rsquo;t change their clocks on the same date. The US and Europe typically switch several weeks apart. Singapore, Japan, India, and most of Asia don&rsquo;t observe DST at all.</p>
+
+  <p>This means the gap between two cities can shift by an hour or two at certain times of year, moving a meeting that fell within business hours to outside them. A 9am New York / 2pm London standup becomes a 9am New York / 1pm London standup when the US switches before the UK &mdash; which is fine &mdash; but can become a 9am New York / 3pm London meeting when the UK switches first. The variations are small but they matter when the overlap window is already tight.</p>
+
+  <p>Always check current, DST-adjusted offsets when scheduling recurring meetings, not just the standard UTC offset.</p>
+
+  <div class="cta-box">
+    <h3>Find your team&rsquo;s overlap window instantly</h3>
+    <p>Interactive world map, DST-aware, 24-hour overlap grid. Free, no signup.</p>
+    <a href="/tools/timezone-overlap.html" class="cta-btn">Open Time Zone Overlap Tool <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+
+  <h2>Strategies for teams with no good overlap</h2>
+
+  <p>When the math doesn&rsquo;t work, the answer isn&rsquo;t to force a meeting at an unreasonable hour every day. These approaches reduce the synchronous meeting burden:</p>
+
+  <ul>
+    <li><strong>Async standups.</strong> Team members post a short text or voice note at the start of their day answering the standard standup questions (what I did yesterday, what I&rsquo;m doing today, any blockers). Tools like Loom, Slack, or even a shared document handle this well.</li>
+    <li><strong>Rotating meeting times.</strong> Instead of one time zone always taking the early or late call, rotate the meeting time weekly or monthly. This distributes the inconvenience fairly.</li>
+    <li><strong>Reduce meeting frequency.</strong> If daily standups are genuinely impractical across time zones, consider whether they need to be daily. Weekly synchronous meetings supplemented by async updates can work well for many teams.</li>
+    <li><strong>Designate overlap hours.</strong> Agree on a 2&ndash;3 hour window each day where everyone is expected to be available for synchronous communication, and schedule all meetings within it. Outside that window, async is the default.</li>
+  </ul>
+
+  <h2>The fairness question</h2>
+
+  <p>When there&rsquo;s no good overlap, someone is always making a sacrifice. The common default &mdash; setting the meeting time to work for the largest office or the headquarters time zone &mdash; consistently burdens the same people.</p>
+
+  <p>Over time, this creates a real equity problem. Team members who are always taking 7am or 7pm calls are experiencing a different employment condition than those who always meet during normal hours. This affects wellbeing, retention, and perceived inclusion in the team.</p>
+
+  <p>The most defensible approach is to rotate the burden explicitly, acknowledge it openly, and compensate people who regularly take calls outside normal hours with flexibility in other areas &mdash; later starts, earlier finishes, or additional autonomy over their schedule.</p>
+
+  <p>Good remote teams treat time zone fairness as a real management problem, not a scheduling inconvenience.</p>
+
+</div>
+</div>
+<footer>
+<div class="W" style="max-width:1200px">
+  <a href="/">&larr; Deskloop home</a> &middot; <a href="/blog/">All articles</a> &middot; <a href="/privacy.html">Privacy</a> &middot; &copy; 2026 Deskloop.work
+</div>
+</footer>
+</body>
+</html>
