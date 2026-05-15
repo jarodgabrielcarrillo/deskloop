@@ -3,48 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Deskloop — Free Productivity Tools No Signup | Focus, Habit, Deep Work & More</title>
-<meta name="description" content="Free productivity tools that open instantly — no signup, no install, no noise. Focus Timer, Habit Tracker, Deep Work Tracker, Meeting Cost, Time Zone Overlap. 100% browser-based.">
+<title>Deskloop — Free Productivity Tools No Signup | Focus Timer, Habit Tracker & More</title>
+<meta name="description" content="Free productivity tools that open instantly — no signup, no install, no noise. Focus Timer, Habit Tracker, Deep Work Tracker, Meeting Cost Calculator and more. 100% browser-based.">
 <meta name="keywords" content="free productivity tools no signup,free focus timer browser,habit tracker no account,meeting cost calculator free,deep work tracker free,time zone overlap calculator">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://deskloop.work/">
 <meta property="og:title" content="Deskloop — Free Productivity Tools No Signup">
-<meta property="og:description" content="Seven sharp tools. Open one, use it, close it. No signup, no cloud, no friction. 100% free forever.">
+<meta property="og:description" content="Seven focused tools. Open one, use it, close it. No signup, no cloud, no friction.">
 <meta property="og:url" content="https://deskloop.work/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Deskloop","url":"https://deskloop.work/","description":"Free browser-based productivity tools with no signup. Focus Timer, Habit Tracker, Deep Work Tracker, Meeting Cost Calculator, Time Zone Overlap, Work Hours Logger, Task Decider."}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are all Deskloop tools free?","acceptedAnswer":{"@type":"Answer","text":"Yes. 100% free forever. No tiers, no freemium."}},{"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. No signup, no login, no email. Open any tool immediately."}},{"@type":"Question","name":"Where is my data stored?","acceptedAnswer":{"@type":"Answer","text":"Locally in your browser. Nothing sent to any server."}},{"@type":"Question","name":"Do tools work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. Once loaded, all tools work without internet."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Deskloop","url":"https://deskloop.work/","description":"Free browser-based productivity tools. No signup required."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Are all Deskloop tools free?","acceptedAnswer":{"@type":"Answer","text":"Yes. 100% free forever."}},{"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. No signup, no login, no email."}},{"@type":"Question","name":"Where is my data stored?","acceptedAnswer":{"@type":"Answer","text":"Locally in your browser. Nothing sent to any server."}},{"@type":"Question","name":"Do tools work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. Once loaded, all tools work without internet."}}]}</script>
 <meta name="google-site-verification" content="KChKjtl0z6q2zocomb2y3UslhaPxiXZGXB3-vhp9am4">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ac:    #10B981;
-  --ac-lt: #34D399;
-  --ac-dk: #059669;
-  --ac-glow: rgba(16,185,129,.18);
-  --blue:  #3B82F6;
-  --blue-d:#1E40AF;
-  --bg:    #060C18;
-  --s1:    #0A1525;
-  --s2:    #0F1E32;
-  --s3:    #152540;
-  --s4:    #1C2E4A;
-  --tx:    #EEF6FF;
-  --tx2:   #7BACC4;
-  --tx3:   #3E5E78;
-  --bd:    #142032;
-  --bd2:   #1A2D44;
-  --warn:  #F59E0B;
-  --danger:#EF4444;
-  --pur:   #A78BFA;
-  --r:     12px;
-  --rl:    20px;
-  --t:     200ms ease;
-  --mono:  'JetBrains Mono',monospace;
-  --max:   1200px;
+  --ac:#10B981;--ac-lt:#34D399;--ac-dk:#059669;
+  --blue:#3B82F6;--blue-d:#1E40AF;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;--s4:#1C2E4A;
+  --tx:#EEF4FF;--tx2:#88AAC5;--tx3:#4C6580;
+  --bd:#142032;--bd2:#1A2D44;
+  --warn:#F59E0B;--danger:#EF4444;--pur:#A78BFA;--pink:#F472B6;--teal:#38bdf8;
+  --r:12px;--rl:20px;--t:200ms ease;--mono:'JetBrains Mono',monospace;--max:1200px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -52,31 +35,31 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .W{max-width:var(--max);margin:0 auto;padding:0 32px}
 
 /* ── NAV ── */
-.nav{position:fixed;top:0;left:0;right:0;z-index:400;background:rgba(6,12,24,.9);backdrop-filter:blur(28px) saturate(1.6);border-bottom:1px solid rgba(20,32,50,.8);transition:background var(--t)}
-.nav.scrolled{background:rgba(6,12,24,.98)}
-.nav-in{max-width:var(--max);margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
-.logo-m{width:36px;height:36px;background:var(--blue-d);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-t{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.03em}
-.nav-r{display:flex;align-items:center;gap:6px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(6,12,24,.88);backdrop-filter:blur(24px) saturate(1.5);border-bottom:1px solid rgba(20,32,50,.7);transition:background var(--t)}
+.nav.sc{background:rgba(6,12,24,.97)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:0 32px;height:66px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-m{width:34px;height:34px;background:var(--blue-d);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-t{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.025em}
+.nav-r{display:flex;align-items:center;gap:4px}
 .nav-a{color:var(--tx3);text-decoration:none;font-size:14px;font-weight:500;padding:7px 13px;border-radius:var(--r);transition:all var(--t)}
 .nav-a:hover{color:var(--tx2);background:rgba(255,255,255,.04)}
-.nav-cta{background:var(--ac);color:#fff;border:none;border-radius:var(--r);font:600 14px/1 'Inter',sans-serif;padding:10px 20px;cursor:pointer;text-decoration:none;transition:all var(--t);letter-spacing:-.01em;white-space:nowrap}
-.nav-cta:hover{background:var(--ac-lt);transform:translateY(-1px);box-shadow:0 6px 20px var(--ac-glow)}
+.nav-cta{background:var(--ac);color:#fff;border:none;border-radius:var(--r);font:600 14px/1 'Inter',sans-serif;padding:10px 20px;cursor:pointer;text-decoration:none;transition:all var(--t)}
+.nav-cta:hover{background:var(--ac-lt);transform:translateY(-1px)}
 
 /* ── HERO ── */
-.hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 80px;position:relative;overflow:hidden}
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 0 72px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 70% 40%,rgba(16,185,129,.055) 0%,transparent 60%),radial-gradient(ellipse 60% 60% at 15% 70%,rgba(59,130,246,.04) 0%,transparent 60%);pointer-events:none}
-.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 85% 85% at 50% 40%,black 20%,transparent 80%);pointer-events:none}
-.hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;width:100%}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 85% 85% at 50% 40%,black 20%,transparent 80%);pointer-events:none}
+.hero-in{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;width:100%}
 
 /* Left copy */
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:6px 14px;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--ac-lt);margin-bottom:28px}
 .badge-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:bdot 2.2s ease-in-out infinite}
-@keyframes bdot{0%,100%{opacity:1;transform:scale(1)}55%{opacity:.2;transform:scale(.5)}}
-.hero-h1{font-size:76px;font-weight:900;letter-spacing:-.045em;line-height:.98;color:var(--tx);margin-bottom:26px}
+@keyframes bdot{0%,100%{opacity:1}55%{opacity:.2}}
+.hero-h1{font-size:70px;font-weight:900;letter-spacing:-.045em;line-height:1.01;color:var(--tx);margin-bottom:24px}
 .hero-h1 em{font-style:normal;background:linear-gradient(125deg,var(--ac) 0%,#34D399 35%,#60A5FA 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:18px;color:var(--tx2);line-height:1.7;max-width:420px;margin-bottom:44px;font-weight:400}
+.hero-sub{font-size:18px;color:var(--tx2);line-height:1.7;max-width:420px;margin-bottom:42px;font-weight:400}
 .hero-sub strong{color:var(--tx);font-weight:600}
 .hero-btns{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:52px}
 .btn-p{display:inline-flex;align-items:center;gap:9px;background:var(--ac);color:#fff;border:none;border-radius:var(--r);font:600 16px/1 'Inter',sans-serif;padding:16px 28px;cursor:pointer;text-decoration:none;transition:all .22s ease;box-shadow:0 4px 24px rgba(16,185,129,.28);letter-spacing:-.01em}
@@ -86,9 +69,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .btn-s:hover{color:var(--tx);border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.08)}
 .trust-row{display:flex;flex-wrap:wrap;gap:20px}
 .trust-it{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--tx3)}
-.trust-it svg{width:13px;height:13px;stroke:var(--ac);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.trust-it svg{width:13px;height:13px;stroke:var(--ac);fill:none;stroke-width:2;stroke-linecap:round}
 
-/* ── ORBIT STAGE ── */
+/* ════════════════════════════════════════
+   DESKTOP ORBIT (≥769px)
+════════════════════════════════════════ */
 .orbit-stage{position:relative;width:520px;height:560px;flex-shrink:0;user-select:none}
 .orbit-track{position:absolute;top:48%;left:50%;transform:translate(-50%,-52%);width:436px;height:174px;border-radius:50%;border:1px solid rgba(16,185,129,.07);pointer-events:none;z-index:1}
 .orbit-glow{position:absolute;top:48%;left:50%;transform:translate(-50%,-52%);width:320px;height:120px;border-radius:50%;background:radial-gradient(ellipse,rgba(16,185,129,.05) 0%,transparent 70%);pointer-events:none;z-index:1}
@@ -98,8 +83,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .hub-core{width:50px;height:50px;border-radius:50%;background:var(--s2);border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(16,185,129,.15),0 4px 16px rgba(0,0,0,.4)}
 .oi{position:absolute;top:48%;left:50%;will-change:transform}
 .oc{display:block;width:152px;background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:13px 12px 11px;text-decoration:none;cursor:pointer;transform:translate(-50%,-50%);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-
-/* orbit card content */
 .oc-lbl{font-size:8px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;display:flex;align-items:center;gap:5px}
 .oc-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .oc-ring-wrap{display:flex;justify-content:center;position:relative;margin-bottom:7px}
@@ -129,8 +112,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .oc-tz-row{display:flex;align-items:center;gap:5px;margin-bottom:4px}
 .oc-tz-flag{font-size:12px;flex-shrink:0;width:18px}
 .oc-tz-cells{display:flex;gap:2px;flex:1}
-.oc-tc{height:14px;flex:1;border-radius:2px;background:var(--s3)}
-.oc-tc.work{background:rgba(59,130,246,.2)}.oc-tc.ov{background:var(--ac)}
+.oc-tc{height:14px;flex:1;border-radius:2px;background:var(--s3)}.oc-tc.work{background:rgba(59,130,246,.2)}.oc-tc.ov{background:var(--ac)}
 .oc-tz-utc{font-family:var(--mono);font-size:7px;color:var(--tx3);flex-shrink:0}
 .oc-ov-badge{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.22);border-radius:5px;padding:5px 8px;font-size:9px;font-weight:600;color:var(--ac);text-align:center;margin-top:5px}
 .oc-dw-timer{font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:-1px;color:var(--ac);text-align:center;margin:6px 0 5px}
@@ -146,107 +128,219 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .oc-result{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:5px;padding:5px 8px;font-size:9px;font-weight:600;color:var(--ac);text-align:center}
 .oc-wh-timer{font-family:var(--mono);font-size:20px;font-weight:700;letter-spacing:-.5px;color:var(--ac);text-align:center;margin:4px 0 6px;font-variant-numeric:tabular-nums}
 .oc-bars{display:flex;align-items:flex-end;gap:3px;height:42px;margin-bottom:5px}
-.oc-bar{flex:1;border-radius:2px 2px 0 0}
-.oc-bar.today{background:var(--ac);box-shadow:0 0 6px rgba(16,185,129,.25)}
-.oc-bar.past{background:var(--blue-d)}.oc-bar.empty{background:var(--s3)}
+.oc-bar{flex:1;border-radius:2px 2px 0 0}.oc-bar.today{background:var(--ac);box-shadow:0 0 6px rgba(16,185,129,.25)}.oc-bar.past{background:var(--blue-d)}.oc-bar.empty{background:var(--s3)}
 .oc-bar-labels{display:flex;gap:3px;margin-bottom:5px}
 .oc-bar-labels span{flex:1;font-size:7px;color:var(--tx3);text-align:center;font-family:var(--mono)}
 .oc-wh-stat{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:5px;padding:4px 8px;text-align:center;font-size:9px;font-weight:600;color:var(--ac)}
 
+/* ════════════════════════════════════════
+   MOBILE CAROUSEL (≤768px)
+════════════════════════════════════════ */
+.mob-carousel{display:none}
+
+@media(max-width:768px){
+  .mob-carousel{display:block;width:100%;margin-top:40px}
+  .orbit-stage{display:none!important}
+}
+
+/* Carousel wrapper — overflow hidden clips side cards */
+.mc-wrap{width:100%;overflow:hidden;position:relative}
+
+/* Track holds all cards in a flex row */
+.mc-track{display:flex;gap:14px;padding-left:9%;will-change:transform;touch-action:pan-y}
+
+/* Individual tool preview card */
+.mc-card{
+  min-width:82%;flex-shrink:0;
+  background:var(--s1);border:1px solid var(--bd);
+  border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;
+  height:356px;position:relative;
+  transition:border-color .3s ease;
+}
+.mc-card.active{border-color:rgba(16,185,129,.25)}
+.mc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:20px 20px 0 0;transition:opacity .3s}
+.mc-card.active::before{opacity:1}
+
+/* Card header */
+.mcc-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;flex-shrink:0}
+.mcc-name{font-size:13px;font-weight:700;color:var(--tx);letter-spacing:-.015em}
+.mcc-live{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3)}
+.mcc-live-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:bdot 1.8s ease-in-out infinite}
+
+/* Card body — flexible content area */
+.mcc-body{flex:1;padding:0 18px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+
+/* Open CTA */
+.mcc-cta{display:block;margin:10px 18px 16px;background:var(--ac-dk);color:#fff;text-decoration:none;border-radius:10px;padding:11px 16px;font-size:13px;font-weight:600;text-align:center;transition:background var(--t);flex-shrink:0;letter-spacing:-.01em}
+.mcc-cta:hover{background:var(--ac)}
+
+/* Dots */
+.mc-dots{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:18px}
+.mc-dot{width:6px;height:6px;border-radius:3px;background:var(--s3);border:1px solid var(--bd2);cursor:pointer;transition:all .28s ease;padding:0}
+.mc-dot.active{width:24px;background:var(--ac);border-color:var(--ac)}
+
+/* Mobile ring SVGs */
+.mcc-ring-wrap{display:flex;justify-content:center;position:relative;margin-bottom:8px}
+.mcc-ring{width:110px;height:110px}
+.mccr-track{fill:none;stroke:var(--s3);stroke-width:8}
+.mccr-fill{fill:none;stroke:var(--ac);stroke-width:8;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%}
+.mcc-timer-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:28px;font-weight:700;color:var(--tx);letter-spacing:-1px}
+.mcc-mode{font-size:10px;font-weight:600;color:var(--ac);text-align:center;letter-spacing:.5px;margin-bottom:10px}
+.mcc-ambs{display:flex;justify-content:center;gap:9px;margin-bottom:10px}
+.mcc-amb{width:36px;height:36px;border-radius:8px;background:var(--s2);border:1px solid var(--bd);font-size:15px;display:flex;align-items:center;justify-content:center}
+.mcc-amb.on{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3)}
+.mcc-sess-dots{display:flex;justify-content:center;gap:7px}
+.mcc-sd{width:10px;height:10px;border-radius:50%;background:var(--ac)}
+.mcc-sd.off{background:var(--s3);border:1px solid var(--bd)}
+
+/* Habit card styles */
+.mcc-streak-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.mcc-streak-n{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--ac)}
+.mcc-hrow{display:flex;align-items:center;gap:9px;padding:8px 10px;background:var(--s2);border-radius:8px;margin-bottom:5px}
+.mcc-hcheck{width:18px;height:18px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mcc-hcheck svg{width:10px;height:10px;stroke:#060C18;fill:none;stroke-width:2.5;stroke-linecap:round}
+.mcc-hname{font-size:13px;font-weight:500;color:var(--tx2)}
+.mcc-wdots{display:flex;gap:5px;margin-top:10px}
+.mcc-wd{width:12px;height:12px;border-radius:3px;background:var(--ac)}
+.mcc-wd.off{background:var(--s3)}
+
+/* Meeting cost styles */
+.mcc-cost-num{font-family:var(--mono);font-size:40px;font-weight:700;color:var(--warn);letter-spacing:-2px;line-height:1;text-align:center;margin:4px 0 4px;font-variant-numeric:tabular-nums}
+.mcc-cost-sub{font-size:10px;color:var(--tx3);text-align:center;letter-spacing:.8px;text-transform:uppercase;margin-bottom:14px}
+.mcc-cost-meta{display:flex;justify-content:space-around;margin-bottom:14px}
+.mcc-cm{text-align:center}
+.mcc-cm-v{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--tx)}
+.mcc-cm-l{font-size:9px;color:var(--tx3);margin-top:2px}
+.mcc-pbar{background:var(--s3);border-radius:100px;height:5px;overflow:hidden}
+.mcc-pbar-fill{height:100%;background:var(--warn);border-radius:100px}
+
+/* TZ overlap styles */
+.mcc-tz-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.mcc-tz-flag{font-size:16px;flex-shrink:0;width:22px}
+.mcc-tz-cells{display:flex;gap:2px;flex:1}
+.mcc-tc{height:18px;flex:1;border-radius:3px;background:var(--s3)}
+.mcc-tc.work{background:rgba(59,130,246,.22)}.mcc-tc.ov{background:var(--ac)}
+.mcc-tz-utc{font-family:var(--mono);font-size:9px;color:var(--tx3);flex-shrink:0}
+.mcc-ov-banner{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:9px 14px;font-size:11px;font-weight:600;color:var(--ac);text-align:center;margin-top:10px}
+
+/* Deep work styles */
+.mcc-dw-timer{font-family:var(--mono);font-size:36px;font-weight:700;letter-spacing:-2px;color:var(--ac);text-align:center;margin:4px 0 10px}
+.mcc-ratings{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mcc-rate{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px;text-align:center}
+.mcc-rl{font-size:9px;color:var(--tx3);margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase}
+.mcc-re{font-size:18px}
+.mcc-streak-badge{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:8px;padding:8px 14px;text-align:center;font-size:12px;font-weight:700;color:var(--ac)}
+
+/* Task decider styles */
+.mcc-wheel-wrap{display:flex;justify-content:center;flex:1;position:relative;align-items:center}
+.mcc-wheel{width:120px;height:120px}
+.mcc-wg{transform-origin:60px 60px;animation:wSpin 3.2s cubic-bezier(.25,.46,.45,.94) infinite}
+.mcc-pointer{position:absolute;right:calc(50% - 66px);top:50%;transform:translateY(-50%);width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:16px solid var(--ac);filter:drop-shadow(0 0 4px rgba(16,185,129,.5))}
+.mcc-result{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:600;color:var(--ac);text-align:center;margin-top:8px}
+
+/* Work hours styles */
+.mcc-wh-timer{font-family:var(--mono);font-size:32px;font-weight:700;letter-spacing:-1px;color:var(--ac);text-align:center;margin:4px 0 10px;font-variant-numeric:tabular-nums}
+.mcc-bars{display:flex;align-items:flex-end;gap:5px;height:60px;margin-bottom:7px}
+.mcc-bar{flex:1;border-radius:3px 3px 0 0}
+.mcc-bar.today{background:var(--ac);box-shadow:0 0 8px rgba(16,185,129,.3)}.mcc-bar.past{background:var(--blue-d)}.mcc-bar.empty{background:var(--s3)}
+.mcc-bar-lbls{display:flex;gap:5px;margin-bottom:10px}
+.mcc-bar-lbls span{flex:1;font-size:9px;color:var(--tx3);text-align:center;font-family:var(--mono)}
+.mcc-wh-stats{display:flex;gap:8px}
+.mcc-whs{flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:8px;text-align:center}
+.mcc-whs-v{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ac)}
+.mcc-whs-l{font-size:9px;color:var(--tx3);margin-top:2px}
+
 /* ── TRUST BAR ── */
-.trust-bar{border-top:1px solid rgba(26,45,68,.8);border-bottom:1px solid rgba(26,45,68,.8);padding:20px 0;background:rgba(10,21,37,.6);backdrop-filter:blur(12px)}
+.trust-bar{border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:18px 0;background:rgba(10,21,37,.6);backdrop-filter:blur(12px)}
 .trust-bar-in{max-width:var(--max);margin:0 auto;padding:0 32px;display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap}
 .tb-i{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--tx3)}
-.tb-i svg{width:14px;height:14px;stroke:var(--ac);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.tb-i svg{width:14px;height:14px;stroke:var(--ac);fill:none;stroke-width:2;stroke-linecap:round}
 
-/* ── SECTION COMMONS ── */
-.sec{padding:110px 0}
-.sec-sm{padding:80px 0}
-.sec-tag{font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--ac);margin-bottom:20px;display:flex;align-items:center;gap:9px}
-.sec-tag::before{content:'';width:28px;height:2px;background:var(--ac);border-radius:1px;flex-shrink:0}
-.sec-h{font-size:52px;font-weight:900;letter-spacing:-.04em;line-height:1.04;margin-bottom:20px}
-.sec-sub{font-size:18px;color:var(--tx2);line-height:1.7;max-width:560px}
+/* ── SECTIONS ── */
+.sec{padding:100px 0}.sec-sm{padding:72px 0}
+.sec-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ac);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:24px;height:2px;background:var(--ac);border-radius:1px}
+.sec-h{font-size:48px;font-weight:900;letter-spacing:-.04em;line-height:1.06;margin-bottom:18px}
+.sec-sub{font-size:17px;color:var(--tx2);line-height:1.72;max-width:540px}
 
 /* ── TOOLS BENTO ── */
-.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto auto;gap:16px;margin-top:64px}
-.tc{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:30px 28px;text-decoration:none;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1)}
-.tc::after{content:'';position:absolute;inset:0;border-radius:var(--rl);opacity:0;transition:opacity .3s;pointer-events:none}
-.tc:hover{transform:translateY(-6px);border-color:rgba(16,185,129,.3);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(16,185,129,.12),0 0 40px rgba(16,185,129,.06)}
-.tc:hover::after{opacity:1}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:60px}
 .tc-span2{grid-column:span 2}
-.tc-corner{position:absolute;top:0;right:0;width:200px;height:200px;border-radius:0 var(--rl) 0 100%;opacity:.5;transition:opacity .3s}
-.tc:hover .tc-corner{opacity:1}
-.tc-c-blue .tc-corner{background:radial-gradient(circle at top right,rgba(59,130,246,.12),transparent 70%)}
-.tc-c-green .tc-corner{background:radial-gradient(circle at top right,rgba(16,185,129,.1),transparent 70%)}
-.tc-c-amber .tc-corner{background:radial-gradient(circle at top right,rgba(245,158,11,.09),transparent 70%)}
-.tc-c-purple .tc-corner{background:radial-gradient(circle at top right,rgba(167,139,250,.1),transparent 70%)}
-.tc-c-pink .tc-corner{background:radial-gradient(circle at top right,rgba(244,114,182,.08),transparent 70%)}
-.tc-c-teal .tc-corner{background:radial-gradient(circle at top right,rgba(56,189,248,.08),transparent 70%)}
-.tc-c-orange .tc-corner{background:radial-gradient(circle at top right,rgba(251,146,60,.08),transparent 70%)}
-.tc-pill{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:3px 10px;margin-bottom:18px;width:fit-content}
-.tc-hd{display:flex;align-items:center;gap:13px;margin-bottom:13px}
-.tc-ic{width:44px;height:44px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.tc-ic svg{width:22px;height:22px}
-.tc-nm{font-size:18px;font-weight:700;letter-spacing:-.025em;color:var(--tx)}
-.tc-ds{font-size:13px;color:var(--tx2);line-height:1.65;flex:1;margin-bottom:22px}
+.tc{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:28px;text-decoration:none;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1);min-height:200px}
+.tc::before{content:'';position:absolute;top:0;right:0;width:180px;height:180px;border-radius:0 var(--rl) 0 100%;opacity:.45;transition:opacity .3s}
+.tc-blue::before{background:radial-gradient(circle at top right,rgba(59,130,246,.1),transparent 70%)}
+.tc-green::before{background:radial-gradient(circle at top right,rgba(16,185,129,.1),transparent 70%)}
+.tc-amber::before{background:radial-gradient(circle at top right,rgba(245,158,11,.08),transparent 70%)}
+.tc-purple::before{background:radial-gradient(circle at top right,rgba(167,139,250,.09),transparent 70%)}
+.tc-pink::before{background:radial-gradient(circle at top right,rgba(244,114,182,.08),transparent 70%)}
+.tc-teal::before{background:radial-gradient(circle at top right,rgba(56,189,248,.08),transparent 70%)}
+.tc-orange::before{background:radial-gradient(circle at top right,rgba(251,146,60,.08),transparent 70%)}
+.tc:hover{transform:translateY(-5px);border-color:rgba(16,185,129,.22);box-shadow:0 20px 56px rgba(0,0,0,.42),0 0 0 1px rgba(16,185,129,.09)}
+.tc:hover::before{opacity:1}
+.tc-pill{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:3px 10px;margin-bottom:16px;width:fit-content}
+.tc-hd{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.tc-ic{width:42px;height:42px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.tc-ic svg{width:21px;height:21px}
+.tc-nm{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--tx)}
+.tc-ds{font-size:13px;color:var(--tx2);line-height:1.65;flex:1;margin-bottom:20px}
 .tc-lk{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--ac);transition:gap var(--t);margin-top:auto}
-.tc:hover .tc-lk{gap:9px}
+.tc:hover .tc-lk{gap:8px}
 .tc-lk svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 
-/* ── WHY DESKLOOP ── */
-.why-bg{background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 50%,var(--bg) 100%)}
-.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
-.why-card{background:var(--s2);border:1px solid var(--bd2);border-radius:var(--rl);padding:40px 36px;position:relative;overflow:hidden;transition:all .3s ease}
-.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--rl) var(--rl) 0 0;transition:opacity .3s}
+/* ── WHY ── */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:60px}
+.why-card{background:var(--s2);border:1px solid var(--bd2);border-radius:var(--rl);padding:38px 32px;position:relative;overflow:hidden;transition:all .3s ease}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac-lt) 50%,transparent);opacity:0;transition:opacity .3s}
 .why-card:hover{border-color:rgba(16,185,129,.2);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
-.why-card::before{background:linear-gradient(90deg,var(--ac) 0%,var(--ac-lt) 50%,transparent);opacity:0}
 .why-card:hover::before{opacity:1}
-.why-ic{width:56px;height:56px;border-radius:14px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
-.why-ic svg{width:26px;height:26px}
-.why-h3{font-size:20px;font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
+.why-ic{width:52px;height:52px;border-radius:13px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.why-ic svg{width:25px;height:25px}
+.why-h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}
 .why-p{font-size:14px;color:var(--tx2);line-height:1.75}
 
 /* ── COMPARISON ── */
-.comp-wrap{margin-top:64px;border:1px solid var(--bd2);border-radius:var(--rl);overflow:hidden}
+.comp-wrap{margin-top:56px;border:1px solid var(--bd2);border-radius:var(--rl);overflow:hidden}
 .comp-row{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;border-bottom:1px solid var(--bd)}
 .comp-row:last-child{border-bottom:none}
-.comp-cell{padding:16px 22px;font-size:14px;display:flex;align-items:center;transition:background var(--t)}
-.comp-row:not(.comp-hdr):hover{background:rgba(255,255,255,.02)}
-.comp-hdr .comp-cell{background:var(--s2);font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tx3);padding:14px 22px}
-.comp-hdr .comp-cell:nth-child(2){color:var(--ac);background:rgba(16,185,129,.06);border-top:2px solid var(--ac)}
-.comp-cell:nth-child(2){background:rgba(16,185,129,.025)}
-.comp-feat{color:var(--tx2)}
-.comp-yes{color:var(--ac);font-weight:600;display:flex;align-items:center;gap:5px}
-.comp-no{color:var(--tx3)}
-.comp-yes svg,.comp-no svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.comp-cell{padding:15px 22px;font-size:14px;display:flex;align-items:center;transition:background var(--t)}
+.comp-row.hdr .comp-cell{background:var(--s2);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);padding:13px 22px}
+.comp-row.hdr .comp-cell:nth-child(2){color:var(--ac);background:rgba(16,185,129,.05);border-top:2px solid var(--ac)}
+.comp-row:not(.hdr){background:var(--s1)}
+.comp-row:not(.hdr):hover{background:var(--s2)}
+.comp-cell:nth-child(2){background:rgba(16,185,129,.02)}
+.comp-feat{color:var(--tx2)}.comp-yes{color:var(--ac);font-weight:600;display:flex;align-items:center;gap:5px}.comp-no{color:var(--tx3)}
+.comp-yes svg,.comp-no svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 
 /* ── FAQ ── */
-.faq-list{margin-top:56px;display:flex;flex-direction:column;gap:2px}
+.faq-list{margin-top:52px;display:flex;flex-direction:column;gap:2px}
 .faq-item{border:1px solid var(--bd2);border-radius:var(--r);overflow:hidden}
-.faq-q{width:100%;background:var(--s1);border:none;text-align:left;padding:21px 24px;font:600 15px/1.5 'Inter',sans-serif;color:var(--tx);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:background var(--t)}
+.faq-q{width:100%;background:var(--s1);border:none;text-align:left;padding:20px 22px;font:600 15px/1.5 'Inter',sans-serif;color:var(--tx);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:background var(--t)}
 .faq-q:hover{background:var(--s2)}
-.faq-q svg{width:18px;height:18px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform var(--t),stroke var(--t)}
-.faq-a{display:none;padding:0 24px 20px;font-size:14px;color:var(--tx2);line-height:1.78;background:var(--s1)}
+.faq-q svg{width:17px;height:17px;stroke:var(--tx3);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform var(--t),stroke var(--t)}
+.faq-a{display:none;padding:0 22px 18px;font-size:14px;color:var(--tx2);line-height:1.78;background:var(--s1)}
 .faq-item.open .faq-q{background:var(--s2)}.faq-item.open .faq-a{display:block}
 .faq-item.open .faq-q svg{transform:rotate(45deg);stroke:var(--ac)}
 
 /* ── FINAL CTA ── */
-.fin-cta{padding:120px 0;text-align:center;position:relative;overflow:hidden}
-.fin-cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;border-radius:50%;background:radial-gradient(ellipse,rgba(16,185,129,.08) 0%,transparent 70%);pointer-events:none}
-.fin-h2{font-size:62px;font-weight:900;letter-spacing:-.045em;line-height:1.02;margin-bottom:22px;position:relative}
-.fin-h2 em{font-style:normal;background:linear-gradient(125deg,var(--ac) 0%,var(--ac-lt) 50%,var(--blue) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.fin-sub{font-size:18px;color:var(--tx2);margin-bottom:48px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.68;position:relative}
+.fin{padding:110px 0;text-align:center;position:relative;overflow:hidden}
+.fin::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:350px;border-radius:50%;background:radial-gradient(ellipse,rgba(16,185,129,.08),transparent 70%);pointer-events:none}
+.fin-h{font-size:56px;font-weight:900;letter-spacing:-.04em;line-height:1.04;margin-bottom:20px;position:relative}
+.fin-h em{font-style:normal;background:linear-gradient(125deg,var(--ac) 0%,var(--ac-lt) 50%,var(--blue) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fin-sub{font-size:18px;color:var(--tx2);margin-bottom:44px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.68;position:relative}
 .fin-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative}
 
 /* ── FOOTER ── */
-footer{border-top:1px solid var(--bd);padding:52px 0 60px;background:var(--bg)}
+footer{border-top:1px solid var(--bd);padding:48px 0 56px}
 .foot-in{max-width:var(--max);margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:start}
-.foot-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:12px}
+.foot-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:10px}
 .foot-bm{width:32px;height:32px;background:var(--blue-d);border-radius:7px;display:flex;align-items:center;justify-content:center}
 .foot-bn{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.03em}
-.foot-tag{font-size:13px;color:var(--tx3);margin-bottom:8px}
-.foot-legal{font-size:12px;color:var(--tx3)}
-.foot-links{display:flex;gap:24px;flex-wrap:wrap;padding-top:6px}
+.foot-tag{font-size:13px;color:var(--tx3);margin-bottom:5px}
+.foot-email{font-size:12px;color:var(--ac);text-decoration:none;transition:opacity var(--t)}
+.foot-email:hover{opacity:.7}
+.foot-legal{font-size:11px;color:var(--tx3);margin-top:6px}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;padding-top:6px}
 .foot-a{color:var(--tx3);text-decoration:none;font-size:13px;transition:color var(--t)}
 .foot-a:hover{color:var(--tx2)}
 
@@ -254,31 +348,33 @@ footer{border-top:1px solid var(--bd);padding:52px 0 60px;background:var(--bg)}
 
 /* ── RESPONSIVE ── */
 @media(max-width:1060px){
-  .hero-h1{font-size:60px}
+  .hero-h1{font-size:56px}
   .orbit-stage{width:460px;height:500px}
-  .sec-h{font-size:44px}
-  .fin-h2{font-size:52px}
+  .sec-h{font-size:40px}
+  .fin-h{font-size:46px}
 }
 @media(max-width:880px){
-  .hero-in{grid-template-columns:1fr;gap:56px}
-  .orbit-stage{display:none}
-  .hero-h1{font-size:52px}
+  .hero-in{grid-template-columns:1fr;gap:0}
+  .hero-h1{font-size:48px}
   .bento{grid-template-columns:1fr 1fr}
   .tc-span2{grid-column:span 2}
   .why-grid{grid-template-columns:1fr}
-  .sec-h{font-size:36px}
-  .fin-h2{font-size:42px}
+  .sec-h{font-size:34px}
+  .fin-h{font-size:38px}
   .nav-r .nav-a{display:none}
 }
-@media(max-width:560px){
+@media(max-width:600px){
   .bento{grid-template-columns:1fr}
   .tc-span2{grid-column:span 1}
-  .hero-h1{font-size:42px}
+  .hero-h1{font-size:38px}
+  .hero-sub{font-size:16px}
   .W{padding:0 18px}
-  .fin-h2{font-size:34px}
-  .foot-in{grid-template-columns:1fr}
-  .comp-row{min-width:580px}
+  .nav-in{padding:0 18px}
+  .trust-bar-in{gap:20px}
+  .comp-row{min-width:560px}
   .comp-wrap{overflow-x:auto}
+  .fin-h{font-size:32px}
+  .foot-in{grid-template-columns:1fr}
 }
 a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:3px}
 </style>
@@ -288,15 +384,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 <!-- NAV -->
 <nav class="nav" id="nav">
 <div class="nav-in">
-  <a href="/" class="logo">
-    <div class="logo-m"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.4"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div>
-    <span class="logo-t">Deskloop</span>
-  </a>
+  <a href="/" class="logo"><div class="logo-m"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.4"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="logo-t">Deskloop</span></a>
   <div class="nav-r">
     <a href="#tools" class="nav-a">Tools</a>
     <a href="/blog/" class="nav-a">Blog</a>
-    <a href="#why"   class="nav-a">Why Deskloop</a>
-    <a href="#faq"   class="nav-a">FAQ</a>
+    <a href="#why" class="nav-a">Why</a>
+    <a href="#faq" class="nav-a">FAQ</a>
     <a href="/tools/focus-timer.html" class="nav-cta">Start Free &rarr;</a>
   </div>
 </div>
@@ -304,18 +397,18 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 
 <!-- HERO -->
 <section class="hero">
-<div class="hero-grid-bg"></div>
+<div class="hero-grid"></div>
 <div class="W" style="width:100%">
 <div class="hero-in">
 
-  <!-- Left -->
+  <!-- Left copy -->
   <div>
     <div class="hero-badge"><div class="badge-dot"></div>Free &middot; No Account &middot; Browser-Based</div>
     <h1 class="hero-h1">Your work,<br>without the<br><em>friction.</em></h1>
     <p class="hero-sub">Seven sharp tools that open in seconds. <strong>No signup wall</strong>, no loading screen, no data leaving your device. Just open one and get to work.</p>
     <div class="hero-btns">
       <a href="/tools/focus-timer.html" class="btn-p">Start Focus Timer <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a href="#tools" class="btn-s">Browse all tools</a>
+      <a href="#tools" class="btn-s">See all tools</a>
     </div>
     <div class="trust-row">
       <div class="trust-it"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>100% free forever</div>
@@ -325,120 +418,200 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
     </div>
   </div>
 
-  <!-- Orbit -->
+  <!-- Desktop: Orbit (≥769px) -->
   <div class="orbit-stage" id="orbitStage">
     <div class="orbit-track"></div>
     <div class="orbit-glow"></div>
-    <div class="orbit-hub">
-      <div class="hub-ring"></div>
-      <div class="hub-core"><svg width="24" height="24" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="#10B981" stroke-width="2.2"/><circle cx="9" cy="9" r="2" fill="#10B981"/></svg></div>
-    </div>
+    <div class="orbit-hub"><div class="hub-ring"></div><div class="hub-core"><svg width="24" height="24" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="#10B981" stroke-width="2.2"/><circle cx="9" cy="9" r="2" fill="#10B981"/></svg></div></div>
 
-    <!-- 0: Focus Timer -->
-    <div class="oi" data-idx="0">
-      <a class="oc" href="/tools/focus-timer.html">
-        <div class="oc-lbl"><div class="oc-dot" style="background:var(--ac)"></div>Focus Timer</div>
-        <div class="oc-ring-wrap">
-          <svg class="oc-ring" viewBox="0 0 76 76"><circle class="ocr-track" cx="38" cy="38" r="30"/><circle class="ocr-fill" cx="38" cy="38" r="30" stroke-dasharray="188.5" stroke-dashoffset="47" stroke="var(--ac)"/></svg>
-          <div class="oc-time" id="ocFocusTime">19:27</div>
+    <!-- Tool 0: Focus Timer -->
+    <div class="oi" data-idx="0"><a class="oc" href="/tools/focus-timer.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--ac)"></div>Focus Timer</div><div class="oc-ring-wrap"><svg class="oc-ring" viewBox="0 0 76 76"><circle class="ocr-track" cx="38" cy="38" r="30"/><circle class="ocr-fill" cx="38" cy="38" r="30" stroke-dasharray="188.5" stroke-dashoffset="47" stroke="var(--ac)"/></svg><div class="oc-time" id="ocFocusTime">19:27</div></div><div class="oc-mode">&#9679; Deep Focus</div><div class="oc-ambs"><div class="oc-amb on">&#127783;</div><div class="oc-amb">&#9749;</div><div class="oc-amb">&#127754;</div><div class="oc-amb">&#128293;</div></div><button class="oc-btn">&#9208; Pause Session</button></a></div>
+    <!-- Tool 1: Habit Tracker -->
+    <div class="oi" data-idx="1"><a class="oc" href="/tools/habit-tracker.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--ac)"></div>Habit Tracker</div><div class="oc-streak"><div class="oc-streak-v">&#128293; 14 days</div><div style="font-size:8px;color:var(--tx3)">Best:28</div></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#127939; Morning run</span></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#128218; Read 30 min</span></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#128167; 8 glasses</span></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#129496; Meditate</span></div><div class="oc-weekdots" style="margin-top:7px"><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd off"></div><div class="oc-wd off"></div></div></a></div>
+    <!-- Tool 2: Meeting Cost -->
+    <div class="oi" data-idx="2"><a class="oc" href="/tools/meeting-cost.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--warn);animation:bdot 1.2s ease-in-out infinite"></div>Meeting Cost</div><div class="oc-cost" id="ocMeetCost">$341.28</div><div class="oc-cost-lbl">TOTAL MEETING COST</div><div class="oc-cost-meta"><span>$3.85/min</span><span>6 people</span><span>$80k avg</span></div><div class="oc-pbar-wrap"><div class="oc-pbar" style="width:71%"></div></div><div class="oc-pbar-lbl"><span>0</span><span>60 min</span></div></a></div>
+    <!-- Tool 3: TZ Overlap -->
+    <div class="oi" data-idx="3"><a class="oc" href="/tools/timezone-overlap.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--blue)"></div>TZ Overlap</div><div class="oc-tz-row"><div class="oc-tz-flag">&#127482;&#127480;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">-5</div></div><div class="oc-tz-row"><div class="oc-tz-flag">&#127468;&#127463;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">+0</div></div><div class="oc-tz-row"><div class="oc-tz-flag">&#127480;&#127468;</div><div class="oc-tz-cells"><div class="oc-tc"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc work"></div></div><div class="oc-tz-utc">+8</div></div><div class="oc-ov-badge">&#9989; 2h overlap &middot; 14:00&ndash;16:00</div></a></div>
+    <!-- Tool 4: Deep Work -->
+    <div class="oi" data-idx="4"><a class="oc" href="/tools/deep-work-tracker.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--pur);animation:bdot 1.8s ease-in-out infinite"></div>Deep Work</div><div class="oc-dw-timer">01:23:44</div><div class="oc-dw-ratings"><div class="oc-dw-rate"><div class="oc-dw-rl">Energy</div><div class="oc-dw-re">&#128522;</div></div><div class="oc-dw-rate"><div class="oc-dw-rl">Focus</div><div class="oc-dw-re">&#10024;</div></div></div><div style="font-size:9px;color:var(--tx3);text-align:center;margin-bottom:6px;font-family:var(--mono)">&#128187; Product spec</div><div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:5px;padding:5px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--ac)">&#128293; 5 day streak</div></a></div>
+    <!-- Tool 5: Task Decider -->
+    <div class="oi" data-idx="5"><a class="oc" href="/tools/task-decider.html"><div class="oc-lbl"><div class="oc-dot" style="background:#fb923c"></div>Task Decider</div><div class="oc-wheel-wrap"><div class="oc-pointer"></div><svg class="oc-wheel" viewBox="0 0 80 80"><g class="oc-wg"><path d="M 40,40 L 80,40 A 40,40 0 0,1 60,74.6 Z" fill="#1E40AF"/><path d="M 40,40 L 60,74.6 A 40,40 0 0,1 20,74.6 Z" fill="#10B981"/><path d="M 40,40 L 20,74.6 A 40,40 0 0,1 0,40 Z" fill="#F59E0B"/><path d="M 40,40 L 0,40 A 40,40 0 0,1 20,5.4 Z" fill="#EF4444"/><path d="M 40,40 L 20,5.4 A 40,40 0 0,1 60,5.4 Z" fill="#A78BFA"/><path d="M 40,40 L 60,5.4 A 40,40 0 0,1 80,40 Z" fill="#F472B6"/><circle cx="40" cy="40" r="8" fill="#060C18"/><text x="40" y="44" font-size="8" text-anchor="middle" fill="white">&#127922;</text></g></svg></div><div class="oc-result">&rarr; Review pull requests</div></a></div>
+    <!-- Tool 6: Work Hours -->
+    <div class="oi" data-idx="6"><a class="oc" href="/tools/work-hours-logger.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--ac);animation:bdot 1.4s ease-in-out infinite"></div>Work Hours</div><div class="oc-wh-timer" id="ocWHTimer">03:42:18</div><div class="oc-bars"><div class="oc-bar past" style="height:72%"></div><div class="oc-bar past" style="height:52%"></div><div class="oc-bar past" style="height:92%"></div><div class="oc-bar today" style="height:44%"></div><div class="oc-bar empty" style="height:8%"></div><div class="oc-bar empty" style="height:4%"></div><div class="oc-bar empty" style="height:4%"></div></div><div class="oc-bar-labels"><span>M</span><span>T</span><span>W</span><span style="color:var(--ac)">T</span><span>F</span><span>S</span><span>S</span></div><div class="oc-wh-stat">3h 42m today &middot; 21.4h week</div></a></div>
+  </div>
+
+</div><!-- /hero-in -->
+
+<!-- Mobile carousel (≤768px) -->
+<div class="mob-carousel" id="mobCarousel">
+  <div class="mc-wrap" id="mcWrap">
+    <div class="mc-track" id="mcTrack">
+
+      <!-- Card 0: Focus Timer -->
+      <div class="mc-card active" style="--cc:#10B981">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#10B981,#34D399 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Focus Timer</span>
+          <span class="mcc-live"><div class="mcc-live-dot"></div>Active</span>
         </div>
-        <div class="oc-mode">&#9679; Deep Focus</div>
-        <div class="oc-ambs"><div class="oc-amb on">&#127783;</div><div class="oc-amb">&#9749;</div><div class="oc-amb">&#127754;</div><div class="oc-amb">&#128293;</div></div>
-        <button class="oc-btn">&#9208; Pause Session</button>
-      </a>
-    </div>
-
-    <!-- 1: Habit Tracker -->
-    <div class="oi" data-idx="1">
-      <a class="oc" href="/tools/habit-tracker.html">
-        <div class="oc-lbl"><div class="oc-dot" style="background:var(--ac)"></div>Habit Tracker</div>
-        <div class="oc-streak"><div class="oc-streak-v">&#128293; 14 days</div><div style="font-size:8px;color:var(--tx3)">Best: 28</div></div>
-        <div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#127939; Morning run</span></div>
-        <div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#128218; Read 30 min</span></div>
-        <div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#128167; 8 glasses</span></div>
-        <div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#129496; Meditate</span></div>
-        <div class="oc-weekdots" style="margin-top:7px"><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd off"></div><div class="oc-wd off"></div></div>
-      </a>
-    </div>
-
-    <!-- 2: Meeting Cost -->
-    <div class="oi" data-idx="2">
-      <a class="oc" href="/tools/meeting-cost.html">
-        <div class="oc-lbl"><div class="oc-dot" style="background:var(--warn);animation:bdot 1.2s ease-in-out infinite"></div>Meeting Cost</div>
-        <div class="oc-cost" id="ocMeetCost">$341.28</div>
-        <div class="oc-cost-lbl">TOTAL MEETING COST</div>
-        <div class="oc-cost-meta"><span>$3.85/min</span><span>6 people</span><span>$80k avg</span></div>
-        <div class="oc-pbar-wrap"><div class="oc-pbar" style="width:71%"></div></div>
-        <div class="oc-pbar-lbl"><span>0</span><span>60 min</span></div>
-      </a>
-    </div>
-
-    <!-- 3: TZ Overlap -->
-    <div class="oi" data-idx="3">
-      <a class="oc" href="/tools/timezone-overlap.html">
-        <div class="oc-lbl"><div class="oc-dot" style="background:var(--blue)"></div>TZ Overlap</div>
-        <div class="oc-tz-row"><div class="oc-tz-flag">&#127482;&#127480;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">-5</div></div>
-        <div class="oc-tz-row"><div class="oc-tz-flag">&#127468;&#127463;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">+0</div></div>
-        <div class="oc-tz-row"><div class="oc-tz-flag">&#127480;&#127468;</div><div class="oc-tz-cells"><div class="oc-tc"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc work"></div></div><div class="oc-tz-utc">+8</div></div>
-        <div class="oc-ov-badge">&#9989; 2h overlap &middot; 14:00&ndash;16:00</div>
-      </a>
-    </div>
-
-    <!-- 4: Deep Work -->
-    <div class="oi" data-idx="4">
-      <a class="oc" href="/tools/deep-work-tracker.html">
-        <div class="oc-lbl"><div class="oc-dot" style="background:var(--pur);animation:bdot 1.8s ease-in-out infinite"></div>Deep Work</div>
-        <div class="oc-dw-timer">01:23:44</div>
-        <div class="oc-dw-ratings">
-          <div class="oc-dw-rate"><div class="oc-dw-rl">Energy</div><div class="oc-dw-re">&#128522;</div></div>
-          <div class="oc-dw-rate"><div class="oc-dw-rl">Focus</div><div class="oc-dw-re">&#10024;</div></div>
+        <div class="mcc-body">
+          <div class="mcc-ring-wrap">
+            <svg class="mcc-ring" viewBox="0 0 110 110"><circle class="mccr-track" cx="55" cy="55" r="44"/><circle class="mccr-fill" cx="55" cy="55" r="44" stroke-dasharray="276.5" stroke-dashoffset="69" stroke="#10B981"/></svg>
+            <div class="mcc-timer-inner" id="mcFTimer">19:27</div>
+          </div>
+          <div class="mcc-mode">&#9679; Deep Focus &mdash; Session 2 of 4</div>
+          <div class="mcc-ambs"><div class="mcc-amb on">&#127783;</div><div class="mcc-amb">&#9749;</div><div class="mcc-amb">&#127754;</div><div class="mcc-amb">&#128293;</div></div>
+          <div class="mcc-sess-dots"><div class="mcc-sd"></div><div class="mcc-sd"></div><div class="mcc-sd off"></div><div class="mcc-sd off"></div></div>
         </div>
-        <div style="font-size:9px;color:var(--tx3);text-align:center;margin-bottom:6px;font-family:var(--mono)">&#128187; Coding &middot; Product spec</div>
-        <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:5px;padding:5px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--ac)">&#128293; 5 day streak</div>
-      </a>
-    </div>
+        <a href="/tools/focus-timer.html" class="mcc-cta">Open Focus Timer &rarr;</a>
+      </div>
 
-    <!-- 5: Task Decider -->
-    <div class="oi" data-idx="5">
-      <a class="oc" href="/tools/task-decider.html">
-        <div class="oc-lbl"><div class="oc-dot" style="background:#fb923c"></div>Task Decider</div>
-        <div class="oc-wheel-wrap">
-          <div class="oc-pointer"></div>
-          <svg class="oc-wheel" viewBox="0 0 80 80">
-            <g class="oc-wg">
-              <path d="M 40,40 L 80,40 A 40,40 0 0,1 60,74.6 Z" fill="#1E40AF"/>
-              <path d="M 40,40 L 60,74.6 A 40,40 0 0,1 20,74.6 Z" fill="#10B981"/>
-              <path d="M 40,40 L 20,74.6 A 40,40 0 0,1 0,40 Z" fill="#F59E0B"/>
-              <path d="M 40,40 L 0,40 A 40,40 0 0,1 20,5.4 Z" fill="#EF4444"/>
-              <path d="M 40,40 L 20,5.4 A 40,40 0 0,1 60,5.4 Z" fill="#A78BFA"/>
-              <path d="M 40,40 L 60,5.4 A 40,40 0 0,1 80,40 Z" fill="#F472B6"/>
-              <circle cx="40" cy="40" r="8" fill="#060C18"/>
-              <text x="40" y="44" font-size="8" text-anchor="middle" fill="white">&#127922;</text>
-            </g>
-          </svg>
+      <!-- Card 1: Habit Tracker -->
+      <div class="mc-card" style="--cc:#34D399">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#34D399,#10B981 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Habit Tracker</span>
+          <span class="mcc-live"><div class="mcc-live-dot"></div>4/4 Done</span>
         </div>
-        <div class="oc-result">&rarr; Review pull requests</div>
-      </a>
-    </div>
-
-    <!-- 6: Work Hours -->
-    <div class="oi" data-idx="6">
-      <a class="oc" href="/tools/work-hours-logger.html">
-        <div class="oc-lbl"><div class="oc-dot" style="background:var(--ac);animation:bdot 1.4s ease-in-out infinite"></div>Work Hours</div>
-        <div class="oc-wh-timer" id="ocWHTimer">03:42:18</div>
-        <div class="oc-bars">
-          <div class="oc-bar past" style="height:72%"></div><div class="oc-bar past" style="height:52%"></div>
-          <div class="oc-bar past" style="height:92%"></div><div class="oc-bar today" style="height:44%"></div>
-          <div class="oc-bar empty" style="height:8%"></div><div class="oc-bar empty" style="height:4%"></div><div class="oc-bar empty" style="height:4%"></div>
+        <div class="mcc-body">
+          <div class="mcc-streak-row"><div><div class="mcc-streak-n">&#128293; 14 days</div><div style="font-size:11px;color:var(--tx3);margin-top:2px">Best streak: 28 days</div></div><div style="font-family:var(--mono);font-size:28px;font-weight:800;color:var(--ac)">100%</div></div>
+          <div class="mcc-hrow"><div class="mcc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="mcc-hname">&#127939; Morning run</span></div>
+          <div class="mcc-hrow"><div class="mcc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="mcc-hname">&#128218; Read 30 minutes</span></div>
+          <div class="mcc-hrow"><div class="mcc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="mcc-hname">&#128167; Drink 8 glasses</span></div>
+          <div class="mcc-hrow"><div class="mcc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="mcc-hname">&#129496; Meditate</span></div>
+          <div class="mcc-wdots"><div class="mcc-wd"></div><div class="mcc-wd"></div><div class="mcc-wd"></div><div class="mcc-wd"></div><div class="mcc-wd"></div><div class="mcc-wd off"></div><div class="mcc-wd off"></div></div>
         </div>
-        <div class="oc-bar-labels"><span>M</span><span>T</span><span>W</span><span style="color:var(--ac)">T</span><span>F</span><span>S</span><span>S</span></div>
-        <div class="oc-wh-stat">3h 42m today &middot; 21.4h this week</div>
-      </a>
-    </div>
+        <a href="/tools/habit-tracker.html" class="mcc-cta">Open Habit Tracker &rarr;</a>
+      </div>
 
-  </div><!-- /orbit-stage -->
+      <!-- Card 2: Meeting Cost -->
+      <div class="mc-card" style="--cc:#F59E0B">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#F59E0B,#fbbf24 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Meeting Cost</span>
+          <span class="mcc-live" style="color:var(--warn)"><div class="mcc-live-dot" style="background:var(--warn)"></div>Running</span>
+        </div>
+        <div class="mcc-body">
+          <div class="mcc-cost-num" id="mcMCost">$341.28</div>
+          <div class="mcc-cost-sub">Total Meeting Cost</div>
+          <div class="mcc-cost-meta">
+            <div class="mcc-cm"><div class="mcc-cm-v">$3.85</div><div class="mcc-cm-l">per min</div></div>
+            <div class="mcc-cm"><div class="mcc-cm-v">6</div><div class="mcc-cm-l">people</div></div>
+            <div class="mcc-cm"><div class="mcc-cm-v">$80k</div><div class="mcc-cm-l">avg salary</div></div>
+          </div>
+          <div class="mcc-pbar"><div class="mcc-pbar-fill" style="width:71%"></div></div>
+        </div>
+        <a href="/tools/meeting-cost.html" class="mcc-cta" style="background:#d97706">Open Meeting Cost &rarr;</a>
+      </div>
+
+      <!-- Card 3: Time Zone Overlap -->
+      <div class="mc-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#60A5FA 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Time Zone Overlap</span>
+          <span class="mcc-live" style="color:#38bdf8"><div class="mcc-live-dot" style="background:#38bdf8"></div>3 zones</span>
+        </div>
+        <div class="mcc-body">
+          <div class="mcc-tz-row"><div class="mcc-tz-flag">&#127482;&#127480;</div><div class="mcc-tz-cells"><div class="mcc-tc work"></div><div class="mcc-tc work"></div><div class="mcc-tc ov"></div><div class="mcc-tc ov"></div><div class="mcc-tc work"></div><div class="mcc-tc"></div></div><div class="mcc-tz-utc">UTC-5</div></div>
+          <div class="mcc-tz-row"><div class="mcc-tz-flag">&#127468;&#127463;</div><div class="mcc-tz-cells"><div class="mcc-tc work"></div><div class="mcc-tc work"></div><div class="mcc-tc ov"></div><div class="mcc-tc ov"></div><div class="mcc-tc"></div><div class="mcc-tc"></div></div><div class="mcc-tz-utc">UTC+0</div></div>
+          <div class="mcc-tz-row"><div class="mcc-tz-flag">&#127480;&#127468;</div><div class="mcc-tz-cells"><div class="mcc-tc"></div><div class="mcc-tc ov"></div><div class="mcc-tc ov"></div><div class="mcc-tc work"></div><div class="mcc-tc work"></div><div class="mcc-tc work"></div></div><div class="mcc-tz-utc">UTC+8</div></div>
+          <div class="mcc-ov-banner">&#9989; 2 hours overlap &middot; 14:00&ndash;16:00 UTC</div>
+        </div>
+        <a href="/tools/timezone-overlap.html" class="mcc-cta" style="background:#0369a1">Open TZ Overlap &rarr;</a>
+      </div>
+
+      <!-- Card 4: Deep Work -->
+      <div class="mc-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#A78BFA,#c4b5fd 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Deep Work Tracker</span>
+          <span class="mcc-live" style="color:#A78BFA"><div class="mcc-live-dot" style="background:#A78BFA"></div>Flow State</span>
+        </div>
+        <div class="mcc-body">
+          <div class="mcc-dw-timer">01:23:44</div>
+          <div class="mcc-ratings">
+            <div class="mcc-rate"><div class="mcc-rl">Energy</div><div class="mcc-re">&#128522;</div></div>
+            <div class="mcc-rate"><div class="mcc-rl">Focus</div><div class="mcc-re">&#10024;</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--tx3);text-align:center;margin-bottom:10px;font-family:var(--mono)">&#128187; Coding &middot; &ldquo;Product spec review&rdquo;</div>
+          <div class="mcc-streak-badge">&#128293; 5 day streak &mdash; Best: 12 days</div>
+        </div>
+        <a href="/tools/deep-work-tracker.html" class="mcc-cta" style="background:#7c3aed">Open Deep Work &rarr;</a>
+      </div>
+
+      <!-- Card 5: Task Decider -->
+      <div class="mc-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#fb923c,#f97316 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Task Decider</span>
+          <span class="mcc-live" style="color:#fb923c"><div class="mcc-live-dot" style="background:#fb923c"></div>Spinning</span>
+        </div>
+        <div class="mcc-body">
+          <div class="mcc-wheel-wrap">
+            <div class="mcc-pointer"></div>
+            <svg class="mcc-wheel" viewBox="0 0 120 120">
+              <g class="mcc-wg">
+                <path d="M 60,60 L 120,60 A 60,60 0 0,1 90,111.96 Z" fill="#1E40AF"/>
+                <path d="M 60,60 L 90,111.96 A 60,60 0 0,1 30,111.96 Z" fill="#10B981"/>
+                <path d="M 60,60 L 30,111.96 A 60,60 0 0,1 0,60 Z" fill="#F59E0B"/>
+                <path d="M 60,60 L 0,60 A 60,60 0 0,1 30,8.04 Z" fill="#EF4444"/>
+                <path d="M 60,60 L 30,8.04 A 60,60 0 0,1 90,8.04 Z" fill="#A78BFA"/>
+                <path d="M 60,60 L 90,8.04 A 60,60 0 0,1 120,60 Z" fill="#F472B6"/>
+                <circle cx="60" cy="60" r="12" fill="#060C18"/>
+                <text x="60" y="65" font-size="11" text-anchor="middle" fill="white">&#127922;</text>
+              </g>
+            </svg>
+          </div>
+          <div class="mcc-result">&rarr; &ldquo;Review pull requests&rdquo;</div>
+        </div>
+        <a href="/tools/task-decider.html" class="mcc-cta" style="background:#c2410c">Spin the Wheel &rarr;</a>
+      </div>
+
+      <!-- Card 6: Work Hours -->
+      <div class="mc-card">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#F472B6,#ec4899 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Work Hours Logger</span>
+          <span class="mcc-live"><div class="mcc-live-dot"></div>Clocked In</span>
+        </div>
+        <div class="mcc-body">
+          <div class="mcc-wh-timer" id="mcWHTimer">03:42:18</div>
+          <div style="text-align:center;font-size:11px;color:var(--tx3);margin-bottom:10px;font-family:var(--mono)">&#129504; Deep Work &middot; &ldquo;Product spec&rdquo;</div>
+          <div class="mcc-bars">
+            <div class="mcc-bar past" style="height:72%"></div>
+            <div class="mcc-bar past" style="height:52%"></div>
+            <div class="mcc-bar past" style="height:92%"></div>
+            <div class="mcc-bar today" style="height:44%"></div>
+            <div class="mcc-bar empty" style="height:8%"></div>
+            <div class="mcc-bar empty" style="height:4%"></div>
+            <div class="mcc-bar empty" style="height:4%"></div>
+          </div>
+          <div class="mcc-bar-lbls"><span>M</span><span>T</span><span>W</span><span style="color:var(--ac)">T</span><span>F</span><span>S</span><span>S</span></div>
+          <div class="mcc-wh-stats">
+            <div class="mcc-whs"><div class="mcc-whs-v">3h 42m</div><div class="mcc-whs-l">Today</div></div>
+            <div class="mcc-whs"><div class="mcc-whs-v">21.4h</div><div class="mcc-whs-l">This week</div></div>
+            <div class="mcc-whs"><div class="mcc-whs-v">&#128293; 9</div><div class="mcc-whs-l">Day streak</div></div>
+          </div>
+        </div>
+        <a href="/tools/work-hours-logger.html" class="mcc-cta" style="background:#be185d">Open Work Hours &rarr;</a>
+      </div>
+
+    </div><!-- /mc-track -->
+  </div><!-- /mc-wrap -->
+
+  <!-- Navigation dots -->
+  <div class="mc-dots" role="tablist" aria-label="Tool carousel navigation">
+    <button class="mc-dot active" data-i="0" aria-label="Focus Timer"></button>
+    <button class="mc-dot" data-i="1" aria-label="Habit Tracker"></button>
+    <button class="mc-dot" data-i="2" aria-label="Meeting Cost"></button>
+    <button class="mc-dot" data-i="3" aria-label="Time Zone Overlap"></button>
+    <button class="mc-dot" data-i="4" aria-label="Deep Work Tracker"></button>
+    <button class="mc-dot" data-i="5" aria-label="Task Decider"></button>
+    <button class="mc-dot" data-i="6" aria-label="Work Hours Logger"></button>
+  </div>
 </div>
-</div>
+
+</div><!-- /W -->
 </section>
 
 <!-- TRUST BAR -->
@@ -458,95 +631,30 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 <div class="W">
   <div class="sec-tag">Most Used Tools</div>
   <h2 class="sec-h">Everything you need.<br>Nothing you don&rsquo;t.</h2>
-  <p class="sec-sub">Seven focused tools, each solving one problem with zero bloat. Open any in under 3 seconds &mdash; no loading screen, no account wall.</p>
+  <p class="sec-sub">Seven focused tools, each solving one problem with zero bloat. Open any in under 3 seconds &mdash; no account, no loading screen.</p>
   <div class="bento">
-
-    <a href="/tools/focus-timer.html" class="tc tc-c-blue tc-span2">
-      <div class="tc-corner"></div>
-      <div class="tc-pill">&#11088; Most Popular</div>
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(59,130,246,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="tc-nm">Focus Timer</div></div></div>
-      <p class="tc-ds">Pomodoro-style deep work timer with custom intervals, ambient sounds (rain, caf&eacute;, fire, ocean), session history, and browser notifications. Stay locked in without leaving your browser.</p>
-      <div class="tc-lk">Open timer <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/tools/habit-tracker.html" class="tc tc-c-green">
-      <div class="tc-corner"></div>
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div><div><div class="tc-nm">Habit Tracker</div></div></div>
-      <p class="tc-ds">Daily check-offs with streak tracking, 12-week calendar grid, and at-risk streak warnings. No cloud, no account.</p>
-      <div class="tc-lk">Track habits <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/tools/meeting-cost.html" class="tc tc-c-amber">
-      <div class="tc-corner"></div>
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(245,158,11,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="tc-nm">Meeting Cost</div></div></div>
-      <p class="tc-ds">Real-time dollar counter showing what your meeting costs as it runs. 17 currencies, progress bar, cost benchmarks.</p>
-      <div class="tc-lk">Calculate cost <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/tools/timezone-overlap.html" class="tc tc-c-teal">
-      <div class="tc-corner"></div>
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(56,189,248,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg></div><div><div class="tc-nm">Time Zone Overlap</div></div></div>
-      <p class="tc-ds">Find the best meeting window across time zones. Interactive world map, DST toggle, 24-hour overlap grid, CSV &amp; PDF export.</p>
-      <div class="tc-lk">Find overlap <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/tools/deep-work-tracker.html" class="tc tc-c-purple">
-      <div class="tc-corner"></div>
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(167,139,250,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div><div><div class="tc-nm">Deep Work Tracker</div></div></div>
-      <p class="tc-ds">Flow-state timer with energy &amp; focus ratings, day streak counter, weekly bar chart, and session history with category tags.</p>
-      <div class="tc-lk">Track focus <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/tools/work-hours-logger.html" class="tc tc-c-pink">
-      <div class="tc-corner"></div>
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(244,114,182,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="tc-nm">Work Hours Logger</div></div></div>
-      <p class="tc-ds">Clock in and out with notes and tags. Streak counter, weekly chart, daily totals, CSV export for payroll or invoicing.</p>
-      <div class="tc-lk">Log hours <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/tools/task-decider.html" class="tc tc-c-orange">
-      <div class="tc-corner"></div>
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(251,146,60,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0118.8-4.3M22 12.5a10 10 0 01-18.8 4.2"/></svg></div><div><div class="tc-nm">Task Decider</div></div></div>
-      <p class="tc-ds">Spinning wheel that randomly picks your next task. Beat decision paralysis instantly. Up to 12 tasks, saves spin history.</p>
-      <div class="tc-lk">Spin the wheel <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
-    <a href="/blog/" class="tc tc-span2" style="background:linear-gradient(135deg,var(--s1) 0%,rgba(16,185,129,.06) 100%);border-color:rgba(16,185,129,.18)">
-      <div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div><div class="tc-nm" style="color:var(--ac)">Blog &amp; Guides</div></div></div>
-      <p class="tc-ds">Practical articles on deep work, focus, habit building, remote scheduling, and getting more done. Written by the person building Deskloop.</p>
-      <div class="tc-lk">Read articles <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-    </a>
-
+    <a href="/tools/focus-timer.html" class="tc tc-blue tc-span2"><div class="tc-pill">&#11088; Most Popular</div><div class="tc-hd"><div class="tc-ic" style="background:rgba(59,130,246,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="tc-nm">Focus Timer</div></div></div><p class="tc-ds">Pomodoro-style deep work timer with custom intervals, ambient sounds (rain, caf&eacute;, fire), session history, and browser notifications.</p><div class="tc-lk">Open timer <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    <a href="/tools/habit-tracker.html" class="tc tc-green"><div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div><div><div class="tc-nm">Habit Tracker</div></div></div><p class="tc-ds">Daily check-offs with streak tracking, 12-week calendar grid, and at-risk warnings.</p><div class="tc-lk">Track habits <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    <a href="/tools/meeting-cost.html" class="tc tc-amber"><div class="tc-hd"><div class="tc-ic" style="background:rgba(245,158,11,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="tc-nm">Meeting Cost</div></div></div><p class="tc-ds">Real-time dollar counter showing what your meeting costs as it runs. 17 currencies, cost benchmarks.</p><div class="tc-lk">Calculate cost <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    <a href="/tools/timezone-overlap.html" class="tc tc-teal"><div class="tc-hd"><div class="tc-ic" style="background:rgba(56,189,248,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg></div><div><div class="tc-nm">Time Zone Overlap</div></div></div><p class="tc-ds">Find the best meeting window across time zones. Interactive world map, DST toggle, overlap grid, CSV export.</p><div class="tc-lk">Find overlap <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    <a href="/tools/deep-work-tracker.html" class="tc tc-purple"><div class="tc-hd"><div class="tc-ic" style="background:rgba(167,139,250,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div><div><div class="tc-nm">Deep Work Tracker</div></div></div><p class="tc-ds">Flow-state timer with energy &amp; focus ratings, day streak, weekly chart, and session history with tags.</p><div class="tc-lk">Track focus <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    <a href="/tools/work-hours-logger.html" class="tc tc-pink"><div class="tc-hd"><div class="tc-ic" style="background:rgba(244,114,182,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="tc-nm">Work Hours Logger</div></div></div><p class="tc-ds">Clock in and out with notes and tags. Streak counter, weekly chart, daily totals, CSV export.</p><div class="tc-lk">Log hours <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    <a href="/tools/task-decider.html" class="tc tc-orange"><div class="tc-hd"><div class="tc-ic" style="background:rgba(251,146,60,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0118.8-4.3M22 12.5a10 10 0 01-18.8 4.2"/></svg></div><div><div class="tc-nm">Task Decider</div></div></div><p class="tc-ds">Spinning wheel that randomly picks your next task. Beat decision paralysis instantly. Saves spin history.</p><div class="tc-lk">Spin the wheel <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    <a href="/blog/" class="tc tc-span2" style="background:linear-gradient(135deg,var(--s1) 0%,rgba(16,185,129,.06) 100%);border-color:rgba(16,185,129,.18)"><div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div><div class="tc-nm" style="color:var(--ac)">Blog &amp; Guides</div></div></div><p class="tc-ds">Practical articles on deep work, focus, habit building, remote scheduling, and getting more done.</p><div class="tc-lk">Read articles <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
   </div>
 </div>
 </section>
 
-<!-- WHY DESKLOOP -->
-<section class="sec why-bg" id="why">
+<!-- WHY -->
+<section class="sec" id="why" style="background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 50%,var(--bg) 100%)">
 <div class="W">
   <div class="sec-tag">Why Deskloop</div>
   <h2 class="sec-h">Built to get out<br>of your way.</h2>
   <p class="sec-sub">Most productivity apps are the problem. Deskloop tools open in under three seconds, do exactly one thing, and leave zero trace.</p>
   <div class="why-grid">
-
-    <div class="why-card">
-      <div class="why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-      <h3 class="why-h3">Open. Use. Close.</h3>
-      <p class="why-p">No loading screen. No account wall. No onboarding flow. Click any tool and it&rsquo;s instantly functional &mdash; with sensible defaults already set. That&rsquo;s the entire model.</p>
-    </div>
-
-    <div class="why-card">
-      <div class="why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-      <h3 class="why-h3">Your data. Your device.</h3>
-      <p class="why-p">Everything is stored in your browser&rsquo;s localStorage. Nothing is sent to any server. Deskloop has no backend, no database, and no ability to see your data &mdash; by design.</p>
-    </div>
-
-    <div class="why-card">
-      <div class="why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-      <h3 class="why-h3">Calm by design.</h3>
-      <p class="why-p">No dark patterns, no gamification, no upsells. Every interaction is designed to reduce friction, not manufacture engagement. In and out. Done.</p>
-    </div>
-
+    <div class="why-card"><div class="why-ic"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3 class="why-h3">Open. Use. Close.</h3><p class="why-p">No loading screen. No account wall. No onboarding flow. Click any tool and it&rsquo;s instantly functional with sensible defaults already set. That&rsquo;s the entire model.</p></div>
+    <div class="why-card"><div class="why-ic"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3 class="why-h3">Your data. Your device.</h3><p class="why-p">Everything stored in your browser&rsquo;s localStorage. Nothing sent to any server. Deskloop has no backend and cannot see your data &mdash; by design.</p></div>
+    <div class="why-card"><div class="why-ic"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3 class="why-h3">Calm by design.</h3><p class="why-p">No dark patterns, no gamification, no upsells. Every interaction reduces friction, not manufactures engagement. In and out. Done.</p></div>
   </div>
 </div>
 </section>
@@ -557,48 +665,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
   <div class="sec-tag">The Difference</div>
   <h2 class="sec-h">vs. everything else.</h2>
   <div class="comp-wrap">
-    <div class="comp-row comp-hdr">
-      <div class="comp-cell">Feature</div>
-      <div class="comp-cell">Deskloop</div>
-      <div class="comp-cell">Notion / Todoist</div>
-      <div class="comp-cell">Browser Extensions</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-cell comp-feat">Free forever</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-      <div class="comp-cell comp-no">Limited free tier</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-cell comp-feat">No signup required</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-      <div class="comp-cell comp-no">Account required</div>
-      <div class="comp-cell comp-no">Often required</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-cell comp-feat">Zero data collection</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-      <div class="comp-cell comp-no">Data on their servers</div>
-      <div class="comp-cell comp-no">Varies widely</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-cell comp-feat">Works offline</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-      <div class="comp-cell comp-no">Requires internet</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-cell comp-feat">Ready in &lt;3 seconds</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-      <div class="comp-cell comp-no">Login + loading</div>
-      <div class="comp-cell comp-no">Install required</div>
-    </div>
-    <div class="comp-row">
-      <div class="comp-cell comp-feat">No notifications or upsells</div>
-      <div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div>
-      <div class="comp-cell comp-no">Upgrade prompts</div>
-      <div class="comp-cell comp-no">Permission requests</div>
-    </div>
+    <div class="comp-row hdr"><div class="comp-cell">Feature</div><div class="comp-cell">Deskloop</div><div class="comp-cell">Notion / Todoist</div><div class="comp-cell">Extensions</div></div>
+    <div class="comp-row"><div class="comp-cell comp-feat">Free forever</div><div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div><div class="comp-cell comp-no">Limited free tier</div><div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div></div>
+    <div class="comp-row"><div class="comp-cell comp-feat">No signup required</div><div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div><div class="comp-cell comp-no">Account required</div><div class="comp-cell comp-no">Often required</div></div>
+    <div class="comp-row"><div class="comp-cell comp-feat">Zero data collection</div><div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div><div class="comp-cell comp-no">Data on their servers</div><div class="comp-cell comp-no">Varies widely</div></div>
+    <div class="comp-row"><div class="comp-cell comp-feat">Works offline</div><div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div><div class="comp-cell comp-no">Requires internet</div><div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div></div>
+    <div class="comp-row"><div class="comp-cell comp-feat">Ready in &lt;3 seconds</div><div class="comp-cell comp-yes"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Yes</div><div class="comp-cell comp-no">Login + loading</div><div class="comp-cell comp-no">Install required</div></div>
   </div>
 </div>
 </section>
@@ -611,20 +683,19 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
   <div class="sec-tag">FAQ</div>
   <h2 class="sec-h">Common questions.</h2>
   <div class="faq-list">
-    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Are all Deskloop tools free?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">Yes. Every tool is 100% free, forever. There are no hidden tiers, no premium plans, and no freemium upsells. The only revenue model is non-intrusive display advertising.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Do I need to create an account?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">No. There is no signup, no login, and no email address required &mdash; ever. Open any tool and start using it immediately.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Where is my data stored?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">All data is stored in your browser&rsquo;s localStorage. Nothing is sent to any server. Deskloop has no backend, no database, and cannot access your data under any circumstances.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Are all Deskloop tools free?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">Yes. Every tool is 100% free, forever. No hidden tiers, no premium plans, no freemium upsells.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Do I need to create an account?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">No. There is no signup, no login, and no email required &mdash; ever. Open any tool and start using it immediately.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Where is my data stored?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">All data is stored in your browser&rsquo;s localStorage. Nothing is sent to any server. Deskloop has no backend and cannot access your data under any circumstances.</div></div>
     <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Do the tools work offline?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">Yes. Once a tool page has loaded, it works without internet. The only exception is the world map in Time Zone Overlap, which loads map data from a CDN on first visit.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">Will my data survive if I clear my browser cache?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">Clearing cookies and site data will erase localStorage. To back up your history, use the CSV export available in most Deskloop tools. We recommend exporting weekly if your session history matters.</div></div>
     <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)" aria-expanded="false">What tools does Deskloop offer?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">Focus Timer, Habit Tracker, Deep Work Tracker, Meeting Cost Calculator, Time Zone Overlap, Work Hours Logger, and Task Decider. More are in active development.</div></div>
   </div>
 </div>
 </section>
 
 <!-- FINAL CTA -->
-<section class="fin-cta">
+<section class="fin">
 <div class="W">
-  <h2 class="fin-h2">Stop planning.<br><em>Start working.</em></h2>
+  <h2 class="fin-h">Stop planning.<br><em>Start working.</em></h2>
   <p class="fin-sub">No forms. No loading. No friction. Click a tool and focus &mdash; your first session is one click away.</p>
   <div class="fin-btns">
     <a href="/tools/focus-timer.html" class="btn-p">Start Focus Timer <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
@@ -639,101 +710,254 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
   <div>
     <a href="/" class="foot-brand"><div class="foot-bm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="foot-bn">Deskloop</span></a>
     <p class="foot-tag">Free productivity tools. No signup, no noise.</p>
-    <p class="foot-tag"><a href="mailto:hello@deskloop.work" style="color:var(--ac);text-decoration:none;font-size:13px;transition:opacity .2s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">hello@deskloop.work</a></p>
-    <p class="foot-legal"><a href="/blog/" style="color:var(--tx3);text-decoration:none">Blog</a> &middot; <a href="/about.html" style="color:var(--tx3);text-decoration:none">About</a> &middot; <a href="/privacy.html" style="color:var(--tx3);text-decoration:none">Privacy Policy</a> &middot; <a href="/contact.html" style="color:var(--tx3);text-decoration:none">Contact</a> &middot; &copy; 2026 Deskloop.work &middot; No cookies &middot; No tracking</p>
+    <a href="mailto:hello@deskloop.work" class="foot-email">hello@deskloop.work</a>
+    <p class="foot-legal"><a href="/about.html" style="color:var(--tx3);text-decoration:none">About</a> &middot; <a href="/privacy.html" style="color:var(--tx3);text-decoration:none">Privacy Policy</a> &middot; <a href="/contact.html" style="color:var(--tx3);text-decoration:none">Contact</a> &middot; &copy; 2026 Deskloop.work</p>
   </div>
   <nav class="foot-links">
-    <a href="/tools/focus-timer.html"       class="foot-a">Focus Timer</a>
-    <a href="/tools/habit-tracker.html"     class="foot-a">Habit Tracker</a>
+    <a href="/tools/focus-timer.html" class="foot-a">Focus Timer</a>
+    <a href="/tools/habit-tracker.html" class="foot-a">Habit Tracker</a>
     <a href="/tools/deep-work-tracker.html" class="foot-a">Deep Work</a>
-    <a href="/tools/meeting-cost.html"      class="foot-a">Meeting Cost</a>
-    <a href="/tools/timezone-overlap.html"  class="foot-a">Time Zones</a>
+    <a href="/tools/meeting-cost.html" class="foot-a">Meeting Cost</a>
+    <a href="/tools/timezone-overlap.html" class="foot-a">Time Zones</a>
     <a href="/tools/work-hours-logger.html" class="foot-a">Work Hours</a>
-    <a href="/tools/task-decider.html"      class="foot-a">Task Decider</a>
+    <a href="/tools/task-decider.html" class="foot-a">Task Decider</a>
+    <a href="/blog/" class="foot-a">Blog</a>
   </nav>
 </div>
 </footer>
 
 <script>
 'use strict';
-/* ── Orbit ──────────────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════
+   DESKTOP ORBIT (≥769px)
+══════════════════════════════════════════════ */
 const N=7,RX=210,RY=82,DUR=30000;
 const stage=document.getElementById('orbitStage');
 const items=Array.from(document.querySelectorAll('.oi'));
 const cards=Array.from(document.querySelectorAll('.oc'));
-let elapsed=0,lastTs=null,paused=false,angleOff=0;
+let rotX=.25,rotY=0,velX=0,velY=0;
+let isDragging=false,hasMoved=false,lastPX=0,lastPY=0,prevPX=0,prevPY=0;
+let autoRotate=true,autoTimer=null;
+let sR=225,elapsed=0,lastTs=null,paused=false;
 
-let focusSec=19*60+27,costVal=341.28,whSec=3*3600+42*60+18;
 function p2(n){return String(Math.floor(n)).padStart(2,'0')}
 
+// Shared live counters (update both orbit and carousel elements)
+let focusSec=19*60+27,costVal=341.28,whSec=3*3600+42*60+18;
 setInterval(()=>{
   if(focusSec>0)focusSec--;
-  const el=document.getElementById('ocFocusTime');
-  if(el)el.textContent=p2(Math.floor(focusSec/60))+':'+p2(focusSec%60);
+  const f=p2(Math.floor(focusSec/60))+':'+p2(focusSec%60);
+  const e1=document.getElementById('ocFocusTime');if(e1)e1.textContent=f;
+  const e2=document.getElementById('mcFTimer');if(e2)e2.textContent=f;
 },1000);
 setInterval(()=>{
   costVal+=3.85/60;
-  const el=document.getElementById('ocMeetCost');
-  if(el)el.textContent='$'+costVal.toFixed(2);
+  const v='$'+costVal.toFixed(2);
+  const e1=document.getElementById('ocMeetCost');if(e1)e1.textContent=v;
+  const e2=document.getElementById('mcMCost');if(e2)e2.textContent=v;
 },1000);
 setInterval(()=>{
   whSec++;
-  const el=document.getElementById('ocWHTimer');
-  if(el)el.textContent=p2(Math.floor(whSec/3600))+':'+p2(Math.floor((whSec%3600)/60))+':'+p2(whSec%60);
+  const v=p2(Math.floor(whSec/3600))+':'+p2(Math.floor((whSec%3600)/60))+':'+p2(whSec%60);
+  const e1=document.getElementById('ocWHTimer');if(e1)e1.textContent=v;
+  const e2=document.getElementById('mcWHTimer');if(e2)e2.textContent=v;
 },1000);
 
-function tick(ts){
-  if(lastTs!==null&&!paused)elapsed+=ts-lastTs;
-  lastTs=ts;
-  const base=(elapsed/DUR)*Math.PI*2+angleOff;
-  let fI=0,fD=-Infinity;
+function rotPt(p){
+  const x1=p.x*Math.cos(rotY)-p.z*Math.sin(rotY);
+  const z1=p.x*Math.sin(rotY)+p.z*Math.cos(rotY);
+  const y2=p.y*Math.cos(rotX)-z1*Math.sin(rotX);
+  const z2=p.y*Math.sin(rotX)+z1*Math.cos(rotX);
+  return{x:x1,y:y2,z:z2};
+}
+function getR(){const w=window.innerWidth;return w<480?150:w<720?185:225;}
+
+function fibSphere(n){
+  const pts=[],phi=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<n;i++){
+    const y=1-(i/(Math.max(n-1,1)))*2;
+    const r=Math.sqrt(Math.max(0,1-y*y));
+    const t=phi*i;
+    pts.push({x:Math.cos(t)*r,y,z:Math.sin(t)*r});
+  }
+  return pts;
+}
+const ART_POS=fibSphere(N);
+
+function updateOrbit(){
+  sR=getR();
   items.forEach((item,i)=>{
-    const a=base+(i/N)*Math.PI*2,sA=Math.sin(a),cA=Math.cos(a);
-    const x=sA*RX,y=-cA*RY,d=(1-cA)/2,sc=0.65+d*.42,op=0.4+d*.6,z=Math.round(d*100);
-    item.style.transform='translate('+x+'px,'+y+'px)';
+    const pos=rotPt(ART_POS[i]);
+    const depth=(pos.z+1)/2;
+    const sc=0.62+depth*.48,op=0.38+depth*.62;
+    const sx=pos.x*sR,sy=pos.y*sR*.76;
+    const z=100+Math.round(depth*100);
+    item.style.transform=`translate(${sx}px,${sy}px)`;
     item.style.zIndex=z;
     item.dataset.sc=sc;
     const card=item.querySelector('.oc');
     if(!card.dataset.tilted){
-      card.style.transform='translate(-50%,-50%) scale('+sc+')';
+      card.style.transform=`translate(-50%,-50%) scale(${sc})`;
       card.style.opacity=op;
     }
-    const g=Math.max(0,(d-.78)/.22);
-    if(g>0){
-      card.style.boxShadow='0 0 '+(g*40|0)+'px rgba(16,185,129,'+(g*.22).toFixed(2)+'),0 8px 28px rgba(0,0,0,.5)';
-      card.style.borderColor='rgba(16,185,129,'+(g*.55).toFixed(2)+')';
-    }else{
-      card.style.boxShadow='0 4px 16px rgba(0,0,0,.45)';
-      card.style.borderColor='';
-    }
-    if(d>fD){fD=d;fI=i;}
+    const g=Math.max(0,(depth-.84)/.16);
+    if(g>0){card.style.boxShadow=`0 0 ${(g*38)|0}px rgba(16,185,129,${(g*.24).toFixed(2)}),0 8px 24px rgba(0,0,0,.5)`;card.style.borderColor=`rgba(16,185,129,${(g*.62).toFixed(2)})`;}
+    else{card.style.boxShadow='0 4px 16px rgba(0,0,0,.45)';card.style.borderColor='';}
   });
-  requestAnimationFrame(tick);
 }
 
+function orbitTick(ts){
+  if(lastTs!==null&&!paused)elapsed+=ts-lastTs;
+  lastTs=ts;
+  if(!isDragging){
+    if(autoRotate)rotY+=.003;
+    velX*=.93;velY*=.93;
+    if(!autoRotate){rotX+=velX;rotY+=velY;}
+  }
+  rotX=Math.max(-Math.PI/2.2,Math.min(Math.PI/2.2,rotX));
+  updateOrbit();
+  requestAnimationFrame(orbitTick);
+}
 if(stage){
+  requestAnimationFrame(orbitTick);
   stage.addEventListener('mouseenter',()=>{paused=true;lastTs=null;});
   stage.addEventListener('mouseleave',()=>{paused=false;});
 }
 
+if(stage){
+  stage.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='touch'&&!e.isPrimary)return;
+    isDragging=true;hasMoved=false;autoRotate=false;
+    if(autoTimer)clearTimeout(autoTimer);
+    lastPX=prevPX=e.clientX;lastPY=prevPY=e.clientY;
+    stage.setPointerCapture(e.pointerId);e.preventDefault();
+  },{passive:false});
+  stage.addEventListener('pointermove',e=>{
+    if(!isDragging)return;
+    const dx=e.clientX-lastPX,dy=e.clientY-lastPY;
+    if(Math.abs(dx)+Math.abs(dy)>4)hasMoved=true;
+    prevPX=lastPX;prevPY=lastPY;lastPX=e.clientX;lastPY=e.clientY;
+    velY=dx*.009;velX=dy*.009;rotY+=dx*.009;rotX+=dy*.009;
+    e.preventDefault();
+  },{passive:false});
+  stage.addEventListener('pointerup',()=>{
+    isDragging=false;
+    velY=(lastPX-prevPX)*.013;velX=(lastPY-prevPY)*.013;
+    autoTimer=setTimeout(()=>{autoRotate=true;},3200);
+  });
+  stage.addEventListener('pointercancel',()=>{isDragging=false;});
+}
+
+// 3D tilt
 cards.forEach((card,i)=>{
   const item=items[i];
-  card.addEventListener('mouseenter',()=>{card.dataset.tilted='1';card.style.transition='none';card.style.opacity='1';});
-  card.addEventListener('mouseleave',()=>{
-    delete card.dataset.tilted;
-    card.style.transition='transform .5s ease,opacity .3s ease';
-  });
+  card.addEventListener('mouseenter',()=>{card.dataset.tilted='1';card.style.transition='box-shadow .3s,border-color .3s';});
+  card.addEventListener('mouseleave',()=>{delete card.dataset.tilted;card.style.transition='transform .45s ease,opacity .3s,box-shadow .3s,border-color .3s';});
   card.addEventListener('mousemove',e=>{
     const r=card.getBoundingClientRect();
     const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
     const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
-    const sc=parseFloat(item.dataset.sc)||1;
-    card.style.transform='translate(-50%,-50%) scale('+Math.max(sc,.85)+') perspective(600px) rotateX('+(-dy*14)+'deg) rotateY('+(dx*14)+'deg)';
-    card.style.opacity='1';
+    const pos=rotPt(ART_POS[i]);
+    const sc=(.62+((pos.z+1)/2)*.48)*1.08;
+    const sx=pos.x*sR,sy=pos.y*sR*.76;
+    card.style.transform=`translate(-50%,-50%) scale(${sc}) perspective(520px) rotateX(${-dy*13}deg) rotateY(${dx*13}deg)`;
   });
 });
 
-requestAnimationFrame(tick);
+// Pinch zoom
+let touches={},pinchD0=225,pinchR0=225;
+if(stage){
+  stage.addEventListener('touchstart',e=>{Array.from(e.touches).forEach(t=>{touches[t.identifier]=t;});if(Object.keys(touches).length===2){const[a,b]=Object.values(touches);pinchD0=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);pinchR0=sR;isDragging=false;}},{passive:true});
+  stage.addEventListener('touchmove',e=>{Array.from(e.touches).forEach(t=>{touches[t.identifier]=t;});if(Object.keys(touches).length===2){const[a,b]=Object.values(touches);const d=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);const base=getR();sR=Math.max(base*.5,Math.min(base*1.8,pinchR0*(d/pinchD0)));e.preventDefault();}},{passive:false});
+  stage.addEventListener('touchend',e=>{Array.from(e.changedTouches).forEach(t=>{delete touches[t.identifier];});},{passive:true});
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE CAROUSEL (≤768px)
+══════════════════════════════════════════════ */
+const MC_N=7;
+let mcIdx=0,mcAutoTimer=null;
+let mcTouchStartX=0,mcTouchStartY=0,mcTouchStartTime=0,mcLastX=0;
+let mcIsDragging=false,mcHasMoved=false,mcBaseOffset=0;
+
+const mcWrap  = document.getElementById('mcWrap');
+const mcTrack = document.getElementById('mcTrack');
+const mcDots  = Array.from(document.querySelectorAll('.mc-dot'));
+const mcCards = Array.from(document.querySelectorAll('.mc-card'));
+
+function mcOffset(idx){
+  if(!mcTrack||!mcWrap)return 0;
+  const cardW=mcCards[0]?mcCards[0].offsetWidth:window.innerWidth*.82;
+  const gap=14;
+  const padL=mcWrap.offsetWidth*.09;
+  return padL-idx*(cardW+gap);
+}
+
+function mcGoTo(idx,animate=true){
+  mcIdx=Math.max(0,Math.min(MC_N-1,idx));
+  const off=mcOffset(mcIdx);
+  mcTrack.style.transition=animate?'transform .42s cubic-bezier(0.25,0.46,0.45,0.94)':'none';
+  mcTrack.style.transform=`translateX(${off}px)`;
+  mcDots.forEach((d,i)=>{d.classList.toggle('active',i===mcIdx);d.setAttribute('aria-selected',i===mcIdx);});
+  mcCards.forEach((c,i)=>c.classList.toggle('active',i===mcIdx));
+}
+
+function mcStartAuto(){
+  clearInterval(mcAutoTimer);
+  mcAutoTimer=setInterval(()=>mcGoTo(mcIdx>=MC_N-1?0:mcIdx+1),5000);
+}
+
+// Touch events for carousel
+if(mcTrack){
+  mcTrack.addEventListener('touchstart',e=>{
+    mcIsDragging=true;mcHasMoved=false;
+    mcTouchStartX=mcLastX=e.touches[0].clientX;
+    mcTouchStartY=e.touches[0].clientY;
+    mcTouchStartTime=Date.now();
+    mcBaseOffset=mcOffset(mcIdx);
+    mcTrack.style.transition='none';
+    clearInterval(mcAutoTimer);
+  },{passive:true});
+
+  mcTrack.addEventListener('touchmove',e=>{
+    if(!mcIsDragging)return;
+    const dx=e.touches[0].clientX-mcTouchStartX;
+    const dy=e.touches[0].clientY-mcTouchStartY;
+    // If primarily vertical, don't interfere
+    if(!mcHasMoved&&Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>10){mcIsDragging=false;return;}
+    if(Math.abs(dx)>8)mcHasMoved=true;
+    mcLastX=e.touches[0].clientX;
+    mcTrack.style.transform=`translateX(${mcBaseOffset+dx}px)`;
+  },{passive:true});
+
+  mcTrack.addEventListener('touchend',e=>{
+    if(!mcIsDragging)return;
+    mcIsDragging=false;
+    const dx=e.changedTouches[0].clientX-mcTouchStartX;
+    const dt=Math.max(1,Date.now()-mcTouchStartTime);
+    const vel=dx/dt;
+    if(Math.abs(dx)>52||Math.abs(vel)>.3){
+      dx<0?mcGoTo(mcIdx+1):mcGoTo(mcIdx-1);
+    }else{
+      mcGoTo(mcIdx);
+    }
+    mcStartAuto();
+  },{passive:true});
+}
+
+// Dot clicks
+mcDots.forEach(d=>{
+  d.addEventListener('click',()=>{mcGoTo(parseInt(d.dataset.i));mcStartAuto();});
+});
+
+// Init carousel after fonts load
+window.addEventListener('load',()=>{
+  if(window.innerWidth<=768){mcGoTo(0,false);mcStartAuto();}
+});
+window.addEventListener('resize',()=>{
+  if(window.innerWidth<=768)mcGoTo(mcIdx,false);
+},{passive:true});
 
 /* ── FAQ ── */
 function toggleFAQ(btn){
@@ -742,17 +966,12 @@ function toggleFAQ(btn){
   if(!open){item.classList.add('open');btn.setAttribute('aria-expanded','true');}
 }
 
-/* ── Scroll nav ── */
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50);
-},{passive:true});
+/* ── Nav scroll ── */
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('sc',window.scrollY>50);},{passive:true});
 
 /* ── Smooth anchors ── */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
-  });
+  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});
 });
 </script>
 </body>
