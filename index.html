@@ -951,12 +951,14 @@ mcDots.forEach(d=>{
   d.addEventListener('click',()=>{mcGoTo(parseInt(d.dataset.i));mcStartAuto();});
 });
 
-// Init carousel after fonts load
-window.addEventListener('load',()=>{
-  if(window.innerWidth<=768){mcGoTo(0,false);mcStartAuto();}
-});
+// Init carousel — start immediately, always
+setTimeout(()=>{
+  mcGoTo(0,false);
+  mcStartAuto();
+},80); // slight delay so layout is calculated
+
 window.addEventListener('resize',()=>{
-  if(window.innerWidth<=768)mcGoTo(mcIdx,false);
+  mcGoTo(mcIdx,false);
 },{passive:true});
 
 /* ── FAQ ── */
