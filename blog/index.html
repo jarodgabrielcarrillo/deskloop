@@ -80,6 +80,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   will-change:transform,opacity;
   transition:box-shadow .3s ease,border-color .3s ease;
   pointer-events:auto;touch-action:none;
+  isolation:isolate;
 }
 .sc-tag{display:inline-flex;align-items:center;gap:4px;font-size:8px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:3px 8px;border-radius:100px;margin-bottom:10px}
 .sc-title{font-size:13px;font-weight:700;letter-spacing:-.02em;line-height:1.35;color:var(--tx);margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -90,10 +91,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
 /* Filler elements base */
 .fe{
-  position:absolute;pointer-events:none;user-select:none;
+  position:absolute;pointer-events:none!important;user-select:none;
   -webkit-user-select:none;will-change:transform,opacity;
-  transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%);cursor:default;
 }
+.fe *{pointer-events:none!important}
 /* Emoji */
 .fe-emoji{line-height:1;display:flex;align-items:center;justify-content:center}
 /* Keyword tag */
