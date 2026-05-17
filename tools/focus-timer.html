@@ -564,17 +564,32 @@
   padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
 </style>
+
+<style id="gdpr-css">
+#gdpr-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0A1525;border-top:1px solid #1A2D44;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 32px rgba(0,0,0,.5)}
+#gdpr-banner.show{transform:translateY(0)}
+#gdpr-banner p{font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#88AAC5;line-height:1.6;margin:0;flex:1;min-width:200px}
+#gdpr-banner p a{color:#10B981;text-decoration:none}
+#gdpr-banner p a:hover{text-decoration:underline}
+.gdpr-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.gdpr-accept{background:#10B981;color:#fff;border:none;border-radius:8px;font:600 13px/1 'Inter',system-ui,sans-serif;padding:10px 20px;cursor:pointer;transition:background .2s;white-space:nowrap}
+.gdpr-accept:hover{background:#34D399}
+.gdpr-decline{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 13px/1 'Inter',system-ui,sans-serif;padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
+</style>
 </head>
 <body>
-
-<!-- GDPR Consent Banner -->
-<div id="gdpr-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+<div id="gdpr-banner" role="dialog" aria-label="Cookie consent">
   <p>We use cookies from <strong style="color:#EEF4FF">Google AdSense</strong> to serve ads. We collect no personal data ourselves. By clicking Accept you consent to Google&rsquo;s use of advertising cookies. <a href="/privacy.html">Privacy Policy</a></p>
   <div class="gdpr-btns">
     <button class="gdpr-decline" onclick="gdprDecline()">Decline</button>
     <button class="gdpr-accept" onclick="gdprAccept()">Accept</button>
   </div>
 </div>
+
+
+<!-- GDPR Consent Banner -->
+
 
 <!-- ── NAV ── -->
 <nav role="navigation" aria-label="Main navigation">
@@ -766,12 +781,15 @@
 </div>
 
 <!-- ── FOOTER ── -->
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <span>© 2025 <a href="/">Deskloop.work</a> — Free productivity tools</span>
-      <span>No cookies · No tracking · No nonsense</span>
-    </div>
+<footer style="border-top:1px solid #142032;background:#060C18;padding:0">
+  <div style="text-align:center;padding:18px 24px;font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
+    <a href="/" style="color:#4C6580;text-decoration:none;display:flex;align-items:center;gap:5px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>
+    <span>&middot;</span>
+    <a href="/privacy.html" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#4C6580'">Privacy Policy</a>
+    <span>&middot;</span>
+    <a href="/contact.html" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">Contact</a>
+    <span>&middot;</span>
+    <span>&copy; 2026 Deskloop.work</span>
   </div>
 </footer>
 
@@ -1198,6 +1216,28 @@ updateDisplay();
 updateStats();
 renderHistory();
 updateNotifUI();
+</script>
+<script id="gdpr-js">
+(function(){
+  var choice=localStorage.getItem('dl_gdpr_v1');
+  if(choice)return;
+  setTimeout(function(){var b=document.getElementById('gdpr-banner');if(b)b.classList.add('show');},800);
+})();
+function gdprAccept(){
+  localStorage.setItem('dl_gdpr_v1','accepted');
+  var b=document.getElementById('gdpr-banner');
+  if(b){b.style.transition='transform .3s ease';b.style.transform='translateY(100%)';}
+  if(!document.getElementById('adsense-script')){
+    var s=document.createElement('script');s.id='adsense-script';s.async=true;
+    s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5768905713200594';
+    s.crossOrigin='anonymous';document.head.appendChild(s);
+  }
+}
+function gdprDecline(){
+  localStorage.setItem('dl_gdpr_v1','declined');
+  var b=document.getElementById('gdpr-banner');
+  if(b){b.style.transition='transform .3s ease';b.style.transform='translateY(100%)';}
+}
 </script>
 </body>
 </html>
