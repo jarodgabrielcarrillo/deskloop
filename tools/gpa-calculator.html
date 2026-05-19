@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Free GPA Calculator — No Signup | Deskloop</title>
+<meta name="description" content="Calculate your GPA instantly across multiple semesters. What-if simulator, Dean's List standing, Pass/Fail courses, target GPA planner. Free, no signup, works offline.">
+<meta name="keywords" content="free GPA calculator,college GPA calculator,cumulative GPA,grade calculator no signup,GPA tracker,what if GPA calculator,Dean's List GPA">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://deskloop.work/tools/gpa-calculator.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ac:#10B981;--ac-lt:#34D399;--ac-dk:#059669;
+  --blue-d:#1E40AF;--blue:#3B82F6;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;
+  --tx:#EEF6FF;--tx2:#88AAC5;--tx3:#4C6580;
+  --bd:#142032;--bd2:#1A2D44;
+  --warn:#F59E0B;--danger:#EF4444;--pur:#A78BFA;
+  --r:10px;--rl:16px;--t:200ms ease;--mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;background:rgba(6,12,24,.96);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);
+  padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.logo-m{width:32px;height:32px;background:var(--blue-d);border-radius:8px;
+  display:flex;align-items:center;justify-content:center}
+.logo-t{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.025em}
+.nav-r{display:flex;align-items:center;gap:8px}
+.nav-back{color:var(--tx3);text-decoration:none;font-size:13px;font-weight:500;
+  padding:7px 13px;border-radius:var(--r);border:1px solid var(--bd);transition:all var(--t)}
+.nav-back:hover{color:var(--tx2);border-color:var(--bd2)}
+.nav-whatif{font:600 12px/1 'Inter',sans-serif;padding:8px 14px;border-radius:var(--r);
+  border:none;cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:6px}
+.nav-whatif.off{background:var(--s2);color:var(--tx2);border:1px solid var(--bd2)}
+.nav-whatif.on{background:rgba(245,158,11,.12);color:var(--warn);border:1px solid rgba(245,158,11,.3)}
+.nav-whatif svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* HERO */
+.hero{padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:600px;height:300px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(16,185,129,.08) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(16,185,129,.08);
+  border:1px solid rgba(16,185,129,.2);border-radius:100px;
+  padding:5px 13px;font-size:10px;font-weight:700;letter-spacing:1.8px;
+  text-transform:uppercase;color:var(--ac-lt);margin-bottom:18px}
+.hero-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}55%{opacity:.2}}
+.hero-h1{font-size:50px;font-weight:900;letter-spacing:-.045em;line-height:1.02;margin-bottom:12px}
+.hero-h1 em{font-style:normal;background:linear-gradient(125deg,var(--ac) 0%,var(--ac-lt) 40%,var(--blue) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:16px;color:var(--tx2);max-width:480px;margin:0 auto;line-height:1.7}
+
+/* WHAT-IF BANNER */
+.whatif-banner{display:none;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);
+  border-radius:var(--r);padding:10px 16px;margin:0 24px 16px;
+  font-size:13px;color:var(--warn);text-align:center;
+  max-width:900px;margin-left:auto;margin-right:auto}
+.whatif-banner.show{display:block}
+
+/* GPA DISPLAY */
+.gpa-display-wrap{max-width:960px;margin:0 auto 32px;padding:0 24px}
+.gpa-cards{display:grid;grid-template-columns:220px 1fr 1fr 1fr;gap:12px}
+
+/* Main GPA card */
+.gpa-main-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:24px 20px;text-align:center;position:relative;overflow:hidden}
+.gpa-main-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:var(--rl) var(--rl) 0 0;background:linear-gradient(90deg,var(--ac),var(--ac-lt))}
+.ring-wrap{position:relative;width:90px;height:90px;margin:0 auto 10px}
+.ring-svg{width:90px;height:90px;transform:rotate(-90deg)}
+.ring-track{fill:none;stroke:var(--s3);stroke-width:8}
+.ring-fill{fill:none;stroke-width:8;stroke-linecap:round;
+  stroke-dasharray:226.2;stroke-dashoffset:226.2;transition:stroke-dashoffset .6s ease,stroke .3s}
+.ring-proj{fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:226.2;
+  stroke-dashoffset:226.2;opacity:.5;transition:all .4s ease}
+.ring-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-gpa{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--tx);display:block;line-height:1}
+.ring-proj-val{font-family:var(--mono);font-size:10px;color:var(--warn);display:block;margin-top:2px}
+.standing-badge{display:inline-flex;align-items:center;gap:5px;border-radius:100px;
+  padding:3px 10px;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  margin-bottom:6px;border:1px solid currentColor}
+
+/* Stat cards */
+.stat-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:18px 16px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--rl) var(--rl) 0 0}
+.sc-blue::before{background:linear-gradient(90deg,var(--blue),#60A5FA)}
+.sc-pur::before{background:linear-gradient(90deg,var(--pur),#c4b5fd)}
+.sc-warn::before{background:linear-gradient(90deg,var(--warn),#fbbf24)}
+.sc-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3)}
+.sc-value{font-family:var(--mono);font-size:32px;font-weight:700;letter-spacing:-1px;
+  line-height:1;margin:8px 0 4px;transition:all .3s}
+.sc-sub{font-size:11px;color:var(--tx3)}
+.sc-proj{font-size:11px;color:var(--warn);font-family:var(--mono);margin-top:2px;display:none}
+.sc-proj.show{display:block}
+
+/* Graduation tracker */
+.grad-strip{max-width:960px;margin:0 auto 20px;padding:0 24px}
+.grad-bar-wrap{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
+  padding:14px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.grad-label{font-size:12px;font-weight:600;color:var(--tx2);white-space:nowrap}
+.grad-inp{background:var(--s2);border:1px solid var(--bd2);border-radius:8px;
+  color:var(--tx);font:600 13px/1 var(--mono);padding:7px 10px;outline:none;
+  width:80px;text-align:center;transition:border-color var(--t)}
+.grad-inp:focus{border-color:rgba(16,185,129,.4)}
+.grad-progress{flex:1;min-width:160px}
+.grad-prog-bar{background:var(--s3);border-radius:100px;height:8px;overflow:hidden;margin-bottom:4px}
+.grad-prog-fill{height:100%;border-radius:100px;background:var(--ac);transition:width .5s ease}
+.grad-prog-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3);font-family:var(--mono)}
+.grad-stat{font-size:12px;color:var(--tx2);white-space:nowrap}
+.grad-stat strong{color:var(--tx);font-family:var(--mono)}
+
+/* MAIN LAYOUT */
+.main{max-width:960px;margin:0 auto;padding:0 24px 60px;display:grid;
+  grid-template-columns:1fr 300px;gap:18px;align-items:start}
+
+/* COURSES PANEL */
+.panel{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden}
+.panel-hdr{padding:16px 18px;border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.panel-title{font-size:13px;font-weight:700;color:var(--tx);
+  display:flex;align-items:center;gap:7px}
+.panel-title-dot{width:6px;height:6px;border-radius:50%;background:var(--ac)}
+
+/* Semester */
+.sem-section{border-bottom:1px solid var(--bd)}
+.sem-section:last-child{border-bottom:none}
+.sem-hdr{padding:11px 18px;background:var(--s2);display:flex;
+  align-items:center;justify-content:space-between;cursor:pointer;transition:background var(--t)}
+.sem-hdr:hover{background:var(--s3)}
+.sem-left{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.sem-name-inp{background:transparent;border:1px solid transparent;border-radius:6px;
+  color:var(--tx2);font:700 12px/1.4 'Inter',sans-serif;padding:4px 7px;
+  outline:none;transition:all var(--t);min-width:0;flex:1;max-width:180px}
+.sem-name-inp:focus{background:var(--s2);border-color:rgba(16,185,129,.3);color:var(--tx)}
+.sem-badge{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ac);
+  background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);
+  border-radius:100px;padding:2px 8px;white-space:nowrap;flex-shrink:0}
+.sem-cr-badge{font-size:10px;color:var(--tx3);flex-shrink:0}
+.sem-right{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.sem-del{width:22px;height:22px;border-radius:5px;background:transparent;border:none;
+  color:var(--tx3);cursor:pointer;font-size:13px;display:flex;align-items:center;
+  justify-content:center;transition:all var(--t)}
+.sem-del:hover{background:rgba(239,68,68,.1);color:var(--danger)}
+.sem-chevron{color:var(--tx3);font-size:13px;transition:transform .2s;line-height:1}
+
+/* Course rows */
+.courses-body{padding:10px 10px 10px}
+.courses-col-hdr{display:grid;gap:5px;padding:0 2px 7px;
+  border-bottom:1px solid var(--bd);margin-bottom:6px}
+.col-lbl{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--tx3)}
+.course-row{display:grid;gap:5px;align-items:start;margin-bottom:5px;
+  border-radius:8px;padding:4px 2px;transition:background var(--t)}
+.course-row.grade-warn{background:rgba(245,158,11,.04)}
+.course-row.grade-danger{background:rgba(239,68,68,.06)}
+.course-row.grade-good{background:rgba(16,185,129,.03)}
+.course-row.pf-row{opacity:.75}
+.ci{background:var(--s2);border:1px solid var(--bd2);border-radius:8px;
+  color:var(--tx);font:400 13px/1.4 'Inter',sans-serif;padding:8px 10px;
+  outline:none;transition:border-color var(--t),box-shadow var(--t);width:100%}
+.ci:focus{border-color:rgba(16,185,129,.4);box-shadow:0 0 0 3px rgba(16,185,129,.08)}
+.ci::placeholder{color:var(--tx3)}
+.ci-grade{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234C6580' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 6px center;background-size:11px;
+  padding-right:20px;cursor:pointer;font-weight:700;text-align:center}
+.ci-proj{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F59E0B' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 5px center;background-size:10px;
+  padding-right:18px;cursor:pointer;font-weight:700;color:var(--warn);
+  border-color:rgba(245,158,11,.3);background-color:rgba(245,158,11,.06);
+  font-size:12px;display:none}
+.ci-proj.show{display:block}
+.cdel{width:28px;height:28px;border-radius:6px;background:transparent;
+  border:1px solid var(--bd);color:var(--tx3);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  transition:all var(--t);padding:0;line-height:1;flex-shrink:0}
+.cdel:hover{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:var(--danger)}
+.add-course-btn{display:flex;align-items:center;gap:6px;background:transparent;
+  border:1px dashed var(--bd2);border-radius:8px;color:var(--tx3);
+  font:500 12px/1 'Inter',sans-serif;padding:8px 12px;cursor:pointer;
+  transition:all var(--t);width:100%;margin-top:4px}
+.add-course-btn:hover{border-color:var(--ac);color:var(--ac);background:rgba(16,185,129,.03)}
+.add-course-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.add-sem-btn{display:flex;align-items:center;gap:6px;background:transparent;
+  border:1px dashed var(--bd2);border-radius:8px;color:var(--tx3);
+  font:500 12px/1 'Inter',sans-serif;padding:8px 14px;cursor:pointer;
+  transition:all var(--t);white-space:nowrap}
+.add-sem-btn:hover{border-color:var(--ac);color:var(--ac)}
+.add-sem-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* SIDE PANEL */
+.side{display:flex;flex-direction:column;gap:14px}
+.side-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:18px}
+.side-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:12px}
+
+/* Scale selector */
+.scale-tabs{display:flex;background:var(--s2);border:1px solid var(--bd2);
+  border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.scale-tab{flex:1;padding:8px 4px;font:500 11px/1 'Inter',sans-serif;border:none;
+  background:transparent;color:var(--tx3);cursor:pointer;transition:all var(--t);text-align:center}
+.scale-tab.on{background:var(--ac);color:#fff;font-weight:600}
+
+/* Legend */
+.legend-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tx2)}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* Target GPA */
+.target-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.target-inp{flex:1;background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx);font:600 16px/1 var(--mono);padding:10px 12px;outline:none;
+  transition:border-color var(--t);text-align:center}
+.target-inp:focus{border-color:rgba(16,185,129,.4)}
+.target-result{font-size:12px;color:var(--tx2);line-height:1.65;padding:10px 12px;
+  background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);margin-bottom:10px}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--tx3);margin-bottom:5px}
+.progress-bar{background:var(--s3);border-radius:100px;height:6px;overflow:hidden}
+.progress-fill{height:100%;border-radius:100px;transition:width .5s ease,background .3s}
+
+/* Stats */
+.stats-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini-stat{background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  padding:11px;text-align:center}
+.mini-val{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--tx)}
+.mini-lbl{font-size:10px;color:var(--tx3);margin-top:3px}
+
+/* Actions */
+.btn-export{width:100%;background:var(--ac);color:#fff;border:none;border-radius:var(--r);
+  font:600 13px/1 'Inter',sans-serif;padding:12px;cursor:pointer;
+  transition:all var(--t);display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-export:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.btn-export svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.btn-clear{width:100%;background:transparent;color:var(--tx3);border:1px solid var(--bd2);
+  border-radius:var(--r);font:500 12px/1 'Inter',sans-serif;padding:10px;cursor:pointer;transition:all var(--t)}
+.btn-clear:hover{color:var(--danger);border-color:rgba(239,68,68,.3)}
+
+/* Standing reference */
+.standing-list{display:flex;flex-direction:column;gap:5px}
+.standing-item{display:flex;align-items:center;justify-content:space-between;
+  padding:7px 10px;border-radius:7px;font-size:11px;border:1px solid transparent}
+.standing-current{border-color:currentColor!important;font-weight:700}
+.si-name{font-weight:600}
+.si-gpa{font-family:var(--mono);font-size:10px;opacity:.8}
+
+/* SEO / FAQ */
+.content-section{max-width:960px;margin:0 auto;padding:0 24px 72px}
+.content-divider{border-top:1px solid var(--bd);margin-bottom:48px}
+.content-h2{font-size:22px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.content-p{font-size:14px;color:var(--tx2);line-height:1.82;margin-bottom:16px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px}
+.info-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:20px}
+.info-card h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.info-card p{font-size:13px;color:var(--tx2);line-height:1.75;margin:0}
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.faq-item{border:1px solid var(--bd2);border-radius:var(--r);overflow:hidden}
+.faq-q{width:100%;background:var(--s1);border:none;text-align:left;
+  padding:16px 20px;font:600 14px/1.5 'Inter',sans-serif;color:var(--tx);
+  cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:background var(--t)}
+.faq-q:hover{background:var(--s2)}
+.faq-q svg{width:16px;height:16px;stroke:var(--tx3);fill:none;stroke-width:2;
+  stroke-linecap:round;flex-shrink:0;transition:transform var(--t),stroke var(--t)}
+.faq-a{display:none;padding:0 20px 16px;font-size:13px;color:var(--tx2);line-height:1.78;background:var(--s1)}
+.faq-item.open .faq-q{background:var(--s2)}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q svg{transform:rotate(45deg);stroke:var(--ac)}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  padding:11px 20px;font-size:13px;font-weight:500;color:var(--tx);
+  opacity:0;transition:all .3s;pointer-events:none;z-index:500;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* GDPR */
+#gdpr-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:#0A1525;border-top:1px solid #1A2D44;padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 32px rgba(0,0,0,.5)}
+#gdpr-banner.show{transform:translateY(0)}
+#gdpr-banner p{font-size:12px;color:#88AAC5;line-height:1.5;margin:0;flex:1;min-width:200px}
+#gdpr-banner p a{color:#10B981;text-decoration:none}
+#gdpr-banner p strong{color:#EEF4FF}
+.gbtns{display:flex;gap:8px;flex-shrink:0}
+.gbtn-a{background:#10B981;color:#fff;border:none;border-radius:8px;font:600 12px/1 'Inter',sans-serif;padding:9px 18px;cursor:pointer}
+.gbtn-d{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 12px/1 'Inter',sans-serif;padding:9px 14px;cursor:pointer}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .gpa-cards{grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto}
+  .gpa-main-card{grid-column:span 3}
+  .main{grid-template-columns:1fr}
+  .hero-h1{font-size:38px}
+  .two-col{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .gpa-cards{grid-template-columns:1fr 1fr}
+  .gpa-main-card{grid-column:span 2}
+  .hero-h1{font-size:32px}
+  .nav{padding:0 14px}
+  .nav-whatif span{display:none}
+  .grad-bar-wrap{flex-direction:column;align-items:flex-start}
+  .grad-progress{width:100%}
+}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:3px}
+</style>
+</head>
+<body>
+
+<div id="gdpr-banner" role="dialog" aria-label="Cookie consent">
+  <p>We use cookies from <strong>Google AdSense</strong> to serve ads. No personal data collected by us. <a href="/privacy.html">Privacy Policy</a></p>
+  <div class="gbtns">
+    <button class="gbtn-d" onclick="gdprDecline()">Decline</button>
+    <button class="gbtn-a" onclick="gdprAccept()">Accept</button>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="/" class="logo">
+    <div class="logo-m"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div>
+    <span class="logo-t">Deskloop</span>
+  </a>
+  <div class="nav-r">
+    <button class="nav-whatif off" id="whatifBtn" onclick="toggleWhatIf()">
+      <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg>
+      <span>What-If Mode</span>
+    </button>
+    <a href="/" class="nav-back">&larr; All tools</a>
+  </div>
+</nav>
+
+<div class="whatif-banner" id="whatifBanner">
+  &#10024; What-If Mode &mdash; Change grades in the orange dropdowns to see your projected GPA without affecting your saved data.
+</div>
+
+<div class="hero">
+  <div class="hero-tag"><div class="hero-tag-dot"></div>Free GPA Calculator</div>
+  <h1 class="hero-h1">Your GPA,<br><em>calculated.</em></h1>
+  <p class="hero-sub">Multi-semester tracking, What-If simulator, standing indicator, and target GPA planner. Free, no signup, your data never leaves your device.</p>
+</div>
+
+<!-- GPA DISPLAY -->
+<div class="gpa-display-wrap">
+  <div class="gpa-cards">
+    <div class="gpa-main-card">
+      <div class="ring-wrap">
+        <svg class="ring-svg" viewBox="0 0 90 90">
+          <circle class="ring-track" cx="45" cy="45" r="36"/>
+          <circle class="ring-proj" id="ringProj" cx="45" cy="45" r="36" stroke="var(--warn)" stroke-dashoffset="226.2"/>
+          <circle class="ring-fill" id="ringFill" cx="45" cy="45" r="36" stroke="var(--ac)"/>
+        </svg>
+        <div class="ring-text">
+          <span class="ring-gpa" id="ringGPA">—</span>
+          <span class="ring-proj-val" id="ringProjVal" style="display:none"></span>
+        </div>
+      </div>
+      <div id="standingBadge" style="margin-bottom:6px;min-height:22px"></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--tx3)">Cumulative GPA</div>
+    </div>
+    <div class="stat-card sc-blue">
+      <div class="sc-label">Total Credits</div>
+      <div class="sc-value" id="totalCredits" style="color:#60A5FA">0</div>
+      <div class="sc-sub">credit hours</div>
+      <div class="sc-proj" id="projCredits"></div>
+    </div>
+    <div class="stat-card sc-pur">
+      <div class="sc-label">Quality Points</div>
+      <div class="sc-value" id="totalPoints" style="color:var(--pur)">0.0</div>
+      <div class="sc-sub">grade points</div>
+      <div class="sc-proj" id="projPoints"></div>
+    </div>
+    <div class="stat-card sc-warn">
+      <div class="sc-label">Courses</div>
+      <div class="sc-value" id="totalCourses" style="color:var(--warn)">0</div>
+      <div class="sc-sub">total courses</div>
+      <div class="sc-proj" id="projGPACard"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GRADUATION TRACKER -->
+<div class="grad-strip">
+  <div class="grad-bar-wrap">
+    <div class="grad-label">&#127Cap; Credits to graduate:</div>
+    <input class="grad-inp" type="number" id="gradCredits" placeholder="120" min="0" max="300" oninput="update()">
+    <div class="grad-progress" id="gradProgress" style="display:none">
+      <div class="grad-prog-bar"><div class="grad-prog-fill" id="gradProgFill" style="width:0%"></div></div>
+      <div class="grad-prog-labels"><span id="gradProgLeft"></span><span id="gradProgRight"></span></div>
+    </div>
+    <div class="grad-stat" id="gradStat"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- COURSES PANEL -->
+  <div class="panel">
+    <div class="panel-hdr">
+      <div class="panel-title"><div class="panel-title-dot"></div>Courses &amp; Grades</div>
+      <button class="add-sem-btn" onclick="addSemester()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Semester
+      </button>
+    </div>
+    <div id="semestersContainer"></div>
+  </div>
+
+  <!-- SIDE -->
+  <div class="side">
+
+    <!-- Scale -->
+    <div class="side-card">
+      <div class="side-label">Grading Scale</div>
+      <div class="scale-tabs">
+        <button class="scale-tab on" onclick="setScale('4.0',this)">4.0</button>
+        <button class="scale-tab" onclick="setScale('4.3',this)">4.3</button>
+        <button class="scale-tab" onclick="setScale('5.0',this)">5.0</button>
+        <button class="scale-tab" onclick="setScale('100',this)">100pt</button>
+      </div>
+      <div class="legend-grid" id="legendItems"></div>
+    </div>
+
+    <!-- Standing -->
+    <div class="side-card">
+      <div class="side-label">Academic Standing</div>
+      <div class="standing-list" id="standingList"></div>
+    </div>
+
+    <!-- Current semester stats -->
+    <div class="side-card">
+      <div class="side-label">Last Semester</div>
+      <div class="stats-2">
+        <div class="mini-stat"><div class="mini-val" id="semGPA">—</div><div class="mini-lbl">Semester GPA</div></div>
+        <div class="mini-stat"><div class="mini-val" id="semCredits">0</div><div class="mini-lbl">Credits</div></div>
+      </div>
+    </div>
+
+    <!-- Target GPA -->
+    <div class="side-card">
+      <div class="side-label">Target GPA Planner</div>
+      <div class="target-row">
+        <input class="target-inp" type="number" id="targetGPA" placeholder="3.50" min="0" max="5" step="0.01" oninput="calcTarget()">
+        <div style="font-size:11px;color:var(--tx3)">target</div>
+      </div>
+      <div class="target-result" id="targetResult">Enter a target GPA to see what you need in remaining credits.</div>
+      <div id="progressWrap" style="display:none">
+        <div class="progress-label"><span>Progress to target</span><span id="progressPct">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <button class="btn-export" onclick="exportCSV()">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export to CSV
+    </button>
+    <button class="btn-clear" onclick="clearAll()">Clear all data</button>
+
+  </div>
+</div>
+
+<!-- SEO + FAQ -->
+<div class="content-section">
+  <div class="content-divider"></div>
+  <h2 class="content-h2">Free GPA Calculator &mdash; No Signup Required</h2>
+  <p class="content-p">The Deskloop GPA Calculator tracks your academic performance across every semester with no account required. Add courses, assign credit hours, select your grade, and your cumulative GPA updates live. All data stays in your browser — nothing is ever sent to a server.</p>
+
+  <div class="two-col">
+    <div class="info-card"><h3>How GPA is calculated</h3><p>GPA = Total Quality Points &divide; Total Credit Hours. Quality points per course = Grade Points &times; Credit Hours. An A (4.0) in a 3-credit course contributes 12 quality points toward your cumulative average.</p></div>
+    <div class="info-card"><h3>What-If Grade Simulator</h3><p>Toggle What-If Mode to test how changing any grade would affect your GPA — without overwriting your saved data. Useful for deciding whether to retake a course or which final exams matter most.</p></div>
+    <div class="info-card"><h3>Pass/Fail courses</h3><p>Mark any course as Pass or Fail. Pass adds credits toward your total without affecting GPA. Fail (No Credit) removes both — matching how most universities treat P/F grading.</p></div>
+    <div class="info-card"><h3>Multiple grading scales</h3><p>Supports 4.0, 4.3 (with A+), 5.0, and 100-point scales. Switch at any time and all grades recalculate instantly. The scale selector also updates the standing thresholds automatically.</p></div>
+  </div>
+
+  <h2 class="content-h2" style="margin-bottom:16px">Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">What is considered a good GPA?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">On a 4.0 scale: 3.5+ is generally considered Dean's List territory and is competitive for most graduate programs. 3.0–3.49 is good standing. 2.5–2.99 is satisfactory. Below 2.0 typically triggers academic probation. However, "good" is relative to your field — engineering programs often have lower median GPAs than liberal arts programs due to grading curves.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">What GPA do I need for graduate school?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">Most graduate programs have a minimum GPA requirement of 3.0, but competitive programs at top universities typically admit students with 3.5+ GPAs. Medical schools (MD) typically want 3.7+. Law schools look heavily at LSAT scores alongside GPA. PhD programs in STEM often focus more on research experience than GPA, though 3.3+ is usually expected. Always check specific program requirements.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">How can I raise my GPA?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">GPA improvement is harder the more credits you already have — early grades have more weight because there are fewer total credits. Strategies: retake courses where your school allows grade replacement, take higher-credit courses where you can perform well (each credit matters more), use the What-If simulator to identify which courses to prioritize, and consider taking electives in subjects where you have a competitive advantage.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">What GPA do I need to graduate with honors?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">Latin honors thresholds vary by institution, but a common standard is: Cum Laude (3.5–3.64), Magna Cum Laude (3.65–3.79), Summa Cum Laude (3.8–4.0). Some schools use class rank instead of fixed GPA thresholds. Check your institution's specific requirements — they may also require a minimum number of credits completed at that institution.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">Does a Pass/Fail grade affect my GPA?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">At most universities, a Pass grade does not affect your GPA — it adds the credits to your total without contributing grade points, making it mathematically neutral. A Fail (No Credit) also doesn't affect GPA in most institutions, but you lose the credits. Some graduate programs and professional schools may ask for the breakdown of P/F courses separately, so it's worth tracking them. Use the P/F toggle in this calculator to mark courses accordingly.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">What is the difference between GPA and CGPA?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><div class="faq-a">GPA (Grade Point Average) can refer to any period — a semester, a year, or your full academic career. CGPA (Cumulative GPA) specifically refers to your overall GPA across all completed semesters. When most people and institutions say "GPA," they typically mean your cumulative GPA. Semester GPA is your average for that term only and is useful for tracking improvement but doesn't appear on your transcript as prominently as your cumulative figure.</div></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer style="border-top:1px solid #142032;background:#060C18;padding:0">
+  <div style="text-align:center;padding:16px 24px;font-family:'Inter',system-ui,sans-serif;font-size:12px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
+    <a href="/" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>
+    <span>&middot;</span>
+    <a href="/privacy.html" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#10B981'" onmouseout="this.style.color='#4C6580'">Privacy Policy</a>
+    <span>&middot;</span>
+    <a href="/contact.html" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">Contact</a>
+    <span>&middot;</span>
+    <span>&copy; 2026 Deskloop.work</span>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ── Scales ──────────────────────────────────────────────────────────── */
+const SCALES = {
+  '4.0':[
+    {letter:'A',  points:4.0,color:'#10B981'},{letter:'A-', points:3.7,color:'#34D399'},
+    {letter:'B+', points:3.3,color:'#60A5FA'},{letter:'B',  points:3.0,color:'#3B82F6'},
+    {letter:'B-', points:2.7,color:'#818CF8'},{letter:'C+', points:2.3,color:'#A78BFA'},
+    {letter:'C',  points:2.0,color:'#F59E0B'},{letter:'C-', points:1.7,color:'#FBBF24'},
+    {letter:'D+', points:1.3,color:'#FB923C'},{letter:'D',  points:1.0,color:'#F97316'},
+    {letter:'F',  points:0.0,color:'#EF4444'},
+    {letter:'P',  points:null,color:'#34D399',pf:true},
+    {letter:'F (No Credit)', points:null,color:'#EF4444',pf:true,noCredit:true},
+  ],
+  '4.3':[
+    {letter:'A+', points:4.3,color:'#10B981'},{letter:'A',  points:4.0,color:'#34D399'},
+    {letter:'A-', points:3.7,color:'#6EE7B7'},{letter:'B+', points:3.3,color:'#60A5FA'},
+    {letter:'B',  points:3.0,color:'#3B82F6'},{letter:'B-', points:2.7,color:'#818CF8'},
+    {letter:'C+', points:2.3,color:'#A78BFA'},{letter:'C',  points:2.0,color:'#F59E0B'},
+    {letter:'C-', points:1.7,color:'#FBBF24'},{letter:'D',  points:1.0,color:'#FB923C'},
+    {letter:'F',  points:0.0,color:'#EF4444'},
+    {letter:'P',  points:null,color:'#34D399',pf:true},
+    {letter:'F (No Credit)', points:null,color:'#EF4444',pf:true,noCredit:true},
+  ],
+  '5.0':[
+    {letter:'A+', points:5.0,color:'#10B981'},{letter:'A',  points:4.75,color:'#34D399'},
+    {letter:'A-', points:4.5,color:'#6EE7B7'},{letter:'B+', points:4.25,color:'#60A5FA'},
+    {letter:'B',  points:4.0,color:'#3B82F6'},{letter:'B-', points:3.75,color:'#818CF8'},
+    {letter:'C+', points:3.5,color:'#A78BFA'},{letter:'C',  points:3.0,color:'#F59E0B'},
+    {letter:'D',  points:2.0,color:'#FB923C'},{letter:'F',  points:0.0,color:'#EF4444'},
+    {letter:'P',  points:null,color:'#34D399',pf:true},
+    {letter:'F (No Credit)', points:null,color:'#EF4444',pf:true,noCredit:true},
+  ],
+  '100':[
+    {letter:'97-100',points:4.0,color:'#10B981'},{letter:'93-96',points:3.7,color:'#34D399'},
+    {letter:'89-92', points:3.3,color:'#60A5FA'},{letter:'85-88',points:3.0,color:'#3B82F6'},
+    {letter:'80-84', points:2.7,color:'#818CF8'},{letter:'75-79',points:2.3,color:'#A78BFA'},
+    {letter:'70-74', points:2.0,color:'#F59E0B'},{letter:'65-69',points:1.7,color:'#FBBF24'},
+    {letter:'60-64', points:1.0,color:'#FB923C'},{letter:'Below 60',points:0.0,color:'#EF4444'},
+    {letter:'P',points:null,color:'#34D399',pf:true},
+    {letter:'F (No Credit)',points:null,color:'#EF4444',pf:true,noCredit:true},
+  ],
+};
+
+const STANDINGS = [
+  {min:3.9, label:'Summa Cum Laude', color:'#10B981', bg:'rgba(16,185,129,.08)'},
+  {min:3.7, label:'Magna Cum Laude', color:'#60A5FA', bg:'rgba(96,165,250,.08)'},
+  {min:3.5, label:"Dean's List",     color:'#A78BFA', bg:'rgba(167,139,250,.08)'},
+  {min:3.0, label:'Good Standing',   color:'#34D399', bg:'rgba(52,211,153,.06)'},
+  {min:2.0, label:'Satisfactory',    color:'#F59E0B', bg:'rgba(245,158,11,.06)'},
+  {min:0,   label:'Academic Probation', color:'#EF4444', bg:'rgba(239,68,68,.08)'},
+];
+
+/* ── State ───────────────────────────────────────────────────────────── */
+let scale   = '4.0';
+let semId   = 1, courseId = 1;
+let semesters  = [];
+let whatIfMode = false;
+let saveTimer  = null;
+
+/* ── Init ────────────────────────────────────────────────────────────── */
+function init(){
+  const saved = localStorage.getItem('dl_gpa_v2');
+  if(saved){
+    try{
+      const d = JSON.parse(saved);
+      scale     = d.scale || '4.0';
+      semesters = d.semesters || [];
+      semId     = Math.max(1,...semesters.map(s=>s.id))+1;
+      const allIds = semesters.flatMap(s=>s.courses.map(c=>c.id));
+      courseId  = allIds.length ? Math.max(...allIds)+1 : 1;
+      const gc  = d.gradCredits;
+      if(gc) document.getElementById('gradCredits').value = gc;
+    }catch(e){}
+  }
+  if(!semesters.length) addSemester(true);
+  // Activate correct scale tab
+  document.querySelectorAll('.scale-tab').forEach(t=>{
+    if(t.textContent.trim()===scale) t.classList.add('on');
+    else t.classList.remove('on');
+  });
+  renderAll();
+  renderLegend();
+  renderStanding(0);
+  initGDPR();
+}
+
+/* ── Scale ───────────────────────────────────────────────────────────── */
+function getScale(){return SCALES[scale];}
+function maxGPA(){return Math.max(...getScale().filter(g=>g.points!==null).map(g=>g.points));}
+function gradeEntry(letter){return getScale().find(g=>g.letter===letter);}
+function gradeColor(letter){const e=gradeEntry(letter);return e?e.color:'#4C6580';}
+function gradePoints(letter){const e=gradeEntry(letter);return(e&&e.points!=null)?e.points:null;}
+
+function setScale(s,btn){
+  scale=s;
+  document.querySelectorAll('.scale-tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  // Ensure all courses have valid grades for new scale
+  const validLetters = SCALES[s].map(g=>g.letter);
+  semesters.forEach(sem=>sem.courses.forEach(c=>{
+    if(!validLetters.includes(c.grade)) c.grade=SCALES[s][0].letter;
+    if(!validLetters.includes(c.projGrade)) c.projGrade=c.grade;
+  }));
+  renderAll();renderLegend();scheduleSave();
+}
+
+function renderLegend(){
+  const sc = getScale().filter(g=>!g.pf);
+  document.getElementById('legendItems').innerHTML = sc.map(function(g){
+    return '<div class="legend-item"><div class="legend-dot" style="background:'+g.color+'"></div>'
+      + '<span>'+g.letter+' = '+g.points.toFixed(1)+'</span></div>';
+  }).join('');
+}
+
+/* ── Standing ────────────────────────────────────────────────────────── */
+function getStanding(gpa){
+  return STANDINGS.find(s=>gpa>=s.min) || STANDINGS[STANDINGS.length-1];
+}
+
+function renderStanding(gpa){
+  const curr = getStanding(gpa);
+  // Badge on main card
+  const badge = document.getElementById('standingBadge');
+  if(gpa>0){
+    badge.innerHTML=`<div class="standing-badge" style="color:${curr.color};background:${curr.bg};border-color:${curr.color}44">${curr.label}</div>`;
+  } else {
+    badge.innerHTML='';
+  }
+  // List on side panel
+  document.getElementById('standingList').innerHTML = STANDINGS.map(function(s, idx) {
+    var prevMin = idx > 0 ? STANDINGS[idx-1].min : 999;
+    var isCurr = gpa >= s.min && gpa < prevMin;
+    var isLast = idx === STANDINGS.length - 1;
+    return '<div class="standing-item' + (isCurr ? ' standing-current' : '') + '"'
+      + ' style="color:' + s.color + ';background:' + (isCurr ? s.bg : 'transparent') + '">'
+      + '<span class="si-name">' + s.label + '</span>'
+      + '<span class="si-gpa">' + (isLast ? '< 2.0' : s.min.toFixed(1) + '+') + '</span>'
+      + '</div>';
+  }).join('');
+}
+
+/* ── What-If ─────────────────────────────────────────────────────────── */
+function toggleWhatIf(){
+  whatIfMode = !whatIfMode;
+  const btn = document.getElementById('whatifBtn');
+  btn.className = 'nav-whatif '+(whatIfMode?'on':'off');
+  document.getElementById('whatifBanner').classList.toggle('show',whatIfMode);
+  renderAll();
+}
+
+/* ── Semester management ─────────────────────────────────────────────── */
+function addSemester(silent){
+  const names=['Spring','Summer','Fall','Winter'];
+  const year=2024+Math.floor(semesters.length/4);
+  semesters.push({id:semId++,name:names[semesters.length%4]+' '+year,courses:[],open:true});
+  if(!silent){renderAll();scheduleSave();}
+}
+function deleteSemester(id){
+  if(!confirm('Delete this semester?')) return;
+  semesters=semesters.filter(s=>s.id!==id);renderAll();scheduleSave();
+}
+function toggleSemester(id){
+  const s=semesters.find(s=>s.id===id);if(s)s.open=!s.open;renderAll();
+}
+function updateSemName(id,val){
+  const s=semesters.find(s=>s.id===id);if(s)s.name=val;scheduleSave();
+}
+
+/* ── Course management ───────────────────────────────────────────────── */
+function addCourse(sId, focusIt){
+  const s=semesters.find(s=>s.id===sId);
+  if(!s) return;
+  // Inherit last credit value
+  const lastCr = s.courses.length ? s.courses[s.courses.length-1].credits : 3;
+  const firstGrade = getScale()[0].letter;
+  s.courses.push({id:courseId++,name:'',credits:lastCr,grade:firstGrade,projGrade:firstGrade});
+  renderAll();
+  if(focusIt){
+    setTimeout(()=>{
+      const inputs=document.querySelectorAll('.course-name-inp');
+      if(inputs.length) inputs[inputs.length-1].focus();
+    },50);
+  }
+  scheduleSave();
+}
+function deleteCourse(sId,cId){
+  const s=semesters.find(s=>s.id===sId);
+  if(s){s.courses=s.courses.filter(c=>c.id!==cId);}
+  renderAll();scheduleSave();
+}
+function updateCourse(sId,cId,field,val){
+  const s=semesters.find(s=>s.id===sId);
+  const c=s?.courses.find(c=>c.id===cId);
+  if(!c) return;
+  if(field==='credits') c.credits=parseFloat(val)||0;
+  else if(field==='grade'){c.grade=val;if(!whatIfMode)c.projGrade=val;}
+  else if(field==='projGrade') c.projGrade=val;
+  else c[field]=val;
+  update();scheduleSave();
+}
+
+/* ── Calc ────────────────────────────────────────────────────────────── */
+function semCalc(sem, useProj){
+  let creds=0,pts=0,count=0;
+  sem.courses.forEach(c=>{
+    const grade = useProj&&whatIfMode ? c.projGrade : c.grade;
+    const entry = gradeEntry(grade);
+    if(!entry) return;
+    if(entry.pf){
+      if(!entry.noCredit&&c.credits>0){creds+=c.credits;count++;}
+      return;
+    }
+    if(entry.points==null||c.credits<=0) return;
+    creds+=c.credits; pts+=entry.points*c.credits; count++;
+  });
+  return{creds,pts,gpa:creds>0?pts/creds:0,count};
+}
+
+function update(){
+  const max=maxGPA();
+  let ac=0,ap=0,aco=0, pc=0,pp=0;
+  semesters.forEach(s=>{
+    const r=semCalc(s,false); ac+=r.creds;ap+=r.pts;aco+=r.count;
+    const p=semCalc(s,true);  pc+=p.creds;pp+=p.pts;
+  });
+  const cumGPA  = ac>0?ap/ac:0;
+  const projGPA = pc>0?pp/pc:0;
+  const pct     = max>0?cumGPA/max:0;
+  const projPct = max>0?projGPA/max:0;
+  const CIRC    = 226.2;
+
+  // Ring
+  document.getElementById('ringGPA').textContent = aco>0?cumGPA.toFixed(2):'—';
+  document.getElementById('ringFill').style.strokeDashoffset = CIRC*(1-pct);
+  const rc = pct>0.88?'#10B981':pct>0.75?'#34D399':pct>0.5?'#60A5FA':pct>0.25?'#F59E0B':'#EF4444';
+  document.getElementById('ringFill').style.stroke = rc;
+
+  if(whatIfMode&&aco>0){
+    document.getElementById('ringProj').style.strokeDashoffset=CIRC*(1-projPct);
+    document.getElementById('ringProj').style.display='block';
+    document.getElementById('ringProjVal').style.display='block';
+    document.getElementById('ringProjVal').textContent='\u2192 '+projGPA.toFixed(2);
+  } else {
+    document.getElementById('ringProj').style.strokeDashoffset=CIRC;
+    document.getElementById('ringProj').style.display='none';
+    document.getElementById('ringProjVal').style.display='none';
+  }
+
+  // Stats
+  document.getElementById('totalCredits').textContent=ac;
+  document.getElementById('totalPoints').textContent=ap.toFixed(1);
+  document.getElementById('totalCourses').textContent=aco;
+
+  if(whatIfMode&&aco>0){
+    const showProj=(v,id)=>{const el=document.getElementById(id);el.textContent='\u2192 '+v;el.classList.add('show');};
+    showProj(pc+' cr','projCredits');
+    showProj(pp.toFixed(1)+' pts','projPoints');
+    const diff=(projGPA-cumGPA);
+    const sign=diff>=0?'+':'';
+    document.getElementById('projGPACard').textContent='\u2192 '+projGPA.toFixed(2)+' ('+sign+diff.toFixed(2)+')';
+    document.getElementById('projGPACard').classList.add('show');
+  } else {
+    ['projCredits','projPoints','projGPACard'].forEach(id=>{
+      document.getElementById(id).classList.remove('show');
+    });
+  }
+
+  renderStanding(cumGPA);
+
+  // Last semester
+  const last=semesters[semesters.length-1];
+  if(last){
+    const r=semCalc(last,false);
+    document.getElementById('semGPA').textContent=r.count>0?r.gpa.toFixed(2):'—';
+    document.getElementById('semCredits').textContent=r.creds;
+  }
+
+  // Graduation tracker
+  const gradCr=parseInt(document.getElementById('gradCredits').value)||0;
+  if(gradCr>0){
+    const remain=Math.max(0,gradCr-ac);
+    const pctDone=Math.min(100,Math.round((ac/gradCr)*100));
+    document.getElementById('gradProgress').style.display='block';
+    document.getElementById('gradProgFill').style.width=pctDone+'%';
+    document.getElementById('gradProgLeft').textContent=ac+' / '+gradCr+' credits';
+    document.getElementById('gradProgRight').textContent=pctDone+'% complete';
+    document.getElementById('gradStat').innerHTML=remain>0?
+      `<strong>${remain}</strong> credits remaining`:
+      '<strong style="color:var(--ac)">\u2713 Graduation requirement met!</strong>';
+  } else {
+    document.getElementById('gradProgress').style.display='none';
+    document.getElementById('gradStat').textContent='';
+  }
+
+  calcTarget(cumGPA,ac,ap);
+  return{cumGPA,ac,ap,aco};
+}
+
+function calcTarget(cumGPAIn,acIn,apIn){
+  const target=parseFloat(document.getElementById('targetGPA').value);
+  const max=maxGPA();
+  const res=document.getElementById('targetResult');
+  const pw=document.getElementById('progressWrap');
+  const pf=document.getElementById('progressFill');
+  const pp=document.getElementById('progressPct');
+
+  // Use passed values or recalc
+  let cumGPA=cumGPAIn,ac=acIn,ap=apIn;
+  if(cumGPA===undefined){
+    let tc=0,tp=0;
+    semesters.forEach(s=>{const r=semCalc(s,false);tc+=r.creds;tp+=r.pts;});
+    cumGPA=tc>0?tp/tc:0;ac=tc;ap=tp;
+  }
+
+  if(!target||isNaN(target)){
+    res.textContent='Enter a target GPA to see what you need in remaining credits.';
+    pw.style.display='none'; return;
+  }
+  if(target>max){
+    res.textContent='Target exceeds maximum GPA of '+max.toFixed(1)+' on this scale.';
+    pw.style.display='none'; return;
+  }
+
+  const pct=ac>0&&target>0?Math.min(100,Math.round((cumGPA/target)*100)):0;
+  pf.style.width=pct+'%';
+  pf.style.background=pct>=100?'var(--ac)':pct>=75?'#60A5FA':'var(--warn)';
+  pp.textContent=pct+'%';
+  pw.style.display='block';
+
+  if(cumGPA>=target){
+    res.innerHTML='<strong style="color:var(--ac)">\u2713 Target reached!</strong> Your '+cumGPA.toFixed(2)+' GPA meets '+target.toFixed(2)+'.';
+    return;
+  }
+  const futCr=15;
+  const needed=(target*(ac+futCr)-ap)/futCr;
+  if(needed>max){
+    res.innerHTML='To reach <strong>'+target.toFixed(2)+'</strong> in '+futCr+' more credits, you need <strong>'+needed.toFixed(2)+'</strong> — above the '+max.toFixed(1)+' max. Try a lower target or more credits.';
+  } else {
+    const ne=getScale().filter(g=>g.points!=null).find(g=>g.points>=needed-0.25)||getScale()[0];
+    res.innerHTML='Need <strong style="color:var(--ac)">'+needed.toFixed(2)+'</strong> avg in next '+futCr+' credits to reach '+target.toFixed(2)+' — roughly a <strong style="color:'+ne.color+'">'+ne.letter+'</strong> average.';
+  }
+}
+
+/* ── Render helpers ─────────────────────────────────────────────────── */
+function makeOpts(grade) {
+  return getScale().map(function(g) {
+    var sel = g.letter === grade ? ' selected' : '';
+    var lbl = g.points != null ? g.letter + ' (' + g.points.toFixed(1) + ')' : g.letter;
+    return '<option value="' + g.letter + '"' + sel + '>' + lbl + '</option>';
+  }).join('');
+}
+
+function makeProjOpts(grade) {
+  return getScale().map(function(g) {
+    var sel = g.letter === grade ? ' selected' : '';
+    return '<option value="' + g.letter + '"' + sel + '>' + g.letter + '</option>';
+  }).join('');
+}
+
+function gradeRowClass(letter) {
+  var e = gradeEntry(letter);
+  if (!e || e.pf) return 'pf-row';
+  if (e.points === null) return '';
+  if (e.points >= 3.5) return 'grade-good';
+  if (e.points >= 2.0) return '';
+  if (e.points >= 1.0) return 'grade-warn';
+  return 'grade-danger';
+}
+
+function makeCourseRow(sem, c) {
+  var gc = gradeColor(c.grade);
+  var col = whatIfMode
+    ? 'grid-template-columns:1fr 60px 90px 80px 28px'
+    : 'grid-template-columns:1fr 60px 90px 28px';
+  var html = '<div class="course-row ' + gradeRowClass(c.grade) + '" style="' + col + '">';
+  html += '<input class="ci course-name-inp" type="text" value="' + esc(c.name) + '"'
+    + ' placeholder="Course name"'
+    + ' oninput="updateCourse(' + sem.id + ',' + c.id + ',\'name\',this.value)"'
+    + ' onkeydown="handleCourseTab(event,' + sem.id + ')">';
+  html += '<input class="ci" type="number" value="' + c.credits + '" min="0" max="12" step="0.5"'
+    + ' oninput="updateCourse(' + sem.id + ',' + c.id + ',\'credits\',this.value)"'
+    + ' style="text-align:right;padding:8px 8px">';
+  html += '<select class="ci ci-grade"'
+    + ' onchange="updateCourse(' + sem.id + ',' + c.id + ',\'grade\',this.value)"'
+    + ' style="color:' + gc + ';border-color:' + gc + '44;font-size:12px;padding:8px 20px 8px 8px">'
+    + makeOpts(c.grade) + '</select>';
+  if (whatIfMode) {
+    var pg = c.projGrade || c.grade;
+    html += '<select class="ci ci-grade"'
+      + ' onchange="updateCourse(' + sem.id + ',' + c.id + ',\'projGrade\',this.value)"'
+      + ' style="color:var(--warn);border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.06);font-size:12px;padding:8px 18px 8px 8px">'
+      + makeProjOpts(pg) + '</select>';
+  }
+  html += '<button class="cdel" onclick="deleteCourse(' + sem.id + ',' + c.id + ')">&times;</button>';
+  html += '</div>';
+  return html;
+}
+
+function makeSemester(sem) {
+  var r = semCalc(sem, false);
+  var col = whatIfMode
+    ? 'grid-template-columns:1fr 60px 90px 80px 28px'
+    : 'grid-template-columns:1fr 60px 90px 28px';
+  var html = '<div class="sem-section">';
+  html += '<div class="sem-hdr" onclick="toggleSemester(' + sem.id + ')">';
+  html += '<div class="sem-left">';
+  html += '<input class="sem-name-inp" value="' + esc(sem.name) + '"'
+    + ' onclick="event.stopPropagation()"'
+    + ' oninput="updateSemName(' + sem.id + ',this.value)"'
+    + ' onkeydown="if(event.key===\'Enter\')this.blur()">';
+  if (r.count > 0) {
+    html += '<span class="sem-badge">' + r.gpa.toFixed(2) + ' GPA</span>'
+      + '<span class="sem-cr-badge">' + r.creds + ' cr</span>';
+  } else {
+    html += '<span class="sem-cr-badge">No courses</span>';
+  }
+  html += '</div>';
+  html += '<div class="sem-right">'
+    + '<button class="sem-del" onclick="event.stopPropagation();deleteSemester(' + sem.id + ')" title="Delete">&times;</button>'
+    + '<span class="sem-chevron" style="' + (sem.open ? '' : 'transform:rotate(-90deg)') + '">&#8964;</span>'
+    + '</div></div>';
+
+  if (sem.open) {
+    html += '<div class="courses-body">';
+    html += '<div class="courses-col-hdr" style="' + col + '">';
+    html += '<span class="col-lbl">Course</span>';
+    html += '<span class="col-lbl" style="text-align:right">Credits</span>';
+    html += '<span class="col-lbl" style="text-align:center">Grade</span>';
+    if (whatIfMode) html += '<span class="col-lbl" style="text-align:center;color:var(--warn)">What-If</span>';
+    html += '<span></span></div>';
+    sem.courses.forEach(function(course) {
+      html += makeCourseRow(sem, course);
+    });
+    html += '<button class="add-course-btn" onclick="addCourse(' + sem.id + ',true)">'
+      + '<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+      + ' Add course</button>';
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+/* ── Tab handler ─────────────────────────────────────────────────────── */
+function handleCourseTab(e, sId) {
+  if (e.key !== 'Tab' || e.shiftKey) return;
+  var rows = document.querySelectorAll('.course-name-inp');
+  var last = rows[rows.length - 1];
+  if (e.target === last) { e.preventDefault(); addCourse(sId, true); }
+}
+
+/* ── Render ──────────────────────────────────────────────────────────── */
+function renderAll() {
+  var html = '';
+  semesters.forEach(function(sem) { html += makeSemester(sem); });
+  document.getElementById('semestersContainer').innerHTML = html;
+  update();
+}
+
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ── Export ──────────────────────────────────────────────────────────── */
+function exportCSV(){
+  const sc=getScale();
+  let rows=['Semester,Course,Credits,Grade,Grade Points,Quality Points,Type'];
+  semesters.forEach(sem=>{
+    sem.courses.forEach(c=>{
+      const e=gradeEntry(c.grade);
+      const gp=e&&e.points!=null?e.points:0;
+      const type=e?.pf?'Pass/Fail':'Graded';
+      rows.push(`"${sem.name}","${c.name}",${c.credits},${c.grade},${gp.toFixed(1)},${(gp*c.credits).toFixed(2)},${type}`);
+    });
+  });
+  let ac=0,ap=0;
+  semesters.forEach(s=>{const r=semCalc(s,false);ac+=r.creds;ap+=r.pts;});
+  rows.push('');
+  rows.push(`Cumulative GPA,${ac>0?(ap/ac).toFixed(3):0},Total Credits,${ac},Quality Points,${ap.toFixed(2)}`);
+  const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='my-gpa.csv';a.click();
+  showToast('\u2713 Exported to CSV');
+}
+
+/* ── Persistence ─────────────────────────────────────────────────────── */
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    localStorage.setItem('dl_gpa_v2',JSON.stringify({
+      scale,semesters,gradCredits:document.getElementById('gradCredits').value
+    }));
+  },600);
+}
+function clearAll(){
+  if(!confirm('Clear all GPA data? This cannot be undone.')) return;
+  localStorage.removeItem('dl_gpa_v2');location.reload();
+}
+
+/* ── FAQ ─────────────────────────────────────────────────────────────── */
+function toggleFAQ(btn){
+  const item=btn.closest('.faq-item'),open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('.faq-q').setAttribute('aria-expanded','false');});
+  if(!open){item.classList.add('open');btn.setAttribute('aria-expanded','true');}
+}
+
+/* ── Toast ───────────────────────────────────────────────────────────── */
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+/* ── GDPR ────────────────────────────────────────────────────────────── */
+function initGDPR(){
+  if(localStorage.getItem('dl_gdpr_v1')) return;
+  setTimeout(()=>{const b=document.getElementById('gdpr-banner');if(b)b.classList.add('show');},900);
+}
+function gdprAccept(){
+  localStorage.setItem('dl_gdpr_v1','accepted');
+  const b=document.getElementById('gdpr-banner');
+  if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}
+  if(!document.getElementById('adsense-script')){
+    const s=document.createElement('script');s.id='adsense-script';s.async=true;
+    s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5768905713200594';
+    s.crossOrigin='anonymous';document.head.appendChild(s);
+  }
+}
+function gdprDecline(){
+  localStorage.setItem('dl_gdpr_v1','declined');
+  const b=document.getElementById('gdpr-banner');
+  if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}
+}
+
+init();
+</script>
+</body>
+</html>
