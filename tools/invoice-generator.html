@@ -331,6 +331,33 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
   .preview-panel{background:#fff;padding:0}
   .inv-doc{box-shadow:none;max-width:100%}
 }
+
+/* ── Hero ── */
+.ds-hero{padding:52px 24px 36px;text-align:center;position:relative;overflow:hidden;
+  background:var(--bg)}
+.ds-hero::before{content:'';position:absolute;top:-80px;left:50%;
+  transform:translateX(-50%);width:640px;height:280px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(16,185,129,.09) 0%,transparent 70%);
+  pointer-events:none;z-index:0}
+.ds-hero-inner{position:relative;z-index:1;max-width:600px;margin:0 auto}
+.ds-hero-tag{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);
+  border-radius:100px;padding:5px 14px;font-size:10px;font-weight:700;
+  letter-spacing:1.8px;text-transform:uppercase;color:#34D399;margin-bottom:20px}
+.ds-hero-dot{width:5px;height:5px;border-radius:50%;background:#10B981;
+  animation:dspulse 2s ease-in-out infinite}
+@keyframes dspulse{0%,100%{opacity:1}55%{opacity:.2}}
+.ds-hero h1{font-size:50px;font-weight:900;letter-spacing:-.045em;
+  line-height:1.03;margin-bottom:14px;color:#EEF6FF;white-space:pre-line}
+.ds-hero h1 em{font-style:normal;
+  background:linear-gradient(125deg,#10B981 0%,#34D399 40%,#60A5FA 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ds-hero p{font-size:16px;color:#88AAC5;line-height:1.7;max-width:500px;margin:0 auto}
+@media(max-width:600px){
+  .ds-hero{padding:36px 20px 24px}
+  .ds-hero h1{font-size:34px}
+  .ds-hero p{font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -364,6 +391,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
     </button>
   </div>
 </nav>
+<!-- ── DS HERO ── -->
+<div class="ds-hero">
+  <div class="ds-hero-inner">
+    <div class="ds-hero-tag"><div class="ds-hero-dot"></div>FREE INVOICE GENERATOR</div>
+    <h1>Professional invoices,
+<em>in seconds.</em></h1>
+    <p>24 currencies, live exchange rates, tax presets by country, logo upload, recurring billing, and PDF download. Free forever, no account needed.</p>
+  </div>
+</div>
 
 <div class="app">
 
