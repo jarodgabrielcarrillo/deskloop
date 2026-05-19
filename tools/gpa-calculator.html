@@ -38,11 +38,25 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .nav-back{color:var(--tx3);text-decoration:none;font-size:13px;font-weight:500;
   padding:7px 13px;border-radius:var(--r);border:1px solid var(--bd);transition:all var(--t)}
 .nav-back:hover{color:var(--tx2);border-color:var(--bd2)}
-.nav-whatif{font:600 12px/1 'Inter',sans-serif;padding:8px 14px;border-radius:var(--r);
-  border:none;cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:6px}
-.nav-whatif.off{background:var(--s2);color:var(--tx2);border:1px solid var(--bd2)}
-.nav-whatif.on{background:rgba(245,158,11,.12);color:var(--warn);border:1px solid rgba(245,158,11,.3)}
+.nav-whatif{font:700 12px/1 'Inter',sans-serif;padding:9px 16px;border-radius:var(--r);
+  border:none;cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:7px;
+  position:relative;overflow:hidden}
+.nav-whatif.off{
+  background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(245,158,11,.05));
+  color:var(--warn);border:1px solid rgba(245,158,11,.4);
+  box-shadow:0 0 12px rgba(245,158,11,.1)}
+.nav-whatif.off:hover{
+  background:linear-gradient(135deg,rgba(245,158,11,.25),rgba(245,158,11,.1));
+  box-shadow:0 0 20px rgba(245,158,11,.2);transform:translateY(-1px)}
+.nav-whatif.on{
+  background:linear-gradient(135deg,rgba(245,158,11,.9),rgba(251,191,36,.8));
+  color:#1a0f00;border:1px solid var(--warn);
+  box-shadow:0 0 24px rgba(245,158,11,.4),0 4px 12px rgba(245,158,11,.2)}
+.nav-whatif.on:hover{box-shadow:0 0 32px rgba(245,158,11,.5);transform:translateY(-1px)}
 .nav-whatif svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.nav-whatif-pulse{position:absolute;inset:0;border-radius:var(--r);
+  background:rgba(245,158,11,.15);animation:wipulse 2.5s ease-in-out infinite;pointer-events:none}
+@keyframes wipulse{0%,100%{opacity:0;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
 
 /* HERO */
 .hero{padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden}
@@ -331,9 +345,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
     <span class="logo-t">Deskloop</span>
   </a>
   <div class="nav-r">
-    <button class="nav-whatif off" id="whatifBtn" onclick="toggleWhatIf()">
+    <button class="nav-whatif off" id="whatifBtn" onclick="toggleWhatIf()" title="Simulate grade changes without affecting your saved data">
+      <div class="nav-whatif-pulse" id="whatifPulse"></div>
       <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg>
-      <span>What-If Mode</span>
+      <span>&#10024; What-If</span>
     </button>
     <a href="/" class="nav-back">&larr; All tools</a>
   </div>
@@ -654,8 +669,11 @@ function renderStanding(gpa){
 /* ── What-If ─────────────────────────────────────────────────────────── */
 function toggleWhatIf(){
   whatIfMode = !whatIfMode;
-  const btn = document.getElementById('whatifBtn');
+  const btn  = document.getElementById('whatifBtn');
+  const pulse = document.getElementById('whatifPulse');
   btn.className = 'nav-whatif '+(whatIfMode?'on':'off');
+  // Stop pulse when active — button is already visually prominent
+  pulse.style.animation = whatIfMode ? 'none' : '';
   document.getElementById('whatifBanner').classList.toggle('show',whatIfMode);
   renderAll();
 }
