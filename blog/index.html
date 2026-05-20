@@ -39,14 +39,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .nav-cta:hover{background:var(--ac-lt);transform:translateY(-1px)}
 
 /* PAGE HEADER */
-.page-hdr{padding:120px 0 52px;text-align:center;position:relative}
-.page-hdr::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(16,185,129,.07) 0%,transparent 70%);pointer-events:none}
-.ph-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:6px 14px;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--ac-lt);margin-bottom:24px}
+.page-hdr{padding:56px 24px 40px;text-align:center;position:relative;overflow:hidden}
+.page-hdr::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(16,185,129,.1) 0%,transparent 70%);pointer-events:none;z-index:0}
+.ph-tag{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:6px 14px;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--ac-lt);margin-bottom:24px}
 .ph-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:glow 2.2s ease-in-out infinite}
 @keyframes glow{0%,100%{opacity:1}55%{opacity:.2}}
-.ph-h1{font-size:60px;font-weight:900;letter-spacing:-.045em;line-height:1.02;margin-bottom:18px;position:relative}
+.ph-h1{font-size:60px;font-weight:900;letter-spacing:-.045em;line-height:1.04;margin-bottom:18px;position:relative;z-index:1;white-space:pre-line}
 .ph-h1 em{font-style:normal;background:linear-gradient(125deg,var(--ac) 0%,var(--ac-lt) 40%,var(--blue) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.ph-sub{font-size:17px;color:var(--tx2);max-width:520px;margin:0 auto;line-height:1.72}
+.ph-sub{position:relative;z-index:1;font-size:17px;color:var(--tx2);max-width:520px;margin:0 auto;line-height:1.72}
 
 /* CONTROLS */
 .controls{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:0 0 40px;position:relative;z-index:10}
@@ -91,11 +91,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
 /* Filler elements base */
 .fe{
-  position:absolute;pointer-events:none!important;user-select:none;
+  position:absolute;user-select:none;
   -webkit-user-select:none;will-change:transform,opacity;
-  transform:translate(-50%,-50%);cursor:default;
+  transform:translate(-50%,-50%);cursor:pointer;
+  transition:opacity .15s,filter .15s;
 }
-.fe *{pointer-events:none!important}
+.fe:hover{opacity:1!important;filter:brightness(1.4) drop-shadow(0 0 6px rgba(16,185,129,.5))}
+.fe *{pointer-events:none}
 /* Emoji */
 .fe-emoji{line-height:1;display:flex;align-items:center;justify-content:center}
 /* Keyword tag */
@@ -253,8 +255,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 
 <div class="page-hdr">
   <div class="ph-tag"><div class="ph-dot"></div>Productivity Articles</div>
-  <h1 class="ph-h1">Guides &amp; <em>Articles</em></h1>
-  <p class="ph-sub">Practical writing on deep work, focus, habits, and remote collaboration. Drag the sphere to explore &mdash; click any card to read.</p>
+  <h1 class="ph-h1">Read, learn,
+<em>get more done.</em></h1>
+  <p class="ph-sub">Practical guides on deep work, focus, habits, and remote collaboration. Written for people who want to do their best work &mdash; without burning out.</p>
 </div>
 
 <div class="controls W">
@@ -458,8 +461,6 @@ function shapeHTML(f) {
 FILLERS.forEach((f, i) => {
   const el = document.createElement('div');
   el.className = 'fe';
-  el.style.pointerEvents = 'none';
-
   if (f.type === 'emoji') {
     el.classList.add('fe-emoji');
     el.style.fontSize = f.size + 'px';
@@ -478,6 +479,14 @@ FILLERS.forEach((f, i) => {
     el.classList.add('fe-shape');
     el.innerHTML = shapeHTML(f);
   }
+
+  // Click: cycle to article pages
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const urls = ['/blog/what-is-deep-work.html', '/blog/pomodoro-technique.html', '/blog/streak-habits.html', '/blog/meeting-cost.html', '/blog/remote-team-time-zones.html'];
+    const target = urls[i % urls.length];
+    window.location.href = target;
+  });
 
   center.appendChild(el);
   fillerObjs.push({ el, f, basePos: FILLER_POS[i] });
