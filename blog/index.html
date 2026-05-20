@@ -78,7 +78,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   padding:18px 16px 16px;cursor:pointer;
   user-select:none;-webkit-user-select:none;
   will-change:transform,opacity;
-  transition:box-shadow .3s ease,border-color .3s ease;
+  transition:box-shadow .3s ease,border-color .3s ease,transform .2s ease;
   pointer-events:auto;touch-action:none;
   isolation:isolate;
 }
@@ -88,6 +88,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .sc-time{font-size:10px;color:var(--tx3);font-family:var(--mono)}
 .sc-arrow{font-size:10px;font-weight:700;color:var(--ac);opacity:0;transition:opacity .2s}
 .s-card:hover .sc-arrow,.s-card.front .sc-arrow{opacity:1}
+.s-card.front:hover{box-shadow:0 12px 40px rgba(0,0,0,.4);border-color:rgba(16,185,129,.3)!important}
 
 /* Filler elements base */
 .fe{
@@ -444,7 +445,9 @@ ARTICLES.forEach(art => {
     <div class="sc-meta"><span class="sc-time">${art.readTime} read</span><span class="sc-arrow">Read &rarr;</span></div>`;
   center.appendChild(el);
   cardEls.push(el);
-  el.addEventListener('click', () => { if(!hasMoved) openArticle(art.id); });
+  el.addEventListener('click', () => {
+    if(!hasMoved) window.location.href = art.url;
+  });
 });
 
 /* ── Build filler elements ─────────────────────────────────────────────── */
@@ -576,7 +579,7 @@ wrap.addEventListener('pointerdown', e => {
 wrap.addEventListener('pointermove', e => {
   if(!isDragging) return;
   const dx=e.clientX-lastPX, dy=e.clientY-lastPY;
-  if(Math.abs(dx)+Math.abs(dy)>4) hasMoved=true;
+  if(Math.abs(dx)+Math.abs(dy)>8) hasMoved=true;
   prevPX=lastPX; prevPY=lastPY; lastPX=e.clientX; lastPY=e.clientY;
   velY=dx*.009; velX=dy*.009;
   rotY+=dx*.009; rotX+=dy*.009;
