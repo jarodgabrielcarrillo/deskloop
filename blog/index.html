@@ -591,6 +591,22 @@ wrap.addEventListener('pointerup', e => {
   isDragging=false;
   velY=(lastPX-prevPX)*.013; velX=(lastPY-prevPY)*.013;
   autoResumeTimer=setTimeout(()=>{autoRotate=true;},3200);
+  // Navigate on clean tap/click
+  if(!hasMoved){
+    // Article card click
+    const card=e.target.closest('.s-card');
+    if(card){
+      const idx=cardEls.indexOf(card);
+      if(idx>=0){window.location.href=ARTICLES[idx].url;return;}
+    }
+    // Filler element click
+    const fe=e.target.closest('.fe');
+    if(fe){
+      const urls=['/blog/what-is-deep-work.html', '/blog/pomodoro-technique.html', '/blog/streak-habits.html', '/blog/meeting-cost.html', '/blog/remote-team-time-zones.html'];
+      const fi=fillerObjs.findIndex(f=>f.el===fe);
+      if(fi>=0){window.location.href=urls[fi%urls.length];return;}
+    }
+  }
 });
 wrap.addEventListener('pointercancel', ()=>{ isDragging=false; });
 wrap.addEventListener('contextmenu', e=>e.preventDefault());
