@@ -955,11 +955,13 @@ if(stage){
   },{passive:false});
   stage.addEventListener('pointerup',e=>{
     isDragging=false;
-    velY=(lastPX-prevPX)*.013;velX=(lastPY-prevPY)*.013;
+    velY=(lastPX-prevPX)*.013;velX=(lastPY-prevPX)*.013;
     autoTimer=setTimeout(()=>{autoRotate=true;},3200);
-    // Navigate on clean tap/click (no drag)
+    // Navigate on clean tap — use elementFromPoint because setPointerCapture
+    // redirects e.target to stage, so closest() on e.target always fails
     if(!hasMoved){
-      const link=e.target.closest('a.oc');
+      const el=document.elementFromPoint(e.clientX,e.clientY);
+      const link=el&&el.closest('a.oc');
       if(link){window.location.href=link.getAttribute('href');return;}
     }
   });

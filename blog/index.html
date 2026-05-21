@@ -623,14 +623,16 @@ wrap.addEventListener('pointerup', e => {
   autoResumeTimer=setTimeout(()=>{autoRotate=true;},3200);
   // Navigate on clean tap/click
   if(!hasMoved){
+    // Use elementFromPoint — setPointerCapture makes e.target always === wrap
+    const el=document.elementFromPoint(e.clientX,e.clientY);
     // Article card click
-    const card=e.target.closest('.s-card');
+    const card=el&&el.closest('.s-card');
     if(card){
       const idx=cardEls.indexOf(card);
       if(idx>=0){window.location.href=ARTICLES[idx].url;return;}
     }
     // Filler element click
-    const fe=e.target.closest('.fe');
+    const fe=el&&el.closest('.fe');
     if(fe){
       const urls=['/blog/what-is-deep-work.html', '/blog/pomodoro-technique.html', '/blog/streak-habits.html', '/blog/meeting-cost.html', '/blog/remote-team-time-zones.html'];
       const fi=fillerObjs.findIndex(f=>f.el===fe);
