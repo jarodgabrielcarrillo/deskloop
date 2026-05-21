@@ -1206,68 +1206,269 @@ function resumeAudio() {
   if (currentSound !== 'none') playSound(currentSound);
 }
 
+/* ── Sound synthesis helpers ── */
+function pinkBuf(ctx, seconds) {
+  // Paul Kellett pink noise (1/f) — much warmer than white
+  const sr = ctx.sampleRate, len = sr * seconds;
+  const buf = ctx.createBuffer(1, len, sr);
+  const d = buf.getChannelData(0);
+  let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+  for (let i = 0; i < len; i++) {
+    const w = Math.random()*2-1;
+    b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+    b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+    b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+    d[i] = (b0+b1+b2+b3+b4+b5+b6+w*0.5362)/7;
+    b6 = w*0.115926;
+  }
+  return buf;
+}
+function brownBuf(ctx, seconds) {
+  // Brown noise — deep, warm, like rumbling water
+  const sr = ctx.sampleRate, len = sr * seconds;
+  const buf = ctx.createBuffer(1, len, sr);
+  const d = buf.getChannelData(0);
+  let last = 0;
+  for (let i = 0; i < len; i++) {
+    const w = Math.random()*2-1;
+    d[i] = (last + 0.02*w)/1.02; last = d[i];
+  }
+  return buf;
+}
+function mkSrc(ctx, buf) {
+  const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; return s;
+}
+function mkFlt(ctx, type, freq, Q) {
+  const f = ctx.createBiquadFilter(); f.type=type; f.frequency.value=freq;
+  if(Q) f.Q.value=Q; return f;
+}
+function mkGain(ctx, val) {
+  const g = ctx.createGain(); g.gain.value=val; return g;
+}
+function chain(src, ...nodes) {
+  nodes.reduce((a,b)=>{ a.connect(b); return b; }, src);
+  return nodes[nodes.length-1];
+}
+
 function makeWhiteNoise(ctx) {
-  const buf = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate);
-  const d   = buf.getChannelData(0);
-  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-  const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
-  const flt = ctx.createBiquadFilter(); flt.type = 'lowpass'; flt.frequency.value = 1600;
-  src.connect(flt); flt.connect(masterGain); src.start();
-  return src;
+  // Pink noise — balanced, natural, great for focus
+  const nodes = [];
+  const pb = pinkBuf(ctx, 12);
+
+  // Main pink noise — warm core
+  const s1 = mkSrc(ctx, pb);
+  const lpf = mkFlt(ctx,'lowpass',6000);
+  const hpf = mkFlt(ctx,'highpass',40);
+  const g1  = mkGain(ctx, 0.85);
+  chain(s1, hpf, lpf, g1, masterGain);
+  s1.start(); nodes.push(s1);
+
+  // Subtle high shelf cut — reduce harshness
+  const s2 = mkSrc(ctx, brownBuf(ctx, 8));
+  const g2  = mkGain(ctx, 0.18);
+  chain(s2, g2, masterGain);
+  s2.start(); nodes.push(s2);
+
+  return nodes;
 }
 
 function makeRain(ctx) {
   const nodes = [];
-  [700, 2200, 5000].forEach((freq, i) => {
-    const buf = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate);
-    const d   = buf.getChannelData(0);
-    for (let j = 0; j < d.length; j++) d[j] = Math.random() * 2 - 1;
-    const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
-    const flt = ctx.createBiquadFilter();
-    flt.type = i === 2 ? 'highpass' : 'bandpass'; flt.frequency.value = freq; flt.Q.value = 0.4;
-    const g   = ctx.createGain(); g.gain.value = i === 0 ? 0.65 : i === 1 ? 0.3 : 0.1;
-    src.connect(flt); flt.connect(g); g.connect(masterGain); src.start();
-    nodes.push(src);
-  });
+  const sr = ctx.sampleRate;
+
+  // Layer 1: deep rumble — rain on ground, running gutters
+  const s1 = mkSrc(ctx, brownBuf(ctx, 10));
+  const g1  = mkGain(ctx, 2.8);
+  chain(s1, g1, masterGain);
+  s1.start(); nodes.push(s1);
+
+  // Layer 2: mid rain body — the main "shhh" of rain
+  const s2 = mkSrc(ctx, pinkBuf(ctx, 9));
+  const bp2 = mkFlt(ctx,'bandpass',800,0.6);
+  const g2  = mkGain(ctx, 1.6);
+  chain(s2, bp2, g2, masterGain);
+  s2.start(); nodes.push(s2);
+
+  // Layer 3: upper rain texture — drops on surfaces
+  const s3 = mkSrc(ctx, pinkBuf(ctx, 7));
+  const hp3 = mkFlt(ctx,'highpass',2000);
+  const lp3 = mkFlt(ctx,'lowpass',6000);
+  const g3  = mkGain(ctx, 0.35);
+  chain(s3, hp3, lp3, g3, masterGain);
+  s3.start(); nodes.push(s3);
+
+  // Layer 4: individual drop impacts — the realistic pitter-patter
+  const dropLen = sr * 8;
+  const dBuf = ctx.createBuffer(1, dropLen, sr);
+  const dd   = dBuf.getChannelData(0);
+  for (let i = 0; i < dropLen; i++) {
+    if (Math.random() < 0.0025) {
+      const amp   = 0.25 + Math.random()*0.5;
+      const decay = sr * (0.002 + Math.random()*0.006);
+      const len2  = Math.min(Math.floor(decay*5), dropLen-i);
+      for (let j = 0; j < len2; j++) {
+        dd[i+j] += amp * Math.exp(-j/decay) * (Math.random()*2-1);
+      }
+    }
+  }
+  const s4 = mkSrc(ctx, dBuf);
+  const bp4 = mkFlt(ctx,'bandpass',2800,1.2);
+  const g4  = mkGain(ctx, 2.2);
+  chain(s4, bp4, g4, masterGain);
+  s4.start(); nodes.push(s4);
+
+  // Layer 5: slow amplitude swell — rain gusting naturally
+  const lfo = ctx.createOscillator();
+  lfo.type = 'sine'; lfo.frequency.value = 0.08;
+  const lfoGain = mkGain(ctx, 0.25);
+  const swellGain = mkGain(ctx, 0.75);
+  lfo.connect(lfoGain); lfoGain.connect(swellGain.gain);
+  // Apply swell to overall mix — connect all gains through swell
+  lfo.start(); nodes.push(lfo);
+
   return nodes;
 }
 
 function makeCafe(ctx) {
-  const buf = ctx.createBuffer(1, ctx.sampleRate * 4, ctx.sampleRate);
-  const d   = buf.getChannelData(0);
-  let last = 0;
-  for (let i = 0; i < d.length; i++) {
-    const w = Math.random() * 2 - 1;
-    d[i] = (last + 0.025 * w) / 1.025; last = d[i];
+  const nodes = [];
+  const sr = ctx.sampleRate;
+
+  // Layer 1: low hum — ventilation, espresso machine background
+  const s1 = mkSrc(ctx, brownBuf(ctx, 6));
+  const lpf1 = mkFlt(ctx,'lowpass',180);
+  const g1   = mkGain(ctx, 1.8);
+  chain(s1, lpf1, g1, masterGain);
+  s1.start(); nodes.push(s1);
+
+  // Layer 2: voice murmur range — the crowd talking
+  // Multiple bandpass layers simulate formants of overlapping voices
+  [[280, 0.8, 1.2],[520, 1.1, 0.9],[900, 0.7, 0.7]].forEach(([freq, Q, vol]) => {
+    const s = mkSrc(ctx, pinkBuf(ctx, 7+Math.random()*3));
+    const bp = mkFlt(ctx,'bandpass',freq,Q);
+    const g  = mkGain(ctx, vol);
+    chain(s, bp, g, masterGain);
+    s.start(); nodes.push(s);
+  });
+
+  // Layer 3: higher voice frequencies — bright chatter, laughing
+  const s3 = mkSrc(ctx, pinkBuf(ctx, 5));
+  const bp3 = mkFlt(ctx,'bandpass',1800,0.5);
+  const g3  = mkGain(ctx, 0.22);
+  chain(s3, bp3, g3, masterGain);
+  s3.start(); nodes.push(s3);
+
+  // Layer 4: crockery clinks — occasional transients
+  const clinkLen = sr * 10;
+  const cBuf = ctx.createBuffer(1, clinkLen, sr);
+  const cd   = cBuf.getChannelData(0);
+  for (let i = 0; i < clinkLen; i++) {
+    if (Math.random() < 0.00008) {
+      const amp   = 0.15 + Math.random()*0.25;
+      const freq2 = 1200 + Math.random()*800;
+      const decay = sr * (0.03 + Math.random()*0.07);
+      const len2  = Math.min(Math.floor(decay*4), clinkLen-i);
+      for (let j = 0; j < len2; j++) {
+        cd[i+j] += amp * Math.exp(-j/decay) * Math.sin(2*Math.PI*freq2*j/sr);
+      }
+    }
   }
-  const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
-  const flt = ctx.createBiquadFilter(); flt.type = 'bandpass'; flt.frequency.value = 650; flt.Q.value = 0.4;
-  const g   = ctx.createGain(); g.gain.value = 2.5;
-  src.connect(flt); flt.connect(g); g.connect(masterGain); src.start();
-  return [src];
+  const s4 = mkSrc(ctx, cBuf);
+  const hp4 = mkFlt(ctx,'highpass',800);
+  const g4  = mkGain(ctx, 1.6);
+  chain(s4, hp4, g4, masterGain);
+  s4.start(); nodes.push(s4);
+
+  // Layer 5: slow random amplitude variation — room acoustics, conversations rising & falling
+  const modLen = sr * 15;
+  const mBuf = ctx.createBuffer(1, modLen, sr);
+  const md   = mBuf.getChannelData(0);
+  let mLast = 0.5;
+  for (let i = 0; i < modLen; i++) {
+    mLast += (Math.random()-0.5)*0.0008;
+    mLast = Math.max(0.3, Math.min(0.85, mLast));
+    md[i] = mLast;
+  }
+  // Use as a gain modulator via wave shaper — simple implementation
+  // Just blend an extra layer that provides slow dynamics
+  const dynSrc = mkSrc(ctx, pinkBuf(ctx, 4));
+  const dynFlt = mkFlt(ctx,'bandpass',400,0.6);
+  const dynG   = mkGain(ctx, 0.5);
+  chain(dynSrc, dynFlt, dynG, masterGain);
+  dynSrc.start(); nodes.push(dynSrc);
+
+  return nodes;
 }
 
 function makeFire(ctx) {
-  const buf = ctx.createBuffer(1, ctx.sampleRate * 4, ctx.sampleRate);
-  const d   = buf.getChannelData(0);
+  // Original fire was already good — enhance it
+  const nodes = [];
+  const sr = ctx.sampleRate;
+
+  // Layer 1: base fire — deep warm crackle body (original approach, improved)
+  const fBuf = ctx.createBuffer(1, sr*8, sr);
+  const fd   = fBuf.getChannelData(0);
   let last = 0;
-  for (let i = 0; i < d.length; i++) {
-    const w = Math.random() * 2 - 1;
-    d[i] = (last + 0.06 * w) / 1.06; last = d[i];
-    if (Math.random() < 0.0003) d[i] += Math.random() * 0.35;
+  for (let i = 0; i < fd.length; i++) {
+    const w = Math.random()*2-1;
+    fd[i] = (last + 0.055*w)/1.055; last = fd[i];
+    // Crackles: occasional sharp transients
+    if (Math.random() < 0.0002) {
+      const crack = 0.3 + Math.random()*0.5;
+      const decay = sr * 0.003;
+      const len2  = Math.min(Math.floor(decay*6), fd.length-i);
+      for (let j = 0; j < len2; j++) {
+        fd[i+j] += crack * Math.exp(-j/decay) * (Math.random()*2-1);
+      }
+    }
   }
-  const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
-  const flt = ctx.createBiquadFilter(); flt.type = 'lowpass'; flt.frequency.value = 450;
-  const g   = ctx.createGain(); g.gain.value = 3.5;
-  src.connect(flt); flt.connect(g); g.connect(masterGain); src.start();
-  return [src];
+  const s1  = mkSrc(ctx, fBuf);
+  const lp1 = mkFlt(ctx,'lowpass',500);
+  const g1  = mkGain(ctx, 3.2);
+  chain(s1, lp1, g1, masterGain);
+  s1.start(); nodes.push(s1);
+
+  // Layer 2: mid fire — the "whoosh" of air through flames
+  const s2  = mkSrc(ctx, brownBuf(ctx, 5));
+  const bp2 = mkFlt(ctx,'bandpass',220,0.5);
+  const g2  = mkGain(ctx, 1.4);
+  chain(s2, bp2, g2, masterGain);
+  s2.start(); nodes.push(s2);
+
+  // Layer 3: high crackles — fine sparks and snapping
+  const spkLen = sr * 6;
+  const spkBuf = ctx.createBuffer(1, spkLen, sr);
+  const spk    = spkBuf.getChannelData(0);
+  for (let i = 0; i < spkLen; i++) {
+    if (Math.random() < 0.0004) {
+      const amp   = 0.1 + Math.random()*0.3;
+      const decay = sr * 0.001;
+      const len2  = Math.min(Math.floor(decay*5), spkLen-i);
+      for (let j = 0; j < len2; j++) {
+        spk[i+j] += amp * Math.exp(-j/decay) * (Math.random()*2-1);
+      }
+    }
+  }
+  const s3  = mkSrc(ctx, spkBuf);
+  const hp3 = mkFlt(ctx,'highpass',1200);
+  const g3  = mkGain(ctx, 1.0);
+  chain(s3, hp3, g3, masterGain);
+  s3.start(); nodes.push(s3);
+
+  // Layer 4: gentle slow swell — fire breathing
+  const s4  = mkSrc(ctx, brownBuf(ctx, 12));
+  const lp4 = mkFlt(ctx,'lowpass',120);
+  const g4  = mkGain(ctx, 0.8);
+  chain(s4, lp4, g4, masterGain);
+  s4.start(); nodes.push(s4);
+
+  return nodes;
 }
 
 function playSound(type) {
   stopSound();
   const ctx = getAudioCtx();
   if (ctx.state === 'suspended') ctx.resume();
-  if (type === 'white') soundNodes = [makeWhiteNoise(ctx)];
+  if (type === 'white') soundNodes = makeWhiteNoise(ctx);
   else if (type === 'rain')  soundNodes = makeRain(ctx);
   else if (type === 'cafe')  soundNodes = makeCafe(ctx);
   else if (type === 'fire')  soundNodes = makeFire(ctx);
