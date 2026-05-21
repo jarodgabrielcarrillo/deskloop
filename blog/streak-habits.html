@@ -3,351 +3,447 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>How to Build a Streak Habit That Actually Sticks — Deskloop</title>
-<meta name="description" content="Streaks are one of the most effective habit-building tools available. Here's the psychology behind why they work and how to use them without burning out.">
+<title>How to Build a Streak Habit That Actually Sticks | Deskloop Blog</title>
+<meta name="description" content="The psychology of habit streaks, why loss aversion makes them powerful, how to recover from missing a day, and how long habits actually take to become automatic.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://deskloop.work/blog/streak-habits.html">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--ac:#10B981;--ac-lt:#34D399;--blue-d:#1E40AF;--bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;--tx:#EEF6FF;--tx2:#7BACC4;--tx3:#3E5E78;--bd:#142032;--bd2:#1A2D44;--r:12px;--rl:20px;--t:200ms ease}
+:root{
+  --ac:#10B981;--ac-lt:#34D399;--blue:#3B82F6;--blue-lt:#60A5FA;--blue-d:#1E40AF;
+  --cat:#10B981;--cat-lt:#34D399;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;
+  --tx:#EEF6FF;--tx2:#88AAC5;--tx3:#4C6580;
+  --bd:#142032;--bd2:#1A2D44;
+  --r:10px;--rl:16px;--t:200ms ease;--mono:'JetBrains Mono',monospace;
+  --article-width:680px;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.W{max-width:740px;margin:0 auto;padding:0 28px}
-nav{position:sticky;top:0;z-index:300;background:rgba(6,12,24,.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--bd)}
-.nav-in{max-width:1200px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-m{width:34px;height:34px;background:var(--blue-d);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.logo-t{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.03em}
-.nav-a{color:var(--tx3);text-decoration:none;font-size:14px;font-weight:500;padding:7px 13px;border-radius:var(--r);transition:all var(--t)}
-.nav-a:hover{color:var(--tx2);background:rgba(255,255,255,.04)}
-.article{padding:72px 0 100px}
-.art-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ac);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.art-tag::before{content:'';width:22px;height:2px;background:var(--ac);border-radius:1px}
-h1{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1.06;margin-bottom:18px}
-.art-meta{font-size:13px;color:var(--tx3);margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--bd2);display:flex;gap:16px;flex-wrap:wrap}
-.art-meta span{display:flex;align-items:center;gap:5px}
-h2{font-size:24px;font-weight:700;letter-spacing:-.025em;margin:44px 0 16px;color:var(--tx)}
-h3{font-size:18px;font-weight:600;letter-spacing:-.02em;margin:28px 0 12px;color:var(--tx)}
-p{font-size:16px;color:var(--tx2);line-height:1.82;margin-bottom:20px}
-ul,ol{margin:0 0 20px 22px;color:var(--tx2);font-size:16px;line-height:1.82}
-li{margin-bottom:8px}
-strong{color:var(--tx);font-weight:600}
-em{color:var(--ac-lt);font-style:italic}
-blockquote{border-left:3px solid var(--ac);padding:16px 20px;margin:28px 0;background:rgba(16,185,129,.05);border-radius:0 var(--r) var(--r) 0}
-blockquote p{margin:0;color:var(--tx2);font-style:italic}
-.cta-box{background:var(--s1);border:1px solid var(--bd2);border-radius:var(--rl);padding:36px;margin:48px 0;text-align:center;position:relative;overflow:hidden}
-.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--ac-lt) 50%,transparent)}
-.cta-box h3{margin:0 0 10px;font-size:20px}
-.cta-box p{margin:0 0 20px;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--ac);color:#fff;text-decoration:none;border-radius:var(--r);padding:13px 24px;font-size:14px;font-weight:600;transition:all var(--t)}
-.cta-btn:hover{background:var(--ac-lt);transform:translateY(-1px)}
-.cta-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
-.key-point{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:var(--r);padding:18px 22px;margin:24px 0}
-.key-point p{margin:0;font-size:15px}
-footer{border-top:1px solid var(--bd);padding:36px 0;text-align:center;font-size:12px;color:var(--tx3)}
-footer a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
-footer a:hover{color:var(--tx2)}
-
-
-/* ── Design System v2 polish ── */
-/* Nav unified */
-nav{position:sticky;top:0;z-index:300;background:rgba(6,12,24,.97);
-  backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
-.nav-in{max-width:900px;margin:0 auto;padding:0 24px;height:62px;
-  display:flex;align-items:center;justify-content:space-between}
-
-/* Article hero glow */
-.art-hero{position:relative;overflow:hidden;padding-top:12px}
-.art-hero::before{content:'';position:absolute;top:-60px;left:50%;
-  transform:translateX(-50%);width:700px;height:260px;border-radius:50%;
-  background:radial-gradient(ellipse,rgba(16,185,129,.08) 0%,transparent 70%);
-  pointer-events:none;z-index:0}
-.art-hero>*{position:relative;z-index:1}
-
-/* Category tag pulse dot */
-.art-tag-dot{display:inline-block;width:5px;height:5px;border-radius:50%;
-  background:var(--ac);margin-right:8px;vertical-align:middle;
-  animation:atpulse 2s ease-in-out infinite}
-@keyframes atpulse{0%,100%{opacity:1}55%{opacity:.2}}
-
-
-/* Reading progress bar */
-.read-progress{position:fixed;top:0;left:0;z-index:999;height:3px;width:0%;
-  background:linear-gradient(90deg,var(--ac),#60A5FA);
-  transition:width .1s linear;border-radius:0 2px 2px 0}
-
-/* Article card top border */
-.article{border-top:3px solid transparent;
-  background-image:linear-gradient(var(--bg),var(--bg)),
-                   linear-gradient(90deg,var(--ac),#3B82F6);
-  background-origin:border-box;background-clip:padding-box,border-box}
-
-/* Related tools strip */
-.related-tools{background:var(--s1);border:1px solid var(--bd);border-radius:16px;
-  padding:24px 28px;margin-top:48px}
-.rt-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--tx3);margin-bottom:14px}
-.rt-links{display:flex;gap:10px;flex-wrap:wrap}
-.rt-link{display:inline-flex;align-items:center;gap:6px;background:var(--s2);
-  border:1px solid var(--bd2);border-radius:8px;padding:9px 14px;
-  color:var(--tx2);text-decoration:none;font-size:13px;font-weight:500;
-  transition:all 200ms ease}
-.rt-link:hover{border-color:rgba(16,185,129,.3);color:var(--ac);
-  background:rgba(16,185,129,.05)}
-.rt-link svg{width:13px;height:13px;stroke:currentColor;fill:none;
-  stroke-width:2;stroke-linecap:round}
-
-/* ── Layout & typography fix ── */
-body{overflow-x:hidden}
-.article{overflow-x:hidden;padding-left:0;padding-right:0}
-.W{max-width:680px;margin:0 auto;padding:0 24px;width:100%}
-.art-hero{padding-top:8px}
-
-/* Article h1: fluid size for long titles */
-h1{
-  font-size:clamp(26px, 4.5vw, 42px);
-  font-weight:900;
-  letter-spacing:-.04em;
-  line-height:1.06;
-  margin-bottom:16px;
-  overflow-wrap:break-word;
-  word-break:break-word;
-  hyphens:auto;
-}
-
-/* Responsive adjustments */
-@media(max-width:720px){
-  .W{padding:0 20px}
-  h1{font-size:clamp(24px, 5vw, 34px)}
-  .article{padding:48px 0 72px}
-}
-@media(max-width:480px){
-  .W{padding:0 16px}
-  h1{font-size:26px}
-  .art-meta{gap:10px;font-size:12px}
-}
-
-/* ── Skeleton loaders ── */
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);
+  font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.read-prog{position:fixed;top:0;left:0;z-index:1000;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--cat),var(--ac));
+  transition:width .1s linear;border-radius:0 2px 2px 0;pointer-events:none}
+.nav{position:sticky;top:0;z-index:200;background:rgba(6,12,24,.97);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);
+  padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-lm{width:32px;height:32px;background:var(--blue-d);border-radius:8px;
+  display:flex;align-items:center;justify-content:center}
+.nav-lt{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.025em}
+.nav-r{display:flex;align-items:center;gap:8px}
+.nav-a{color:var(--tx2);text-decoration:none;font-size:13px;font-weight:500;
+  padding:7px 14px;border-radius:var(--r);border:1px solid var(--bd);transition:all var(--t);display:inline-flex;align-items:center;gap:5px}
+.nav-a:hover{color:var(--tx);border-color:var(--bd2)}
+.nav-cta{background:var(--ac);color:#fff;font-weight:600;font-size:13px;
+  padding:8px 16px;border-radius:var(--r);text-decoration:none;transition:all var(--t)}
+.nav-cta:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.art-hero{position:relative;overflow:hidden;padding:60px 24px 0;text-align:center}
+.art-hero::before{content:'';position:absolute;top:-100px;left:50%;
+  transform:translateX(-50%);width:800px;height:400px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(16,185,129,.09) 0%,transparent 68%);pointer-events:none}
+.art-hero-inner{position:relative;z-index:1;max-width:var(--article-width);margin:0 auto}
+.art-cat{display:inline-flex;align-items:center;gap:7px;background:rgba(16,185,129,.06);
+  border:1px solid rgba(16,185,129,.22);border-radius:100px;
+  padding:5px 14px;font-size:10px;font-weight:700;letter-spacing:1.8px;
+  text-transform:uppercase;color:var(--cat-lt);margin-bottom:22px}
+.art-cat-dot{width:5px;height:5px;border-radius:50%;background:var(--cat);
+  animation:catpulse 2s ease-in-out infinite}
+@keyframes catpulse{0%,100%{opacity:1}55%{opacity:.2}}
+.art-h1{font-size:clamp(34px,5.5vw,56px);font-weight:900;letter-spacing:-.045em;
+  line-height:1.04;color:var(--tx);margin-bottom:24px}
+.art-h1 em{font-style:normal;background:linear-gradient(125deg,var(--cat-lt) 0%,var(--ac) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.art-meta{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:36px}
+.art-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--tx3);
+  padding:0 16px;border-right:1px solid var(--bd2)}
+.art-meta-item:last-child{border-right:none}
+.art-meta-item svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.art-img-wrap{max-width:var(--article-width);margin:0 auto;border-radius:var(--rl);overflow:hidden;border:1px solid var(--bd2)}
+.art-img-placeholder{height:280px;background:linear-gradient(135deg,var(--s2) 0%,var(--s3) 50%,var(--s2) 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}
+.art-img-placeholder::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 40%,rgba(16,185,129,.09) 0%,transparent 60%)}
+.art-img-icon{width:52px;height:52px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.22);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.art-img-icon svg{width:22px;height:22px;stroke:var(--cat-lt);fill:none;stroke-width:1.5;stroke-linecap:round}
+.art-img-caption{font-size:12px;color:var(--tx3);position:relative;z-index:1;text-align:center;padding:0 24px}
+.art-outer{max-width:1080px;margin:0 auto;padding:48px 24px 72px;
+  display:grid;grid-template-columns:220px 1fr;gap:48px;align-items:start}
+.art-toc{position:sticky;top:82px;display:flex;flex-direction:column;gap:0}
+.toc-label{font-size:9px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.toc-label::before{content:'';width:16px;height:2px;background:var(--cat);border-radius:1px}
+.toc-nav{display:flex;flex-direction:column;gap:1px}
+.toc-link{font-size:12px;color:var(--tx3);text-decoration:none;padding:7px 12px;
+  border-left:2px solid var(--bd);border-radius:0 6px 6px 0;transition:all var(--t);line-height:1.4}
+.toc-link:hover{color:var(--tx2);border-left-color:var(--bd2);background:rgba(255,255,255,.02)}
+.toc-link.active{color:var(--cat-lt);border-left-color:var(--cat);background:rgba(16,185,129,.06);font-weight:600}
+.toc-share{margin-top:28px;padding-top:24px;border-top:1px solid var(--bd)}
+.toc-share-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px}
+.share-btns-v{display:flex;flex-direction:column;gap:6px}
+.share-btn-v{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;
+  background:var(--s2);border:1px solid var(--bd2);color:var(--tx2);font-size:12px;
+  font-weight:500;cursor:pointer;transition:all var(--t);font-family:inherit}
+.share-btn-v:hover{border-color:var(--ac);color:var(--ac);background:rgba(16,185,129,.05)}
+.share-btn-v svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.art-content{min-width:0;max-width:var(--article-width)}
+.art-lead{font-size:18px;color:var(--tx2);line-height:1.78;margin-bottom:28px;
+  padding-bottom:28px;border-bottom:1px solid var(--bd)}
+.art-content h2{font-size:26px;font-weight:800;letter-spacing:-.03em;
+  color:var(--tx);margin:52px 0 18px;line-height:1.2;display:flex;align-items:center;gap:12px}
+.art-content h2::before{content:'';width:4px;height:28px;
+  background:linear-gradient(180deg,var(--cat),var(--ac));border-radius:2px;flex-shrink:0}
+.art-content h3{font-size:18px;font-weight:700;letter-spacing:-.02em;
+  color:var(--tx);margin:36px 0 12px;padding-left:16px;
+  border-left:2px solid var(--bd2);line-height:1.35}
+.art-content p{font-size:16px;color:var(--tx2);line-height:1.85;margin-bottom:20px}
+.art-content strong{color:var(--tx);font-weight:600}
+.art-content em{color:var(--tx2);font-style:italic}
+.art-content a{color:var(--cat-lt);text-decoration:underline;text-decoration-color:rgba(96,165,250,.3);
+  text-underline-offset:3px;transition:all var(--t)}
+.pull-quote{margin:36px 0;padding:22px 28px;background:rgba(16,185,129,.12);
+  border-left:4px solid var(--cat);border-radius:0 var(--r) var(--r) 0;position:relative}
+.pull-quote::before{content:'\201C';position:absolute;top:-8px;left:20px;
+  font-size:72px;color:rgba(16,185,129,.2);font-family:Georgia,serif;line-height:1}
+.pull-quote p{font-size:18px;font-style:italic;color:var(--tx);line-height:1.65;font-weight:500;margin:0}
+.pull-quote cite{display:block;font-size:12px;color:var(--tx3);margin-top:10px;
+  font-style:normal;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.callout{margin:32px 0;padding:20px 24px;border-radius:var(--r);
+  background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);
+  display:flex;gap:14px;align-items:flex-start}
+.callout-icon{width:36px;height:36px;border-radius:8px;background:rgba(16,185,129,.12);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.callout-icon svg{width:16px;height:16px;stroke:var(--ac);fill:none;stroke-width:2;stroke-linecap:round}
+.callout-body{}
+.callout-label{font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ac);margin-bottom:5px}
+.callout-body p{font-size:14px;color:var(--tx2);line-height:1.7;margin:0}
+.callout-body strong{color:var(--tx)}
+.callout.warn{background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.2)}
+.callout.warn .callout-icon{background:rgba(245,158,11,.1)}
+.callout.warn .callout-icon svg{stroke:#F59E0B}
+.callout.warn .callout-label{color:#F59E0B}
+.callout.cat{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.22)}
+.callout.cat .callout-icon{background:rgba(16,185,129,.12)}
+.callout.cat .callout-icon svg{stroke:var(--cat-lt)}
+.callout.cat .callout-label{color:var(--cat-lt)}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.stat-box{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:20px;text-align:center;position:relative;overflow:hidden}
+.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--cat),var(--ac))}
+.stat-num{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--cat-lt);
+  line-height:1;margin-bottom:6px}
+.stat-label{font-size:12px;color:var(--tx3);line-height:1.4}
+.art-divider{border:none;border-top:1px solid var(--bd);margin:44px 0}
+mark{background:rgba(16,185,129,.06);color:var(--cat-lt);border-radius:3px;padding:1px 4px;font-weight:500}
+.art-content ul,.art-content ol{padding-left:0;margin:20px 0 24px;
+  display:flex;flex-direction:column;gap:10px;list-style:none}
+.art-content ul li,.art-content ol li{
+  font-size:15px;color:var(--tx2);line-height:1.75;
+  padding:12px 16px 12px 44px;background:var(--s1);
+  border:1px solid var(--bd);border-radius:var(--r);position:relative}
+.art-content ul li::before{content:'';position:absolute;left:16px;top:20px;
+  width:8px;height:8px;border-radius:50%;background:var(--cat);flex-shrink:0}
+.art-content ol{counter-reset:list}
+.art-content ol li{counter-increment:list}
+.art-content ol li::before{content:counter(list);position:absolute;left:14px;top:50%;
+  transform:translateY(-50%);width:22px;height:22px;background:rgba(16,185,129,.06);
+  border:1px solid rgba(16,185,129,.22);border-radius:50%;
+  font-size:11px;font-weight:700;color:var(--cat-lt);
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono)}
+.art-content li strong{color:var(--tx)}
+.art-cta{margin:44px 0;padding:28px;border-radius:var(--rl);
+  background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(16,185,129,.06));
+  border:1px solid rgba(16,185,129,.2);text-align:center}
+.art-cta h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--tx)}
+.art-cta p{font-size:14px;color:var(--tx2);margin-bottom:18px;line-height:1.6}
+.art-cta-btn{display:inline-flex;align-items:center;gap:7px;background:var(--ac);
+  color:#fff;text-decoration:none;padding:11px 22px;border-radius:var(--r);
+  font:600 14px/1 'Inter',sans-serif;transition:all var(--t)}
+.art-cta-btn:hover{background:var(--ac-lt);transform:translateY(-1px);box-shadow:0 6px 20px rgba(16,185,129,.25)}
+.art-cta-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.art-share{margin-top:52px;padding-top:32px;border-top:1px solid var(--bd);text-align:center}
+.art-share-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:16px}
+.share-btns{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;
+  border-radius:var(--r);font:600 13px/1 'Inter',sans-serif;cursor:pointer;
+  transition:all var(--t);text-decoration:none;border:none}
+.share-btn-x{background:var(--s2);color:var(--tx2);border:1px solid var(--bd2)}
+.share-btn-x:hover{border-color:var(--tx3);color:var(--tx)}
+.share-btn-copy{background:var(--s2);color:var(--tx2);border:1px solid var(--bd2)}
+.share-btn-copy:hover{border-color:var(--ac);color:var(--ac)}
+.share-btn-copy.copied{border-color:var(--ac);color:var(--ac);background:rgba(16,185,129,.06)}
+.share-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.related{margin-top:52px}
+.related-label{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.related-label::before{content:'';width:20px;height:2px;background:var(--ac);border-radius:1px}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.related-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:20px;text-decoration:none;transition:all var(--t);display:block;position:relative;overflow:hidden}
+.related-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:var(--rl) var(--rl) 0 0;opacity:.6;transition:opacity var(--t)}
+.related-card:hover{border-color:rgba(16,185,129,.25);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.related-card:hover::before{opacity:1}
+.rc-cat{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px}
+.rc-title{font-size:14px;font-weight:700;color:var(--tx);line-height:1.4;margin-bottom:6px}
+.rc-time{font-size:11px;color:var(--tx3)}
+.rc-arrow{font-size:12px;color:var(--tx3);margin-top:12px;display:block;transition:color var(--t)}
+.related-card:hover .rc-arrow{color:var(--ac)}
+.art-back{display:inline-flex;align-items:center;gap:7px;margin-top:40px;
+  color:var(--tx3);text-decoration:none;font-size:13px;font-weight:500;
+  padding:10px 16px;border-radius:var(--r);border:1px solid var(--bd);transition:all var(--t)}
+.art-back:hover{color:var(--tx2);border-color:var(--bd2)}
+.art-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+footer{border-top:1px solid var(--bd);background:var(--bg)}
+.foot-inner{text-align:center;padding:18px 24px;font-size:12px;color:var(--tx3);
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.foot-inner a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
+.foot-inner a:hover{color:var(--tx2)}
+#gdpr-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:#0A1525;border-top:1px solid #1A2D44;padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 32px rgba(0,0,0,.5)}
+#gdpr-banner.show{transform:translateY(0)}
+#gdpr-banner p{font-size:12px;color:#88AAC5;line-height:1.5;margin:0;flex:1;min-width:200px}
+#gdpr-banner p a{color:#10B981;text-decoration:none}
+#gdpr-banner p strong{color:#EEF4FF}
+.gbtns{display:flex;gap:8px;flex-shrink:0}
+.gbtn-a{background:#10B981;color:#fff;border:none;border-radius:8px;font:600 12px/1 'Inter',sans-serif;padding:9px 18px;cursor:pointer}
+.gbtn-d{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 12px/1 'Inter',sans-serif;padding:9px 14px;cursor:pointer}
 @keyframes sk-shine{0%{background-position:-400px 0}100%{background-position:400px 0}}
-.sk{border-radius:6px;background:linear-gradient(90deg,var(--s2,#0F1E32) 25%,var(--s3,#152540) 50%,var(--s2,#0F1E32) 75%);background-size:800px 100%;animation:sk-shine 1.4s ease-in-out infinite;flex-shrink:0}
-.sk-screen{position:fixed;inset:0;z-index:9000;background:var(--bg,#060C18);display:flex;flex-direction:column;padding-top:62px;transition:opacity .4s ease;pointer-events:none}
+.sk{border-radius:6px;background:linear-gradient(90deg,#0F1E32 25%,#152540 50%,#0F1E32 75%);background-size:800px 100%;animation:sk-shine 1.4s ease-in-out infinite;flex-shrink:0}
+.sk-screen{position:fixed;inset:0;z-index:9000;background:#060C18;display:flex;flex-direction:column;padding-top:62px;transition:opacity .4s ease;pointer-events:none}
 .sk-screen.sk-out{opacity:0}
-.sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:var(--bg,#060C18);border-bottom:1px solid var(--bd,#142032);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
-.sk-rows{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
-</style>
-
-<style>
-#gdpr-banner{
-  position:fixed;bottom:0;left:0;right:0;z-index:9999;
-  background:#0A1525;border-top:1px solid #1A2D44;
-  padding:16px 24px;display:flex;align-items:center;
-  justify-content:space-between;gap:16px;flex-wrap:wrap;
-  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 -8px 32px rgba(0,0,0,.5);
+.sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:#060C18;border-bottom:1px solid #142032;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+@media(max-width:900px){
+  .art-outer{grid-template-columns:1fr;gap:32px}
+  .art-toc{position:static;border:1px solid var(--bd);border-radius:var(--r);padding:16px;background:var(--s1)}
+  .toc-collapsed .toc-nav,.toc-collapsed .toc-share{display:none}
+  .toc-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:0}
+  .toc-toggle-icon{color:var(--tx3);font-size:18px;transition:transform var(--t)}
+  .art-toc:not(.toc-collapsed) .toc-toggle-icon{transform:rotate(180deg)}
+  .related-grid{grid-template-columns:1fr}
 }
-#gdpr-banner.show{transform:translateY(0)}
-#gdpr-banner p{font-family:'Inter',system-ui,sans-serif;font-size:13px;
-  color:#88AAC5;line-height:1.6;margin:0;flex:1;min-width:200px}
-#gdpr-banner p a{color:#10B981;text-decoration:none}
-#gdpr-banner p a:hover{text-decoration:underline}
-.gdpr-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
-.gdpr-accept{background:#10B981;color:#fff;border:none;border-radius:8px;
-  font:600 13px/1 'Inter',system-ui,sans-serif;padding:10px 20px;
-  cursor:pointer;transition:background .2s;white-space:nowrap}
-.gdpr-accept:hover{background:#34D399}
-.gdpr-decline{background:transparent;color:#4C6580;border:1px solid #142032;
-  border-radius:8px;font:500 13px/1 'Inter',system-ui,sans-serif;
-  padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
-.gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
-</style>
-
-<style id="gdpr-css">
-#gdpr-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0A1525;border-top:1px solid #1A2D44;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:0 -8px 32px rgba(0,0,0,.5)}
-#gdpr-banner.show{transform:translateY(0)}
-#gdpr-banner p{font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#88AAC5;line-height:1.6;margin:0;flex:1;min-width:200px}
-#gdpr-banner p a{color:#10B981;text-decoration:none}
-#gdpr-banner p a:hover{text-decoration:underline}
-.gdpr-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
-.gdpr-accept{background:#10B981;color:#fff;border:none;border-radius:8px;font:600 13px/1 'Inter',system-ui,sans-serif;padding:10px 20px;cursor:pointer;transition:background .2s;white-space:nowrap}
-.gdpr-accept:hover{background:#34D399}
-.gdpr-decline{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 13px/1 'Inter',system-ui,sans-serif;padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
-.gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
+@media(min-width:901px){.toc-toggle-icon{display:none}}
+@media(max-width:600px){
+  .art-hero{padding:40px 20px 0}
+  .art-outer{padding:32px 20px 56px}
+  .art-h1{font-size:30px}
+  .art-lead{font-size:16px}
+  .art-content h2{font-size:22px}
+  .stat-row{grid-template-columns:1fr}
+  .art-meta-item{padding:6px 12px;font-size:12px}
+}
 </style>
 </head>
 <body>
-<div class="sk-screen" id="skScreen"><div class="sk-nav">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="sk" style="width:32px;height:32px;border-radius:8px"></div>
-    <div class="sk" style="width:90px;height:18px;border-radius:4px"></div>
+<div class="sk-screen" id="skScreen">
+  <div class="sk-nav">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="sk" style="width:32px;height:32px;border-radius:8px"></div>
+      <div class="sk" style="width:90px;height:18px"></div>
+    </div>
+    <div class="sk" style="width:100px;height:30px;border-radius:10px"></div>
   </div>
-  <div style="display:flex;gap:8px">
-    <div class="sk" style="width:80px;height:32px;border-radius:10px"></div>
-    <div class="sk" style="width:120px;height:32px;border-radius:10px"></div>
+  <div style="padding:60px 24px 0;display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div class="sk" style="width:140px;height:20px;border-radius:100px"></div>
+    <div class="sk" style="width:min(540px,85vw);height:52px"></div>
+    <div class="sk" style="width:min(380px,72vw);height:52px"></div>
+    <div class="sk" style="width:min(680px,90vw);height:240px;border-radius:16px;margin-top:12px"></div>
   </div>
-</div><div style="max-width:680px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;gap:12px">
-  <div class="sk" style="height:48px;border-radius:8px"></div>
-  <div class="sk" style="height:30px;width:75%;border-radius:8px"></div>
-  <div class="sk" style="height:16px;margin-top:8px;border-radius:4px"></div>
-  <div class="sk" style="height:16px;width:90%;border-radius:4px"></div>
-  <div class="sk" style="height:16px;width:85%;border-radius:4px"></div>
-  <div class="sk" style="height:16px;border-radius:4px"></div>
-  <div class="sk" style="height:120px;border-radius:10px;margin-top:8px"></div>
-  <div class="sk" style="height:16px;border-radius:4px"></div>
-  <div class="sk" style="height:16px;width:80%;border-radius:4px"></div>
-  <div class="sk" style="height:16px;width:90%;border-radius:4px"></div>
-</div></div>
+</div>
+<div class="read-prog" id="readProg"></div>
 <div id="gdpr-banner" role="dialog" aria-label="Cookie consent">
-  <p>We use cookies from <strong style="color:#EEF4FF">Google AdSense</strong> to serve ads. We collect no personal data ourselves. By clicking Accept you consent to Google&rsquo;s use of advertising cookies. <a href="/privacy.html">Privacy Policy</a></p>
-  <div class="gdpr-btns">
-    <button class="gdpr-decline" onclick="gdprDecline()">Decline</button>
-    <button class="gdpr-accept" onclick="gdprAccept()">Accept</button>
+  <p>We use cookies from <strong>Google AdSense</strong> to serve ads. No personal data collected by us. <a href="/privacy.html">Privacy Policy</a></p>
+  <div class="gbtns"><button class="gbtn-d" onclick="gdprDecline()">Decline</button><button class="gbtn-a" onclick="gdprAccept()">Accept</button></div>
+</div>
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-lm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div>
+    <span class="nav-lt">Deskloop</span>
+  </a>
+  <div class="nav-r">
+    <a href="/blog/" class="nav-a">&larr; All articles</a>
+    <a href="/tools/habit-tracker.html" class="nav-cta">Track Your Habits &rarr;</a>
   </div>
-</div>
-
-
-<!-- GDPR Consent Banner -->
-
-<nav>
-<div class="nav-in">
-  <a href="/" class="logo"><div class="logo-m"><svg width="17" height="17" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div><span class="logo-t">Deskloop</span></a>
-  <a href="/blog/" class="nav-a">&larr; All articles</a>
-</div>
 </nav>
-<div class="article">
-<div class="W">
-  <div class="art-tag">Habits</div>
-  <h1>How to Build a Streak Habit That Actually Sticks</h1>
-  <div class="art-meta">
-    <span>&#128197; May 2026</span>
-    <span>&#9200; 6 min read</span>
-    <span>&#128172; Habits &amp; consistency</span>
+<div class="art-hero">
+  <div class="art-hero-inner">
+    <div class="art-cat"><div class="art-cat-dot"></div>Habits</div>
+    <h1 class="art-h1">Build a Streak Habit<br><em>That Actually Sticks</em></h1>
+    <div class="art-meta">
+      <div class="art-meta-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>May 2026</div>
+      <div class="art-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>6 min read</div>
+      <div class="art-meta-item"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Habits &amp; Consistency</div>
+      <div class="art-meta-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Deskloop Editorial</div>
+    </div>
+    <div class="art-img-wrap">
+      <div class="art-img-placeholder">
+        <div class="art-img-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="art-img-caption">Jerry Seinfeld&rsquo;s &lsquo;don&rsquo;t break the chain&rsquo; method &mdash; and the psychology that makes streak-based habits more durable than goal-based ones.</div>
+      </div>
+    </div>
   </div>
-</div><!-- /art-hero -->
-
-  <p>Jerry Seinfeld has a method he&rsquo;s described for building a comedy writing habit: get a big wall calendar, put a red X on every day you write, and don&rsquo;t break the chain. The goal stops being &ldquo;write good jokes&rdquo; and becomes &ldquo;don&rsquo;t break the chain.&rdquo;</p>
-
-  <p>It sounds almost too simple. But it&rsquo;s one of the most psychologically effective habit-building approaches available, and there&rsquo;s real research behind why it works.</p>
-
-  <h2>Why streaks work</h2>
-
-  <p>Streaks exploit several features of human psychology simultaneously.</p>
-
-  <p><strong>Loss aversion.</strong> Behavioral economics research consistently shows that people feel losses more acutely than equivalent gains. A 10-day streak has real psychological value that you don&rsquo;t want to lose &mdash; which motivates action on days when your default would be to skip.</p>
-
-  <p><strong>Identity reinforcement.</strong> James Clear&rsquo;s work on habits, particularly in <em>Atomic Habits</em>, argues that the most durable habits are tied to identity rather than outcomes. Every day you complete your habit, you cast a vote for the identity &ldquo;I am someone who does this.&rdquo; A visible streak makes that vote tangible.</p>
-
-  <p><strong>Reduced decision fatigue.</strong> A streak removes the daily decision of whether to do the thing. The streak is already running &mdash; the decision was made. This is the same reason wearing the same thing every day (a strategy famously used by Steve Jobs and Barack Obama) preserves cognitive energy for more important decisions.</p>
-
-  <div class="key-point">
-    <p><strong>The key insight:</strong> Streaks shift the question from &ldquo;Should I do this today?&rdquo; to &ldquo;Do I want to break my streak today?&rdquo; That&rsquo;s a much easier question to answer.</p>
-  </div>
-
-  <h2>What habits work best with streaks</h2>
-
-  <p>Not every habit is a good candidate for streak tracking. The best ones share a few characteristics:</p>
-
-  <ul>
-    <li><strong>Daily cadence.</strong> Streaks work best for things you want to do every day. Weekly habits are harder to track this way without it feeling arbitrary.</li>
-    <li><strong>Clear completion criteria.</strong> &ldquo;Exercise&rdquo; is vague. &ldquo;Walk for 20 minutes&rdquo; is clear. You need to know unambiguously whether today&rsquo;s box gets a checkmark.</li>
-    <li><strong>Low minimum threshold.</strong> The minimum requirement should be achievable on your worst day. If your streak requires a full hour of exercise and you&rsquo;re exhausted and traveling, you&rsquo;ll break it unnecessarily. Make the bar low enough to clear even when circumstances are difficult.</li>
-    <li><strong>Intrinsic value.</strong> The habit should be something you actually want to build, not just something that looks good on a tracker.</li>
-  </ul>
-
-  <h2>The two mistakes that kill streaks</h2>
-
-  <p><strong>Setting the bar too high.</strong> The most common mistake is making the daily requirement too ambitious. A streak of &ldquo;meditate for one minute&rdquo; is more valuable than a failed streak of &ldquo;meditate for 30 minutes&rdquo; because the former actually runs. One minute of meditation done consistently for six months produces real results. Thirty minutes done sporadically produces almost none.</p>
-
-  <p><strong>Treating a broken streak as failure.</strong> Missing a day happens. The research on habit formation suggests that what matters is not perfection but the response to imperfection. People who miss a day and immediately resume outperform people who treat a break as a reason to abandon the habit entirely. Missing once is an accident. Missing twice starts becoming a new habit.</p>
-
-  <blockquote>
-    <p>&ldquo;Never miss twice&rdquo; is more useful advice than &ldquo;never miss once.&rdquo;</p>
-  </blockquote>
-
-  <h2>Building your first streak habit</h2>
-
-  <p>A practical approach for starting a new streak habit:</p>
-
-  <ol>
-    <li><strong>Choose one habit only.</strong> Willpower and attention are finite. Starting three streak habits simultaneously almost never works. Pick the most important one.</li>
-    <li><strong>Define the minimum.</strong> What is the smallest version of this habit that still counts? That&rsquo;s your floor, not your goal. On good days you&rsquo;ll do more. The streak only requires the floor.</li>
-    <li><strong>Attach it to an existing anchor.</strong> Habits form more reliably when they&rsquo;re attached to existing routines. &ldquo;After I make coffee, I will...&rdquo; is more reliable than &ldquo;I will do this sometime today.&rdquo;</li>
-    <li><strong>Track it visibly.</strong> The calendar on the wall works. A habit tracker on your phone works. The visibility is part of the mechanism &mdash; the chain has to be somewhere you can see it breaking.</li>
-    <li><strong>Add a second habit only after the first is automatic.</strong> Automatic means you do it without thinking about it, even on bad days. That usually takes 60&ndash;90 days, not the 21 days that popular culture suggests.</li>
-  </ol>
-
-  <div class="cta-box">
-    <h3>Start tracking your habits today</h3>
-    <p>Daily check-offs, streak counter, 12-week calendar view. Free, no signup, works offline.</p>
-    <a href="/tools/habit-tracker.html" class="cta-btn">Open Habit Tracker <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-  </div>
-
-  <h2>How long until a habit is automatic</h2>
-
-  <p>The popular claim that habits take 21 days to form comes from a misreading of a 1960 book by plastic surgeon Maxwell Maltz, who observed that amputees took about 21 days to adjust to their new body image. It was never a claim about habit formation.</p>
-
-  <p>A 2010 study by Phillippa Lally at University College London found that habits took anywhere from 18 to 254 days to become automatic, with an average of 66 days. The range is enormous because it depends on the complexity of the behavior, the individual, and the consistency of practice.</p>
-
-  <p>What this means practically: expect 60&ndash;90 days of consistent streaking before a habit feels genuinely effortless. The first two weeks are the hardest. The motivation from novelty fades before the automaticity kicks in &mdash; which is exactly when most people quit. Push through that middle section and the streak starts carrying itself.</p>
-
 </div>
+<div class="art-outer">
+  <aside class="art-toc toc-collapsed" id="artToc">
+    <div class="toc-toggle toc-label" onclick="toggleTOC()">
+      <span style="display:flex;align-items:center;gap:7px"><span style="width:16px;height:2px;background:var(--cat);border-radius:1px;display:inline-block"></span>Contents</span>
+      <span class="toc-toggle-icon">&#8964;</span>
+    </div>
+    <nav class="toc-nav"><a href="#intro" class="toc-link">Introduction</a>
+<a href="#why-streaks" class="toc-link">Why streaks work</a>
+<a href="#best-habits" class="toc-link">What habits work best</a>
+<a href="#mistakes" class="toc-link">The two fatal mistakes</a>
+<a href="#building" class="toc-link">Building your first streak</a>
+<a href="#how-long" class="toc-link">How long until automatic</a></nav>
+    <div class="toc-share">
+      <div class="toc-share-label">Share</div>
+      <div class="share-btns-v">
+        <button class="share-btn-v" onclick="shareX()"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg>Share on X</button>
+        <button class="share-btn-v" id="tocCopyBtn" onclick="copyLink('tocCopyBtn')"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy link</button>
+      </div>
+    </div>
+  </aside>
+  <article class="art-content">
+    <p class="art-lead" id="intro">Jerry Seinfeld has a method he&rsquo;s described for building a comedy writing habit: get a big wall calendar, mark a red X on every day you write, and don&rsquo;t break the chain. The goal stops being &ldquo;write good jokes&rdquo; and becomes &ldquo;don&rsquo;t break the chain.&rdquo; It sounds almost too simple. But it&rsquo;s one of the most psychologically effective habit-building approaches available, and there&rsquo;s real research behind why it works.</p>
+
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-num">66</div><div class="stat-label">Average days for a habit to become automatic (UCL research). Not the popular &ldquo;21 days.&rdquo;</div></div>
+      <div class="stat-box"><div class="stat-num">254</div><div class="stat-label">Maximum days observed in the same study. Habit formation varies enormously by individual and behavior complexity.</div></div>
+    </div>
+
+    <h2 id="why-streaks">Why streaks work</h2>
+
+    <p>Streaks exploit several features of human psychology simultaneously.</p>
+
+    <p><strong>Loss aversion.</strong> Behavioral economics research consistently shows that people feel losses more acutely than equivalent gains. A 10-day streak has real psychological value you don&rsquo;t want to lose &mdash; which motivates action on days when your default would be to skip. The fear of losing the streak is often stronger than the motivation to maintain the habit itself.</p>
+
+    <p><strong>Identity reinforcement.</strong> James Clear&rsquo;s work on habits argues that the most durable habits are tied to identity rather than outcomes. Every day you complete your habit, you cast a vote for the identity &ldquo;I am someone who does this.&rdquo; A visible streak makes that vote tangible and cumulative.</p>
+
+    <blockquote class="pull-quote">
+      <p>Streaks shift the question from &ldquo;Should I do this today?&rdquo; to &ldquo;Do I want to break my streak today?&rdquo; That&rsquo;s a much easier question to answer.</p>
+    </blockquote>
+
+    <p><strong>Reduced decision fatigue.</strong> A streak removes the daily decision of whether to do the thing. The streak is already running &mdash; the decision was made. This is the same reason wearing the same outfit every day (a strategy famously used by Steve Jobs and Barack Obama) preserves cognitive energy for more important decisions.</p>
+
+    <hr class="art-divider">
+
+    <h2 id="best-habits">What habits work best with streaks</h2>
+
+    <p>Streaks are most effective for habits that are <mark>binary and daily</mark>: either you did it or you didn&rsquo;t, and it&rsquo;s meant to happen every day. They work less well for habits with variable frequency or output-based goals.</p>
+
+    <ul>
+      <li><strong>Excellent streak candidates:</strong> Daily writing (even just 100 words), exercise, meditation, reading, language practice, journaling, coding practice, any skill-building activity with a daily minimum.</li>
+      <li><strong>Poor streak candidates:</strong> &ldquo;Work on the project&rdquo; (too vague), weekly goals, output-based targets like &ldquo;write 2,000 words&rdquo; (some days this is impossible), habits that depend on external conditions.</li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <div class="callout-body">
+        <div class="callout-label">Key Principle</div>
+        <p>Define the <strong>minimum viable version of the habit</strong> before you start. On good days you&rsquo;ll do more. The streak only requires the minimum. &ldquo;10 minutes of reading&rdquo; beats &ldquo;read for an hour&rdquo; when it comes to streak durability.</p>
+      </div>
+    </div>
+
+    <hr class="art-divider">
+
+    <h2 id="mistakes">The two fatal mistakes that kill streaks</h2>
+
+    <h3>Mistake 1: No defined minimum</h3>
+    <p>People often start streaks without defining what the minimum acceptable version of the habit looks like. This means on hard days &mdash; travel, illness, exhaustion &mdash; there&rsquo;s no clear bar to clear. A 5-minute version of almost any habit counts. Define it before you start.</p>
+
+    <h3>Mistake 2: Treating one miss as failure</h3>
+    <p>Missing a day happens. The research on habit formation suggests that what matters is not perfection but the <strong>response to imperfection</strong>. People who miss a day and immediately resume significantly outperform those who treat a break as a reason to abandon the habit entirely. Missing once is an accident. Missing twice starts becoming a new habit.</p>
+
+    <blockquote class="pull-quote">
+      <p>&ldquo;Never miss twice&rdquo; is more useful advice than &ldquo;never miss once.&rdquo; The goal is consistency over time, not a perfect unbroken chain.</p>
+    </blockquote>
+
+    <div class="callout warn">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <div class="callout-body">
+        <div class="callout-label">Watch Out</div>
+        <p>Starting three streak habits simultaneously <strong>almost never works</strong>. Willpower and attention are finite. Pick the single most important habit and start there. Add a second only after the first is genuinely automatic &mdash; which takes 60&ndash;90 days, not 21.</p>
+      </div>
+    </div>
+
+    <hr class="art-divider">
+
+    <h2 id="building">Building your first streak habit</h2>
+
+    <ol>
+      <li><strong>Choose one habit only.</strong> Decide what the single most valuable habit is. Everything else waits.</li>
+      <li><strong>Define the floor.</strong> What is the smallest version that still counts? Write it down before day one.</li>
+      <li><strong>Attach it to an existing anchor.</strong> &ldquo;After I make coffee, I will...&rdquo; is far more reliable than &ldquo;I will do this sometime today.&rdquo;</li>
+      <li><strong>Track it visibly.</strong> The calendar on the wall, a habit tracker app, a simple spreadsheet. The visibility is part of the mechanism.</li>
+      <li><strong>Expect the middle to be hard.</strong> Motivation from novelty fades around day 10&ndash;14. Push through that window &mdash; automaticity is on the other side.</li>
+    </ol>
+
+    <div class="art-cta">
+      <h3>Start tracking your habits today</h3>
+      <p>Daily check-offs, streak counter, 12-week calendar view, and streak-at-risk warnings before midnight. Free, no signup, works offline.</p>
+      <a href="/tools/habit-tracker.html" class="art-cta-btn">Open Habit Tracker <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <h2 id="how-long">How long until a habit is automatic</h2>
+
+    <p>The popular claim that habits take 21 days to form comes from a misreading of a 1960 book by plastic surgeon Maxwell Maltz. It was never a claim about habit formation. A 2010 study by Phillippa Lally at University College London found that habits took anywhere from <mark>18 to 254 days</mark> to become automatic, with an average of 66 days.</p>
+
+    <p>What this means practically: expect 60&ndash;90 days of consistent streaking before a habit feels genuinely effortless. The first two weeks are the hardest. Push through the middle section where novelty has faded but automaticity hasn&rsquo;t arrived yet, and the streak starts carrying itself.</p>
+
+    <div class="callout">
+      <div class="callout-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="callout-body">
+        <div class="callout-label">Takeaway</div>
+        <p>Start with one habit. Define the minimum. Never miss twice. Track it where you can see it. <strong>Give it 90 days before evaluating whether it&rsquo;s working.</strong> Most people quit at day 12 because it still feels hard &mdash; that&rsquo;s exactly when the work matters most.</p>
+      </div>
+    </div>
+    <div class="art-share">
+      <div class="art-share-label">Found this useful? Share it.</div>
+      <div class="share-btns">
+        <button class="share-btn share-btn-x" onclick="shareX()"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg>Share on X</button>
+        <button class="share-btn share-btn-copy" id="copyBtn" onclick="copyLink('copyBtn')"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy link</button>
+      </div>
+    </div>
+    <div class="related">
+      <div class="related-label">Keep reading</div>
+      <div class="related-grid"><a href="/blog/pomodoro-technique.html" class="related-card"><style>.related-card:hover::before{background:background:linear-gradient(90deg,#60A5FA,transparent)}</style><div class="rc-cat" style="color:#60A5FA">Focus</div><div class="rc-title">The Pomodoro Technique: Does the Science Actually Back It Up?</div><div class="rc-time">7 min read</div><span class="rc-arrow">Read article &rarr;</span></a><a href="/blog/what-is-deep-work.html" class="related-card"><style>.related-card:hover::before{background:background:linear-gradient(90deg,#A78BFA,transparent)}</style><div class="rc-cat" style="color:#A78BFA">Deep Work</div><div class="rc-title">What Is Deep Work and Why Most People Never Do It</div><div class="rc-time">8 min read</div><span class="rc-arrow">Read article &rarr;</span></a><a href="/blog/meeting-cost.html" class="related-card"><style>.related-card:hover::before{background:background:linear-gradient(90deg,#F59E0B,transparent)}</style><div class="rc-cat" style="color:#F59E0B">Meetings</div><div class="rc-title">The True Cost of a One-Hour Meeting</div><div class="rc-time">6 min read</div><span class="rc-arrow">Read article &rarr;</span></a><a href="/blog/remote-team-time-zones.html" class="related-card"><style>.related-card:hover::before{background:background:linear-gradient(90deg,#60A5FA,transparent)}</style><div class="rc-cat" style="color:#60A5FA">Remote Work</div><div class="rc-title">Best Time Zones for Remote Team Standups</div><div class="rc-time">7 min read</div><span class="rc-arrow">Read article &rarr;</span></a></div>
+    </div>
+    <a href="/blog/" class="art-back"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back to all articles</a>
+  </article>
 </div>
-<footer>
-<div class="W" style="max-width:1200px">
-  <a href="/">&larr; Deskloop home</a> &middot; <a href="/blog/">All articles</a> &middot; <a href="/privacy.html">Privacy</a> &middot; &copy; 2026 Deskloop.work
-</div>
-</footer>
-<script id="gdpr-js">
-(function(){
-  var choice=localStorage.getItem('dl_gdpr_v1');
-  if(choice)return;
-  setTimeout(function(){var b=document.getElementById('gdpr-banner');if(b)b.classList.add('show');},800);
-})();
-function gdprAccept(){
-  localStorage.setItem('dl_gdpr_v1','accepted');
-  var b=document.getElementById('gdpr-banner');
-  if(b){b.style.transition='transform .3s ease';b.style.transform='translateY(100%)';}
-  if(!document.getElementById('adsense-script')){
-    var s=document.createElement('script');s.id='adsense-script';s.async=true;
-    s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5768905713200594';
-    s.crossOrigin='anonymous';document.head.appendChild(s);
-  }
-}
-function gdprDecline(){
-  localStorage.setItem('dl_gdpr_v1','declined');
-  var b=document.getElementById('gdpr-banner');
-  if(b){b.style.transition='transform .3s ease';b.style.transform='translateY(100%)';}
-}
-</script>
-<div style="text-align:center;padding:16px 24px;border-top:1px solid #142032;font-family:'Inter',system-ui,sans-serif;font-size:12px;color:#4C6580;background:#060C18">
-  <a href="/" style="color:#4C6580;text-decoration:none;margin:0 8px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>
-  &middot;
-  <a href="/privacy.html" style="color:#4C6580;text-decoration:none;margin:0 8px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">Privacy Policy</a>
-  &middot;
-  <a href="/contact.html" style="color:#4C6580;text-decoration:none;margin:0 8px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">Contact</a>
-  &middot; &copy; 2026 Deskloop.work
-</div>
+<footer><div class="foot-inner">
+  <a href="/">&larr; Deskloop</a><span>&middot;</span><a href="/blog/">All Articles</a>
+  <span>&middot;</span><a href="/privacy.html">Privacy Policy</a>
+  <span>&middot;</span><a href="/contact.html">Contact</a>
+  <span>&middot;</span><span>&copy; 2026 Deskloop.work</span>
+</div></footer>
 <script>
+(function(){var bar=document.getElementById('readProg');if(!bar)return;window.addEventListener('scroll',function(){var s=document.documentElement;bar.style.width=Math.min(100,s.scrollTop/(s.scrollHeight-s.clientHeight)*100)+'%';},{passive:true});})();
+(function(){var toc=document.getElementById('artToc');if(window.innerWidth>=901)toc.classList.remove('toc-collapsed');})();
+function toggleTOC(){document.getElementById('artToc').classList.toggle('toc-collapsed');}
 (function(){
-  var bar = document.getElementById('readProgress');
-  if(!bar) return;
-  window.addEventListener('scroll', function(){
-    var s = document.documentElement;
-    var pct = s.scrollTop / (s.scrollHeight - s.clientHeight) * 100;
-    bar.style.width = Math.min(100, pct) + '%';
-  }, {passive:true});
+  var links=document.querySelectorAll('.toc-link');
+  var sections=Array.from(links).map(function(l){var id=l.getAttribute('href').slice(1);return{link:l,el:document.getElementById(id)};}).filter(function(s){return s.el;});
+  window.addEventListener('scroll',function(){
+    var scrollY=window.scrollY+100;var current=sections[0];
+    sections.forEach(function(s){if(s.el.offsetTop<=scrollY)current=s;});
+    links.forEach(function(l){l.classList.remove('active');});
+    if(current)current.link.classList.add('active');
+  },{passive:true});
 })();
-</script>
-<script>
-(function(){
-  var sk=document.getElementById('skScreen');
-  if(!sk)return;
-  var done=function(){sk.classList.add('sk-out');setTimeout(function(){sk.remove();},450);};
-  if(document.readyState==='complete'){setTimeout(done,120);}
-  else{window.addEventListener('load',function(){setTimeout(done,120);});}
-})();
+function shareX(){var url='https://deskloop.work/blog/streak-habits.html';var text='How to Build a Streak Habit That Actually Sticks | Deskloop Blog';window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(url),'_blank');}
+function copyLink(id){navigator.clipboard.writeText(window.location.href).then(function(){var b=document.getElementById(id);if(!b)return;var o=b.innerHTML;b.innerHTML='<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';b.classList.add('copied');setTimeout(function(){b.innerHTML=o;b.classList.remove('copied');},2000);});}
+(function(){var sk=document.getElementById('skScreen');if(!sk)return;var done=function(){sk.classList.add('sk-out');setTimeout(function(){sk.remove();},450);};if(document.readyState==='complete'){setTimeout(done,120);}else{window.addEventListener('load',function(){setTimeout(done,120);});}})();
+(function(){if(localStorage.getItem('dl_gdpr_v1'))return;setTimeout(function(){var b=document.getElementById('gdpr-banner');if(b)b.classList.add('show');},900);})();
+function gdprAccept(){localStorage.setItem('dl_gdpr_v1','accepted');var b=document.getElementById('gdpr-banner');if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';};if(!document.getElementById('adsense-script')){var s=document.createElement('script');s.id='adsense-script';s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5768905713200594';s.crossOrigin='anonymous';document.head.appendChild(s);};}
+function gdprDecline(){localStorage.setItem('dl_gdpr_v1','declined');var b=document.getElementById('gdpr-banner');if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';};}
 </script>
 </body>
 </html>
