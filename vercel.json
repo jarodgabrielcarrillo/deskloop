@@ -1,15 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.deskloop.work" }],
-      "destination": "https://deskloop.work/:path*",
-      "permanent": true
-    }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [],
   "headers": [
     {
       "source": "/(.*)",
@@ -29,37 +18,13 @@
       ]
     },
     {
-      "source": "/",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=1800, stale-while-revalidate=86400" }
-      ]
-    },
-    {
-      "source": "/about.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
-      ]
-    },
-    {
-      "source": "/privacy.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
-      ]
-    },
-    {
-      "source": "/contact.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
-      ]
-    },
-    {
-      "source": "/tools/:path*",
+      "source": "/tools/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
       ]
     },
     {
-      "source": "/blog/:path*",
+      "source": "/blog/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
       ]
@@ -70,20 +35,6 @@
         { "key": "Cache-Control", "value": "public, max-age=86400" },
         { "key": "Content-Type",  "value": "application/xml; charset=utf-8" }
       ]
-    },
-    {
-      "source": "/ads.txt",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
-      ]
     }
-  ],
-  "routes": [
-    { "src": "/wp-admin(.*)",   "status": 404, "dest": "/404" },
-    { "src": "/wp-login(.*)",   "status": 404, "dest": "/404" },
-    { "src": "/phpMyAdmin(.*)", "status": 404, "dest": "/404" },
-    { "src": "/.env(.*)",       "status": 404, "dest": "/404" },
-    { "src": "/api/(.*)\\.php", "status": 404, "dest": "/404" },
-    { "src": "/(.*)\\.php",     "status": 404, "dest": "/404" }
   ]
 }
