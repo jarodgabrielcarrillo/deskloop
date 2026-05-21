@@ -129,6 +129,14 @@ h1{
   h1{font-size:26px}
   .art-meta{gap:10px;font-size:12px}
 }
+
+/* ── Skeleton loaders ── */
+@keyframes sk-shine{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.sk{border-radius:6px;background:linear-gradient(90deg,var(--s2,#0F1E32) 25%,var(--s3,#152540) 50%,var(--s2,#0F1E32) 75%);background-size:800px 100%;animation:sk-shine 1.4s ease-in-out infinite;flex-shrink:0}
+.sk-screen{position:fixed;inset:0;z-index:9000;background:var(--bg,#060C18);display:flex;flex-direction:column;padding-top:62px;transition:opacity .4s ease;pointer-events:none}
+.sk-screen.sk-out{opacity:0}
+.sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:var(--bg,#060C18);border-bottom:1px solid var(--bd,#142032);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.sk-rows{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
 </style>
 
 <style>
@@ -170,6 +178,27 @@ h1{
 </style>
 </head>
 <body>
+<div class="sk-screen" id="skScreen"><div class="sk-nav">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="sk" style="width:32px;height:32px;border-radius:8px"></div>
+    <div class="sk" style="width:90px;height:18px;border-radius:4px"></div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <div class="sk" style="width:80px;height:32px;border-radius:10px"></div>
+    <div class="sk" style="width:120px;height:32px;border-radius:10px"></div>
+  </div>
+</div><div style="max-width:680px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;gap:12px">
+  <div class="sk" style="height:48px;border-radius:8px"></div>
+  <div class="sk" style="height:30px;width:75%;border-radius:8px"></div>
+  <div class="sk" style="height:16px;margin-top:8px;border-radius:4px"></div>
+  <div class="sk" style="height:16px;width:90%;border-radius:4px"></div>
+  <div class="sk" style="height:16px;width:85%;border-radius:4px"></div>
+  <div class="sk" style="height:16px;border-radius:4px"></div>
+  <div class="sk" style="height:120px;border-radius:10px;margin-top:8px"></div>
+  <div class="sk" style="height:16px;border-radius:4px"></div>
+  <div class="sk" style="height:16px;width:80%;border-radius:4px"></div>
+  <div class="sk" style="height:16px;width:90%;border-radius:4px"></div>
+</div></div>
 <div id="gdpr-banner" role="dialog" aria-label="Cookie consent">
   <p>We use cookies from <strong style="color:#EEF4FF">Google AdSense</strong> to serve ads. We collect no personal data ourselves. By clicking Accept you consent to Google&rsquo;s use of advertising cookies. <a href="/privacy.html">Privacy Policy</a></p>
   <div class="gdpr-btns">
@@ -311,6 +340,15 @@ function gdprDecline(){
     var pct = s.scrollTop / (s.scrollHeight - s.clientHeight) * 100;
     bar.style.width = Math.min(100, pct) + '%';
   }, {passive:true});
+})();
+</script>
+<script>
+(function(){
+  var sk=document.getElementById('skScreen');
+  if(!sk)return;
+  var done=function(){sk.classList.add('sk-out');setTimeout(function(){sk.remove();},450);};
+  if(document.readyState==='complete'){setTimeout(done,120);}
+  else{window.addEventListener('load',function(){setTimeout(done,120);});}
 })();
 </script>
 </body>

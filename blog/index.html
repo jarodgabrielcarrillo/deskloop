@@ -190,6 +190,14 @@ footer{border-top:1px solid var(--bd);padding:44px 0 52px}
   .search-inp{width:220px}
 }
 a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:3px}
+
+/* ── Skeleton loaders ── */
+@keyframes sk-shine{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.sk{border-radius:6px;background:linear-gradient(90deg,var(--s2,#0F1E32) 25%,var(--s3,#152540) 50%,var(--s2,#0F1E32) 75%);background-size:800px 100%;animation:sk-shine 1.4s ease-in-out infinite;flex-shrink:0}
+.sk-screen{position:fixed;inset:0;z-index:9000;background:var(--bg,#060C18);display:flex;flex-direction:column;padding-top:62px;transition:opacity .4s ease;pointer-events:none}
+.sk-screen.sk-out{opacity:0}
+.sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:var(--bg,#060C18);border-bottom:1px solid var(--bd,#142032);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.sk-rows{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
 </style>
 
 <style>
@@ -231,6 +239,28 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 </style>
 </head>
 <body>
+<div class="sk-screen" id="skScreen"><div class="sk-nav">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="sk" style="width:32px;height:32px;border-radius:8px"></div>
+    <div class="sk" style="width:90px;height:18px;border-radius:4px"></div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <div class="sk" style="width:80px;height:32px;border-radius:10px"></div>
+    <div class="sk" style="width:120px;height:32px;border-radius:10px"></div>
+  </div>
+</div><div style="padding:52px 24px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px">
+  <div class="sk" style="width:160px;height:20px;border-radius:100px"></div>
+  <div class="sk" style="width:min(420px,80vw);height:52px"></div>
+  <div class="sk" style="width:min(300px,65vw);height:52px"></div>
+  <div class="sk" style="width:min(360px,70vw);height:16px"></div>
+  <div class="sk" style="width:min(280px,60vw);height:16px"></div>
+</div><div style="display:flex;justify-content:center;padding:20px 24px">
+  <div class="sk" style="width:min(680px,90vw);height:min(500px,60vw);border-radius:20px"></div>
+</div><div style="max-width:960px;margin:24px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+  <div class="sk" style="height:220px;border-radius:16px"></div>
+  <div class="sk" style="height:220px;border-radius:16px"></div>
+  <div class="sk" style="height:220px;border-radius:16px"></div>
+</div></div>
 <div id="gdpr-banner" role="dialog" aria-label="Cookie consent">
   <p>We use cookies from <strong style="color:#EEF4FF">Google AdSense</strong> to serve ads. We collect no personal data ourselves. By clicking Accept you consent to Google&rsquo;s use of advertising cookies. <a href="/privacy.html">Privacy Policy</a></p>
   <div class="gdpr-btns">
@@ -752,5 +782,14 @@ function gdprDecline(){
   <a href="/contact.html" style="color:#4C6580;text-decoration:none;margin:0 8px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">Contact</a>
   &middot; &copy; 2026 Deskloop.work
 </div>
+<script>
+(function(){
+  var sk=document.getElementById('skScreen');
+  if(!sk)return;
+  var done=function(){sk.classList.add('sk-out');setTimeout(function(){sk.remove();},450);};
+  if(document.readyState==='complete'){setTimeout(done,120);}
+  else{window.addEventListener('load',function(){setTimeout(done,120);});}
+})();
+</script>
 </body>
 </html>
