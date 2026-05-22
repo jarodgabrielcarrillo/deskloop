@@ -911,7 +911,8 @@ let history      = [];
 let audioCtx   = null;
 let masterGain = null;
 // ── Ambient audio — use <audio> elements for reliability ──
-let currentAudioEl = null;
+let currentAudioEl  = null;
+let currentGainNode = null;
 
 function getAmbientEl(type) {
   return document.getElementById('snd-' + type);
@@ -1211,14 +1212,16 @@ function getAudioCtx() {
 }
 
 function stopSound() {
-  // Stop Web Audio synthesis nodes
   soundNodes.forEach(n => { try { n.stop(); } catch(e) {} });
   soundNodes = [];
-  // Stop any playing <audio> element
   if (currentAudioEl) {
     currentAudioEl.pause();
     currentAudioEl.currentTime = 0;
     currentAudioEl = null;
+  }
+  if (currentGainNode) {
+    try { currentGainNode.disconnect(); } catch(e) {}
+    currentGainNode = null;
   }
 }
 
@@ -1449,18 +1452,25 @@ function makeForest(ctx) {
 
 function playSound(type) {
   stopSound();
+  const ctx = getAudioCtx();
+  if (ctx.state === 'suspended') ctx.resume();
   const vol = parseFloat(document.getElementById('volSlider')?.value || 0.6);
   const el = getAmbientEl(type);
   if (el) {
-    // Use <audio> element — browser handles loading, looping, format
-    el.volume = vol;
+    // Route <audio> through Web Audio GainNode so volume can exceed 1.0
     el.currentTime = 0;
+    el.volume = 1.0; // keep element at max, control via gainNode
+    const mediaNode = ctx.createMediaElementSource(el);
+    const gainNode  = ctx.createGain();
+    gainNode.gain.value = vol * 5.0; // amplify — slider 0-1 maps to 0-2.5x
+    mediaNode.connect(gainNode);
+    gainNode.connect(ctx.destination);
     el.play().catch(() => {});
-    currentAudioEl = el;
+    currentAudioEl  = el;
+    currentGainNode = gainNode;
+    soundNodes = []; // no synthesis nodes
   } else {
-    // Fallback: Web Audio synthesis for any missing file
-    const ctx = getAudioCtx();
-    if (ctx.state === 'suspended') ctx.resume();
+    // Fallback synthesis
     if (type === 'white')  soundNodes = makeWhiteNoise(ctx);
     else if (type === 'rain')   soundNodes = makeRain(ctx);
     else if (type === 'cafe')   soundNodes = makeCafe(ctx);
@@ -1486,7 +1496,8 @@ function setSound(type, btn) {
 function setVolume(v) {
   const vol = parseFloat(v);
   if (masterGain) masterGain.gain.value = vol;
-  if (currentAudioEl) currentAudioEl.volume = vol;
+  // For file-based sounds routed through gainNode — amplify above 1.0
+  if (currentGainNode) currentGainNode.gain.value = vol * 5.0;
 }
 
 // ── Init ──
