@@ -910,42 +910,15 @@ let history      = [];
 // ── Audio state ──
 let audioCtx   = null;
 let masterGain = null;
-const soundBuffers = {};   // decoded AudioBuffers
-const soundArrayBufs = {}; // pre-fetched ArrayBuffers (no AudioContext needed)
+// ── Ambient audio — use <audio> elements for reliability ──
+let currentAudioEl = null;
 
-// Phase 1: fetch raw bytes immediately on page load — no user interaction required
-const SOUND_FILES = {
-  white:  '/sounds/white-noise.mp3',
-  rain:   '/sounds/rain.mp3',
-  cafe:   '/sounds/cafe.mp3',
-  fire:   '/sounds/fire.mp3',
-  waves:  '/sounds/waves.mp3',
-  forest: '/sounds/forest.mp3',
-  brown:  '/sounds/brown-noise.mp3',
-};
-(function prefetchAll() {
-  Object.entries(SOUND_FILES).forEach(([key, url]) => {
-    fetch(url)
-      .then(r => r.arrayBuffer())
-      .then(buf => { soundArrayBufs[key] = buf; })
-      .catch(() => {});
-  });
-})();
-
-// Phase 2: decode ArrayBuffer → AudioBuffer (requires AudioContext)
-async function ensureDecoded(ctx, key) {
-  if (soundBuffers[key]) return true; // already decoded
-  const arr = soundArrayBufs[key];
-  if (!arr) return false; // fetch hasn't finished yet
-  try {
-    soundBuffers[key] = await ctx.decodeAudioData(arr.slice(0));
-    return true;
-  } catch(e) { return false; }
+function getAmbientEl(type) {
+  return document.getElementById('snd-' + type);
 }
 
-function preloadSounds(ctx) {
-  // Decode all pre-fetched buffers now that we have an AudioContext
-  Object.keys(SOUND_FILES).forEach(key => ensureDecoded(ctx, key));
+function setAmbientVolume(v) {
+  if (currentAudioEl) currentAudioEl.volume = parseFloat(v);
 }
 let soundNodes = [];
 let currentSound = 'none';
@@ -1238,8 +1211,15 @@ function getAudioCtx() {
 }
 
 function stopSound() {
+  // Stop Web Audio synthesis nodes
   soundNodes.forEach(n => { try { n.stop(); } catch(e) {} });
   soundNodes = [];
+  // Stop any playing <audio> element
+  if (currentAudioEl) {
+    currentAudioEl.pause();
+    currentAudioEl.currentTime = 0;
+    currentAudioEl = null;
+  }
 }
 
 function resumeAudio() {
@@ -1467,32 +1447,28 @@ function makeForest(ctx) {
   return nodes;
 }
 
-async function playSound(type) {
+function playSound(type) {
   stopSound();
-  const ctx = getAudioCtx();
-  if (ctx.state === 'suspended') await ctx.resume();
-
-  // Show loading state on button
-  const activeBtn = document.querySelector(`.sound-btn[onclick*="'${type}'"]`);
-  if (activeBtn) activeBtn.style.opacity = '0.5';
-
-  // Wait for file to decode (it's already fetched, just needs decoding)
-  const key = type === 'white' ? 'white' : type;
-  await ensureDecoded(ctx, key);
-
-  // Restore button opacity
-  if (activeBtn) activeBtn.style.opacity = '';
-
-  // Only play if this sound is still the selected one
-  if (currentSound !== type) return;
-
-  if (type === 'white')  soundNodes = makeWhiteNoise(ctx);
-  else if (type === 'rain')   soundNodes = makeRain(ctx);
-  else if (type === 'cafe')   soundNodes = makeCafe(ctx);
-  else if (type === 'fire')   soundNodes = makeFire(ctx);
-  else if (type === 'waves')  soundNodes = makeWaves(ctx);
-  else if (type === 'forest') soundNodes = makeForest(ctx);
-  else if (type === 'brown')  soundNodes = makeBrown(ctx);
+  const vol = parseFloat(document.getElementById('volSlider')?.value || 0.6);
+  const el = getAmbientEl(type);
+  if (el) {
+    // Use <audio> element — browser handles loading, looping, format
+    el.volume = vol;
+    el.currentTime = 0;
+    el.play().catch(() => {});
+    currentAudioEl = el;
+  } else {
+    // Fallback: Web Audio synthesis for any missing file
+    const ctx = getAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    if (type === 'white')  soundNodes = makeWhiteNoise(ctx);
+    else if (type === 'rain')   soundNodes = makeRain(ctx);
+    else if (type === 'cafe')   soundNodes = makeCafe(ctx);
+    else if (type === 'fire')   soundNodes = makeFire(ctx);
+    else if (type === 'waves')  soundNodes = makeWaves(ctx);
+    else if (type === 'forest') soundNodes = makeForest(ctx);
+    else if (type === 'brown')  soundNodes = makeBrown(ctx);
+  }
 }
 
 function setSound(type, btn) {
@@ -1508,7 +1484,9 @@ function setSound(type, btn) {
 }
 
 function setVolume(v) {
-  if (masterGain) masterGain.gain.value = parseFloat(v);
+  const vol = parseFloat(v);
+  if (masterGain) masterGain.gain.value = vol;
+  if (currentAudioEl) currentAudioEl.volume = vol;
 }
 
 // ── Init ──
@@ -1549,5 +1527,13 @@ function gdprDecline(){
   else{window.addEventListener('load',function(){setTimeout(done,120);});}
 })();
 </script>
+<!-- Ambient sound elements -->
+<audio id="snd-white"  src="/sounds/white-noise.mp3" loop preload="auto"></audio>
+<audio id="snd-rain"   src="/sounds/rain.mp3"        loop preload="auto"></audio>
+<audio id="snd-cafe"   src="/sounds/cafe.mp3"        loop preload="auto"></audio>
+<audio id="snd-fire"   src="/sounds/fire.mp3"        loop preload="auto"></audio>
+<audio id="snd-waves"  src="/sounds/waves.mp3"       loop preload="auto"></audio>
+<audio id="snd-forest" src="/sounds/forest.mp3"      loop preload="auto"></audio>
+<audio id="snd-brown"  src="/sounds/brown-noise.mp3" loop preload="auto"></audio>
 </body>
 </html>
