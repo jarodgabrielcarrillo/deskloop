@@ -9,7 +9,7 @@
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://deskloop.work/">
 <meta property="og:title" content="Deskloop — Free Productivity Tools No Signup">
-<meta property="og:description" content="Seven focused tools. Open one, use it, close it. No signup, no cloud, no friction.">
+<meta property="og:description" content="Eleven focused tools. Open one, use it, close it. No signup, no cloud, no friction.">
 <meta property="og:url" content="https://deskloop.work/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -82,7 +82,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 @keyframes hubring{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.5}50%{transform:translate(-50%,-50%) scale(1.45);opacity:0}}
 .hub-core{width:50px;height:50px;border-radius:50%;background:var(--s2);border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(16,185,129,.15),0 4px 16px rgba(0,0,0,.4)}
 .oi{position:absolute;top:48%;left:50%;will-change:transform}
-.oc{display:block;width:152px;background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:13px 12px 11px;text-decoration:none;cursor:pointer;transform:translate(-50%,-50%);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.oc{display:block;width:152px;background:var(--s1);border:1px solid var(--bd);border-radius:13px;padding:13px 12px 11px;text-decoration:none;cursor:pointer;transform:translate(-50%,-50%);will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden}
 .oc-lbl{font-size:8px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;display:flex;align-items:center;gap:5px}
 .oc-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 .oc-ring-wrap{display:flex;justify-content:center;position:relative;margin-bottom:7px}
@@ -475,7 +475,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
   <div>
     <div class="hero-badge"><div class="badge-dot"></div>Free &middot; No Account &middot; Browser-Based</div>
     <h1 class="hero-h1">Your work,<br>without the<br><em>friction.</em></h1>
-    <p class="hero-sub">Ten focused tools for freelancers, students, and solo workers. <strong>No account.</strong> No loading screen. Your data stays on your device..</p>
+    <p class="hero-sub">Eleven focused tools for freelancers, students, and solo workers. <strong>No account.</strong> No loading screen. Your data stays on your device.</p>
     <div class="hero-btns">
       <a href="/tools/focus-timer.html" class="btn-p">Start Focus Timer <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       <a href="#tools" class="btn-s">See all tools</a>
@@ -498,18 +498,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
     <div class="oi" data-idx="0"><a class="oc" href="/tools/focus-timer.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--ac)"></div>Focus Timer</div><div class="oc-ring-wrap"><svg class="oc-ring" viewBox="0 0 76 76"><circle class="ocr-track" cx="38" cy="38" r="30"/><circle class="ocr-fill" cx="38" cy="38" r="30" stroke-dasharray="188.5" stroke-dashoffset="47" stroke="var(--ac)"/></svg><div class="oc-time" id="ocFocusTime">19:27</div></div><div class="oc-mode">&#9679; Deep Focus</div><div class="oc-ambs"><div class="oc-amb on">&#127783;</div><div class="oc-amb">&#9749;</div><div class="oc-amb">&#127754;</div><div class="oc-amb">&#128293;</div></div><button class="oc-btn">&#9208; Pause Session</button></a></div>
     <!-- Tool 1: Habit Tracker -->
     <div class="oi" data-idx="1"><a class="oc" href="/tools/habit-tracker.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--ac)"></div>Habit Tracker</div><div class="oc-streak"><div class="oc-streak-v">&#128293; 14 days</div><div style="font-size:8px;color:var(--tx3)">Best:28</div></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#127939; Morning run</span></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#128218; Read 30 min</span></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#128167; 8 glasses</span></div><div class="oc-hrow"><div class="oc-hcheck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="oc-hname">&#129496; Meditate</span></div><div class="oc-weekdots" style="margin-top:7px"><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd"></div><div class="oc-wd off"></div><div class="oc-wd off"></div></div></a></div>
-    <!-- Tool 2: Meeting Cost -->
-    <div class="oi" data-idx="2"><a class="oc" href="/tools/meeting-cost.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--warn);animation:bdot 1.2s ease-in-out infinite"></div>Meeting Cost</div><div class="oc-cost" id="ocMeetCost">$341.28</div><div class="oc-cost-lbl">TOTAL MEETING COST</div><div class="oc-cost-meta"><span>$3.85/min</span><span>6 people</span><span>$80k avg</span></div><div class="oc-pbar-wrap"><div class="oc-pbar" style="width:71%"></div></div><div class="oc-pbar-lbl"><span>0</span><span>60 min</span></div></a></div>
     <!-- Tool 3: TZ Overlap -->
-    <div class="oi" data-idx="3"><a class="oc" href="/tools/timezone-overlap.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--blue)"></div>TZ Overlap</div><div class="oc-tz-row"><div class="oc-tz-flag">&#127482;&#127480;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">-5</div></div><div class="oc-tz-row"><div class="oc-tz-flag">&#127468;&#127463;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">+0</div></div><div class="oc-tz-row"><div class="oc-tz-flag">&#127480;&#127468;</div><div class="oc-tz-cells"><div class="oc-tc"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc work"></div></div><div class="oc-tz-utc">+8</div></div><div class="oc-ov-badge">&#9989; 2h overlap &middot; 14:00&ndash;16:00</div></a></div>
+    <div class="oi" data-idx="2"><a class="oc" href="/tools/timezone-overlap.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--blue)"></div>TZ Overlap</div><div class="oc-tz-row"><div class="oc-tz-flag">&#127482;&#127480;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">-5</div></div><div class="oc-tz-row"><div class="oc-tz-flag">&#127468;&#127463;</div><div class="oc-tz-cells"><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc"></div><div class="oc-tc"></div></div><div class="oc-tz-utc">+0</div></div><div class="oc-tz-row"><div class="oc-tz-flag">&#127480;&#127468;</div><div class="oc-tz-cells"><div class="oc-tc"></div><div class="oc-tc ov"></div><div class="oc-tc ov"></div><div class="oc-tc work"></div><div class="oc-tc work"></div><div class="oc-tc work"></div></div><div class="oc-tz-utc">+8</div></div><div class="oc-ov-badge">&#9989; 2h overlap &middot; 14:00&ndash;16:00</div></a></div>
     <!-- Tool 4: Deep Work -->
-    <div class="oi" data-idx="4"><a class="oc" href="/tools/deep-work-tracker.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--pur);animation:bdot 1.8s ease-in-out infinite"></div>Deep Work</div><div class="oc-dw-timer">01:23:44</div><div class="oc-dw-ratings"><div class="oc-dw-rate"><div class="oc-dw-rl">Energy</div><div class="oc-dw-re">&#128522;</div></div><div class="oc-dw-rate"><div class="oc-dw-rl">Focus</div><div class="oc-dw-re">&#10024;</div></div></div><div style="font-size:9px;color:var(--tx3);text-align:center;margin-bottom:6px;font-family:var(--mono)">&#128187; Product spec</div><div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:5px;padding:5px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--ac)">&#128293; 5 day streak</div></a></div>
-    <!-- Tool 5: Task Decider -->
-    <div class="oi" data-idx="5"><a class="oc" href="/tools/task-decider.html"><div class="oc-lbl"><div class="oc-dot" style="background:#fb923c"></div>Task Decider</div><div class="oc-wheel-wrap"><div class="oc-pointer"></div><svg class="oc-wheel" viewBox="0 0 80 80"><g class="oc-wg"><path d="M 40,40 L 80,40 A 40,40 0 0,1 60,74.6 Z" fill="#1E40AF"/><path d="M 40,40 L 60,74.6 A 40,40 0 0,1 20,74.6 Z" fill="#10B981"/><path d="M 40,40 L 20,74.6 A 40,40 0 0,1 0,40 Z" fill="#F59E0B"/><path d="M 40,40 L 0,40 A 40,40 0 0,1 20,5.4 Z" fill="#EF4444"/><path d="M 40,40 L 20,5.4 A 40,40 0 0,1 60,5.4 Z" fill="#A78BFA"/><path d="M 40,40 L 60,5.4 A 40,40 0 0,1 80,40 Z" fill="#F472B6"/><circle cx="40" cy="40" r="8" fill="#060C18"/><text x="40" y="44" font-size="8" text-anchor="middle" fill="white">&#127922;</text></g></svg></div><div class="oc-result">&rarr; Review pull requests</div></a></div>
+    <div class="oi" data-idx="3"><a class="oc" href="/tools/deep-work-tracker.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--pur);animation:bdot 1.8s ease-in-out infinite"></div>Deep Work</div><div class="oc-dw-timer">01:23:44</div><div class="oc-dw-ratings"><div class="oc-dw-rate"><div class="oc-dw-rl">Energy</div><div class="oc-dw-re">&#128522;</div></div><div class="oc-dw-rate"><div class="oc-dw-rl">Focus</div><div class="oc-dw-re">&#10024;</div></div></div><div style="font-size:9px;color:var(--tx3);text-align:center;margin-bottom:6px;font-family:var(--mono)">&#128187; Product spec</div><div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:5px;padding:5px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--ac)">&#128293; 5 day streak</div></a></div>
     <!-- Tool 6: Work Hours -->
-    <div class="oi" data-idx="6"><a class="oc" href="/tools/work-hours-logger.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--ac);animation:bdot 1.4s ease-in-out infinite"></div>Work Hours</div><div class="oc-wh-timer" id="ocWHTimer">03:42:18</div><div class="oc-bars"><div class="oc-bar past" style="height:72%"></div><div class="oc-bar past" style="height:52%"></div><div class="oc-bar past" style="height:92%"></div><div class="oc-bar today" style="height:44%"></div><div class="oc-bar empty" style="height:8%"></div><div class="oc-bar empty" style="height:4%"></div><div class="oc-bar empty" style="height:4%"></div></div><div class="oc-bar-labels"><span>M</span><span>T</span><span>W</span><span style="color:var(--ac)">T</span><span>F</span><span>S</span><span>S</span></div><div class="oc-wh-stat">3h 42m today &middot; 21.4h week</div></a></div>
+    <div class="oi" data-idx="4"><a class="oc" href="/tools/work-hours-logger.html"><div class="oc-lbl"><div class="oc-dot" style="background:var(--ac);animation:bdot 1.4s ease-in-out infinite"></div>Work Hours</div><div class="oc-wh-timer" id="ocWHTimer">03:42:18</div><div class="oc-bars"><div class="oc-bar past" style="height:72%"></div><div class="oc-bar past" style="height:52%"></div><div class="oc-bar past" style="height:92%"></div><div class="oc-bar today" style="height:44%"></div><div class="oc-bar empty" style="height:8%"></div><div class="oc-bar empty" style="height:4%"></div><div class="oc-bar empty" style="height:4%"></div></div><div class="oc-bar-labels"><span>M</span><span>T</span><span>W</span><span style="color:var(--ac)">T</span><span>F</span><span>S</span><span>S</span></div><div class="oc-wh-stat">3h 42m today &middot; 21.4h week</div></a></div>
     <!-- Tool 7: Invoice Generator -->
-    <div class="oi" data-idx="7">
+    <div class="oi" data-idx="5">
       <a class="oc" href="/tools/invoice-generator.html">
         <div class="oc-lbl"><div class="oc-dot" style="background:var(--ac)"></div>Invoice Gen</div>
         <div style="background:#fff;border-radius:8px;padding:8px 9px;margin-bottom:7px">
@@ -529,7 +525,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
       </a>
     
     <!-- Tool 8: GPA Calculator -->
-    <div class="oi" data-idx="8">
+    <div class="oi" data-idx="6">
       <a class="oc" href="/tools/gpa-calculator.html">
         <div class="oc-lbl"><div class="oc-dot" style="background:#60A5FA"></div>GPA Calc</div>
         <div style="background:var(--s2);border:1px solid var(--bd2);border-radius:7px;padding:8px 9px;margin-bottom:6px">
@@ -548,7 +544,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
       </a>
     </div></div>
     <!-- Tool 9: Freelance Rate Calculator -->
-    <div class="oi" data-idx="9">
+    <div class="oi" data-idx="7">
       <a class="oc" href="/tools/freelance-rate-calculator.html">
         <div class="oc-lbl"><div class="oc-dot" style="background:#10B981"></div>Rate Calc</div>
         <div style="background:var(--s2);border:1px solid var(--bd2);border-radius:7px;padding:8px 9px;margin-bottom:6px">
@@ -568,6 +564,32 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
         <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--tx3)">
           <span>Income goal &rarr; rate</span>
           <span style="color:#10B981">+ Market data</span>
+        </div>
+      </a>
+    </div>
+
+
+    <!-- Tool 10: Final Grade Calculator -->
+    <div class="oi" data-idx="8">
+      <a class="oc" href="/tools/final-grade-calculator.html">
+        <div class="oc-lbl"><div class="oc-dot" style="background:#60A5FA"></div>Grade Calc</div>
+        <div style="background:var(--s2);border:1px solid var(--bd2);border-radius:7px;padding:8px 9px;margin-bottom:6px">
+          <div style="font-size:8px;font-weight:700;color:var(--tx3);margin-bottom:4px">NEED ON FINAL</div>
+          <div style="font-family:var(--mono);font-size:26px;font-weight:800;color:#60A5FA;text-align:center;margin-bottom:6px">73<span style="font-size:11px;font-weight:500;color:var(--tx3)">%</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+            <div style="background:var(--s3);border-radius:4px;padding:4px 6px;text-align:center">
+              <div style="font-size:7px;color:var(--tx3)">Current</div>
+              <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--tx2)">78%</div>
+            </div>
+            <div style="background:var(--s3);border-radius:4px;padding:4px 6px;text-align:center">
+              <div style="font-size:7px;color:var(--tx3)">Target</div>
+              <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--tx2)">C+</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--tx3)">
+          <span>Grade &rarr; score needed</span>
+          <span style="color:#60A5FA">&#10024; New</span>
         </div>
       </a>
     </div>
@@ -618,26 +640,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
         <a href="/tools/habit-tracker.html" class="mcc-cta">Open Habit Tracker &rarr;</a>
       </div>
 
-      <!-- Card 2: Meeting Cost -->
-      <div class="mc-card" style="--cc:#F59E0B">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#F59E0B,#fbbf24 50%,transparent);border-radius:20px 20px 0 0"></div>
-        <div class="mcc-hdr">
-          <span class="mcc-name">Meeting Cost</span>
-          <span class="mcc-live" style="color:var(--warn)"><div class="mcc-live-dot" style="background:var(--warn)"></div>Running</span>
-        </div>
-        <div class="mcc-body">
-          <div class="mcc-cost-num" id="mcMCost">$341.28</div>
-          <div class="mcc-cost-sub">Total Meeting Cost</div>
-          <div class="mcc-cost-meta">
-            <div class="mcc-cm"><div class="mcc-cm-v">$3.85</div><div class="mcc-cm-l">per min</div></div>
-            <div class="mcc-cm"><div class="mcc-cm-v">6</div><div class="mcc-cm-l">people</div></div>
-            <div class="mcc-cm"><div class="mcc-cm-v">$80k</div><div class="mcc-cm-l">avg salary</div></div>
-          </div>
-          <div class="mcc-pbar"><div class="mcc-pbar-fill" style="width:71%"></div></div>
-        </div>
-        <a href="/tools/meeting-cost.html" class="mcc-cta" style="background:#d97706">Open Meeting Cost &rarr;</a>
-      </div>
-
       <!-- Card 3: Time Zone Overlap -->
       <div class="mc-card">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#38bdf8,#60A5FA 50%,transparent);border-radius:20px 20px 0 0"></div>
@@ -671,34 +673,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
           <div class="mcc-streak-badge">&#128293; 5 day streak &mdash; Best: 12 days</div>
         </div>
         <a href="/tools/deep-work-tracker.html" class="mcc-cta" style="background:#7c3aed">Open Deep Work &rarr;</a>
-      </div>
-
-      <!-- Card 5: Task Decider -->
-      <div class="mc-card">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#fb923c,#f97316 50%,transparent);border-radius:20px 20px 0 0"></div>
-        <div class="mcc-hdr">
-          <span class="mcc-name">Task Decider</span>
-          <span class="mcc-live" style="color:#fb923c"><div class="mcc-live-dot" style="background:#fb923c"></div>Spinning</span>
-        </div>
-        <div class="mcc-body">
-          <div class="mcc-wheel-wrap">
-            <div class="mcc-pointer"></div>
-            <svg class="mcc-wheel" viewBox="0 0 120 120">
-              <g class="mcc-wg">
-                <path d="M 60,60 L 120,60 A 60,60 0 0,1 90,111.96 Z" fill="#1E40AF"/>
-                <path d="M 60,60 L 90,111.96 A 60,60 0 0,1 30,111.96 Z" fill="#10B981"/>
-                <path d="M 60,60 L 30,111.96 A 60,60 0 0,1 0,60 Z" fill="#F59E0B"/>
-                <path d="M 60,60 L 0,60 A 60,60 0 0,1 30,8.04 Z" fill="#EF4444"/>
-                <path d="M 60,60 L 30,8.04 A 60,60 0 0,1 90,8.04 Z" fill="#A78BFA"/>
-                <path d="M 60,60 L 90,8.04 A 60,60 0 0,1 120,60 Z" fill="#F472B6"/>
-                <circle cx="60" cy="60" r="12" fill="#060C18"/>
-                <text x="60" y="65" font-size="11" text-anchor="middle" fill="white">&#127922;</text>
-              </g>
-            </svg>
-          </div>
-          <div class="mcc-result">&rarr; &ldquo;Review pull requests&rdquo;</div>
-        </div>
-        <a href="/tools/task-decider.html" class="mcc-cta" style="background:#c2410c">Spin the Wheel &rarr;</a>
       </div>
 
       <!-- Card 6: Work Hours -->
@@ -765,6 +739,92 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
         <a href="/tools/freelance-rate-calculator.html" class="mcc-cta" style="background:#059669">Calculate My Rate &rarr;</a>
       </div>
 
+    
+      <!-- Card 10: Final Grade Calculator -->
+      <div class="mc-card" style="--cc:#60A5FA">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#3B82F6,#60A5FA 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Grade Calculator</span>
+          <span class="mcc-live" style="background:rgba(96,165,250,.1);color:#93C5FD"><div class="mcc-live-dot" style="background:#60A5FA"></div>Student</span>
+        </div>
+        <div class="mcc-body">
+          <div style="text-align:center;margin-bottom:14px">
+            <div style="font-size:9px;font-weight:700;color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">You Need on Your Final</div>
+            <div style="font-family:var(--mono);font-size:48px;font-weight:800;color:#60A5FA;line-height:1">73%</div>
+            <div style="font-size:10px;color:var(--tx3);margin-top:4px">Very achievable &bull; Final weight 30%</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+            <div style="background:var(--s2);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--tx)">78%</div>
+              <div style="font-size:9px;color:var(--tx3)">Current grade</div>
+            </div>
+            <div style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-family:var(--mono);font-size:15px;font-weight:700;color:#60A5FA">C (70%)</div>
+              <div style="font-size:9px;color:var(--tx3)">Target grade</div>
+            </div>
+          </div>
+          <div style="background:var(--s2);border-radius:8px;padding:10px;font-size:10px;color:var(--tx3);text-align:center">
+            Save scenarios &bull; Multiple finals &bull; Letter grade breakdown
+          </div>
+        </div>
+        <a href="/tools/final-grade-calculator.html" class="mcc-cta" style="background:#1D4ED8">Find My Score &rarr;</a>
+      </div>
+      <!-- Card: Invoice Generator -->
+      <div class="mc-card" style="--cc:#10B981">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#10B981,#34D399 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">Invoice Generator</span>
+          <span class="mcc-live" style="background:rgba(16,185,129,.1);color:#34D399"><div class="mcc-live-dot" style="background:#10B981"></div>Freelancer</span>
+        </div>
+        <div class="mcc-body">
+          <div style="text-align:center;margin-bottom:12px">
+            <div style="font-size:9px;font-weight:700;color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Professional PDF Invoice</div>
+            <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:#10B981;line-height:1">INV-2026-001</div>
+            <div style="font-size:10px;color:var(--tx3);margin-top:4px">24 currencies &bull; Live exchange rates</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+            <div style="background:var(--s2);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--tx)">$1,200</div>
+              <div style="font-size:9px;color:var(--tx3)">Subtotal</div>
+            </div>
+            <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-family:var(--mono);font-size:14px;font-weight:700;color:#10B981">$1,320</div>
+              <div style="font-size:9px;color:var(--tx3)">Total due</div>
+            </div>
+          </div>
+          <div style="background:var(--s2);border-radius:8px;padding:10px;font-size:10px;color:var(--tx3);text-align:center">
+            Logo upload &bull; Tax presets &bull; Recurring billing
+          </div>
+        </div>
+        <a href="/tools/invoice-generator.html" class="mcc-cta" style="background:#059669">Create Invoice &rarr;</a>
+      </div>
+      <!-- Card: GPA Calculator -->
+      <div class="mc-card" style="--cc:#60A5FA">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#3B82F6,#60A5FA 50%,transparent);border-radius:20px 20px 0 0"></div>
+        <div class="mcc-hdr">
+          <span class="mcc-name">GPA Calculator</span>
+          <span class="mcc-live" style="background:rgba(96,165,250,.1);color:#93C5FD"><div class="mcc-live-dot" style="background:#60A5FA"></div>Student</span>
+        </div>
+        <div class="mcc-body">
+          <div style="text-align:center;margin-bottom:14px">
+            <div style="font-size:9px;font-weight:700;color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Cumulative GPA</div>
+            <div style="font-family:var(--mono);font-size:52px;font-weight:800;color:#60A5FA;line-height:1">3.72</div>
+            <div style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);display:inline-block;border-radius:100px;padding:3px 10px;font-size:9px;font-weight:700;color:#60A5FA;margin-top:6px">Dean's List ✨</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+            <div style="background:var(--s2);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--tx)">3.85</div>
+              <div style="font-size:9px;color:var(--tx3)">This semester</div>
+            </div>
+            <div style="background:var(--s2);border-radius:8px;padding:10px;text-align:center">
+              <div style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--tx)">3.60</div>
+              <div style="font-size:9px;color:var(--tx3)">What-If target</div>
+            </div>
+          </div>
+        </div>
+        <a href="/tools/gpa-calculator.html" class="mcc-cta" style="background:#1D4ED8">Calculate GPA &rarr;</a>
+      </div>
+
     </div><!-- /mc-track -->
   </div><!-- /mc-wrap -->
 
@@ -800,18 +860,19 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 <div class="W">
   <div class="sec-tag">Most Used Tools</div>
   <h2 class="sec-h">Everything you need.<br>Nothing you don&rsquo;t.</h2>
-  <p class="sec-sub">Seven focused tools, each solving one problem with zero bloat. Open any in under 3 seconds &mdash; no account, no loading screen.</p>
+  <p class="sec-sub">Eleven focused tools, each solving one problem with zero bloat. Open any in under 3 seconds &mdash; no account, no loading screen.</p>
   <div class="bento">
     <a href="/tools/focus-timer.html" class="tc tc-blue tc-span2"><div class="tc-pill">&#11088; Most Popular</div><div class="tc-hd"><div class="tc-ic" style="background:rgba(59,130,246,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="tc-nm">Focus Timer</div></div></div><p class="tc-ds">Pomodoro-style timer with custom intervals, 7 ambient sounds, session history, and streak tracking.</p><div class="tc-lk">Open timer <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
     <a href="/tools/habit-tracker.html" class="tc tc-green"><div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></div><div><div class="tc-nm">Habit Tracker</div></div></div><p class="tc-ds">Daily check-offs, streak counter, 12-week calendar view, and midnight reminders when your streak is at risk.</p><div class="tc-lk">Track habits <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
-    <a href="/tools/meeting-cost.html" class="tc tc-amber"><div class="tc-hd"><div class="tc-ic" style="background:rgba(245,158,11,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="tc-nm">Meeting Cost</div></div></div><p class="tc-ds">Real-time dollar counter showing what your meeting costs as it runs. 17 currencies.</p><div class="tc-lk">Calculate cost <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    
     <a href="/tools/timezone-overlap.html" class="tc tc-teal"><div class="tc-hd"><div class="tc-ic" style="background:rgba(56,189,248,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg></div><div><div class="tc-nm">Time Zone Overlap</div></div></div><p class="tc-ds">Find the best meeting window across time zones. Interactive world map, DST toggle, overlap grid, CSV export.</p><div class="tc-lk">Find overlap <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
     <a href="/tools/deep-work-tracker.html" class="tc tc-purple"><div class="tc-hd"><div class="tc-ic" style="background:rgba(167,139,250,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div><div><div class="tc-nm">Deep Work Tracker</div></div></div><p class="tc-ds">Flow-state timer with energy &amp; focus ratings, day streak, weekly chart, and session history with tags.</p><div class="tc-lk">Track focus <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
     <a href="/tools/work-hours-logger.html" class="tc tc-pink"><div class="tc-hd"><div class="tc-ic" style="background:rgba(244,114,182,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="tc-nm">Work Hours Logger</div></div></div><p class="tc-ds">Clock in and out with notes and tags. Streak counter, weekly chart, daily totals, CSV export.</p><div class="tc-lk">Log hours <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
-    <a href="/tools/task-decider.html" class="tc tc-orange"><div class="tc-hd"><div class="tc-ic" style="background:rgba(251,146,60,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0118.8-4.3M22 12.5a10 10 0 01-18.8 4.2"/></svg></div><div><div class="tc-nm">Task Decider</div></div></div><p class="tc-ds">Spinning wheel that randomly picks your next task. Beat decision paralysis instantly. Saves spin history.</p><div class="tc-lk">Spin the wheel <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+    
     <a href="/tools/invoice-generator.html" class="tc tc-green tc-span2"><div class="tc-corner"></div><div class="tc-pill">&#10024; New</div><div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="tc-nm">Invoice Generator</div></div></div><p class="tc-ds">Create professional invoices instantly. 24 currencies, live exchange rates, tax presets by country, logo upload, recurring billing, PDF download. Free, no account needed &mdash; perfect for freelancers and students.</p><div class="tc-lk">Create invoice <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
     <a href="/tools/gpa-calculator.html" class="tc tc-blue tc-span2"><div class="tc-corner"></div><div class="tc-pill">&#10024; New</div><div class="tc-hd"><div class="tc-ic" style="background:rgba(96,165,250,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><div><div class="tc-nm">GPA Calculator</div></div></div><p class="tc-ds">Track your GPA across every semester. What-If grade simulator, Dean&rsquo;s List standing indicator, Pass/Fail support, target GPA planner, and CSV export. Free, no signup, your data never leaves your device.</p><div class="tc-lk">Calculate GPA <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
         <a href="/tools/freelance-rate-calculator.html" class="tc tc-green"><div class="tc-corner"></div><div class="tc-pill">&#128181; New</div><div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="tc-nm">Freelance Rate Calculator</div></div></div><p class="tc-ds">Find your exact hourly, daily, and project rate based on your income goal, location, and experience level. Includes market rate benchmarks and a rate profile saver.</p><div class="tc-lk">Calculate my rate <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
+        <a href="/tools/final-grade-calculator.html" class="tc tc-blue"><div class="tc-corner"></div><div class="tc-pill">&#10024; New</div><div class="tc-hd"><div class="tc-ic" style="background:rgba(96,165,250,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div><div class="tc-nm">Final Grade Calculator</div></div></div><p class="tc-ds">Find the exact score you need on your final exam. Supports multiple courses, saved scenarios, and quick presets. Free, no signup.</p><div class="tc-lk">Calculate my score <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
     <a href="/blog/" class="tc tc-span2" style="background:linear-gradient(135deg,var(--s1) 0%,rgba(16,185,129,.06) 100%);border-color:rgba(16,185,129,.18)"><div class="tc-hd"><div class="tc-ic" style="background:rgba(16,185,129,.1)"><svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div><div class="tc-nm" style="color:var(--ac)">Blog &amp; Guides</div></div></div><p class="tc-ds">Practical articles on deep work, focus, habit building, remote scheduling, and getting more done.</p><div class="tc-lk">Read articles <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></a>
   </div>
 </div>
@@ -904,7 +965,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 /* ══════════════════════════════════════════════
    DESKTOP ORBIT (≥769px)
 ══════════════════════════════════════════════ */
-const N=10,RX=210,RY=82,DUR=30000;
+const N=9,RX=210,RY=82,DUR=30000;
 const stage=document.getElementById('orbitStage');
 const items=Array.from(document.querySelectorAll('.oi'));
 const cards=Array.from(document.querySelectorAll('.oc'));
@@ -1055,7 +1116,7 @@ if(stage){
 /* ══════════════════════════════════════════════
    MOBILE CAROUSEL (≤768px)
 ══════════════════════════════════════════════ */
-const MC_N=10;
+const MC_N=9;
 let mcIdx=0,mcAutoTimer=null;
 let mcTouchStartX=0,mcTouchStartY=0,mcTouchStartTime=0,mcLastX=0;
 let mcIsDragging=false,mcHasMoved=false,mcBaseOffset=0;
