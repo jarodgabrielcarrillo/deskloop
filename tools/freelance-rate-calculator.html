@@ -313,6 +313,11 @@ footer{border-top:1px solid var(--bd)}
   .sec-body{padding:18px 20px}
 }
 a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:3px}
+.seo-block{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:32px 36px;margin:0 0 40px}
+.seo-block h2{font-size:20px;font-weight:800;letter-spacing:-.03em;color:var(--tx);margin-bottom:12px}
+.seo-block h3{font-size:14px;font-weight:700;color:var(--tx);margin:24px 0 8px}
+.seo-block p{font-size:14px;color:var(--tx2);line-height:1.8;margin:0}
 </style>
 </head>
 <body>
@@ -747,6 +752,39 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 
 </div><!-- /wrap -->
 
+
+<script>function toggleFaq(btn){var a=btn.nextElementSibling;var open=a.style.display==="block";a.style.display=open?"none":"block";btn.querySelector("svg").style.transform=open?"":"rotate(45deg)";}
+
+</script>
+
+
+<div style="max-width:1100px;margin:0 auto;padding:0 28px 80px">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px">
+    <div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:24px">
+      <h3 style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:10px">How your rate is calculated</h3>
+      <p style="font-size:13px;color:var(--tx2);line-height:1.75;margin:0">Your rate is calculated from the total annual revenue you need to earn — your take-home goal plus business expenses, taxes, and a buffer for slow months. That total is divided by your billable hours per year, which factors in working weeks, daily hours, and utilization rate. The result is the minimum you must charge to hit your target.</p>
+    </div>
+    <div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:24px">
+      <h3 style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:10px">Conservative, Balanced, Premium</h3>
+      <p style="font-size:13px;color:var(--tx2);line-height:1.75;margin:0">The three range cards combine your calculated minimum with market rate data for your experience level and location. Conservative is the market floor. Balanced is the market average. Premium is for specialists with a strong portfolio and a clear differentiator.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SEO content block -->
+<div style="max-width:1100px;margin:0 auto;padding:0 28px 64px">
+  <div class="seo-block">
+    <h2>Freelance Rate Calculator Free — Find Your Exact Hourly Rate</h2>
+    <h3>How your rate is calculated</h3>
+    <p>Your rate is built from the total annual revenue you need to earn — your take-home income goal, plus all business expenses, taxes, and a buffer for slow months. That total is divided by your actual billable hours per year, accounting for working weeks, daily hours, and your utilization rate. The result is the minimum hourly rate that makes your income goal achievable.</p>
+    <h3>Why most freelancers undercharge</h3>
+    <p>Most freelancers set rates based on what feels reasonable, what they charged last year, or what a competitor charges. None of these account for the real cost of self-employment: higher taxes, business expenses, unpaid admin time, and gaps between clients. This calculator forces the actual math.</p>
+    <h3>Understanding utilization rate</h3>
+    <p>Utilization rate is the percentage of your available hours that you actually bill. Admin work, writing proposals, marketing, and chasing invoices all take time no client pays for. Setting this realistically — 60 to 75% for most freelancers — gives you a rate that holds up in practice, not just on paper.</p>
+    <h3>Market rate comparison</h3>
+    <p>The calculator shows where your rate sits relative to market benchmarks for your experience level and location. Rates vary significantly by region: a mid-level developer in the Philippines commands very different rates than one in the US or UK, even for identical remote work.</p>
+  </div>
+</div>
 <footer><div class="foot-inner">
   <a href="/">Deskloop</a><span>·</span>
   <a href="/tools/invoice-generator.html">Invoice Generator</a><span>·</span>

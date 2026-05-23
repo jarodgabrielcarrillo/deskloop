@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Final Grade Calculator Free — What Do You Need on Your Final? | Deskloop</title>
+<meta name="description" content="Free final grade calculator. Enter your current grade and final exam weight to find the exact score you need. Supports multiple courses, saved scenarios, and grading presets.">
+<meta name="keywords" content="final grade calculator free,what grade do I need to pass,exam grade calculator,final exam score calculator,grade needed on final">
+<link rel="canonical" href="https://deskloop.work/tools/final-grade-calculator.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ac:#10B981;--ac-lt:#34D399;--ac-d:#059669;
+  --blue:#3B82F6;--blue-lt:#60A5FA;--blue-d:#1E40AF;
+  --amber:#F59E0B;--amber-lt:#FCD34D;
+  --red:#EF4444;--red-lt:#FCA5A5;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;--s4:#1A2D44;
+  --tx:#EEF6FF;--tx2:#88AAC5;--tx3:#4C6580;
+  --bd:#142032;--bd2:#1A2D44;
+  --r:10px;--rl:16px;--t:200ms ease;
+  --mono:"JetBrains Mono",monospace;
+  --result-color:var(--ac);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--tx);
+  -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:200;background:rgba(6,12,24,.97);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);
+  padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-lm{width:32px;height:32px;background:var(--blue-d);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-lt{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.025em}
+.nav-a{color:var(--tx2);text-decoration:none;font-size:13px;font-weight:500;
+  padding:7px 14px;border-radius:var(--r);border:1px solid var(--bd);
+  transition:all var(--t);display:inline-flex;align-items:center;gap:6px}
+.nav-a:hover{color:var(--tx);border-color:var(--bd2)}
+.nav-a svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:48px 24px 40px;text-align:center}
+.hero::before{content:"";position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:600px;height:360px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(16,185,129,.07) 0%,transparent 68%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:560px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
+  border-radius:100px;padding:5px 14px;font-size:10px;font-weight:700;
+  letter-spacing:1.8px;text-transform:uppercase;color:var(--ac);margin-bottom:18px}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-size:clamp(26px,4.5vw,46px);font-weight:900;letter-spacing:-.04em;line-height:1.06;margin-bottom:12px}
+.hero h1 em{font-style:normal;background:linear-gradient(125deg,var(--ac-lt),var(--blue-lt));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:15px;color:var(--tx2);line-height:1.65}
+
+/* Mode tabs */
+.mode-wrap{max-width:1000px;margin:0 auto;padding:0 24px 20px}
+.mode-tabs{display:flex;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:4px;gap:4px}
+.mtab{flex:1;padding:10px 16px;font-size:13px;font-weight:600;border-radius:10px;
+  cursor:pointer;transition:all var(--t);text-align:center;color:var(--tx3);
+  border:none;background:none;font-family:"Inter",sans-serif;display:flex;align-items:center;justify-content:center;gap:7px}
+.mtab svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.mtab.on{background:var(--s3);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+
+/* Main layout */
+.main{max-width:1000px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+
+/* Cards */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;margin-bottom:14px}
+.card:last-child{margin-bottom:0}
+.card-hdr{padding:18px 22px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.card-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-ico svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.card-title{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:1px}
+.card-desc{font-size:11px;color:var(--tx3)}
+.card-body{padding:20px 22px}
+
+/* Fields */
+.field{margin-bottom:18px}
+.field:last-child{margin-bottom:0}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flabel{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.tip{width:14px;height:14px;border-radius:50%;background:var(--s3);border:1px solid var(--bd2);
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:8px;font-weight:700;color:var(--tx3);position:relative;flex-shrink:0}
+.tip:hover{border-color:var(--ac);color:var(--ac)}
+.tip-box{position:absolute;bottom:calc(100%+6px);left:50%;transform:translateX(-50%);
+  background:var(--s3);border:1px solid var(--bd2);border-radius:8px;padding:10px 12px;
+  font-size:11px;color:var(--tx2);line-height:1.5;width:200px;z-index:50;
+  pointer-events:none;opacity:0;transition:opacity var(--t);box-shadow:0 4px 16px rgba(0,0,0,.4);
+  text-transform:none;letter-spacing:0;font-weight:400}
+.tip:hover .tip-box{opacity:1}
+
+input[type=number],input[type=text],select{
+  width:100%;background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx);font:500 14px/1 "Inter",sans-serif;padding:12px 14px;
+  transition:border-color var(--t),box-shadow var(--t);outline:none;
+  -moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input:focus,select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(16,185,129,.1)}
+input.warn{border-color:var(--amber)!important}
+.has-sfx{position:relative}
+.has-sfx input{padding-right:34px}
+.input-sfx{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--tx3);pointer-events:none}
+select{cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234C6580' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+
+/* Range slider */
+.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+input[type=range]{flex:1;-webkit-appearance:none;height:4px;background:var(--s3);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
+  border-radius:50%;background:var(--ac);cursor:pointer;box-shadow:0 0 0 3px rgba(16,185,129,.15);transition:transform var(--t)}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.slider-num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ac);min-width:40px;text-align:right}
+.slider-hint{font-size:11px;color:var(--tx3);line-height:1.5}
+
+/* Presets */
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.preset{padding:6px 12px;border-radius:8px;background:var(--s2);border:1px solid var(--bd2);
+  font-size:11px;font-weight:600;color:var(--tx2);cursor:pointer;transition:all var(--t)}
+.preset:hover{border-color:var(--ac);color:var(--ac)}
+.preset.active{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.35);color:var(--ac-lt)}
+
+/* Weight validation */
+.weight-warn{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;
+  background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);
+  border-radius:var(--r);font-size:12px;color:var(--amber-lt);line-height:1.5;margin-top:8px}
+.weight-warn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;margin-top:1px}
+
+/* Results sticky panel */
+.results{position:sticky;top:82px}
+.res-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;margin-bottom:14px}
+.res-card:last-child{margin-bottom:0}
+
+/* Result hero */
+.res-hero{padding:28px 22px 20px;text-align:center;position:relative;overflow:hidden;
+  transition:background .4s ease}
+.res-hero::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,var(--result-glow,rgba(16,185,129,.06)),transparent 70%);
+  transition:background .4s ease;pointer-events:none}
+.res-label{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px;position:relative;z-index:1}
+.res-num{font-family:var(--mono);font-size:68px;font-weight:700;letter-spacing:-.02em;
+  line-height:1;margin-bottom:6px;position:relative;z-index:1;
+  color:var(--result-color);transition:color .4s ease}
+.res-period{font-size:13px;color:var(--tx3);margin-bottom:16px;position:relative;z-index:1}
+.res-verdict{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;
+  border-radius:100px;font-size:12px;font-weight:700;position:relative;z-index:1;
+  transition:all .4s ease}
+.res-message{font-size:12px;color:var(--tx2);line-height:1.6;padding:12px 16px;
+  border-top:1px solid var(--bd);text-align:left}
+
+/* Progress visual */
+.prog-section{padding:16px 20px}
+.prog-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px}
+.prog-track{height:10px;background:var(--s3);border-radius:5px;overflow:hidden;position:relative;margin-bottom:8px}
+.prog-cur{position:absolute;left:0;top:0;height:100%;border-radius:5px;transition:width .5s ease;opacity:.4}
+.prog-tgt{position:absolute;top:-4px;height:18px;width:3px;border-radius:2px;transform:translateX(-50%);transition:left .5s ease}
+.prog-needed{position:absolute;top:-4px;height:18px;width:3px;border-radius:2px;transform:translateX(-50%);transition:left .5s ease;background:var(--result-color)}
+.prog-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3)}
+.prog-mid{text-align:center}
+
+/* Status rows */
+.status-rows{padding:0 20px 16px;display:flex;flex-direction:column;gap:4px}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:8px;background:var(--s2)}
+.srow-l{font-size:12px;color:var(--tx3)}
+.srow-v{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--tx)}
+.srow.highlight{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15)}
+.srow.highlight .srow-l{color:var(--ac)}
+.srow.highlight .srow-v{color:var(--ac-lt)}
+
+/* Letter grade grid */
+.lg-section{padding:0 16px 16px}
+.lg-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:10px}
+.lg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.lg-item{background:var(--s2);border:1px solid var(--bd2);border-radius:8px;padding:9px 6px;text-align:center;position:relative;overflow:hidden;transition:all var(--t)}
+.lg-item.is-target{border-color:var(--result-color);background:rgba(16,185,129,.06)}
+.lg-letter{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--tx);margin-bottom:2px}
+.lg-min{font-size:9px;color:var(--tx3)}
+.lg-need{font-size:10px;font-weight:700;margin-top:4px;font-family:var(--mono)}
+
+/* Actions */
+.action-row{display:flex;gap:8px;padding:0 16px 16px}
+.abtn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:11px;border:none;border-radius:var(--r);font:600 12px/1 "Inter",sans-serif;cursor:pointer;transition:all var(--t)}
+.abtn-copy{background:var(--ac);color:#fff}
+.abtn-copy:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.abtn-save{background:var(--s2);color:var(--tx2);border:1px solid var(--bd2)}
+.abtn-save:hover{border-color:var(--blue-lt);color:var(--blue-lt)}
+.abtn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Saved scenarios */
+.scenario-list{display:flex;flex-direction:column;gap:6px}
+.scenario-item{display:flex;align-items:center;gap:8px;padding:9px 12px;
+  background:var(--s2);border:1px solid var(--bd2);border-radius:8px;cursor:pointer;transition:all var(--t)}
+.scenario-item:hover{border-color:rgba(16,185,129,.3)}
+.scenario-name{font-size:12px;font-weight:600;color:var(--tx2);flex:1}
+.scenario-meta{font-size:10px;color:var(--tx3);font-family:var(--mono)}
+.scenario-del{width:20px;height:20px;border:none;background:rgba(239,68,68,.1);color:var(--red-lt);
+  border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all var(--t);flex-shrink:0}
+.scenario-del:hover{background:rgba(239,68,68,.2)}
+.no-scenarios{font-size:12px;color:var(--tx3);text-align:center;padding:12px;
+  background:var(--s2);border-radius:8px;border:1px dashed var(--bd2)}
+
+/* Multi mode */
+.multi-wrap{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.course-row{display:grid;grid-template-columns:1fr 72px 72px auto;gap:8px;align-items:center}
+.cr-input{background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx);font:500 13px/1 "Inter",sans-serif;padding:10px 12px;outline:none;width:100%;transition:border-color var(--t)}
+.cr-input:focus{border-color:var(--ac)}
+.cr-num{text-align:center;padding:10px 8px;font-family:var(--mono);font-size:13px}
+.cr-del{width:30px;height:30px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);
+  border-radius:7px;color:var(--red-lt);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t);flex-shrink:0}
+.cr-del:hover{background:rgba(239,68,68,.18)}
+.cr-del svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.add-row-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;width:fit-content;
+  background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx2);font:500 12px/1 "Inter",sans-serif;cursor:pointer;transition:all var(--t)}
+.add-row-btn:hover{border-color:var(--ac);color:var(--ac)}
+.add-row-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Multi results */
+.multi-result-row{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;background:var(--s2);border-radius:9px;margin-bottom:6px}
+.mrr-left{display:flex;flex-direction:column;gap:2px}
+.mrr-name{font-size:13px;font-weight:600;color:var(--tx)}
+.mrr-meta{font-size:11px;color:var(--tx3)}
+.mrr-val{font-family:var(--mono);font-size:14px;font-weight:700}
+.semester-overview{padding:16px;background:linear-gradient(135deg,rgba(16,185,129,.06),rgba(59,130,246,.04));
+  border:1px solid rgba(16,185,129,.18);border-radius:var(--rl);margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.so-item{text-align:center}
+.so-num{font-family:var(--mono);font-size:22px;font-weight:700;margin-bottom:3px}
+.so-lbl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+
+/* Insights */
+.ins-section{padding:0 16px 14px;display:flex;flex-direction:column;gap:7px}
+.ins{padding:10px 13px;border-radius:9px;font-size:12px;line-height:1.6}
+.ins a{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.25)}
+.ins-good{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);color:var(--ac-lt)}
+.ins-warn{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);color:var(--amber-lt)}
+.ins-bad{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.18);color:var(--red-lt)}
+.ins-info{background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.18);color:var(--blue-lt)}
+
+/* Counter animation */
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.res-num.animate{animation:countUp .3s ease forwards}
+
+/* GDPR */
+#gdpr{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:var(--s1);
+  border-top:1px solid var(--bd2);padding:14px 28px;display:flex;align-items:center;
+  gap:14px;flex-wrap:wrap;transform:translateY(100%);
+  transition:transform .4s cubic-bezier(.4,0,.2,1)}
+#gdpr.show{transform:translateY(0)}
+#gdpr p{font-size:12px;color:var(--tx2);margin:0;flex:1;min-width:200px;line-height:1.5}
+#gdpr a{color:var(--ac);text-decoration:none}
+.g-btns{display:flex;gap:8px;flex-shrink:0}
+.g-accept{background:var(--ac);color:#fff;border:none;border-radius:8px;padding:9px 18px;font:600 12px/1 "Inter",sans-serif;cursor:pointer}
+.g-decline{background:transparent;color:var(--tx3);border:1px solid var(--bd);border-radius:8px;padding:9px 14px;font:500 12px/1 "Inter",sans-serif;cursor:pointer}
+
+/* Skeleton */
+@keyframes sk{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.sk{border-radius:6px;background:linear-gradient(90deg,#0F1E32 25%,#152540 50%,#0F1E32 75%);background-size:800px 100%;animation:sk 1.4s ease-in-out infinite}
+.sk-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;padding-top:62px;transition:opacity .4s ease;pointer-events:none}
+.sk-screen.out{opacity:0}
+.sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+
+/* Footer */
+footer{border-top:1px solid var(--bd)}
+.foot{text-align:center;padding:18px 24px;font-size:12px;color:var(--tx3);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.foot a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
+.foot a:hover{color:var(--tx2)}
+
+/* SEO block */
+.seo-block{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:28px 32px;margin-bottom:32px}
+.seo-block h2{font-size:18px;font-weight:800;letter-spacing:-.03em;color:var(--tx);margin-bottom:10px}
+.seo-block h3{font-size:13px;font-weight:700;color:var(--tx);margin:20px 0 6px}
+.seo-block p{font-size:13px;color:var(--tx2);line-height:1.8}
+
+/* Responsive */
+@media(max-width:820px){
+  .main{grid-template-columns:1fr}
+  .results{position:static}
+  .lg-grid{grid-template-columns:repeat(5,1fr)}
+}
+@media(max-width:540px){
+  .hero{padding:36px 16px 28px}
+  .mode-wrap,.main{padding-left:16px;padding-right:16px}
+  .hero h1{font-size:26px}
+  .course-row{grid-template-columns:1fr 60px 60px auto}
+  .field-row{grid-template-columns:1fr}
+  .action-row{flex-direction:column}
+  .semester-overview{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Skeleton -->
+<div class="sk-screen" id="skScreen">
+  <div class="sk-nav">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="sk" style="width:32px;height:32px;border-radius:8px"></div>
+      <div class="sk" style="width:90px;height:18px"></div>
+    </div>
+    <div class="sk" style="width:70px;height:30px;border-radius:10px"></div>
+  </div>
+  <div style="padding:48px 24px 0;display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div class="sk" style="width:160px;height:20px;border-radius:100px"></div>
+    <div class="sk" style="width:min(440px,85vw);height:48px"></div>
+    <div class="sk" style="width:min(300px,70vw);height:22px"></div>
+  </div>
+</div>
+
+<!-- GDPR -->
+<div id="gdpr" role="dialog">
+  <p>We use cookies from <strong style="color:var(--tx)">Google AdSense</strong> to serve ads. No personal data collected by us. <a href="/privacy.html">Privacy Policy</a></p>
+  <div class="g-btns">
+    <button class="g-decline" onclick="gdprDecline()">Decline</button>
+    <button class="g-accept" onclick="gdprAccept()">Accept</button>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-lm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div>
+    <span class="nav-lt">Deskloop</span>
+  </a>
+  <a href="/" class="nav-a"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><div class="hero-dot"></div>Student Tools</div>
+    <h1>What Do You Need<br><em>on Your Final?</em></h1>
+    <p class="hero-sub">Enter your current grade and final exam weight. Get your exact target score — instantly.</p>
+  </div>
+</div>
+
+<!-- Mode tabs -->
+<div class="mode-wrap">
+  <div class="mode-tabs">
+    <button class="mtab on" onclick="setMode('single',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Single Course
+    </button>
+    <button class="mtab" onclick="setMode('multi',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Multiple Finals
+    </button>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+<!-- ── LEFT PANEL ── -->
+<div id="singleMode">
+
+  <!-- Course + Presets -->
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-ico" style="background:rgba(16,185,129,.1);color:var(--ac)"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div>
+        <div class="card-title">Course Details</div>
+        <div class="card-desc">Name your course and pick a preset</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <div class="flabel">Course Name <span style="color:var(--tx3);font-weight:400;letter-spacing:0;text-transform:none">(optional)</span></div>
+        <input type="text" id="courseName" placeholder="e.g. MATH 101, Calculus, Biology..." oninput="calc()">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <div class="flabel">Quick Presets</div>
+        <div class="presets">
+          <button class="preset" onclick="applyPreset(20)">Final 20%</button>
+          <button class="preset" onclick="applyPreset(25)">Final 25%</button>
+          <button class="preset active" onclick="applyPreset(30)">Final 30%</button>
+          <button class="preset" onclick="applyPreset(40)">Final 40%</button>
+          <button class="preset" onclick="applyPreset(50)">Final 50%</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Grade -->
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-ico" style="background:rgba(96,165,250,.1);color:var(--blue-lt)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div>
+        <div class="card-title">Current Grade</div>
+        <div class="card-desc">Your grade before the final exam</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="slider-row">
+        <input type="range" id="currentSlider" min="0" max="100" value="78" step="0.5"
+          oninput="document.getElementById('currentGrade').value=this.value;calc()">
+        <div class="has-sfx" style="width:90px;flex-shrink:0">
+          <input type="number" id="currentGrade" value="78" min="0" max="100" step="0.5"
+            oninput="document.getElementById('currentSlider').value=this.value;calc()">
+          <span class="input-sfx">%</span>
+        </div>
+      </div>
+      <div class="slider-hint" id="gradeHint">Your current standing in the course</div>
+    </div>
+  </div>
+
+  <!-- Final Weight + Target -->
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-ico" style="background:rgba(245,158,11,.1);color:var(--amber-lt)"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <div>
+        <div class="card-title">Weight &amp; Target</div>
+        <div class="card-desc">How much the final counts and your goal</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field-row">
+        <div class="field">
+          <div class="flabel">
+            Final Exam Weight
+            <span class="tip">?<span class="tip-box">The % of your total grade the final counts for. Check your syllabus.</span></span>
+          </div>
+          <div class="has-sfx">
+            <input type="number" id="finalWeight" value="30" min="1" max="100" step="1" oninput="calc()">
+            <span class="input-sfx">%</span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="flabel">Pre-Final Work</div>
+          <div class="has-sfx">
+            <input type="number" id="preWeight" value="70" min="0" max="99" step="1" readonly
+              style="background:var(--s3);cursor:default;color:var(--tx2)">
+            <span class="input-sfx">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="flabel">Target Final Grade</div>
+        <select id="targetGrade" onchange="handleTarget()">
+          <option value="90">A — 90% or above</option>
+          <option value="80">B — 80% or above</option>
+          <option value="70" selected>C — 70% or above (pass)</option>
+          <option value="60">D — 60% or above</option>
+          <option value="custom">Custom target...</option>
+        </select>
+      </div>
+      <div class="field" id="customField" style="display:none;margin-bottom:0">
+        <div class="flabel">Custom Target %</div>
+        <div class="has-sfx">
+          <input type="number" id="customTarget" value="75" min="0" max="100" step="0.5" oninput="calc()">
+          <span class="input-sfx">%</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <div class="flabel">Grading Scale</div>
+        <select id="scaleType" onchange="calc()">
+          <option value="standard">Standard (A=90, B=80, C=70, D=60)</option>
+          <option value="plus">Plus/Minus (A+=97, A=93, A&#8209;=90…)</option>
+          <option value="strict">Strict (A=95, B=85, C=75, D=65)</option>
+          <option value="relaxed">Relaxed (A=85, B=75, C=65, D=55)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saved Scenarios -->
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-ico" style="background:rgba(139,92,246,.1);color:#A78BFA"><svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg></div>
+      <div>
+        <div class="card-title">Saved Scenarios</div>
+        <div class="card-desc">Save and compare different targets</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="scenario-list" id="scenarioList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Multiple Finals Mode -->
+<div id="multiMode" style="display:none">
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-ico" style="background:rgba(16,185,129,.1);color:var(--ac)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div>
+        <div class="card-title">Your Courses</div>
+        <div class="card-desc">Current grade and final exam weight for each</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:1fr 72px 72px 30px;gap:8px;margin-bottom:8px;padding:0 2px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3)">Course</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);text-align:center">Grade</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tx3);text-align:center">Final%</div>
+        <div></div>
+      </div>
+      <div class="multi-wrap" id="courseList"></div>
+      <button class="add-row-btn" onclick="addCourse()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add course
+      </button>
+      <div class="field" style="margin-top:16px;margin-bottom:0">
+        <div class="flabel">Target grade for all courses</div>
+        <select id="multiTarget" onchange="calcMulti()">
+          <option value="90">A — 90%</option>
+          <option value="80">B — 80%</option>
+          <option value="70" selected>C — 70% (pass)</option>
+          <option value="60">D — 60%</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RIGHT PANEL ── -->
+<div class="results">
+
+  <!-- Single mode result -->
+  <div id="singleResult">
+    <div class="res-card">
+      <div class="res-hero" id="resHero">
+        <div class="res-label">You need at least</div>
+        <div class="res-num" id="resNum">—</div>
+        <div class="res-period" id="resPeriod">on your final exam</div>
+        <div class="res-verdict" id="resVerdict"></div>
+      </div>
+      <div class="res-message" id="resMessage"></div>
+
+      <!-- Progress bar -->
+      <div class="prog-section">
+        <div class="prog-lbl">Score needed vs your current grade</div>
+        <div class="prog-track" id="progTrack">
+          <div class="prog-cur" id="progCur" style="width:78%;background:var(--blue)"></div>
+          <div class="prog-tgt" id="progTgt" style="left:70%;background:var(--ac);opacity:.5"></div>
+          <div class="prog-needed" id="progNeeded" style="left:0%"></div>
+        </div>
+        <div class="prog-labels">
+          <span>0%</span>
+          <span class="prog-mid" id="progMid"></span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <!-- Status rows -->
+      <div class="status-rows" id="statusRows"></div>
+
+      <!-- Letter grade grid -->
+      <div class="lg-section">
+        <div class="lg-lbl">Score needed for each grade</div>
+        <div class="lg-grid" id="lgGrid"></div>
+      </div>
+
+      <!-- Insights -->
+      <div class="ins-section" id="insightBox"></div>
+
+      <!-- Actions -->
+      <div class="action-row">
+        <button class="abtn abtn-copy" id="copyBtn" onclick="copyResult()">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy
+        </button>
+        <button class="abtn abtn-save" onclick="saveScenario()">
+          <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+          Save scenario
+        </button>
+      </div>
+    </div>
+
+    <div class="res-card">
+      <div style="padding:16px 20px">
+        <a href="/tools/gpa-calculator.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx2);transition:color var(--t)" onmouseover="this.style.color='var(--ac)'" onmouseout="this.style.color='var(--tx2)'">
+          <div style="width:32px;height:32px;background:rgba(16,185,129,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:600">See GPA impact</div>
+            <div style="font-size:11px;color:var(--tx3)">Check how this affects your cumulative GPA</div>
+          </div>
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-left:auto;flex-shrink:0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi mode result -->
+  <div id="multiResult" style="display:none">
+    <div class="semester-overview" id="semesterOverview"></div>
+    <div class="res-card">
+      <div style="padding:16px 20px 8px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3)">Results by course</div>
+      <div style="padding:0 16px 14px" id="multiResultList"></div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /main -->
+
+<!-- SEO + explanatory -->
+<div style="max-width:1000px;margin:0 auto;padding:0 24px 72px">
+  <div class="seo-block">
+    <h2>Final Grade Calculator Free — What Do You Need on Your Final?</h2>
+    <h3>How the calculation works</h3>
+    <p>Your overall grade is a weighted average. If the final counts for 30%, your pre-final work counts for 70%. The calculator solves for the exact score you need on the final: (target &minus; current &times; pre-final weight) &divide; final weight. Enter your numbers and get the answer instantly.</p>
+    <h3>What if the result is over 100%?</h3>
+    <p>A result over 100% means your target grade is not mathematically reachable. Your current standing is too low for the final to make up the difference. Consider adjusting your target grade down or speaking to your professor about extra credit options before the semester ends.</p>
+    <h3>Multiple finals planning</h3>
+    <p>The Multiple Finals tab shows every course side by side. Enter each course name, current grade, and final weight, set one target, and see exactly what you need in each exam. The semester overview shows your overall required average and how many courses are already secured.</p>
+    <h3>Free, no signup, works offline</h3>
+    <p>This calculator runs entirely in your browser. Nothing is sent to any server. Once loaded it works offline, and your data never leaves your device. Saved scenarios persist across browser sessions via localStorage.</p>
+  </div>
+</div>
+
+<footer><div class="foot">
+  <a href="/">Deskloop</a><span>·</span>
+  <a href="/tools/gpa-calculator.html">GPA Calculator</a><span>·</span>
+  <a href="/blog/">Blog</a><span>·</span>
+  <a href="/privacy.html">Privacy</a><span>·</span>
+  <a href="/credits.html">Credits</a><span>·</span>
+  <span>© 2026 Deskloop.work</span>
+</div></footer>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────
+var SCALES = {
+  standard:[{l:'A',min:90},{l:'B',min:80},{l:'C',min:70},{l:'D',min:60},{l:'F',min:0}],
+  plus:[{l:'A+',min:97},{l:'A',min:93},{l:'A-',min:90},{l:'B+',min:87},{l:'B',min:83},{l:'B-',min:80},{l:'C+',min:77},{l:'C',min:73},{l:'C-',min:70},{l:'D',min:60},{l:'F',min:0}],
+  strict:[{l:'A',min:95},{l:'B',min:85},{l:'C',min:75},{l:'D',min:65},{l:'F',min:0}],
+  relaxed:[{l:'A',min:85},{l:'B',min:75},{l:'C',min:65},{l:'D',min:55},{l:'F',min:0}],
+};
+
+var MESSAGES = {
+  impossible: "This target isn't reachable with the final alone. Consider asking your professor about extra credit or adjusting your goal.",
+  extreme: "Near-perfect performance required. Clear your schedule, study hard, and go for it — it's still possible.",
+  hard: "Challenging but doable. A focused study plan for the days ahead can get you there.",
+  moderate: "A solid few days of prep should be enough. You're in a realistic position.",
+  easy: "You're in a comfortable spot. One decent exam and you're done.",
+  locked: "You've already secured your target. Even a poor final won't drop you below your goal.",
+};
+
+var currentMode = 'single';
+var prevNum = null;
+var courses = [
+  {name:'Course 1', current:78, weight:30},
+  {name:'Course 2', current:82, weight:25},
+  {name:'Course 3', current:71, weight:35},
+];
+
+// ── Mode ──────────────────────────────────────────────────────────────
+function setMode(mode, btn) {
+  currentMode = mode;
+  document.querySelectorAll('.mtab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.getElementById('singleMode').style.display  = mode==='single'?'':'none';
+  document.getElementById('multiMode').style.display   = mode==='multi'?'':'none';
+  document.getElementById('singleResult').style.display= mode==='single'?'':'none';
+  document.getElementById('multiResult').style.display = mode==='multi'?'':'none';
+  if(mode==='multi'){renderCourses();calcMulti();}
+  else calc();
+}
+
+// ── Presets ───────────────────────────────────────────────────────────
+function applyPreset(w) {
+  document.getElementById('finalWeight').value = w;
+  document.getElementById('preWeight').value   = 100 - w;
+  document.querySelectorAll('.preset').forEach(function(p){p.classList.remove('active');});
+  event.target.classList.add('active');
+  calc();
+}
+
+// ── Target handling ───────────────────────────────────────────────────
+function handleTarget() {
+  var v = document.getElementById('targetGrade').value;
+  document.getElementById('customField').style.display = v==='custom'?'':'none';
+  calc();
+}
+
+// ── Core calculation ──────────────────────────────────────────────────
+function getTarget() {
+  var v = document.getElementById('targetGrade').value;
+  return v==='custom' ? (parseFloat(document.getElementById('customTarget').value)||70) : parseFloat(v);
+}
+
+function calcNeeded(current, finalWeight, target) {
+  var pre = 100 - finalWeight;
+  return (target - current * pre / 100) / (finalWeight / 100);
+}
+
+function calc() {
+  var cur    = parseFloat(document.getElementById('currentGrade').value)||0;
+  var fw     = parseFloat(document.getElementById('finalWeight').value)||30;
+  var target = getTarget();
+
+  // Sync pre-weight
+  document.getElementById('preWeight').value = Math.max(0, 100-fw);
+
+  var needed = calcNeeded(cur, fw, target);
+  needed = Math.round(needed * 10) / 10;
+
+  // Update slider
+  document.getElementById('currentSlider').value = cur;
+
+  // Grade hint
+  var scale = SCALES[document.getElementById('scaleType').value]||SCALES.standard;
+  var letter = scale.find(function(g){return cur>=g.min;})||scale[scale.length-1];
+  document.getElementById('gradeHint').textContent = 'Currently a ' + letter.l + ' (' + cur + '%)';
+
+  renderResult(cur, fw, target, needed, scale);
+}
+
+// ── Render result ─────────────────────────────────────────────────────
+function renderResult(cur, fw, target, needed, scale) {
+  // Colors + states
+  var color, glow, verdictStyle, verdictText, msgKey;
+  if(needed > 100) {
+    color='var(--red)'; glow='rgba(239,68,68,.08)';
+    verdictStyle='background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--red-lt)';
+    verdictText='Not reachable'; msgKey='impossible';
+  } else if(needed > 95) {
+    color='var(--amber)'; glow='rgba(245,158,11,.08)';
+    verdictStyle='background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:var(--amber-lt)';
+    verdictText='Very difficult'; msgKey='extreme';
+  } else if(needed > 80) {
+    color='var(--blue-lt)'; glow='rgba(96,165,250,.08)';
+    verdictStyle='background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);color:var(--blue-lt)';
+    verdictText='Challenging — achievable'; msgKey='hard';
+  } else if(needed > 60) {
+    color='var(--ac)'; glow='rgba(16,185,129,.08)';
+    verdictStyle='background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:var(--ac-lt)';
+    verdictText='Very achievable'; msgKey='moderate';
+  } else if(needed >= 0) {
+    color='var(--ac)'; glow='rgba(16,185,129,.1)';
+    verdictStyle='background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:var(--ac-lt)';
+    verdictText='You got this'; msgKey='easy';
+  } else {
+    color='var(--ac)'; glow='rgba(16,185,129,.12)';
+    verdictStyle='background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:var(--ac-lt)';
+    verdictText='Already secured!'; msgKey='locked';
+  }
+
+  // Animate number
+  var numEl = document.getElementById('resNum');
+  var display = needed<0 ? 'Done!' : needed>100 ? '100+%' : needed+'%';
+  if(display !== prevNum) {
+    numEl.classList.remove('animate');
+    void numEl.offsetWidth;
+    numEl.classList.add('animate');
+    prevNum = display;
+  }
+  numEl.textContent = display;
+  numEl.style.color = color;
+
+  document.getElementById('resPeriod').textContent = needed<0 ? 'Your target is already secured' : 'on your final exam';
+  document.getElementById('resVerdict').setAttribute('style', verdictStyle);
+  document.getElementById('resVerdict').textContent = verdictText;
+  document.getElementById('resHero').style.setProperty('--result-glow', glow);
+  document.getElementById('resMessage').textContent = MESSAGES[msgKey];
+
+  // Progress bar
+  var safeNeeded = Math.max(0, Math.min(100, needed));
+  document.getElementById('progCur').style.width    = Math.min(100,cur)+'%';
+  document.getElementById('progCur').style.background = color;
+  document.getElementById('progTgt').style.left     = target+'%';
+  document.getElementById('progNeeded').style.left  = safeNeeded+'%';
+  document.getElementById('progNeeded').style.background = color;
+  document.getElementById('progMid').textContent    = 'Need: '+(needed<0?'0%':needed>100?'100%+':needed+'%');
+
+  // Status rows
+  document.getElementById('statusRows').innerHTML = [
+    {l:'Current grade',    v:cur+'%'},
+    {l:'Final exam weight',v:fw+'%'},
+    {l:'Pre-final weight', v:(100-fw)+'%'},
+    {l:'Target grade',     v:target+'%', hi:true},
+  ].map(function(r){
+    return '<div class="srow'+(r.hi?' highlight':'')+'"><span class="srow-l">'+r.l+'</span><span class="srow-v">'+r.v+'</span></div>';
+  }).join('');
+
+  // Letter grade grid
+  var topScale = scale.slice(0, Math.min(5, scale.length));
+  var targetNum = getTarget();
+  document.getElementById('lgGrid').innerHTML = topScale.map(function(g){
+    var n = Math.round(calcNeeded(cur, fw, g.min)*10)/10;
+    var isTgt = g.min===targetNum;
+    var c2 = n>100?'var(--red-lt)':n>90?'var(--amber-lt)':n<0?'var(--ac-lt)':'var(--blue-lt)';
+    var show = n<0?'Done':n>100?'N/A':n+'%';
+    return '<div class="lg-item'+(isTgt?' is-target':'')+'">'+
+      '<div class="lg-letter">'+g.l+'</div>'+
+      '<div class="lg-min">'+g.min+'%+</div>'+
+      '<div class="lg-need" style="color:'+c2+'">'+show+'</div>'+
+    '</div>';
+  }).join('');
+
+  // Insights
+  var ins = [];
+  if(needed<0){
+    ins.push({t:'good',m:'Your current grade already guarantees your target. The final cannot drop you below it.'});
+  } else if(needed>100){
+    ins.push({t:'bad',m:'A perfect score still won\'t reach your target. Talk to your professor about extra credit or incomplete options.'});
+  } else if(needed>90){
+    ins.push({t:'warn',m:'You need near-perfect performance. Prioritize this exam above everything else this week.'});
+  }
+  if(fw>=40){
+    ins.push({t:'info',m:'The final counts for '+fw+'% of your grade — it will determine most of your result.'});
+  }
+  if(cur<60&&needed<=100){
+    ins.push({t:'warn',m:'Your pre-final grade is below a D. Confirm with your professor that other grade components are accounted for.'});
+  }
+  ins.push({t:'info',m:'Want to see how this affects your GPA? Use the <a href="/tools/gpa-calculator.html">GPA Calculator</a>.'});
+  document.getElementById('insightBox').innerHTML = ins.map(function(i){
+    return '<div class="ins ins-'+i.t+'">'+i.m+'</div>';
+  }).join('');
+
+  renderScenarios();
+}
+
+// ── Multi mode ────────────────────────────────────────────────────────
+function addCourse() {
+  courses.push({name:'Course '+(courses.length+1),current:75,weight:30});
+  renderCourses(); calcMulti();
+}
+function removeCourse(i) {
+  if(courses.length<=1)return;
+  courses.splice(i,1); renderCourses(); calcMulti();
+}
+function updateCourse(i,field,val) {
+  courses[i][field]=field==='name'?val:(parseFloat(val)||0);
+  calcMulti();
+}
+function renderCourses() {
+  document.getElementById('courseList').innerHTML = courses.map(function(c,i){
+    return '<div class="course-row">'+
+      '<input type="text" class="cr-input" value="'+c.name+'" placeholder="Course name" oninput="updateCourse('+i+',\'name\',this.value)">'+
+      '<input type="number" class="cr-input cr-num" value="'+c.current+'" min="0" max="100" step="0.5" oninput="updateCourse('+i+',\'current\',this.value)">'+
+      '<input type="number" class="cr-input cr-num" value="'+c.weight+'" min="1" max="100" step="1" oninput="updateCourse('+i+',\'weight\',this.value)">'+
+      '<button class="cr-del" onclick="removeCourse('+i+')" '+(courses.length<=1?'disabled':'')+'>'+
+        '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'+
+      '</button>'+
+    '</div>';
+  }).join('');
+}
+function calcMulti() {
+  var target = parseFloat(document.getElementById('multiTarget').value)||70;
+  var results = courses.map(function(c){
+    var n = Math.round(calcNeeded(c.current, c.weight, target)*10)/10;
+    return {name:c.name,current:c.current,weight:c.weight,needed:n};
+  });
+
+  // Semester overview
+  var secured  = results.filter(function(r){return r.needed<0;}).length;
+  var impossible = results.filter(function(r){return r.needed>100;}).length;
+  var viable = results.filter(function(r){return r.needed>=0&&r.needed<=100;});
+  var avgNeeded = viable.length ? Math.round(viable.reduce(function(a,r){return a+r.needed;},0)/viable.length*10)/10 : 0;
+
+  document.getElementById('semesterOverview').innerHTML =
+    '<div class="so-item"><div class="so-num" style="color:var(--ac)">'+secured+'</div><div class="so-lbl">Already secured</div></div>'+
+    '<div class="so-item"><div class="so-num" style="color:var(--blue-lt)">'+avgNeeded+'%</div><div class="so-lbl">Avg score needed</div></div>'+
+    '<div class="so-item"><div class="so-num" style="color:var(--amber-lt)">'+viable.length+'</div><div class="so-lbl">Need to study</div></div>'+
+    '<div class="so-item"><div class="so-num" style="color:var(--red-lt)">'+impossible+'</div><div class="so-lbl">Not reachable</div></div>';
+
+  document.getElementById('multiResultList').innerHTML = results.map(function(r){
+    var color = r.needed>100?'var(--red-lt)':r.needed>90?'var(--amber-lt)':r.needed<0?'var(--ac-lt)':'var(--blue-lt)';
+    var display = r.needed<0?'Secured!':r.needed>100?'Not reachable':'Need '+r.needed+'%';
+    return '<div class="multi-result-row">'+
+      '<div class="mrr-left">'+
+        '<div class="mrr-name">'+r.name+'</div>'+
+        '<div class="mrr-meta">Current: '+r.current+'% &bull; Final: '+r.weight+'%</div>'+
+      '</div>'+
+      '<div class="mrr-val" style="color:'+color+'">'+display+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+// ── Scenarios ─────────────────────────────────────────────────────────
+function getScenarios(){
+  try{return JSON.parse(localStorage.getItem('dl_grade_scenarios_v2')||'[]');}catch(e){return [];}
+}
+function saveScenarios(list){
+  localStorage.setItem('dl_grade_scenarios_v2',JSON.stringify(list));
+}
+function saveScenario() {
+  var needed = document.getElementById('resNum').textContent;
+  var name = prompt('Name this scenario:',
+    (document.getElementById('courseName').value||'Course')+' — target '+document.getElementById('targetGrade').value+'%');
+  if(!name)return;
+  var list = getScenarios();
+  list.unshift({
+    id:'s_'+Date.now(), name:name, needed:needed,
+    current:document.getElementById('currentGrade').value,
+    weight:document.getElementById('finalWeight').value,
+    target:getTarget(), date:new Date().toLocaleDateString()
+  });
+  if(list.length>8)list=list.slice(0,8);
+  saveScenarios(list); renderScenarios();
+}
+function loadScenario(id) {
+  var s = getScenarios().find(function(x){return x.id===id;});
+  if(!s)return;
+  document.getElementById('currentGrade').value=s.current;
+  document.getElementById('currentSlider').value=s.current;
+  document.getElementById('finalWeight').value=s.weight;
+  document.getElementById('preWeight').value=100-parseInt(s.weight);
+  if(s.target===90||s.target===80||s.target===70||s.target===60){
+    document.getElementById('targetGrade').value=s.target;
+    document.getElementById('customField').style.display='none';
+  } else {
+    document.getElementById('targetGrade').value='custom';
+    document.getElementById('customTarget').value=s.target;
+    document.getElementById('customField').style.display='';
+  }
+  calc();
+}
+function deleteScenario(id,e) {
+  e.stopPropagation();
+  saveScenarios(getScenarios().filter(function(x){return x.id!==id;}));
+  renderScenarios();
+}
+function renderScenarios() {
+  var list = getScenarios();
+  var el = document.getElementById('scenarioList');
+  if(!list.length){
+    el.innerHTML='<div class="no-scenarios">No saved scenarios yet. Calculate a result and click Save.</div>';return;
+  }
+  el.innerHTML=list.map(function(s){
+    return '<div class="scenario-item" onclick="loadScenario(\''+s.id+'\')">'+
+      '<div class="scenario-name">'+s.name+'</div>'+
+      '<div class="scenario-meta">'+s.needed+'</div>'+
+      '<button class="scenario-del" onclick="deleteScenario(\''+s.id+'\',event)">&times;</button>'+
+    '</div>';
+  }).join('');
+}
+
+// ── Copy ──────────────────────────────────────────────────────────────
+function copyResult() {
+  var num  = document.getElementById('resNum').textContent;
+  var verd = document.getElementById('resVerdict').textContent;
+  var cur  = document.getElementById('currentGrade').value;
+  var fw   = document.getElementById('finalWeight').value;
+  var text = 'Grade Calculator: Need '+num+' on final. Current: '+cur+'%, Final weight: '+fw+'%. '+verd;
+  navigator.clipboard.writeText(text).then(function(){
+    var btn=document.getElementById('copyBtn');
+    var orig=btn.innerHTML;
+    btn.innerHTML='<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    setTimeout(function(){btn.innerHTML=orig;},2000);
+  });
+}
+
+// ── GDPR ──────────────────────────────────────────────────────────────
+(function(){if(localStorage.getItem('dl_gdpr_v1'))return;setTimeout(function(){var b=document.getElementById('gdpr');if(b)b.classList.add('show');},900);})();
+function gdprAccept(){localStorage.setItem('dl_gdpr_v1','accepted');var b=document.getElementById('gdpr');if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}}
+function gdprDecline(){localStorage.setItem('dl_gdpr_v1','declined');var b=document.getElementById('gdpr');if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}}
+
+// ── Skeleton ──────────────────────────────────────────────────────────
+(function(){var sk=document.getElementById('skScreen');if(!sk)return;var done=function(){sk.classList.add('out');setTimeout(function(){sk.remove();},450);};if(document.readyState==='complete'){setTimeout(done,120);}else{window.addEventListener('load',function(){setTimeout(done,120);});}})();
+
+// ── Init ──────────────────────────────────────────────────────────────
+renderScenarios();
+calc();
+</script>
+</body>
+</html>

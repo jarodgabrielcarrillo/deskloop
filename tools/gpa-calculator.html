@@ -335,6 +335,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 .sk-screen.sk-out{opacity:0}
 .sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:var(--bg,#060C18);border-bottom:1px solid var(--bd,#142032);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
 .sk-rows{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
+.seo-block{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:32px 36px;margin:0 0 40px}
+.seo-block h2{font-size:20px;font-weight:800;letter-spacing:-.03em;color:var(--tx);margin-bottom:12px}
+.seo-block h3{font-size:14px;font-weight:700;color:var(--tx);margin:24px 0 8px}
+.seo-block p{font-size:14px;color:var(--tx2);line-height:1.8;margin:0}
 </style>
 </head>
 <body>
@@ -541,6 +546,21 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 </div>
 
 <!-- Footer -->
+
+<!-- SEO content block -->
+<div style="max-width:960px;margin:0 auto;padding:0 24px 64px">
+  <div class="seo-block">
+    <h2>GPA Calculator — Multi-Semester Tracking with What-If Mode</h2>
+    <h3>How GPA is calculated</h3>
+    <p>GPA is a weighted average of your grade points, where each course is weighted by its credit hours. An A in a 4-credit course contributes more to your GPA than an A in a 1-credit course. This calculator tracks every semester separately and combines them into an accurate cumulative GPA.</p>
+    <h3>What-If mode</h3>
+    <p>What-If mode lets you simulate future grades without committing them. Enter projected grades for upcoming courses and see how your cumulative GPA would change. Useful for setting realistic targets before finals or planning which courses to retake for grade improvement.</p>
+    <h3>Academic standing indicators</h3>
+    <p>The calculator shows your standing relative to common academic honors thresholds: Dean's List, Cum Laude, Magna Cum Laude, and Summa Cum Laude. Thresholds vary by institution — adjust the scale to match your school's specific requirements.</p>
+    <h3>Target GPA planner</h3>
+    <p>Enter a target cumulative GPA and remaining credit hours, and the tool calculates the average grade you need in future courses to reach it. Useful for graduation planning or graduate school preparation.</p>
+  </div>
+</div>
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:16px 24px;font-family:'Inter',system-ui,sans-serif;font-size:12px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>

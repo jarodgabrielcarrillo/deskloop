@@ -54,7 +54,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .btn-nav svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 
 /* APP LAYOUT */
-.app{display:grid;grid-template-columns:480px 1fr;flex:1;min-height:0;overflow:hidden}
+.app{display:grid;grid-template-columns:480px 1fr;height:calc(100vh - 62px);overflow:hidden}
 
 /* FORM PANEL */
 .form-panel{overflow-y:auto;background:var(--s1);border-right:1px solid var(--bd);
@@ -366,6 +366,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 .sk-screen.sk-out{opacity:0}
 .sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:var(--bg,#060C18);border-bottom:1px solid var(--bd,#142032);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
 .sk-rows{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
+.seo-block{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:32px 36px;margin:0 0 40px}
+.seo-block h2{font-size:20px;font-weight:800;letter-spacing:-.03em;color:var(--tx);margin-bottom:12px}
+.seo-block h3{font-size:14px;font-weight:700;color:var(--tx);margin:24px 0 8px}
+.seo-block p{font-size:14px;color:var(--tx2);line-height:1.8;margin:0}
 </style>
 </head>
 <body>
@@ -422,16 +427,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
     </button>
   </div>
 </nav>
-<!-- ── DS HERO ── -->
-<div class="ds-hero">
-  <div class="ds-hero-inner">
-    <div class="ds-hero-tag"><div class="ds-hero-dot"></div>FREE INVOICE GENERATOR</div>
-    <h1>Professional invoices,
-<em>in seconds.</em></h1>
-    <p>24 currencies, live exchange rates, country tax presets, logo upload, recurring billing, and PDF download. Free. No account.</p>
-  </div>
-</div>
-
 <div class="app">
 
 <!-- FORM PANEL -->
@@ -709,6 +704,42 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 </div><!-- /app -->
 
 <!-- Privacy footer -->
+
+
+<div style="max-width:1100px;margin:0 auto;padding:40px 24px 0;text-align:center">
+  <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:5px 14px;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#10B981;margin-bottom:16px">FREE INVOICE GENERATOR</div>
+  <h2 style="font-size:clamp(24px,4vw,40px);font-weight:900;letter-spacing:-.04em;color:#EEF6FF;margin-bottom:12px">Professional invoices, <em style="font-style:normal;background:linear-gradient(125deg,#34D399,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">in seconds.</em></h2>
+  <p style="font-size:14px;color:#88AAC5;max-width:500px;margin:0 auto 32px;line-height:1.7">24 currencies, live exchange rates, country tax presets, logo upload, recurring billing, and PDF download. Free. No account.</p>
+</div>
+<!-- Explanation + FAQ -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 80px">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px">
+    <div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:24px">
+      <h3 style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:10px">How to create an invoice</h3>
+      <p style="font-size:13px;color:var(--tx2);line-height:1.75;margin:0">Fill in your business details, add your client, set a currency, and add line items with quantities and rates. Tax, discount, and a second currency conversion are optional. Click Download PDF when ready. The invoice is generated entirely in your browser — nothing is sent to any server.</p>
+    </div>
+    <div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:24px">
+      <h3 style="font-size:14px;font-weight:700;color:var(--tx);margin-bottom:10px">Templates and recurring invoices</h3>
+      <p style="font-size:13px;color:var(--tx2);line-height:1.75;margin:0">Save up to 8 templates for clients you invoice regularly. Recurring invoice mode auto-increments the invoice number and adjusts the date each time you load a template — useful for monthly retainer clients.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- SEO content block -->
+<div style="max-width:1100px;margin:0 auto;padding:0 24px 64px">
+  <div class="seo-block">
+    <h2>Free Invoice Generator — Professional PDF Invoices in Seconds</h2>
+    <h3>Create and download in under a minute</h3>
+    <p>Fill in your business details, add a client, select a currency, and add line items. Click Download PDF and the invoice saves directly to your device. No account, no watermark, no limit on how many invoices you create.</p>
+    <h3>24 currencies with live exchange rates</h3>
+    <p>Select from 24 currencies including USD, GBP, EUR, PHP, AUD, CAD, INR, SGD, and more. Live exchange rates update hourly. Add a second currency to show the equivalent amount on the invoice — useful when billing international clients who want to see the cost in their local currency.</p>
+    <h3>Templates for recurring clients</h3>
+    <p>Save up to 8 invoice templates for clients you bill regularly. Templates store your business details, client information, line items, tax rate, and currency. Recurring invoice mode auto-increments the invoice number and updates the date each time — set it once and the tool handles the numbering.</p>
+    <h3>Your data stays on your device</h3>
+    <p>The invoice generator runs entirely in your browser using jsPDF. Nothing is uploaded to any server. Your business details, client data, and saved templates store locally in your browser and never leave your device.</p>
+  </div>
+</div>
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:16px 24px;font-family:'Inter',system-ui,sans-serif;font-size:12px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>

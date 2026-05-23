@@ -434,6 +434,11 @@
 .sk-screen.sk-out{opacity:0}
 .sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;background:var(--bg,#060C18);border-bottom:1px solid var(--bd,#142032);display:flex;align-items:center;justify-content:space-between;padding:0 24px}
 .sk-rows{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}
+.seo-block{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:32px 36px;margin:0 0 40px}
+.seo-block h2{font-size:20px;font-weight:800;letter-spacing:-.03em;color:var(--tx);margin-bottom:12px}
+.seo-block h3{font-size:14px;font-weight:700;color:var(--tx);margin:24px 0 8px}
+.seo-block p{font-size:14px;color:var(--tx2);line-height:1.8;margin:0}
 </style>
 
 <style>
@@ -660,6 +665,21 @@
   </div>
 </div>
 
+
+<!-- SEO content block -->
+<div style="max-width:960px;margin:0 auto;padding:0 24px 64px">
+  <div class="seo-block">
+    <h2>Work Hours Logger — Track Billable Hours by Client and Project</h2>
+    <h3>How to log your hours</h3>
+    <p>Click Clock In when you start work on a client or project. Add a label for what you are working on. Click Clock Out when you finish. The session is saved with its duration, date, and label. Review your daily and weekly totals in the charts below.</p>
+    <h3>Billable hours for freelancers</h3>
+    <p>Freelancers billing by the hour need an accurate record of time spent per client. The logger tracks each session separately so you can see exactly how many hours you spent on a project before sending an invoice. Export to CSV to share with a client or import into your invoicing workflow.</p>
+    <h3>Streak counter and weekly charts</h3>
+    <p>The daily streak counter tracks how many consecutive days you have logged work. The weekly bar chart shows your hours per day so you can spot your most and least productive days. Pair the logger with the Work Hours target to see whether you are hitting your billing goals.</p>
+    <h3>Works offline, no account needed</h3>
+    <p>All data saves to your browser's localStorage. The logger works fully offline once the page has loaded. Nothing leaves your device. Export to CSV at any time to keep a permanent record outside the browser.</p>
+  </div>
+</div>
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:18px 24px;font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none;display:flex;align-items:center;gap:5px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>
