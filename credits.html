@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Credits & Attributions | Deskloop</title>
+<meta name="description" content="Credits and attributions for audio, fonts, and open-source libraries used on Deskloop.work.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://deskloop.work/credits.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ac:#10B981;--ac-lt:#34D399;--blue:#3B82F6;--blue-lt:#60A5FA;--blue-d:#1E40AF;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;
+  --tx:#EEF6FF;--tx2:#88AAC5;--tx3:#4C6580;
+  --bd:#142032;--bd2:#1A2D44;--r:10px;--rl:16px;--t:200ms ease;
+  --mono:"JetBrains Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--tx);
+  -webkit-font-smoothing:antialiased;line-height:1.7;min-height:100vh}
+.nav{position:sticky;top:0;z-index:200;background:rgba(6,12,24,.97);
+  backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);
+  padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-lm{width:32px;height:32px;background:var(--blue-d);border-radius:8px;
+  display:flex;align-items:center;justify-content:center}
+.nav-lt{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.025em}
+.nav-a{color:var(--tx2);text-decoration:none;font-size:13px;font-weight:500;
+  padding:7px 14px;border-radius:var(--r);border:1px solid var(--bd);
+  transition:all var(--t);display:inline-flex;align-items:center;gap:6px}
+.nav-a:hover{color:var(--tx);border-color:var(--bd2)}
+.nav-a svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+.page{max-width:760px;margin:0 auto;padding:56px 24px 80px}
+.page-tag{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
+  border-radius:100px;padding:5px 14px;font-size:10px;font-weight:700;
+  letter-spacing:1.8px;text-transform:uppercase;color:var(--ac);margin-bottom:20px}
+.page h1{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-.04em;
+  line-height:1.08;margin-bottom:14px}
+.page-sub{font-size:15px;color:var(--tx2);line-height:1.65;margin-bottom:48px;
+  max-width:560px}
+
+/* Sections */
+.sec{margin-bottom:40px}
+.sec-label{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sec-label::before{content:"";width:20px;height:2px;background:var(--ac);border-radius:1px}
+
+/* License badge */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;
+  font-size:10px;font-weight:700;letter-spacing:.5px}
+.badge-cc0{background:rgba(16,185,129,.12);color:var(--ac-lt);border:1px solid rgba(16,185,129,.25)}
+.badge-ccby{background:rgba(96,165,250,.12);color:var(--blue-lt);border:1px solid rgba(96,165,250,.25)}
+.badge-ccbync{background:rgba(245,158,11,.12);color:#FCD34D;border:1px solid rgba(245,158,11,.25)}
+.badge-ofl{background:rgba(139,92,246,.12);color:#A78BFA;border:1px solid rgba(139,92,246,.25)}
+.badge-mit{background:rgba(52,211,153,.12);color:var(--ac-lt);border:1px solid rgba(52,211,153,.25)}
+
+/* Credit cards */
+.credit-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:18px 22px;margin-bottom:10px;display:flex;align-items:flex-start;
+  gap:16px;transition:border-color var(--t)}
+.credit-card:hover{border-color:var(--bd2)}
+.credit-icon{width:36px;height:36px;border-radius:10px;background:var(--s2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.credit-body{flex:1;min-width:0}
+.credit-name{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:3px}
+.credit-by{font-size:12px;color:var(--tx3);margin-bottom:6px}
+.credit-by a{color:var(--blue-lt);text-decoration:none;transition:color var(--t)}
+.credit-by a:hover{color:var(--ac-lt)}
+.credit-desc{font-size:12px;color:var(--tx2);line-height:1.5;margin-bottom:8px}
+.credit-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.credit-link{font-size:11px;color:var(--tx3);text-decoration:none;
+  display:inline-flex;align-items:center;gap:4px;transition:color var(--t)}
+.credit-link:hover{color:var(--ac)}
+.credit-link svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.credit-id{font-family:var(--mono);font-size:10px;color:var(--tx3)}
+
+/* Warning box */
+
+/* License legend */
+.legend{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  padding:20px 24px;margin-top:40px}
+.legend h3{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:14px}
+.legend-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;font-size:12px;color:var(--tx2)}
+.legend-row:last-child{margin-bottom:0}
+.legend-badge{flex-shrink:0;margin-top:1px}
+
+/* Footer */
+footer{border-top:1px solid var(--bd)}
+.foot{text-align:center;padding:20px 24px;font-size:12px;color:var(--tx3);
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.foot a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
+.foot a:hover{color:var(--tx2)}
+
+/* Skeleton */
+@keyframes sk-shine{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.sk{border-radius:6px;background:linear-gradient(90deg,#0F1E32 25%,#152540 50%,#0F1E32 75%);
+  background-size:800px 100%;animation:sk-shine 1.4s ease-in-out infinite}
+.sk-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);
+  display:flex;flex-direction:column;padding-top:62px;
+  transition:opacity .4s ease;pointer-events:none}
+.sk-screen.sk-out{opacity:0}
+.sk-nav{position:fixed;top:0;left:0;right:0;height:62px;z-index:9001;
+  background:var(--bg);border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+@media(max-width:600px){.page{padding:40px 20px 60px}}
+</style>
+</head>
+<body>
+
+<!-- Skeleton -->
+<div class="sk-screen" id="skScreen">
+  <div class="sk-nav">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="sk" style="width:32px;height:32px;border-radius:8px"></div>
+      <div class="sk" style="width:90px;height:18px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-lm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div>
+    <span class="nav-lt">Deskloop</span>
+  </a>
+  <a href="/" class="nav-a"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back</a>
+</nav>
+
+<div class="page">
+  <div class="page-tag">Transparency</div>
+  <h1>Credits &amp;<br>Attributions</h1>
+  <p class="page-sub">Deskloop is built on the work of talented creators who share their work freely. This page credits every audio recording, font, and open-source library used on the site.</p>
+
+  <!-- ── Audio ── -->
+  <div class="sec">
+    <div class="sec-label">Ambient Audio — Focus Timer</div>
+
+    <!-- Rain -->
+    <div class="credit-card">
+      <div class="credit-icon">🌧️</div>
+      <div class="credit-body">
+        <div class="credit-name">Ambient Thunder Strikes, Heavy Rain, City, Passing Cars, Birds</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/ValentinPetiteau/" target="_blank" rel="noopener">ValentinPetiteau</a> on Freesound</div>
+        <div class="credit-desc">Used as: Rain ambient sound in the Focus Timer</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 649073</span>
+          <a class="credit-link" href="https://freesound.org/s/649073/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Café -->
+    <div class="credit-card">
+      <div class="credit-icon">☕</div>
+      <div class="credit-body">
+        <div class="credit-name">Moderately Crowded Coffee Shop Ambiance</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/ElliotRambach/" target="_blank" rel="noopener">ElliotRambach</a> on Freesound</div>
+        <div class="credit-desc">Used as: Café ambient sound in the Focus Timer</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 344473</span>
+          <a class="credit-link" href="https://freesound.org/s/344473/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fire -->
+    <div class="credit-card">
+      <div class="credit-icon">🔥</div>
+      <div class="credit-body">
+        <div class="credit-name">Binaural Fire Crackling</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/yfjesse/" target="_blank" rel="noopener">yfjesse</a> on Freesound</div>
+        <div class="credit-desc">Used as: Fire ambient sound in the Focus Timer</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 734248</span>
+          <a class="credit-link" href="https://freesound.org/s/734248/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Waves -->
+    <div class="credit-card">
+      <div class="credit-icon">🌊</div>
+      <div class="credit-body">
+        <div class="credit-name">Ocean Waves Crashing on the Coast of Big Lagoon, Redwoods</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/cvltiv8r/" target="_blank" rel="noopener">cvltiv8r</a> on Freesound</div>
+        <div class="credit-desc">Used as: Ocean Waves ambient sound in the Focus Timer</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 803679</span>
+          <a class="credit-link" href="https://freesound.org/s/803679/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forest (brook) -->
+    <div class="credit-card">
+      <div class="credit-icon">🌿</div>
+      <div class="credit-body">
+        <div class="credit-name">The Sound of a Babbling Brook</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/hoshisato/" target="_blank" rel="noopener">hoshisato</a> on Freesound</div>
+        <div class="credit-desc">Used as: part of the Forest ambient sound in the Focus Timer (original recording — replaced by wind recording below)</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 853672</span>
+          <a class="credit-link" href="https://freesound.org/s/853672/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forest (wind) -->
+    <div class="credit-card">
+      <div class="credit-icon">🌿</div>
+      <div class="credit-body">
+        <div class="credit-name">Young Trees Creaking in the Wind</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/garuda1982/" target="_blank" rel="noopener">garuda1982</a> on Freesound</div>
+        <div class="credit-desc">Used as: Forest ambient sound in the Focus Timer</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 624737</span>
+          <a class="credit-link" href="https://freesound.org/s/624737/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brown noise -->
+    <div class="credit-card">
+      <div class="credit-icon">🟤</div>
+      <div class="credit-body">
+        <div class="credit-name">60 Minutes of Ultra Soft Noise v2</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/assett1/" target="_blank" rel="noopener">assett1</a> on Freesound</div>
+        <div class="credit-desc">Used as: Brown Noise ambient sound in the Focus Timer (trimmed to 5 minutes)</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 403326</span>
+          <a class="credit-link" href="https://freesound.org/s/403326/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- White noise -->
+    <div class="credit-card">
+      <div class="credit-icon">🌫️</div>
+      <div class="credit-body">
+        <div class="credit-name">Inside Airplane</div>
+        <div class="credit-by">by <a href="https://freesound.org/people/MrTheNoronha/" target="_blank" rel="noopener">MrTheNoronha</a> on Freesound</div>
+        <div class="credit-desc">Used as: White Noise ambient sound in the Focus Timer</div>
+        <div class="credit-meta">
+          <span class="badge badge-cc0">CC0</span>
+          <span class="credit-id">ID: 418385</span>
+          <a class="credit-link" href="https://freesound.org/s/418385/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View on Freesound
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Fonts ── -->
+  <div class="sec">
+    <div class="sec-label">Fonts</div>
+
+    <div class="credit-card">
+      <div class="credit-icon" style="font-size:13px;font-weight:800;color:var(--tx2)">Aa</div>
+      <div class="credit-body">
+        <div class="credit-name">Inter</div>
+        <div class="credit-by">by <a href="https://rsms.me/" target="_blank" rel="noopener">Rasmus Andersson</a> — served via Google Fonts</div>
+        <div class="credit-desc">Primary typeface used across all pages for body text, UI, and headings.</div>
+        <div class="credit-meta">
+          <span class="badge badge-ofl">OFL 1.1</span>
+          <a class="credit-link" href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Google Fonts
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="credit-card">
+      <div class="credit-icon" style="font-size:11px;font-weight:700;color:var(--ac);font-family:monospace">01</div>
+      <div class="credit-body">
+        <div class="credit-name">JetBrains Mono</div>
+        <div class="credit-by">by <a href="https://www.jetbrains.com/" target="_blank" rel="noopener">JetBrains</a> — served via Google Fonts</div>
+        <div class="credit-desc">Monospace typeface used for numbers, rates, timers, and code-like displays across all tools.</div>
+        <div class="credit-meta">
+          <span class="badge badge-ofl">OFL 1.1</span>
+          <a class="credit-link" href="https://fonts.google.com/specimen/JetBrains+Mono" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Google Fonts
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Libraries ── -->
+  <div class="sec">
+    <div class="sec-label">Open Source Libraries</div>
+
+    <div class="credit-card">
+      <div class="credit-icon" style="font-size:13px;font-weight:700;color:var(--tx2)">PDF</div>
+      <div class="credit-body">
+        <div class="credit-name">jsPDF</div>
+        <div class="credit-by">by <a href="https://github.com/parallax/jsPDF" target="_blank" rel="noopener">parallax / jsPDF contributors</a></div>
+        <div class="credit-desc">Used in the Invoice Generator to create downloadable PDF invoices directly in the browser. No server required.</div>
+        <div class="credit-meta">
+          <span class="badge badge-mit">MIT License</span>
+          <a class="credit-link" href="https://github.com/parallax/jsPDF" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- License legend -->
+  <div class="legend">
+    <h3>License Guide</h3>
+    <div class="legend-row">
+      <span class="legend-badge"><span class="badge badge-cc0">CC0</span></span>
+      <span><strong style="color:var(--tx)">Public Domain.</strong> No restrictions. Commercial use allowed. No attribution required. The most permissive license.</span>
+    </div>
+    <div class="legend-row">
+      <span class="legend-badge"><span class="badge badge-ccby">CC BY</span></span>
+      <span><strong style="color:var(--tx)">Attribution Required.</strong> Commercial use allowed. Must credit the creator — which this page does.</span>
+    </div>
+    <div class="legend-row">
+      <span class="legend-badge"><span class="badge badge-ccbync">CC BY-NC</span></span>
+      <span><strong style="color:var(--tx)">Non-Commercial Only.</strong> Cannot be used on sites running ads (including Google AdSense). Must be replaced if found.</span>
+    </div>
+    <div class="legend-row">
+      <span class="legend-badge"><span class="badge badge-ofl">OFL</span></span>
+      <span><strong style="color:var(--tx)">Open Font License.</strong> Free to use in any project including commercial. No attribution required in most uses.</span>
+    </div>
+    <div class="legend-row">
+      <span class="legend-badge"><span class="badge badge-mit">MIT</span></span>
+      <span><strong style="color:var(--tx)">MIT License.</strong> Free to use, modify, and distribute commercially with minimal restrictions.</span>
+    </div>
+  </div>
+
+</div>
+
+<footer><div class="foot">
+  <a href="/">← Deskloop</a>
+  <span>·</span>
+  <a href="/privacy.html">Privacy Policy</a>
+  <span>·</span>
+  <a href="/contact.html">Contact</a>
+  <span>·</span>
+  <span>© 2026 Deskloop.work</span>
+</div></footer>
+
+<script>
+(function(){
+  var sk=document.getElementById('skScreen');
+  if(!sk)return;
+  var done=function(){sk.classList.add('sk-out');setTimeout(function(){sk.remove();},450);};
+  if(document.readyState==='complete'){setTimeout(done,120);}
+  else{window.addEventListener('load',function(){setTimeout(done,120);});}
+})();
+</script>
+</body>
+</html>

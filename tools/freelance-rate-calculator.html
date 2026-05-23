@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Freelance Rate Calculator Free — What Should I Charge? | Deskloop</title>
+<meta name="description" content="Free freelance rate calculator. Enter your income goal, location, and experience level to find your exact hourly, daily, and project rate. No signup needed.">
+<meta name="keywords" content="freelance rate calculator free,how much to charge as a freelancer,freelance hourly rate calculator,consultant rate calculator,freelance pricing tool">
+<link rel="canonical" href="https://deskloop.work/tools/freelance-rate-calculator.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ac:#10B981;--ac-lt:#34D399;--ac-d:#059669;
+  --blue:#3B82F6;--blue-lt:#60A5FA;--blue-d:#1E40AF;
+  --amber:#F59E0B;--amber-lt:#FCD34D;--red:#EF4444;--red-lt:#FCA5A5;
+  --purple:#8B5CF6;--purple-lt:#A78BFA;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;--s4:#1A2D44;
+  --tx:#EEF6FF;--tx2:#88AAC5;--tx3:#4C6580;
+  --bd:rgba(255,255,255,.06);--bd2:rgba(255,255,255,.1);
+  --r:10px;--rl:18px;--t:220ms ease;
+  --mono:"JetBrains Mono",monospace;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--tx);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+
+/* ── Nav ── */
+.nav{position:sticky;top:0;z-index:200;background:rgba(6,12,24,.95);
+  backdrop-filter:blur(24px);border-bottom:1px solid var(--bd);
+  padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lm{width:34px;height:34px;background:var(--blue-d);border-radius:9px;
+  display:flex;align-items:center;justify-content:center}
+.nav-lt{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.025em}
+.nav-a{color:var(--tx2);text-decoration:none;font-size:13px;font-weight:500;
+  padding:7px 16px;border-radius:var(--r);border:1px solid var(--bd);transition:all var(--t);
+  display:inline-flex;align-items:center;gap:6px}
+.nav-a:hover{color:var(--tx);border-color:var(--bd2)}
+.nav-a svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* ── Hero ── */
+.hero{position:relative;overflow:hidden;padding:52px 28px 40px;text-align:center}
+.hero::before{content:"";position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+  width:900px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(16,185,129,.07) 0%,transparent 65%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:600px;margin:0 auto}
+.hero-pill{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
+  border-radius:100px;padding:5px 16px;font-size:10px;font-weight:700;
+  letter-spacing:1.8px;text-transform:uppercase;color:var(--ac);margin-bottom:20px}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--ac);
+  animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+h1{font-size:clamp(28px,4.5vw,50px);font-weight:900;letter-spacing:-.045em;
+  line-height:1.05;margin-bottom:14px}
+h1 em{font-style:normal;background:linear-gradient(130deg,var(--ac-lt) 0%,var(--blue-lt) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:15px;color:var(--tx2);line-height:1.65;max-width:460px;margin:0 auto}
+
+/* ── Layout ── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px 80px;
+  display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start}
+
+/* ── Input sections ── */
+.section{margin-bottom:16px}
+.section-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  overflow:hidden;box-shadow:var(--shadow)}
+.sec-hdr{padding:22px 28px 20px;border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;gap:12px}
+.sec-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0}
+.sec-ico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.sec-title{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:2px}
+.sec-desc{font-size:12px;color:var(--tx3)}
+.sec-body{padding:24px 28px}
+
+/* ── Experience pills ── */
+.exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:4px}
+.exp-btn{background:var(--s2);border:1px solid var(--bd2);border-radius:10px;
+  padding:12px 8px;cursor:pointer;transition:all var(--t);text-align:center;color:var(--tx2)}
+.exp-btn:hover{border-color:rgba(16,185,129,.3);color:var(--tx)}
+.exp-btn.active{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.4);color:var(--ac-lt)}
+.exp-emoji{font-size:18px;display:block;margin-bottom:5px}
+.exp-name{font-size:11px;font-weight:700;display:block;margin-bottom:2px}
+.exp-yrs{font-size:10px;color:var(--tx3);display:block}
+.exp-btn.active .exp-yrs{color:rgba(52,211,153,.7)}
+
+/* ── Location ── */
+.loc-select{width:100%;background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx);font:500 14px/1 "Inter",sans-serif;padding:12px 36px 12px 14px;
+  transition:border-color var(--t);outline:none;cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234C6580' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center}
+.loc-select:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(16,185,129,.1)}
+
+/* ── Field system ── */
+.field{margin-bottom:20px}
+.field:last-child{margin-bottom:0}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field-label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;
+  letter-spacing:.6px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+.tip-btn{width:15px;height:15px;border-radius:50%;background:var(--s3);border:1px solid var(--bd2);
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:9px;font-weight:700;color:var(--tx3);position:relative;transition:all var(--t)}
+.tip-btn:hover{border-color:var(--ac);color:var(--ac)}
+.tip-box{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--s3);border:1px solid var(--bd2);border-radius:8px;
+  padding:10px 12px;font-size:11px;color:var(--tx2);line-height:1.5;
+  width:220px;z-index:100;pointer-events:none;opacity:0;transition:opacity var(--t);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);text-transform:none;letter-spacing:0;font-weight:400}
+.tip-btn:hover .tip-box{opacity:1}
+
+.input-wrap{position:relative}
+.input-pfx,.input-sfx{position:absolute;top:50%;transform:translateY(-50%);
+  font-size:13px;color:var(--tx3);font-family:var(--mono);font-weight:600;pointer-events:none}
+.input-pfx{left:13px}
+.input-sfx{right:13px}
+input[type=number],input[type=text],select:not(.loc-select){
+  width:100%;background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx);font:500 14px/1 "Inter",sans-serif;padding:12px 14px;
+  transition:border-color var(--t),box-shadow var(--t);outline:none;
+  -moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(16,185,129,.1)}
+.has-pfx input{padding-left:30px}
+.has-sfx input{padding-right:38px}
+select:not(.loc-select){cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234C6580' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  padding-right:36px;appearance:none}
+select:not(.loc-select):focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(16,185,129,.1);outline:none}
+
+/* Slider */
+.slider-wrap{display:flex;align-items:center;gap:14px}
+input[type=range]{flex:1;-webkit-appearance:none;height:4px;background:var(--s3);
+  border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;
+  border-radius:50%;background:var(--ac);cursor:pointer;
+  box-shadow:0 0 0 3px rgba(16,185,129,.15);transition:transform var(--t)}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.slider-val{font-family:var(--mono);font-size:13px;font-weight:700;
+  color:var(--ac);min-width:42px;text-align:right}
+.slider-hint{font-size:11px;color:var(--tx3);margin-top:7px;line-height:1.5}
+
+/* ── Results panel ── */
+.results{position:sticky;top:84px;display:flex;flex-direction:column;gap:14px}
+.res-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  overflow:hidden;box-shadow:var(--shadow)}
+
+/* Main rate display */
+.rate-hero{padding:28px 24px 20px;text-align:center;
+  background:linear-gradient(160deg,rgba(16,185,129,.04) 0%,transparent 60%)}
+.rate-lbl{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:10px}
+.rate-num{font-family:var(--mono);font-size:60px;font-weight:700;letter-spacing:-.03em;
+  line-height:1;color:var(--ac);margin-bottom:6px;transition:all .3s ease}
+.rate-period{font-size:13px;color:var(--tx3);margin-bottom:20px}
+.rate-tabs{display:flex;background:var(--s2);border-radius:10px;padding:3px;margin:0 0 4px}
+.rtab{flex:1;padding:8px;font-size:12px;font-weight:600;border-radius:8px;cursor:pointer;
+  transition:all var(--t);text-align:center;color:var(--tx3);border:none;background:none;font-family:"Inter",sans-serif}
+.rtab.on{background:var(--s3);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+
+/* Rate range cards */
+.range-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 16px 16px}
+.range-card{border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;
+  transition:all var(--t);border:1px solid transparent}
+.range-card.conservative{background:rgba(96,165,250,.06);border-color:rgba(96,165,250,.15)}
+.range-card.balanced{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25)}
+.range-card.premium{background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.15)}
+.range-card.selected{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.range-card.conservative.selected{border-color:rgba(96,165,250,.4);box-shadow:0 4px 16px rgba(96,165,250,.15)}
+.range-card.balanced.selected{border-color:rgba(16,185,129,.5);box-shadow:0 4px 16px rgba(16,185,129,.2)}
+.range-card.premium.selected{border-color:rgba(139,92,246,.4);box-shadow:0 4px 16px rgba(139,92,246,.15)}
+.range-type{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.range-card.conservative .range-type{color:var(--blue-lt)}
+.range-card.balanced .range-type{color:var(--ac-lt)}
+.range-card.premium .range-type{color:var(--purple-lt)}
+.range-val{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--tx);margin-bottom:3px}
+.range-desc{font-size:10px;color:var(--tx3)}
+
+/* Market comparison */
+.market-wrap{padding:0 20px 18px}
+.market-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:12px}
+.market-bar-wrap{position:relative;height:8px;background:var(--s3);border-radius:4px;margin-bottom:20px}
+.market-bar-fill{position:absolute;left:0;top:0;height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--blue-lt),var(--ac),var(--purple-lt));transition:width .5s ease}
+.market-marker{position:absolute;top:50%;transform:translate(-50%,-50%);
+  width:14px;height:14px;border-radius:50%;border:2px solid var(--bg);z-index:2;transition:left .5s ease}
+.market-marker.your{background:var(--ac)}
+.market-labels{display:flex;justify-content:space-between;margin-top:6px}
+.market-label{font-size:10px;color:var(--tx3)}
+.market-label.center{text-align:center}
+.market-rows{display:flex;flex-direction:column;gap:6px}
+.mrow{display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;background:var(--s2);border-radius:8px}
+.mrow-name{font-size:12px;color:var(--tx3)}
+.mrow-val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--tx2)}
+.mrow.yours .mrow-name{color:var(--ac)}
+.mrow.yours .mrow-val{color:var(--ac-lt)}
+
+/* Breakdown donut */
+.donut-section{padding:0 20px 18px}
+.donut-row{display:flex;align-items:center;gap:16px}
+.donut-svg{flex-shrink:0}
+.donut-info{flex:1;display:flex;flex-direction:column;gap:6px}
+.dinfo-item{display:flex;align-items:center;gap:8px}
+.dinfo-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.dinfo-text{font-size:12px;color:var(--tx2)}
+.dinfo-val{font-family:var(--mono);font-size:12px;font-weight:600;margin-left:auto;color:var(--tx)}
+
+/* Insights */
+.ins-section{padding:0 16px 16px;display:flex;flex-direction:column;gap:8px}
+.ins{padding:11px 14px;border-radius:10px;font-size:12px;line-height:1.6}
+.ins a{text-decoration:none}
+.ins-warn{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);color:var(--amber-lt)}
+.ins-good{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);color:var(--ac-lt)}
+.ins-info{background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.18);color:var(--blue-lt)}
+
+/* Checker */
+.checker-section{padding:16px 20px}
+.checker-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:10px}
+.checker-inner{display:flex;gap:10px;align-items:flex-end}
+.checker-inner .input-wrap{flex:1}
+.checker-result{margin-top:10px;padding:11px 14px;border-radius:10px;
+  font-size:12px;line-height:1.55;display:none}
+
+/* Copy / action buttons */
+.action-row{display:flex;gap:8px;padding:0 16px 16px}
+.act-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:11px;border:none;border-radius:var(--r);
+  font:600 12px/1 "Inter",sans-serif;cursor:pointer;transition:all var(--t)}
+.act-copy{background:var(--ac);color:#fff}
+.act-copy:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.act-save{background:var(--s2);color:var(--tx2);border:1px solid var(--bd2)}
+.act-save:hover{border-color:var(--ac);color:var(--ac)}
+.act-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.act-btn.copied{background:var(--blue-d)}
+
+/* Profiles */
+.profiles-section{padding:16px 20px}
+.profiles-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:10px}
+.profiles-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.profile-item{display:flex;align-items:center;gap:8px;padding:9px 12px;
+  background:var(--s2);border:1px solid var(--bd2);border-radius:8px;cursor:pointer;
+  transition:all var(--t)}
+.profile-item:hover{border-color:rgba(16,185,129,.3)}
+.profile-name{font-size:12px;font-weight:600;color:var(--tx2);flex:1}
+.profile-date{font-size:10px;color:var(--tx3)}
+.profile-del{width:20px;height:20px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:rgba(239,68,68,.1);color:var(--red-lt);
+  font-size:12px;cursor:pointer;border:none;transition:all var(--t)}
+.profile-del:hover{background:rgba(239,68,68,.2)}
+.profile-empty{font-size:12px;color:var(--tx3);text-align:center;padding:12px;
+  background:var(--s2);border-radius:8px;border:1px dashed var(--bd2)}
+
+/* Section divider */
+.divider{height:1px;background:var(--bd);margin:20px 0}
+
+/* Footer */
+footer{border-top:1px solid var(--bd)}
+.foot-inner{text-align:center;padding:20px 24px;font-size:12px;color:var(--tx3);
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.foot-inner a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
+.foot-inner a:hover{color:var(--tx2)}
+
+/* Skeleton */
+@keyframes sk{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.sk{border-radius:6px;background:linear-gradient(90deg,#0F1E32 25%,#152540 50%,#0F1E32 75%);
+  background-size:800px 100%;animation:sk 1.4s ease-in-out infinite}
+.sk-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);
+  display:flex;flex-direction:column;padding-top:64px;
+  transition:opacity .4s ease;pointer-events:none}
+.sk-screen.out{opacity:0}
+.sk-nav{position:fixed;top:0;left:0;right:0;height:64px;z-index:9001;
+  background:var(--bg);border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+
+/* GDPR */
+#gdpr{position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  background:var(--s1);border-top:1px solid var(--bd2);padding:14px 28px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+#gdpr.show{transform:translateY(0)}
+#gdpr p{font-size:12px;color:var(--tx2);margin:0;flex:1;min-width:200px;line-height:1.5}
+#gdpr a{color:var(--ac);text-decoration:none}
+.g-btns{display:flex;gap:8px;flex-shrink:0}
+.g-accept{background:var(--ac);color:#fff;border:none;border-radius:8px;
+  padding:9px 18px;font:600 12px/1 "Inter",sans-serif;cursor:pointer}
+.g-decline{background:transparent;color:var(--tx3);border:1px solid var(--bd2);
+  border-radius:8px;padding:9px 14px;font:500 12px/1 "Inter",sans-serif;cursor:pointer}
+
+/* Responsive */
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  .results{position:static}
+}
+@media(max-width:580px){
+  .wrap{padding:0 16px 60px}
+  .hero{padding:36px 16px 28px}
+  .exp-grid{grid-template-columns:repeat(2,1fr)}
+  .range-grid{grid-template-columns:repeat(3,1fr)}
+  .field-row{grid-template-columns:1fr}
+  .action-row{flex-direction:column}
+  .sec-body{padding:18px 20px}
+}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:2px;border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- Skeleton -->
+<div class="sk-screen" id="skScreen">
+  <div class="sk-nav">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="sk" style="width:34px;height:34px;border-radius:9px"></div>
+      <div class="sk" style="width:90px;height:18px"></div>
+    </div>
+    <div class="sk" style="width:70px;height:30px;border-radius:10px"></div>
+  </div>
+  <div style="padding:52px 28px 0;display:flex;flex-direction:column;align-items:center;gap:14px">
+    <div class="sk" style="width:180px;height:20px;border-radius:100px"></div>
+    <div class="sk" style="width:min(480px,85vw);height:50px"></div>
+    <div class="sk" style="width:min(340px,70vw);height:28px"></div>
+  </div>
+</div>
+
+<!-- GDPR -->
+<div id="gdpr" role="dialog" aria-label="Cookie consent">
+  <p>We use cookies from <strong style="color:var(--tx)">Google AdSense</strong> to serve ads. No personal data collected by us. <a href="/privacy.html">Privacy Policy</a><span>&middot;</span><a href="/credits.html">Credits</a></p>
+  <div class="g-btns">
+    <button class="g-decline" onclick="gdprDecline()">Decline</button>
+    <button class="g-accept" onclick="gdprAccept()">Accept</button>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-lm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div>
+    <span class="nav-lt">Deskloop</span>
+  </a>
+  <a href="/" class="nav-a"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-pill"><div class="hero-dot"></div>Freelancer Tools</div>
+    <h1>What Should You<br><em>Actually Charge?</em></h1>
+    <p class="hero-sub">Enter your income goal, location, and experience. Get your exact hourly, daily, and project rate — with market benchmarks.</p>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="wrap">
+
+<!-- ══ LEFT: INPUTS ══════════════════════════════════════════════════ -->
+<div>
+
+  <!-- Profile -->
+  <div class="section">
+  <div class="section-card">
+    <div class="sec-hdr">
+      <div class="sec-ico" style="background:rgba(16,185,129,.1);color:var(--ac)">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <div class="sec-title">Your Profile</div>
+        <div class="sec-desc">Experience and location shape your rate significantly</div>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <div class="field-label">Experience Level</div>
+        <div class="exp-grid" id="expGrid">
+          <button class="exp-btn" data-exp="beginner" onclick="setExp('beginner')">
+            <span class="exp-emoji">🌱</span>
+            <span class="exp-name">Beginner</span>
+            <span class="exp-yrs">0 – 1 yr</span>
+          </button>
+          <button class="exp-btn active" data-exp="intermediate" onclick="setExp('intermediate')">
+            <span class="exp-emoji">⚡</span>
+            <span class="exp-name">Intermediate</span>
+            <span class="exp-yrs">2 – 4 yrs</span>
+          </button>
+          <button class="exp-btn" data-exp="professional" onclick="setExp('professional')">
+            <span class="exp-emoji">🎯</span>
+            <span class="exp-name">Professional</span>
+            <span class="exp-yrs">5 – 8 yrs</span>
+          </button>
+          <button class="exp-btn" data-exp="expert" onclick="setExp('expert')">
+            <span class="exp-emoji">🏆</span>
+            <span class="exp-name">Expert</span>
+            <span class="exp-yrs">9+ yrs</span>
+          </button>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <div class="field-label">Your Location / Market</div>
+        <select class="loc-select" id="location" onchange="calc()">
+          <option value="ph">🇵🇭 Philippines</option>
+          <option value="us" selected>🇺🇸 United States</option>
+          <option value="uk">🇬🇧 United Kingdom</option>
+          <option value="sg">🇸🇬 Singapore</option>
+          <option value="au">🇦🇺 Australia</option>
+          <option value="ca">🇨🇦 Canada</option>
+          <option value="in">🇮🇳 India</option>
+          <option value="de">🇩🇪 Germany</option>
+          <option value="fr">🇫🇷 France</option>
+          <option value="remote">🌐 Remote / Global</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Income Goal -->
+  <div class="section">
+  <div class="section-card">
+    <div class="sec-hdr">
+      <div class="sec-ico" style="background:rgba(16,185,129,.1);color:var(--ac)">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      </div>
+      <div>
+        <div class="sec-title">Income Goal</div>
+        <div class="sec-desc">How much do you want to take home annually?</div>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">
+            Target Annual Income
+            <span class="tip-btn">?<span class="tip-box">This is your personal take-home goal after taxes and expenses, not your business revenue.</span></span>
+          </div>
+          <div class="input-wrap has-pfx">
+            <span class="input-pfx" id="currSym">$</span>
+            <input type="number" id="annualIncome" value="60000" min="0" step="1000" oninput="calc()">
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Income Type</div>
+          <select id="incomeType" onchange="calc()">
+            <option value="net">Net (after tax)</option>
+            <option value="gross">Gross (before tax)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Time Available -->
+  <div class="section">
+  <div class="section-card">
+    <div class="sec-hdr">
+      <div class="sec-ico" style="background:rgba(96,165,250,.1);color:var(--blue-lt)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <div class="sec-title">Time &amp; Availability</div>
+        <div class="sec-desc">How much of your time is actually billable?</div>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <div class="field-label">
+          Working Weeks Per Year
+          <span class="tip-btn">?<span class="tip-box">52 minus vacation, sick days, and public holidays. Most freelancers take 4–8 weeks off per year.</span></span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="workWeeks" min="20" max="52" value="46" step="1"
+            oninput="sync('workWeeks','wkVal','');calc()">
+          <span class="slider-val" id="wkVal">46</span>
+        </div>
+        <div class="slider-hint">That is <span id="offWks">6</span> weeks off per year</div>
+      </div>
+      <div class="field">
+        <div class="field-label">
+          Billable Hours Per Day
+          <span class="tip-btn">?<span class="tip-box">Not all work hours are billable. Admin, proposals, and marketing take real time. Most freelancers bill 5–7 hours of an 8-hour day.</span></span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="billHrs" min="1" max="10" value="6" step="0.5"
+            oninput="sync('billHrs','bhVal','');calc()">
+          <span class="slider-val" id="bhVal">6</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <div class="field-label">
+          Utilization Rate
+          <span class="tip-btn">?<span class="tip-box">What % of your available hours do you expect to actually invoice? New freelancers: 50–65%. Established: 75–90%. Perfect utilization is unrealistic.</span></span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="utilRate" min="30" max="100" value="75" step="5"
+            oninput="sync('utilRate','urVal','%');calc()">
+          <span class="slider-val" id="urVal">75%</span>
+        </div>
+        <div class="slider-hint" id="utilHint">At 75% you bill ~<span id="utilHrs">0</span> hrs/year</div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Expenses -->
+  <div class="section">
+  <div class="section-card">
+    <div class="sec-hdr">
+      <div class="sec-ico" style="background:rgba(245,158,11,.1);color:var(--amber-lt)">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      </div>
+      <div>
+        <div class="sec-title">Business Expenses</div>
+        <div class="sec-desc">Costs your rate needs to cover — often underestimated</div>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">Software &amp; Tools /mo</div>
+          <div class="input-wrap has-pfx">
+            <span class="input-pfx expPfx">$</span>
+            <input type="number" id="software" value="100" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Equipment /yr</div>
+          <div class="input-wrap has-pfx">
+            <span class="input-pfx expPfx">$</span>
+            <input type="number" id="equipment" value="800" min="0" oninput="calc()">
+          </div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">Marketing &amp; Portfolio /yr</div>
+          <div class="input-wrap has-pfx">
+            <span class="input-pfx expPfx">$</span>
+            <input type="number" id="marketing" value="300" min="0" oninput="calc()">
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Professional Development /yr</div>
+          <div class="input-wrap has-pfx">
+            <span class="input-pfx expPfx">$</span>
+            <input type="number" id="prodev" value="400" min="0" oninput="calc()">
+          </div>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <div class="field-label">Other Annual Expenses</div>
+        <div class="input-wrap has-pfx">
+          <span class="input-pfx expPfx">$</span>
+          <input type="number" id="otherExp" value="0" min="0" oninput="calc()">
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Tax -->
+  <div class="section" style="margin-bottom:0">
+  <div class="section-card">
+    <div class="sec-hdr">
+      <div class="sec-ico" style="background:rgba(239,68,68,.1);color:var(--red-lt)">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      </div>
+      <div>
+        <div class="sec-title">Tax &amp; Safety Buffer</div>
+        <div class="sec-desc">Self-employment tax is higher than regular employment</div>
+      </div>
+    </div>
+    <div class="sec-body">
+      <div class="field">
+        <div class="field-label">
+          Effective Tax Rate
+          <span class="tip-btn">?<span class="tip-box">Includes income tax + self-employment tax. US: 28–35%. UK: 25–35%. PH: 20–30%. EU: 25–45%. When in doubt, set higher.</span></span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="taxRate" min="0" max="65" value="25" step="1"
+            oninput="sync('taxRate','trVal','%');calc()">
+          <span class="slider-val" id="trVal">25%</span>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <div class="field-label">
+          Emergency Buffer
+          <span class="tip-btn">?<span class="tip-box">Extra % added to cover slow months, late payers, and unexpected costs. At minimum 10%. Many freelancers use 15–20%.</span></span>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="buffer" min="0" max="40" value="10" step="1"
+            oninput="sync('buffer','bufVal','%');calc()">
+          <span class="slider-val" id="bufVal">10%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</div>
+<!-- ══ END LEFT ══════════════════════════════════════════════════════ -->
+
+<!-- ══ RIGHT: RESULTS ════════════════════════════════════════════════ -->
+<div class="results">
+
+  <!-- Main rate card -->
+  <div class="res-card">
+    <div class="rate-hero">
+      <div class="rate-lbl">Your Minimum Rate</div>
+      <div class="rate-num" id="mainRate">$0</div>
+      <div class="rate-period" id="mainPeriod">per hour</div>
+      <div class="rate-tabs">
+        <button class="rtab on" onclick="setTab('hourly',this)">Hourly</button>
+        <button class="rtab" onclick="setTab('daily',this)">Daily</button>
+        <button class="rtab" onclick="setTab('project',this)">Project</button>
+      </div>
+    </div>
+
+    <!-- Rate range -->
+    <div class="range-grid">
+      <div class="range-card conservative" onclick="applyRange('conservative')">
+        <div class="range-type">Conservative</div>
+        <div class="range-val" id="rc-conservative">—</div>
+        <div class="range-desc">Safe start</div>
+      </div>
+      <div class="range-card balanced selected" onclick="applyRange('balanced')">
+        <div class="range-type">Balanced</div>
+        <div class="range-val" id="rc-balanced">—</div>
+        <div class="range-desc">Recommended</div>
+      </div>
+      <div class="range-card premium" onclick="applyRange('premium')">
+        <div class="range-type">Premium</div>
+        <div class="range-val" id="rc-premium">—</div>
+        <div class="range-desc">Strong positioning</div>
+      </div>
+    </div>
+
+    <!-- Market comparison bar -->
+    <div class="market-wrap">
+      <div class="market-lbl" id="mktLbl">Market rates — Intermediate in United States</div>
+      <div class="market-bar-wrap">
+        <div class="market-bar-fill" id="mktBarFill" style="width:0%"></div>
+        <div class="market-marker your" id="mktMarkerYour" style="left:0%"></div>
+      </div>
+      <div class="market-labels">
+        <span class="market-label" id="mktLow">$0</span>
+        <span class="market-label center" id="mktAvg">avg $0</span>
+        <span class="market-label" id="mktHigh">$0</span>
+      </div>
+      <div class="market-rows" style="margin-top:10px">
+        <div class="mrow"><span class="mrow-name">Market low</span><span class="mrow-val" id="mr-low">—</span></div>
+        <div class="mrow"><span class="mrow-name">Market average</span><span class="mrow-val" id="mr-avg">—</span></div>
+        <div class="mrow"><span class="mrow-name">Market high</span><span class="mrow-val" id="mr-high">—</span></div>
+        <div class="mrow yours"><span class="mrow-name">Your rate</span><span class="mrow-val" id="mr-yours">—</span></div>
+      </div>
+    </div>
+
+    <!-- Breakdown donut -->
+    <div class="donut-section">
+      <div class="market-lbl">Annual Revenue Breakdown</div>
+      <div class="donut-row">
+        <svg class="donut-svg" width="96" height="96" viewBox="0 0 96 96">
+          <circle cx="48" cy="48" r="36" fill="none" stroke="var(--s3)" stroke-width="16"/>
+          <circle cx="48" cy="48" r="36" fill="none" stroke="var(--ac)" stroke-width="16"
+            id="d-income" stroke-dasharray="226" stroke-dashoffset="0" transform="rotate(-90 48 48)"
+            style="transition:stroke-dasharray .5s ease,stroke-dashoffset .5s ease"/>
+          <circle cx="48" cy="48" r="36" fill="none" stroke="var(--amber)" stroke-width="16"
+            id="d-exp" stroke-dasharray="0 226" stroke-dashoffset="0" transform="rotate(-90 48 48)"
+            style="transition:stroke-dasharray .5s ease,stroke-dashoffset .5s ease"/>
+          <circle cx="48" cy="48" r="36" fill="none" stroke="var(--red)" stroke-width="16"
+            id="d-tax" stroke-dasharray="0 226" stroke-dashoffset="0" transform="rotate(-90 48 48)"
+            style="transition:stroke-dasharray .5s ease,stroke-dashoffset .5s ease"/>
+        </svg>
+        <div class="donut-info">
+          <div class="dinfo-item">
+            <div class="dinfo-dot" style="background:var(--ac)"></div>
+            <span class="dinfo-text">Take-home</span>
+            <span class="dinfo-val" id="di-income">—</span>
+          </div>
+          <div class="dinfo-item">
+            <div class="dinfo-dot" style="background:var(--amber)"></div>
+            <span class="dinfo-text">Expenses</span>
+            <span class="dinfo-val" id="di-exp">—</span>
+          </div>
+          <div class="dinfo-item">
+            <div class="dinfo-dot" style="background:var(--red)"></div>
+            <span class="dinfo-text">Tax + Buffer</span>
+            <span class="dinfo-val" id="di-tax">—</span>
+          </div>
+          <div style="margin-top:6px;font-size:11px;color:var(--tx3)">
+            <strong id="di-hrs" style="color:var(--tx2)">0</strong> billable hrs/yr
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="ins-section" id="insights"></div>
+
+    <!-- Action buttons -->
+    <div class="action-row">
+      <button class="act-btn act-copy" id="copyBtn" onclick="copyRate()">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Rate
+      </button>
+      <button class="act-btn act-save" onclick="saveProfile()">
+        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save Profile
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Am I undercharging -->
+  <div class="res-card">
+    <div class="checker-section">
+      <div class="checker-lbl">Am I Undercharging?</div>
+      <div class="checker-inner">
+        <div class="input-wrap has-pfx" style="flex:1">
+          <span class="input-pfx" id="checkSym">$</span>
+          <input type="number" id="currentRate" placeholder="Your current rate" min="0" oninput="checkRate()">
+        </div>
+      </div>
+      <div class="checker-result" id="checkerRes"></div>
+    </div>
+  </div>
+
+  <!-- Saved profiles -->
+  <div class="res-card">
+    <div class="profiles-section">
+      <div class="profiles-lbl">Saved Rate Profiles</div>
+      <div class="profiles-list" id="profilesList"></div>
+    </div>
+  </div>
+
+</div>
+<!-- ══ END RIGHT ═════════════════════════════════════════════════════ -->
+
+</div><!-- /wrap -->
+
+<footer><div class="foot-inner">
+  <a href="/">Deskloop</a><span>·</span>
+  <a href="/tools/invoice-generator.html">Invoice Generator</a><span>·</span>
+  <a href="/tools/work-hours-logger.html">Hours Logger</a><span>·</span>
+  <a href="/privacy.html">Privacy</a><span>·</span><a href="/credits.html">Credits</a><span>·</span>
+  <span>© 2026 Deskloop.work</span>
+</div></footer>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────
+const LOCATIONS = {
+  ph:     { name:'Philippines',    sym:'\u20b1', rate:56,   market:{ beginner:[5,15],   intermediate:[15,30],  professional:[30,55],  expert:[50,90]  }},
+  us:     { name:'United States',  sym:'$',       rate:1,    market:{ beginner:[20,45],  intermediate:[45,85],  professional:[85,140], expert:[120,220] }},
+  uk:     { name:'United Kingdom', sym:'\u00a3', rate:0.79, market:{ beginner:[18,40],  intermediate:[40,75],  professional:[75,125], expert:[100,200] }},
+  sg:     { name:'Singapore',      sym:'S$',      rate:1.34, market:{ beginner:[15,30],  intermediate:[30,60],  professional:[60,100], expert:[80,160]  }},
+  au:     { name:'Australia',      sym:'A$',      rate:1.52, market:{ beginner:[22,45],  intermediate:[45,85],  professional:[85,140], expert:[110,200] }},
+  ca:     { name:'Canada',         sym:'C$',      rate:1.36, market:{ beginner:[18,38],  intermediate:[38,72],  professional:[72,115], expert:[90,175]  }},
+  in:     { name:'India',          sym:'\u20b9', rate:83,   market:{ beginner:[4,12],   intermediate:[12,25],  professional:[25,50],  expert:[40,80]   }},
+  de:     { name:'Germany',        sym:'\u20ac', rate:0.92, market:{ beginner:[20,42],  intermediate:[42,75],  professional:[75,120], expert:[95,170]  }},
+  fr:     { name:'France',         sym:'\u20ac', rate:0.92, market:{ beginner:[18,38],  intermediate:[38,70],  professional:[70,115], expert:[90,160]  }},
+  remote: { name:'Remote / Global',sym:'$',       rate:1,    market:{ beginner:[10,25],  intermediate:[25,55],  professional:[55,100], expert:[80,150]  }},
+};
+const EXP_MULTI = { beginner:0.65, intermediate:1.0, professional:1.55, expert:2.2 };
+
+let currentExp = 'intermediate';
+let currentTab = 'hourly';
+let selectedRange = 'balanced';
+let D = {}; // computed data
+
+// ── Experience selector ───────────────────────────────────────────────
+function setExp(exp) {
+  currentExp = exp;
+  document.querySelectorAll('.exp-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-exp="'+exp+'"]').classList.add('active');
+  calc();
+}
+
+// ── Slider sync ───────────────────────────────────────────────────────
+function sync(id, valId, suffix) {
+  var v = document.getElementById(id).value;
+  document.getElementById(valId).textContent = v + suffix;
+  if(id === 'workWeeks') document.getElementById('offWks').textContent = 52 - parseInt(v);
+}
+
+// ── Core calculation ──────────────────────────────────────────────────
+function calc() {
+  var loc       = LOCATIONS[document.getElementById('location').value] || LOCATIONS.us;
+  var incType   = document.getElementById('incomeType').value;
+  var annual    = parseFloat(document.getElementById('annualIncome').value) || 0;
+  var workWks   = parseFloat(document.getElementById('workWeeks').value) || 46;
+  var billHrs   = parseFloat(document.getElementById('billHrs').value) || 6;
+  var utilR     = parseFloat(document.getElementById('utilRate').value) / 100 || 0.75;
+  var taxR      = parseFloat(document.getElementById('taxRate').value) / 100 || 0.25;
+  var bufR      = parseFloat(document.getElementById('buffer').value) / 100 || 0.10;
+  var software  = (parseFloat(document.getElementById('software').value) || 0) * 12;
+  var equipment = parseFloat(document.getElementById('equipment').value) || 0;
+  var marketing = parseFloat(document.getElementById('marketing').value) || 0;
+  var prodev    = parseFloat(document.getElementById('prodev').value) || 0;
+  var otherExp  = parseFloat(document.getElementById('otherExp').value) || 0;
+  var totalExp  = software + equipment + marketing + prodev + otherExp;
+
+  var sym = loc.sym;
+  // Expense inputs shown in local currency — convert to USD for market comparison
+  var localToUsd = 1 / loc.rate;
+
+  // Convert annual income to local currency if needed
+  var grossNeeded;
+  if(incType === 'net') {
+    grossNeeded = (annual + totalExp) / (1 - taxR - bufR);
+  } else {
+    grossNeeded = (annual + totalExp) * (1 + bufR);
+  }
+
+  var taxAmt    = grossNeeded * taxR;
+  var bufAmt    = grossNeeded * bufR;
+  var netHome   = grossNeeded - taxAmt - bufAmt - totalExp;
+  var billHrsYr = workWks * 5 * billHrs * utilR;
+
+  var hourlyRate = billHrsYr > 0 ? grossNeeded / billHrsYr : 0;
+  var dailyRate  = hourlyRate * billHrs;
+  var weeklyRate = dailyRate * 5;
+  var monthlyRate= grossNeeded / 12;
+  var proj1wk    = dailyRate * 5;
+  var proj1mo    = dailyRate * workWks * 5 / 12;
+  var proj3mo    = proj1mo * 3;
+
+  // Market rates in USD — convert to local
+  var mktRaw  = loc.market[currentExp];
+  var mktLow  = mktRaw[0] * loc.rate;
+  var mktHigh = mktRaw[1] * loc.rate;
+  var mktAvg  = (mktLow + mktHigh) / 2;
+
+  // Range recommendations (based on market + calculation)
+  var conservative = Math.max(hourlyRate, mktLow);
+  var balanced     = Math.max(hourlyRate, mktAvg);
+  var premium      = Math.max(hourlyRate, mktHigh * 1.15);
+
+  D = { sym, loc, hourlyRate, dailyRate, weeklyRate, monthlyRate,
+    proj1wk, proj1mo, proj3mo, billHrs, billHrsYr, grossNeeded,
+    netHome, totalExp, taxAmt, bufAmt, taxR, bufR,
+    mktLow, mktHigh, mktAvg, conservative, balanced, premium,
+    workWks, utilR };
+
+  // Update currency symbols in expense fields
+  document.getElementById('currSym').textContent = sym;
+  document.getElementById('checkSym').textContent = sym;
+  document.querySelectorAll('.expPfx').forEach(function(el){ el.textContent = sym; });
+
+  // Utilization hint
+  document.getElementById('utilHrs').textContent = Math.round(billHrsYr).toLocaleString();
+
+  updateResults();
+}
+
+// ── Render results ────────────────────────────────────────────────────
+function updateResults() {
+  if(!D.sym) return;
+  renderMain();
+  renderRanges();
+  renderMarket();
+  renderDonut();
+  renderInsights();
+  checkRate();
+  renderProfiles();
+}
+
+function f(sym, n, decimals) {
+  if(decimals === undefined) decimals = 0;
+  if(n >= 1000000) return sym + (n/1000000).toFixed(1) + 'M';
+  if(n >= 100000)  return sym + Math.round(n/1000) + 'K';
+  if(decimals === 0) return sym + Math.round(n).toLocaleString();
+  return sym + n.toFixed(decimals);
+}
+
+function setTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.rtab').forEach(function(b){ b.classList.remove('on'); });
+  el.classList.add('on');
+  renderMain();
+  renderRanges();
+}
+
+function getTabRate(baseHourly) {
+  if(currentTab === 'hourly')  return baseHourly;
+  if(currentTab === 'daily')   return baseHourly * D.billHrs;
+  if(currentTab === 'project') return baseHourly * D.billHrs * D.workWks * 5 / 12;
+  return baseHourly;
+}
+function tabPeriod() {
+  if(currentTab === 'hourly')  return 'per hour';
+  if(currentTab === 'daily')   return 'per day ('+D.billHrs+'h)';
+  if(currentTab === 'project') return 'per month-long project';
+  return '';
+}
+
+function renderMain() {
+  var rate = getTabRate(D.hourlyRate);
+  document.getElementById('mainRate').textContent   = f(D.sym, rate);
+  document.getElementById('mainPeriod').textContent = tabPeriod();
+}
+
+function applyRange(r) {
+  selectedRange = r;
+  document.querySelectorAll('.range-card').forEach(function(c){ c.classList.remove('selected'); });
+  document.querySelector('.range-card.'+r).classList.add('selected');
+}
+
+function renderRanges() {
+  document.getElementById('rc-conservative').textContent = f(D.sym, getTabRate(D.conservative));
+  document.getElementById('rc-balanced').textContent     = f(D.sym, getTabRate(D.balanced));
+  document.getElementById('rc-premium').textContent      = f(D.sym, getTabRate(D.premium));
+}
+
+function renderMarket() {
+  var loc = document.getElementById('location');
+  var locName = LOCATIONS[loc.value].name;
+  var expNames = {beginner:'Beginner',intermediate:'Intermediate',professional:'Professional',expert:'Expert'};
+  document.getElementById('mktLbl').textContent = 'Market rates — '+expNames[currentExp]+' in '+locName;
+
+  var low  = D.mktLow;
+  var high = D.mktHigh;
+  var avg  = D.mktAvg;
+  var your = D.hourlyRate;
+  var max  = high * 1.3;
+
+  // Bar
+  var fillPct = Math.min(100, (avg / max) * 100);
+  var yourPct = Math.min(100, (your / max) * 100);
+  document.getElementById('mktBarFill').style.width  = fillPct + '%';
+  document.getElementById('mktMarkerYour').style.left = yourPct + '%';
+
+  document.getElementById('mktLow').textContent  = f(D.sym, low)+'/hr';
+  document.getElementById('mktAvg').textContent  = 'avg '+f(D.sym, avg)+'/hr';
+  document.getElementById('mktHigh').textContent = f(D.sym, high)+'/hr';
+
+  document.getElementById('mr-low').textContent   = f(D.sym, low)+'/hr';
+  document.getElementById('mr-avg').textContent   = f(D.sym, avg)+'/hr';
+  document.getElementById('mr-high').textContent  = f(D.sym, high)+'/hr';
+  document.getElementById('mr-yours').textContent = f(D.sym, your)+'/hr';
+}
+
+function renderDonut() {
+  var circ = 2 * Math.PI * 36;
+  var total = D.grossNeeded > 0 ? D.grossNeeded : 1;
+  var incomePct  = D.netHome / total;
+  var expPct     = D.totalExp / total;
+  var taxPct     = (D.taxAmt + D.bufAmt) / total;
+  var gap = 2;
+
+  var iLen = Math.max(0, circ * incomePct - gap);
+  var eLen = Math.max(0, circ * expPct - gap);
+  var tLen = Math.max(0, circ * taxPct - gap);
+  var iOff = 0;
+  var eOff = -(circ * incomePct);
+  var tOff = -(circ * (incomePct + expPct));
+
+  document.getElementById('d-income').setAttribute('stroke-dasharray', iLen+' '+circ);
+  document.getElementById('d-income').setAttribute('stroke-dashoffset', iOff);
+  document.getElementById('d-exp').setAttribute('stroke-dasharray', eLen+' '+circ);
+  document.getElementById('d-exp').setAttribute('stroke-dashoffset', eOff);
+  document.getElementById('d-tax').setAttribute('stroke-dasharray', tLen+' '+circ);
+  document.getElementById('d-tax').setAttribute('stroke-dashoffset', tOff);
+
+  document.getElementById('di-income').textContent = f(D.sym, D.netHome);
+  document.getElementById('di-exp').textContent    = f(D.sym, D.totalExp);
+  document.getElementById('di-tax').textContent    = f(D.sym, D.taxAmt + D.bufAmt);
+  document.getElementById('di-hrs').textContent    = Math.round(D.billHrsYr).toLocaleString();
+}
+
+function renderInsights() {
+  var ins = [];
+  var utilPct = parseFloat(document.getElementById('utilRate').value);
+  var taxPct  = parseFloat(document.getElementById('taxRate').value);
+  var wks     = parseFloat(document.getElementById('workWeeks').value);
+
+  if(D.hourlyRate < D.mktLow) {
+    ins.push({t:'warn', m:'<strong>Below market floor.</strong> Your calculated rate is lower than the market minimum for '+currentExp+' freelancers in this location. Consider increasing your income goal or reducing expenses.'});
+  } else if(D.hourlyRate >= D.mktAvg) {
+    ins.push({t:'good', m:'<strong>At or above market average.</strong> Your rate is competitive. Focus on positioning and portfolio quality to justify it.'});
+  }
+  if(utilPct < 60) {
+    ins.push({t:'warn', m:'<strong>Low utilization warning.</strong> At '+utilPct+'%, expect many slow weeks. Build at least 3 months of savings before relying on this income.'});
+  }
+  if(taxPct < 15) {
+    ins.push({t:'info', m:'<strong>Check your tax rate.</strong> Self-employed income usually carries higher tax than employment. Consult a local accountant to confirm your rate.'});
+  }
+  if(wks > 49) {
+    ins.push({t:'warn', m:'<strong>Almost no time off.</strong> Even 2 weeks makes a significant difference for burnout prevention and client gap coverage.'});
+  }
+  if(currentExp === 'beginner') {
+    ins.push({t:'info', m:'<strong>Starting out tip.</strong> Beginner rates are fine to start, but raise your rate with every new client as you build your portfolio.'});
+  }
+  ins.push({t:'good', m:'<strong>Ready to invoice?</strong> Use <a href="/tools/invoice-generator.html" style="color:var(--ac-lt)">Deskloop Invoice Generator</a> to bill clients at this rate.'});
+
+  document.getElementById('insights').innerHTML = ins.map(function(i){
+    return '<div class="ins ins-'+i.t+'">'+i.m+'</div>';
+  }).join('');
+}
+
+// ── Undercharge checker ───────────────────────────────────────────────
+function checkRate() {
+  var current = parseFloat(document.getElementById('currentRate').value);
+  var el = document.getElementById('checkerRes');
+  if(!current || !D.hourlyRate) { el.style.display='none'; return; }
+  el.style.display = 'block';
+  var diff = current - D.hourlyRate;
+  var pct  = Math.abs(diff / D.hourlyRate * 100).toFixed(0);
+  if(diff < -1) {
+    el.className = 'checker-result ins ins-warn';
+    el.innerHTML = '<strong>Undercharging by '+pct+'%.</strong> At your current rate, you miss '+f(D.sym, Math.abs(diff)*D.billHrsYr)+' annually.';
+  } else if(diff > 1) {
+    el.className = 'checker-result ins ins-good';
+    el.innerHTML = '<strong>'+pct+'% above your minimum.</strong> That buffer covers slow months and gives you negotiation room.';
+  } else {
+    el.className = 'checker-result ins ins-info';
+    el.innerHTML = '<strong>Right at your minimum.</strong> Charge more when possible — there is no buffer for slow periods.';
+  }
+}
+
+// ── Copy rate ─────────────────────────────────────────────────────────
+function copyRate() {
+  var text = 'Freelance Rate (Deskloop)\nHourly: '+f(D.sym,D.hourlyRate)+'\nDaily: '+f(D.sym,D.dailyRate)+'\nMonthly: '+f(D.sym,D.monthlyRate);
+  navigator.clipboard.writeText(text).then(function(){
+    var btn = document.getElementById('copyBtn');
+    var orig = btn.innerHTML;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.innerHTML=orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── Save/Load profiles ────────────────────────────────────────────────
+function getProfiles() {
+  try { return JSON.parse(localStorage.getItem('dl_rate_profiles') || '[]'); }
+  catch(e) { return []; }
+}
+function saveProfiles(list) {
+  localStorage.setItem('dl_rate_profiles', JSON.stringify(list));
+}
+
+function saveProfile() {
+  var name = prompt('Name this profile:', 'Profile '+new Date().toLocaleDateString());
+  if(!name) return;
+  var profiles = getProfiles();
+  profiles.unshift({
+    id: 'p_'+Date.now(),
+    name: name,
+    date: new Date().toLocaleDateString(),
+    data: {
+      experience: currentExp,
+      location: document.getElementById('location').value,
+      annualIncome: document.getElementById('annualIncome').value,
+      incomeType: document.getElementById('incomeType').value,
+      workWeeks: document.getElementById('workWeeks').value,
+      billHrs: document.getElementById('billHrs').value,
+      utilRate: document.getElementById('utilRate').value,
+      taxRate: document.getElementById('taxRate').value,
+      buffer: document.getElementById('buffer').value,
+      software: document.getElementById('software').value,
+      equipment: document.getElementById('equipment').value,
+      marketing: document.getElementById('marketing').value,
+      prodev: document.getElementById('prodev').value,
+      otherExp: document.getElementById('otherExp').value,
+    }
+  });
+  if(profiles.length > 5) profiles = profiles.slice(0, 5);
+  saveProfiles(profiles);
+  renderProfiles();
+}
+
+function loadProfile(id) {
+  var profiles = getProfiles();
+  var p = profiles.find(function(x){ return x.id === id; });
+  if(!p) return;
+  var d = p.data;
+  setExp(d.experience);
+  document.getElementById('location').value     = d.location;
+  document.getElementById('annualIncome').value = d.annualIncome;
+  document.getElementById('incomeType').value   = d.incomeType;
+  document.getElementById('workWeeks').value    = d.workWeeks;
+  document.getElementById('billHrs').value      = d.billHrs;
+  document.getElementById('utilRate').value     = d.utilRate;
+  document.getElementById('taxRate').value      = d.taxRate;
+  document.getElementById('buffer').value       = d.buffer;
+  document.getElementById('software').value     = d.software;
+  document.getElementById('equipment').value    = d.equipment;
+  document.getElementById('marketing').value    = d.marketing;
+  document.getElementById('prodev').value       = d.prodev;
+  document.getElementById('otherExp').value     = d.otherExp;
+  sync('workWeeks','wkVal','');
+  sync('billHrs','bhVal','');
+  sync('utilRate','urVal','%');
+  sync('taxRate','trVal','%');
+  sync('buffer','bufVal','%');
+  document.getElementById('offWks').textContent = 52 - parseInt(d.workWeeks);
+  calc();
+}
+
+function deleteProfile(id, e) {
+  e.stopPropagation();
+  var profiles = getProfiles().filter(function(x){ return x.id !== id; });
+  saveProfiles(profiles);
+  renderProfiles();
+}
+
+function renderProfiles() {
+  var profiles = getProfiles();
+  var el = document.getElementById('profilesList');
+  if(!profiles.length) {
+    el.innerHTML = '<div class="profile-empty">No saved profiles yet. Fill in your details and click Save Profile.</div>';
+    return;
+  }
+  el.innerHTML = profiles.map(function(p){
+    return "<div class=\"profile-item\" onclick=\"loadProfile('"+p.id+"')\">"+
+      "<span class=\"profile-name\">"+p.name+"</span>"+
+      "<span class=\"profile-date\">"+p.date+"</span>"+
+      "<button class=\"profile-del\" onclick=\"deleteProfile('"+p.id+"',event)\">&times;</button>"+
+    "</div>";
+  }).join('');
+}
+
+// ── GDPR ──────────────────────────────────────────────────────────────
+(function(){
+  if(localStorage.getItem('dl_gdpr_v1')) return;
+  setTimeout(function(){
+    var b=document.getElementById('gdpr'); if(b) b.classList.add('show');
+  }, 900);
+})();
+function gdprAccept(){
+  localStorage.setItem('dl_gdpr_v1','accepted');
+  var b=document.getElementById('gdpr');
+  if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}
+  if(!document.getElementById('adsense-script')){
+    var s=document.createElement('script');s.id='adsense-script';s.async=true;
+    s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5768905713200594';
+    s.crossOrigin='anonymous';document.head.appendChild(s);
+  }
+}
+function gdprDecline(){
+  localStorage.setItem('dl_gdpr_v1','declined');
+  var b=document.getElementById('gdpr');
+  if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}
+}
+
+// ── Skeleton ──────────────────────────────────────────────────────────
+(function(){
+  var sk=document.getElementById('skScreen');
+  if(!sk) return;
+  var done=function(){ sk.classList.add('out'); setTimeout(function(){ sk.remove(); }, 450); };
+  if(document.readyState==='complete'){ setTimeout(done,120); }
+  else{ window.addEventListener('load',function(){ setTimeout(done,120); }); }
+})();
+
+// ── Init ──────────────────────────────────────────────────────────────
+sync('workWeeks','wkVal','');
+sync('billHrs','bhVal','');
+sync('utilRate','urVal','%');
+sync('taxRate','trVal','%');
+sync('buffer','bufVal','%');
+document.getElementById('offWks').textContent = 52 - parseInt(document.getElementById('workWeeks').value);
+renderProfiles();
+calc();
+</script>
+</body>
+</html>

@@ -259,7 +259,7 @@ footer{border-top:1px solid var(--bd);background:var(--bg)}
 </div>
 <div class="read-prog" id="readProg"></div>
 <div id="gdpr-banner" role="dialog" aria-label="Cookie consent">
-  <p>We use cookies from <strong>Google AdSense</strong> to serve ads. No personal data collected by us. <a href="/privacy.html">Privacy Policy</a></p>
+  <p>We use cookies from <strong>Google AdSense</strong> to serve ads. No personal data collected by us. <a href="/privacy.html">Privacy Policy</a><span>&middot;</span><a href="/credits.html">Credits</a></p>
   <div class="gbtns"><button class="gbtn-d" onclick="gdprDecline()">Decline</button><button class="gbtn-a" onclick="gdprAccept()">Accept</button></div>
 </div>
 <nav class="nav">
@@ -311,7 +311,7 @@ footer{border-top:1px solid var(--bd);background:var(--bg)}
     </div>
   </aside>
   <article class="art-content">
-    <p class="art-lead" id="intro">Scheduling a daily standup for a team spread across multiple time zones is one of those problems that sounds simple until you try to actually solve it. New York and London have a 5-hour gap that&rsquo;s manageable. Add Singapore and you&rsquo;re spanning 13 hours. Add San Francisco and you&rsquo;ve run out of business hours entirely. There is no perfect solution when a team is genuinely global &mdash; but there are better and worse approaches.</p>
+    <p class="art-lead" id="intro">Scheduling a daily standup across time zones sounds simple. It is not. New York and London have a 5-hour gap. Add Singapore and you span 13 hours. Add San Francisco and there are no business hours that work for everyone. There is no perfect solution when a team is genuinely global, but there are better and worse ways to handle it.</p>
 
     <div class="stat-row">
       <div class="stat-box"><div class="stat-num">5h</div><div class="stat-label">Gap between New York and London. One of the most manageable cross-Atlantic time zone combinations.</div></div>
@@ -320,35 +320,35 @@ footer{border-top:1px solid var(--bd);background:var(--bg)}
 
     <h2 id="common-combos">The most common time zone combinations and their overlap windows</h2>
 
-    <p>For teams in two or three time zones, there&rsquo;s usually a workable overlap window during standard business hours. Here are the most common combinations and what they actually allow:</p>
+    <p>For teams in two or three time zones, a workable overlap window during standard business hours usually exists. The most common combinations:</p>
 
     <h3>US East Coast + Western Europe (New York + London)</h3>
-    <p>With a <mark>5-hour gap</mark> (6 during US daylight saving), there&rsquo;s solid overlap from 2pm&ndash;5pm London / 9am&ndash;12pm New York. A 9am Eastern standup works well for both sides. This is one of the more sustainable cross-Atlantic arrangements.</p>
+    <p>With a <mark>5-hour gap</mark> (6 during US daylight saving), there is solid overlap from 2pm to 5pm London / 9am to 12pm New York. A 9am Eastern standup works well for both sides. This is one of the more sustainable cross-Atlantic arrangements.</p>
 
     <h3>US West Coast + Eastern Europe (San Francisco + Warsaw)</h3>
-    <p>The 9&ndash;10 hour gap makes overlap tight. The only window is roughly <strong>4pm&ndash;6pm Warsaw / 7am&ndash;9am San Francisco</strong>. This means either early mornings in California or late afternoons in Poland. Neither is comfortable long-term &mdash; which makes rotating the burden especially important.</p>
+    <p>The 9 to 10 hour gap makes overlap tight. The only window is roughly <strong>4pm to 6pm Warsaw / 7am to 9am San Francisco</strong>. That means early mornings in California or late afternoons in Poland. Neither is comfortable long-term, which makes rotating the burden important.</p>
 
     <h3>Europe + Asia Pacific (London + Singapore)</h3>
-    <p>An 8-hour gap with limited overlap. The viable window is approximately <strong>9am&ndash;11am Singapore / 1am&ndash;3am London</strong> &mdash; which only works asynchronously for most teams. For synchronous standups, someone will always be outside normal hours.</p>
+    <p>An 8-hour gap with limited overlap. The viable window is approximately <strong>9am to 11am Singapore / 1am to 3am London</strong> — which only works asynchronously for most teams. For synchronous standups, someone is always outside normal hours.</p>
 
     <h3>Fully global (New York + London + Singapore)</h3>
-    <p>With a 13-hour span, there is no time that works during business hours for everyone. The only true solution is asynchronous communication, with synchronous meetings reserved for high-value occasions and distributed across different time zones by rotation.</p>
+    <p>With a 13-hour span, no time works during business hours for everyone. The only solution is asynchronous communication, with synchronous meetings reserved for high-value occasions and rotated across time zones.</p>
 
     <hr class="art-divider">
 
     <h2 id="dst">How Daylight Saving Time complicates everything</h2>
 
-    <p>DST doesn&rsquo;t switch everywhere on the same date. The US and Europe switch in different weeks, and many countries (including most of Asia and Africa) don&rsquo;t observe it at all. This creates a period each spring and autumn where the gap between two locations temporarily shifts by an hour.</p>
+    <p>DST does not switch everywhere on the same date. The US and Europe switch in different weeks. Most of Asia and Africa do not observe it at all. This creates a period each spring and autumn where the gap between two locations shifts by an hour temporarily.</p>
 
     <blockquote class="pull-quote">
-      <p>A 9am New York / 2pm London standup can temporarily become a 9am New York / 3pm London meeting when clocks switch at different times. Small, but it matters when the overlap window is already tight.</p>
+      <p>A 9am New York / 2pm London standup becomes a 9am New York / 3pm London meeting when clocks switch on different dates. Small shift. Significant when the overlap window is already tight.</p>
     </blockquote>
 
     <div class="callout warn">
       <div class="callout-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
       <div class="callout-body">
         <div class="callout-label">DST Warning</div>
-        <p>Always check <strong>current, DST-adjusted offsets</strong> when scheduling recurring meetings &mdash; not just the standard UTC offset. Set calendar events in local time zones rather than fixed UTC times, so they automatically adjust when clocks change.</p>
+        <p>Always check <strong>current, DST-adjusted offsets</strong> when scheduling recurring meetings, not just the standard UTC offset. Set calendar events in local time zones, not fixed UTC, so they adjust automatically when clocks change.</p>
       </div>
     </div>
 
@@ -363,25 +363,25 @@ footer{border-top:1px solid var(--bd);background:var(--bg)}
     <p>When the math doesn&rsquo;t work, forcing a synchronous meeting at an unreasonable hour every day isn&rsquo;t the answer. These approaches reduce the burden:</p>
 
     <ul>
-      <li><strong>Async standups.</strong> Team members post a short text or voice note at the start of their day: what I did yesterday, what I&rsquo;m doing today, any blockers. Loom, Slack, or a shared document handle this well. No scheduling required.</li>
-      <li><strong>Rotating meeting times.</strong> Instead of one time zone always taking the early or late call, rotate the meeting time weekly or monthly. This distributes inconvenience fairly across the team.</li>
-      <li><strong>Reduce meeting frequency.</strong> If daily standups are genuinely impractical across time zones, consider whether they need to be daily. Weekly synchronous meetings supplemented by async updates often work as well.</li>
-      <li><strong>Designate overlap hours.</strong> Agree on a 2&ndash;3 hour window each day where everyone is expected to be available for synchronous communication. Schedule all meetings within it. Outside that window, async is the default.</li>
+      <li><strong>Async standups.</strong> Each person posts a short update at the start of their day: yesterday, today, blockers. Loom, Slack, or a shared doc all work. No scheduling required.</li>
+      <li><strong>Rotating meeting times.</strong> Rotate the inconvenience. Weekly or monthly rotation distributes the burden fairly instead of assigning it permanently to one region.</li>
+      <li><strong>Reduce meeting frequency.</strong> If daily standups are impractical across your time zones, they probably should not be daily. Weekly synchronous meetings plus async updates often produce the same result.</li>
+      <li><strong>Designate overlap hours.</strong> Agree on a 2 to 3 hour window where everyone is reachable. Schedule all meetings inside it. Outside that window, async is the default.</li>
     </ul>
 
     <hr class="art-divider">
 
     <h2 id="fairness">The fairness question</h2>
 
-    <p>When there&rsquo;s no good overlap, someone is always making a sacrifice. The common default &mdash; setting meeting times to suit the largest office or headquarters time zone &mdash; consistently burdens the same people.</p>
+    <p>When no good overlap exists, someone always makes a sacrifice. The default — setting meeting times to suit headquarters — consistently burdens the same people.</p>
 
-    <p>Over time, this creates a real equity problem. Team members who always take 7am or 7pm calls are experiencing a materially different employment condition than those who always meet during normal hours. This affects wellbeing, retention, and perceived inclusion in the team.</p>
+    <p>Over time, this creates a real equity problem. Team members who always take 7am or 7pm calls experience a materially different working condition than those who always meet during normal hours. It affects wellbeing, retention, and perceived inclusion.</p>
 
     <div class="callout cat">
       <div class="callout-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
       <div class="callout-body">
         <div class="callout-label">Fairness Principle</div>
-        <p>The most defensible approach is to <strong>rotate the burden explicitly</strong>, acknowledge it openly, and compensate people who regularly take calls outside normal hours with flexibility elsewhere &mdash; later starts, earlier finishes, or additional schedule autonomy.</p>
+        <p>The most defensible approach is to <strong>rotate the burden explicitly,</strong> acknowledge it openly, and compensate people who regularly take calls outside normal hours with flexibility elsewhere — later starts, earlier finishes, or additional schedule autonomy.</p>
       </div>
     </div>
 
@@ -390,17 +390,17 @@ footer{border-top:1px solid var(--bd);background:var(--bg)}
     <p>The right approach depends on how spread your team is:</p>
 
     <ul>
-      <li><strong>Two time zones, &lt;8 hour gap:</strong> Find a standing time that works for both and stick to it. Rotate if one side always takes the worse slot.</li>
-      <li><strong>Two time zones, 8&ndash;12 hour gap:</strong> Use async for daily standups. One synchronous weekly meeting at a rotating time.</li>
-      <li><strong>Three or more time zones:</strong> Designate overlap hours. Keep synchronous meetings rare and high-value. Build an async-first culture where synchronous time is treated as a scarce resource.</li>
-      <li><strong>Fully global (&gt;12 hour span):</strong> Accept that daily synchronous standups aren&rsquo;t realistic. Design your workflow around asynchronous communication as the default, with synchronous reserved for relationship-building and complex decisions.</li>
+      <li><strong>Two time zones, under 8 hours apart:</strong> Find a standing time that works for both. Rotate if one side always takes the worse slot.</li>
+      <li><strong>Two time zones, 8 to 12 hours apart:</strong> Async for daily standups. One synchronous weekly meeting at a rotating time.</li>
+      <li><strong>Three or more time zones:</strong> Designate overlap hours. Keep synchronous meetings rare and high-value. Treat shared real-time availability as the scarce resource it is.</li>
+      <li><strong>Fully global (12+ hour span):</strong> Daily synchronous standups are not realistic. Design around async as the default. Reserve synchronous time for relationship-building and complex decisions.</li>
     </ul>
 
     <div class="callout">
       <div class="callout-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <div class="callout-body">
         <div class="callout-label">Takeaway</div>
-        <p>Good remote teams <strong>treat time zone fairness as a real management problem</strong>, not a scheduling inconvenience. Start by mapping your actual overlap window, then design your meeting culture around what the math actually allows &mdash; not what headquarters finds convenient.</p>
+        <p>Map your actual overlap window first. Then design your meeting culture around what the math allows. What headquarters finds convenient is not a good enough reason to put someone on a 7am call every week.</p>
       </div>
     </div>
     <div class="art-share">
@@ -419,7 +419,7 @@ footer{border-top:1px solid var(--bd);background:var(--bg)}
 </div>
 <footer><div class="foot-inner">
   <a href="/">&larr; Deskloop</a><span>&middot;</span><a href="/blog/">All Articles</a>
-  <span>&middot;</span><a href="/privacy.html">Privacy Policy</a>
+  <span>&middot;</span><a href="/privacy.html">Privacy Policy</a><span>&middot;</span><a href="/credits.html">Credits</a>
   <span>&middot;</span><a href="/contact.html">Contact</a>
   <span>&middot;</span><span>&copy; 2026 Deskloop.work</span>
 </div></footer>
