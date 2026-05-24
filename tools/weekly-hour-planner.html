@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Weekly Hour Planner Free — Time Blocking Planner | Deskloop</title>
+<meta name="description" content="Free weekly hour planner and time blocking planner. Set targets, log hours daily, track progress with visual heatmap, and get smart insights. No signup required.">
+<meta name="keywords" content="weekly hour planner free,time blocking planner,study planner,weekly time tracker,hour tracker online">
+<link rel="canonical" href="https://deskloop.work/tools/weekly-hour-planner.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231E40AF'/><circle cx='16' cy='16' r='5' fill='none' stroke='white' stroke-width='2.5'/><circle cx='16' cy='16' r='2' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ac:#10B981;--ac-lt:#34D399;--ac-d:#059669;
+  --blue:#3B82F6;--blue-lt:#60A5FA;--blue-d:#1E40AF;
+  --amber:#F59E0B;--amber-lt:#FCD34D;
+  --red:#EF4444;--red-lt:#FCA5A5;
+  --bg:#060C18;--s1:#0A1525;--s2:#0F1E32;--s3:#152540;--s4:#1A2D44;
+  --tx:#EEF6FF;--tx2:#88AAC5;--tx3:#4C6580;
+  --bd:#142032;--bd2:#1A2D44;
+  --r:10px;--rl:16px;--t:200ms ease;
+  --mono:"JetBrains Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--tx);
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:200;background:rgba(6,12,24,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--bd);padding:0 24px;height:62px;
+  display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-lm{width:32px;height:32px;background:var(--blue-d);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.nav-lt{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.025em}
+.nav-a{color:var(--tx2);text-decoration:none;font-size:13px;font-weight:500;padding:7px 14px;
+  border-radius:var(--r);border:1px solid var(--bd);transition:all var(--t);
+  display:inline-flex;align-items:center;gap:6px}
+.nav-a:hover{color:var(--tx);border-color:var(--bd2)}
+.nav-a svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Hero */
+.hero{padding:40px 24px 32px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:600px;height:320px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(16,185,129,.07) 0%,transparent 68%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:520px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(16,185,129,.08);
+  border:1px solid rgba(16,185,129,.2);border-radius:100px;padding:5px 14px;
+  font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--ac);margin-bottom:16px}
+.htdot{width:5px;height:5px;border-radius:50%;background:var(--ac);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-size:clamp(24px,4vw,44px);font-weight:900;letter-spacing:-.04em;line-height:1.06;margin-bottom:10px}
+.hero h1 em{font-style:normal;background:linear-gradient(125deg,var(--ac-lt),var(--blue-lt));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:14px;color:var(--tx2);line-height:1.7}
+
+/* Week bar */
+.week-bar{max-width:1100px;margin:0 auto;padding:0 24px 22px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.week-nav{width:36px;height:36px;background:var(--s1);border:1px solid var(--bd);
+  border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--tx2);transition:all var(--t);flex-shrink:0}
+.week-nav:hover{border-color:var(--ac);color:var(--ac)}
+.week-nav svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.week-info{flex:1;min-width:0;text-align:center}
+.week-label{font-size:16px;font-weight:800;color:var(--tx);letter-spacing:-.02em}
+.week-sub{font-size:12px;color:var(--tx3);margin-top:2px}
+.week-today{padding:8px 16px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
+  font:600 12px/1 "Inter",sans-serif;color:var(--tx2);cursor:pointer;transition:all var(--t);white-space:nowrap}
+.week-today:hover{border-color:var(--ac);color:var(--ac)}
+.week-actions{display:flex;gap:8px}
+.wact{padding:8px 14px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);
+  font:600 12px/1 "Inter",sans-serif;color:var(--tx2);cursor:pointer;transition:all var(--t);
+  display:flex;align-items:center;gap:6px;white-space:nowrap}
+.wact:hover{border-color:var(--ac);color:var(--ac)}
+.wact svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Progress ring + stats */
+.stats-bar{max-width:1100px;margin:0 auto;padding:0 24px 22px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center}
+.ring-wrap{position:relative;width:96px;height:96px;flex-shrink:0}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center}
+.ring-pct{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--ac);line-height:1}
+.ring-lbl{font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.stats-mid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat-box{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:14px 16px}
+.stat-num{font-family:var(--mono);font-size:22px;font-weight:700;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:10px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--tx3)}
+.stats-right{display:flex;flex-direction:column;gap:8px;min-width:160px}
+.wbtn{padding:10px 16px;border-radius:var(--r);font:600 12px/1 "Inter",sans-serif;
+  cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:7px;white-space:nowrap}
+.wbtn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.wbtn-primary{background:var(--ac);border:none;color:#fff}
+.wbtn-primary:hover{background:var(--ac-lt)}
+.wbtn-sec{background:var(--s1);border:1px solid var(--bd);color:var(--tx2)}
+.wbtn-sec:hover{border-color:var(--blue-lt);color:var(--blue-lt)}
+
+/* Main layout */
+.main{max-width:1100px;margin:0 auto;padding:0 24px 28px;
+  display:grid;grid-template-columns:240px 1fr;gap:20px;align-items:start}
+
+/* Sidebar */
+.sidebar{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);
+  overflow:hidden;position:sticky;top:82px}
+.sb-hdr{padding:18px 20px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:9px}
+.sb-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.sb-ico svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.sb-title{font-size:13px;font-weight:700;color:var(--tx)}
+.sb-body{padding:16px}
+
+/* Category cards */
+.cat-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.cat-card{background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);padding:12px 13px;
+  transition:border-color var(--t)}
+.cat-card:hover{border-color:var(--bd)}
+.cat-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.cat-emoji{font-size:16px;flex-shrink:0;cursor:pointer;user-select:none}
+.cat-color-inp{width:0;height:0;opacity:0;position:absolute}
+.cat-color-swatch{width:14px;height:14px;border-radius:50%;flex-shrink:0;cursor:pointer;
+  border:2px solid rgba(255,255,255,.15);transition:transform var(--t)}
+.cat-color-swatch:hover{transform:scale(1.2)}
+.cat-name-inp{flex:1;background:transparent;border:none;color:var(--tx);
+  font:600 13px/1 "Inter",sans-serif;outline:none;min-width:0}
+.cat-del{width:20px;height:20px;background:none;border:none;color:var(--tx3);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  border-radius:4px;transition:color var(--t);flex-shrink:0}
+.cat-del:hover{color:var(--red-lt)}
+.cat-del svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.cat-progress-row{display:flex;align-items:center;gap:8px}
+.cat-prog-track{flex:1;height:4px;background:var(--s3);border-radius:2px;overflow:hidden}
+.cat-prog-fill{height:100%;border-radius:2px;transition:width .4s ease}
+.cat-prog-lbl{font-family:var(--mono);font-size:10px;color:var(--tx3);white-space:nowrap}
+.cat-target-inp{width:44px;background:var(--s3);border:1px solid var(--bd2);border-radius:6px;
+  color:var(--tx);font:600 11px/1 var(--mono);padding:4px 6px;text-align:center;outline:none;
+  transition:border-color var(--t);-moz-appearance:textfield;appearance:textfield}
+.cat-target-inp::-webkit-inner-spin-button,.cat-target-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.cat-target-inp:focus{border-color:var(--ac)}
+
+/* Quick add chips */
+.quick-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.qchip{padding:5px 10px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;
+  background:var(--s2);border:1px solid var(--bd2);color:var(--tx3);transition:all var(--t)}
+.qchip:hover{border-color:var(--ac);color:var(--ac)}
+.add-cat-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px;background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);
+  color:var(--tx2);font:500 12px/1 "Inter",sans-serif;cursor:pointer;transition:all var(--t)}
+.add-cat-btn:hover{border-color:var(--ac);color:var(--ac)}
+.add-cat-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Right column */
+.right-col{display:flex;flex-direction:column;gap:18px}
+
+/* Grid */
+.grid-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden}
+.grid-scroll{overflow-x:auto}
+.grid-table{width:100%;border-collapse:collapse;min-width:600px}
+.gt-th{padding:12px 10px;font-size:10px;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--tx3);text-align:center;
+  border-bottom:2px solid var(--bd);position:relative}
+.gt-th.day-today{color:var(--ac)}
+.gt-th.day-today::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--ac)}
+.gt-th-cat{text-align:left;padding-left:20px}
+.gt-td{padding:5px 8px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.gt-td.day-today{background:rgba(16,185,129,.025)}
+.gt-td:last-child{border-right:none}
+.cat-cell-inner{display:flex;align-items:center;gap:9px;padding:4px 0}
+.cc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cc-emoji{font-size:14px;flex-shrink:0}
+.cc-name{font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;max-width:100px}
+.hour-cell{position:relative}
+.hour-inp{width:52px;height:42px;background:rgba(255,255,255,.03);border:1px solid transparent;
+  border-radius:8px;color:var(--tx);font:700 15px/1 var(--mono);padding:0 6px;
+  text-align:center;outline:none;display:block;margin:0 auto;transition:all var(--t);
+  -moz-appearance:textfield;appearance:textfield}
+.hour-inp::-webkit-inner-spin-button,.hour-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.hour-inp:hover{border-color:var(--bd2);background:var(--s2)}
+.hour-inp:focus{border-color:var(--ac);background:var(--s2);box-shadow:0 0 0 3px rgba(16,185,129,.1)}
+.hour-inp.v-lo{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.15)}
+.hour-inp.v-mid{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.25);color:var(--ac-lt)}
+.hour-inp.v-hi{background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.4);color:var(--ac-lt);font-weight:800}
+.gt-td-prog{padding:5px 12px 5px 6px}
+.row-prog-track{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;margin-bottom:3px}
+.row-prog-fill{height:100%;border-radius:2px;transition:width .4s ease}
+.row-prog-lbl{font-size:9px;color:var(--tx3);font-family:var(--mono)}
+.gt-td-tot{text-align:center;padding:5px 10px}
+.tot-val{font-family:var(--mono);font-size:14px;font-weight:700}
+
+/* Day totals row */
+.day-tot-row td{background:var(--s2);padding:10px 8px;border-top:2px solid var(--bd2);
+  font-family:var(--mono);font-size:12px;font-weight:700;color:var(--tx2);text-align:center}
+.day-tot-row td:first-child{text-align:left;padding-left:20px;font-size:11px;font-weight:600;
+  color:var(--tx3);font-family:"Inter",sans-serif;text-transform:uppercase;letter-spacing:.5px}
+
+/* Insights */
+.ins-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:20px 22px}
+.ins-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:14px}
+.ins-list{display:flex;flex-direction:column;gap:8px}
+.ins{padding:12px 16px;border-radius:var(--r);font-size:13px;line-height:1.65}
+.ins-good{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);color:var(--ac-lt)}
+.ins-warn{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);color:var(--amber-lt)}
+.ins-info{background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.18);color:var(--blue-lt)}
+
+/* Empty state */
+.empty-state{text-align:center;padding:40px 24px}
+.es-emoji{font-size:48px;margin-bottom:16px;display:block}
+.es-title{font-size:16px;font-weight:700;color:var(--tx2);margin-bottom:8px}
+.es-sub{font-size:13px;color:var(--tx3);line-height:1.7;max-width:280px;margin:0 auto 20px}
+.es-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;
+  background:var(--ac);border:none;border-radius:var(--r);color:#fff;
+  font:700 13px/1 "Inter",sans-serif;cursor:pointer;transition:all var(--t)}
+.es-btn:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.es-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* Celebrate animation */
+@keyframes celebrate{
+  0%{transform:scale(1)}40%{transform:scale(1.06)}70%{transform:scale(.97)}100%{transform:scale(1)}
+}
+.celebrating{animation:celebrate .5s ease}
+
+/* Export bar */
+.export-bar{display:flex;gap:8px}
+.exp-btn{flex:1;padding:11px;border-radius:var(--r);font:600 12px/1 "Inter",sans-serif;
+  cursor:pointer;transition:all var(--t);display:flex;align-items:center;justify-content:center;gap:6px}
+.exp-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.exp-primary{background:var(--ac);border:none;color:#fff}
+.exp-primary:hover{background:var(--ac-lt);transform:translateY(-1px)}
+.exp-sec{background:var(--s1);border:1px solid var(--bd);color:var(--tx2)}
+.exp-sec:hover{border-color:var(--blue-lt);color:var(--blue-lt)}
+
+/* Toast */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--s3);border:1px solid var(--bd2);border-radius:100px;
+  padding:10px 20px;font-size:13px;font-weight:600;color:var(--tx);
+  opacity:0;transition:all .3s ease;pointer-events:none;z-index:999;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* SEO */
+.seo-wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px}
+.seo-block{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:28px 32px}
+.seo-block h2{font-size:18px;font-weight:800;letter-spacing:-.03em;color:var(--tx);margin-bottom:10px}
+.seo-block h3{font-size:13px;font-weight:700;color:var(--tx);margin:20px 0 6px}
+.seo-block p{font-size:13px;color:var(--tx2);line-height:1.8}
+
+/* GDPR */
+#gdpr{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:var(--s1);
+  border-top:1px solid var(--bd2);padding:14px 28px;display:flex;align-items:center;
+  gap:14px;flex-wrap:wrap;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+#gdpr.show{transform:translateY(0)}
+#gdpr p{font-size:12px;color:var(--tx2);margin:0;flex:1;min-width:200px;line-height:1.5}
+#gdpr a{color:var(--ac);text-decoration:none}
+.g-btns{display:flex;gap:8px;flex-shrink:0}
+.g-accept{background:var(--ac);color:#fff;border:none;border-radius:8px;padding:9px 18px;font:600 12px/1 "Inter",sans-serif;cursor:pointer}
+.g-decline{background:transparent;color:var(--tx3);border:1px solid var(--bd);border-radius:8px;padding:9px 14px;font:500 12px/1 "Inter",sans-serif;cursor:pointer}
+
+.sk-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);transition:opacity .4s ease;pointer-events:none}
+.sk-screen.out{opacity:0}
+
+footer{border-top:1px solid var(--bd)}
+.foot{text-align:center;padding:18px 24px;font-size:12px;color:var(--tx3);
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.foot a{color:var(--tx3);text-decoration:none;transition:color var(--t)}
+.foot a:hover{color:var(--tx2)}
+
+@media(max-width:940px){
+  .main{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .stats-bar{grid-template-columns:auto 1fr;grid-template-rows:auto auto}
+  .stats-right{flex-direction:row;grid-column:1/-1}
+}
+@media(max-width:560px){
+  .hero{padding:32px 16px 24px}
+  .week-bar,.stats-bar,.main,.seo-wrap{padding-left:16px;padding-right:16px}
+  .stats-bar{grid-template-columns:1fr}
+  .ring-wrap{display:none}
+  .stats-mid{grid-template-columns:1fr 1fr}
+  .week-actions{display:none}
+  .export-bar{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+<div class="sk-screen" id="skScreen"></div>
+<div class="toast" id="toast"></div>
+
+<div id="gdpr" role="dialog">
+  <p>We use cookies from <strong style="color:var(--tx)">Google AdSense</strong> to serve ads. No personal data collected by us. <a href="/privacy.html">Privacy Policy</a></p>
+  <div class="g-btns">
+    <button class="g-decline" onclick="gdprDecline()">Decline</button>
+    <button class="g-accept" onclick="gdprAccept()">Accept</button>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-lm"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="5" stroke="white" stroke-width="2.5"/><circle cx="9" cy="9" r="2" fill="white"/></svg></div>
+    <span class="nav-lt">Deskloop</span>
+  </a>
+  <a href="/" class="nav-a"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><div class="htdot"></div>Productivity</div>
+    <h1>Weekly Hour<br><em>Planner</em></h1>
+    <p class="hero-sub">Set weekly targets for anything. Log hours each day. See exactly where your time goes versus where you planned it to go.</p>
+  </div>
+</div>
+
+<!-- Week navigation -->
+<div class="week-bar">
+  <button class="week-nav" onclick="changeWeek(-1)"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div class="week-info">
+    <div class="week-label" id="weekLabel"></div>
+    <div class="week-sub" id="weekSub"></div>
+  </div>
+  <button class="week-nav" onclick="changeWeek(1)"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  <button class="week-today" onclick="goToday()">This week</button>
+  <div class="week-actions">
+    <button class="wact" onclick="copyFromPrevWeek()">
+      <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Copy from last week
+    </button>
+  </div>
+</div>
+
+<!-- Stats bar with ring -->
+<div class="stats-bar">
+  <div class="ring-wrap">
+    <svg width="96" height="96" viewBox="0 0 96 96">
+      <circle cx="48" cy="48" r="40" fill="none" stroke="var(--s3)" stroke-width="9"/>
+      <circle id="ringFill" cx="48" cy="48" r="40" fill="none" stroke="var(--ac)" stroke-width="9"
+        stroke-dasharray="0 251.33" stroke-dashoffset="62.83" stroke-linecap="round"
+        style="transition:stroke-dasharray .6s ease;transform:rotate(-90deg);transform-origin:48px 48px"/>
+    </svg>
+    <div class="ring-center">
+      <div class="ring-pct" id="ringPct">0%</div>
+      <div class="ring-lbl">done</div>
+    </div>
+  </div>
+
+  <div class="stats-mid">
+    <div class="stat-box">
+      <div class="stat-num" id="statLogged" style="color:var(--ac)">0h</div>
+      <div class="stat-lbl">Logged</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="statTarget" style="color:var(--tx2)">0h</div>
+      <div class="stat-lbl">Target</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="statRemaining" style="color:var(--blue-lt)">0h</div>
+      <div class="stat-lbl">Remaining</div>
+    </div>
+  </div>
+
+  <div class="stats-right">
+    <button class="wbtn wbtn-primary" onclick="copyWeek()">
+      <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy summary
+    </button>
+    <button class="wbtn wbtn-sec" onclick="exportCSV()">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export CSV
+    </button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sb-hdr">
+    <div class="sb-ico" style="background:rgba(16,185,129,.1);color:var(--ac)">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+    </div>
+    <div>
+      <div class="sb-title">Categories</div>
+    </div>
+  </div>
+  <div class="sb-body">
+    <div class="cat-list" id="catList"></div>
+    <div class="quick-chips" id="quickChips"></div>
+    <button class="add-cat-btn" onclick="addCategory()">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add category
+    </button>
+  </div>
+</div>
+
+<!-- Right -->
+<div class="right-col">
+
+  <div class="grid-card">
+    <div class="grid-scroll">
+      <table class="grid-table" id="weekGrid"></table>
+    </div>
+  </div>
+
+  <div class="ins-card">
+    <div class="ins-title">Insights</div>
+    <div class="ins-list" id="insights"></div>
+  </div>
+
+  <div class="export-bar">
+    <button class="exp-btn exp-primary" onclick="copyWeek()">
+      <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy summary
+    </button>
+    <button class="exp-btn exp-sec" onclick="exportCSV()">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export CSV
+    </button>
+    <button class="exp-btn exp-sec" onclick="clearWeek()">
+      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      Clear week
+    </button>
+  </div>
+
+</div>
+</div>
+
+<div class="seo-wrap">
+  <div class="seo-block">
+    <h2>Weekly Hour Planner Free — Track Time Against Your Goals</h2>
+    <h3>How it works</h3>
+    <p>Add categories for anything you want to track — study subjects, client projects, exercise, reading, creative work. Set a weekly hour target for each. Enter how many hours you spent each day. The progress ring and bars update instantly, and the insights panel tells you where you need to focus.</p>
+    <h3>Heatmap coloring</h3>
+    <p>Each logged cell changes color based on how many hours it contains. Light tint for a short session, deeper green for a heavy day. At a glance you can see which days were productive for each category and which were skipped.</p>
+    <h3>Copy from last week</h3>
+    <p>If your schedule repeats — regular study hours, recurring client work, daily exercise — copy last week's logged hours into the current week with one click. Edit whatever changed.</p>
+    <h3>Smart insights</h3>
+    <p>The insights panel calculates where you stand against each target and suggests how many hours per remaining day you need to hit your goal. It tells you which categories are on track, which are behind, and which are already complete.</p>
+    <h3>Export and history</h3>
+    <p>Export a CSV with all logged hours and targets. Copy a plain-text summary for notes or messages. Every week saves automatically in your browser's localStorage. Your history builds over time and nothing ever leaves your device.</p>
+  </div>
+</div>
+
+<footer><div class="foot">
+  <a href="/">Deskloop</a><span>·</span>
+  <a href="/tools/deep-work-tracker.html">Deep Work Tracker</a><span>·</span>
+  <a href="/tools/work-hours-logger.html">Work Hours Logger</a><span>·</span>
+  <a href="/blog/">Blog</a><span>·</span>
+  <a href="/privacy.html">Privacy</a><span>·</span>
+  <a href="/credits.html">Credits</a><span>·</span>
+  <span>© 2026 Deskloop.work</span>
+</div></footer>
+
+<script>
+var STORAGE_CATS='dl_planner_cats_v2';
+var STORAGE_LOGS='dl_planner_logs_v2';
+var DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+var CAT_COLORS=['#10B981','#60A5FA','#A78BFA','#FCD34D','#F97316','#34D399','#38BDF8','#F472B6','#FB923C','#A3E635'];
+var CAT_EMOJIS={
+  'Deep Work':'\uD83D\uDD35','Study':'\uD83D\uDCDA','Exercise':'\uD83C\uDFC3',
+  'Reading':'\uD83D\uDCD6','Client Work':'\uD83D\uDCBC','Side Project':'\u26A1',
+  'Language':'\uD83C\uDF0E','Meditation':'\uD83E\uDDD8','Writing':'\u270D\uFE0F',
+  'Design':'\uD83C\uDFA8','Coding':'\uD83D\uDCBB','default':'\u23F1\uFE0F'
+};
+var QUICK=['Deep Work','Study','Exercise','Reading','Side Project','Language'];
+
+var cats=[];
+var logs={};
+var currentMonday=getMonday(new Date());
+
+function uid(){return 'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+
+// ── Date helpers ──────────────────────────────────────────────────────
+function getMonday(d){
+  var dt=new Date(d);dt.setHours(0,0,0,0);
+  var day=dt.getDay(),diff=dt.getDate()-day+(day===0?-6:1);
+  dt.setDate(diff);return dt;
+}
+function addDays(d,n){var dt=new Date(d);dt.setDate(dt.getDate()+n);return dt;}
+function weekKey(m){return m.getFullYear()+'-'+String(m.getMonth()+1).padStart(2,'0')+'-'+String(m.getDate()).padStart(2,'0');}
+function prevWeekKey(m){return weekKey(addDays(m,-7));}
+function isToday(d){var t=new Date();return d.getDate()===t.getDate()&&d.getMonth()===t.getMonth()&&d.getFullYear()===t.getFullYear();}
+function fmtDate(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+function getEmoji(name){return CAT_EMOJIS[name]||CAT_EMOJIS['default'];}
+
+// ── Storage ───────────────────────────────────────────────────────────
+function saveCats(){localStorage.setItem(STORAGE_CATS,JSON.stringify(cats));}
+function loadCats(){try{var c=JSON.parse(localStorage.getItem(STORAGE_CATS)||'null');if(c&&c.length)cats=c;}catch(e){}}
+function saveLogs(){localStorage.setItem(STORAGE_LOGS,JSON.stringify(logs));}
+function loadLogs(){try{var l=JSON.parse(localStorage.getItem(STORAGE_LOGS)||'{}');if(l)logs=l;}catch(e){}}
+function getLog(wk,cid,di){return(logs[wk]&&logs[wk][cid]&&logs[wk][cid][di]!=null)?logs[wk][cid][di]:0;}
+function setLog(wk,cid,di,v){
+  if(!logs[wk])logs[wk]={};
+  if(!logs[wk][cid])logs[wk][cid]={};
+  logs[wk][cid][di]=parseFloat(v)||0;
+  saveLogs();
+}
+
+// ── Week nav ──────────────────────────────────────────────────────────
+function changeWeek(dir){currentMonday=addDays(currentMonday,dir*7);render();}
+function goToday(){currentMonday=getMonday(new Date());render();}
+
+// ── Categories ────────────────────────────────────────────────────────
+function addCategory(name,target,color){
+  var n=name||'New Category';
+  var c=color||CAT_COLORS[cats.length%CAT_COLORS.length];
+  cats.push({id:uid(),name:n,target:parseFloat(target)||10,color:c});
+  saveCats();render();
+}
+function removeCategory(id){cats=cats.filter(function(c){return c.id!==id;});saveCats();render();}
+function updateCatName(id,v){var c=cats.find(function(x){return x.id===id;});if(c){c.name=v;saveCats();renderGrid();renderInsights();}}
+function updateCatTarget(id,v){var c=cats.find(function(x){return x.id===id;});if(c){c.target=parseFloat(v)||0;saveCats();renderStats();renderGrid();renderInsights();}}
+function updateCatColor(id,v){var c=cats.find(function(x){return x.id===id;});if(c){c.color=v;saveCats();render();}}
+
+function renderCats(){
+  var wk=weekKey(currentMonday);
+  var el=document.getElementById('catList');
+  if(!cats.length){el.innerHTML='';return;}
+  el.innerHTML=cats.map(function(cat){
+    var tot=0;for(var i=0;i<7;i++)tot+=getLog(wk,cat.id,i);
+    var pct=cat.target>0?Math.min(100,Math.round(tot/cat.target*100)):0;
+    var emoji=getEmoji(cat.name);
+    return '<div class="cat-card">'+
+      '<div class="cat-top">'+
+        '<span class="cat-emoji">'+emoji+'</span>'+
+        '<input type="color" class="cat-color-inp" id="clr-'+cat.id+'" value="'+cat.color+'" data-action="catcolor" data-id="'+cat.id+'">'+
+        '<div class="cat-color-swatch" style="background:'+cat.color+'" onclick="document.getElementById(\'clr-'+cat.id+'\').click()" title="Change color"></div>'+
+        '<input type="text" class="cat-name-inp" value="'+escH(cat.name)+'" placeholder="Category" data-action="catname" data-id="'+cat.id+'">'+
+        '<button class="cat-del" data-action="del-cat" data-id="'+cat.id+'"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'+
+      '</div>'+
+      '<div class="cat-progress-row">'+
+        '<div class="cat-prog-track" style="flex:1"><div class="cat-prog-fill" style="width:'+pct+'%;background:'+cat.color+'"></div></div>'+
+        '<input type="number" class="cat-target-inp" value="'+cat.target+'" min="0" max="168" step="0.5" title="Weekly target (hrs)" data-action="cattarget" data-id="'+cat.id+'">'+
+        '<span class="cat-prog-lbl" style="font-size:10px;color:var(--tx3)">h</span>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function renderQuickChips(){
+  var el=document.getElementById('quickChips');
+  var existing=cats.map(function(c){return c.name.toLowerCase();});
+  var chips=QUICK.filter(function(q){return!existing.includes(q.toLowerCase());});
+  el.innerHTML=chips.map(function(q){
+    return '<button class="qchip" data-action="qchip" data-name="'+q+'">+'+q+'</button>';
+  }).join('');
+}
+
+// ── Grid ──────────────────────────────────────────────────────────────
+function heatClass(v){
+  if(!v||v<=0)return'';
+  if(v<1)return'v-lo';
+  if(v<3)return'v-lo';
+  if(v<5)return'v-mid';
+  return'v-hi';
+}
+
+function renderGrid(){
+  var wk=weekKey(currentMonday);
+  var dates=[];for(var i=0;i<7;i++)dates.push(addDays(currentMonday,i));
+  var el=document.getElementById('weekGrid');
+
+  if(!cats.length){
+    el.innerHTML='<tbody><tr><td colspan="10"><div class="empty-state">'+
+      '<span class="es-emoji">\uD83D\uDDD3\uFE0F</span>'+
+      '<div class="es-title">Your planner is empty</div>'+
+      '<div class="es-sub">Add categories on the left to start tracking your weekly hours.</div>'+
+      '<button class="es-btn" onclick="addCategory()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add first category</button>'+
+    '</div></td></tr></tbody>';
+    return;
+  }
+
+  var thead='<thead><tr>'+
+    '<th class="gt-th gt-th-cat" style="text-align:left;padding-left:20px;min-width:150px">Category</th>'+
+    dates.map(function(d,i){
+      var isTdy=isToday(d);
+      return '<th class="gt-th'+(isTdy?' day-today':'')+'">'+DAYS[i]+
+        '<br><span style="font-size:9px;font-weight:400;letter-spacing:0">'+fmtDate(d)+'</span></th>';
+    }).join('')+
+    '<th class="gt-th" style="min-width:56px">Total</th>'+
+    '<th class="gt-th" style="min-width:80px">Progress</th>'+
+  '</tr></thead>';
+
+  var tbody=cats.map(function(cat){
+    var tot=0;
+    var cells=dates.map(function(d,i){
+      var isTdy=isToday(d);
+      var v=getLog(wk,cat.id,i);tot+=v;
+      var hc=heatClass(v);
+      return '<td class="gt-td'+(isTdy?' day-today':'')+'">'+
+        '<input type="number" class="hour-inp'+(hc?' '+hc:'')+'" '+
+        'value="'+(v||'')+'" min="0" max="24" step="0.5" placeholder="\u2014" '+
+        'data-action="loghour" data-wk="'+wk+'" data-cat="'+cat.id+'" data-day="'+i+'" '+
+        'style="color:'+(hc?'':'var(--tx3)')+'">'+
+      '</td>';
+    }).join('');
+    var pct=cat.target>0?Math.min(100,Math.round(tot/cat.target*100)):0;
+    var totColor=pct>=100?'var(--ac)':pct>=70?'var(--blue-lt)':'var(--tx2)';
+    return '<tr>'+
+      '<td class="gt-td">'+
+        '<div class="cat-cell-inner">'+
+          '<span class="cc-emoji">'+getEmoji(cat.name)+'</span>'+
+          '<div class="cc-dot" style="background:'+cat.color+'"></div>'+
+          '<div class="cc-name">'+escH(cat.name)+'</div>'+
+        '</div>'+
+      '</td>'+
+      cells+
+      '<td class="gt-td-tot"><span class="tot-val" style="color:'+totColor+'">'+tot.toFixed(1)+'h</span></td>'+
+      '<td class="gt-td-prog">'+
+        '<div class="row-prog-track"><div class="row-prog-fill" style="width:'+pct+'%;background:'+cat.color+'"></div></div>'+
+        '<div class="row-prog-lbl">'+pct+'% &bull; tgt '+cat.target+'h</div>'+
+      '</td>'+
+    '</tr>';
+  }).join('');
+
+  // Day totals row
+  var dayTots=dates.map(function(d,i){
+    return cats.reduce(function(s,cat){return s+getLog(wk,cat.id,i);},0);
+  });
+  var dayTotRow='<tr class="day-tot-row">'+
+    '<td>Day total</td>'+
+    dayTots.map(function(t,i){
+      var isTdy=isToday(dates[i]);
+      return '<td style="'+(isTdy?'color:var(--ac)':'')+'">'+
+        (t>0?t.toFixed(1)+'h':'\u2014')+'</td>';
+    }).join('')+
+    '<td colspan="2"></td>'+
+  '</tr>';
+
+  el.innerHTML=thead+'<tbody>'+tbody+dayTotRow+'</tbody>';
+}
+
+// ── Stats + ring ──────────────────────────────────────────────────────
+function renderStats(){
+  var wk=weekKey(currentMonday);
+  var totalLogged=0,totalTarget=0;
+  cats.forEach(function(cat){
+    for(var i=0;i<7;i++)totalLogged+=getLog(wk,cat.id,i);
+    totalTarget+=cat.target;
+  });
+  var pct=totalTarget>0?Math.min(100,Math.round(totalLogged/totalTarget*100)):0;
+  var remaining=Math.max(0,totalTarget-totalLogged);
+  var circ=2*Math.PI*40;
+  var fillLen=circ*(pct/100);
+
+  document.getElementById('statLogged').textContent=totalLogged.toFixed(1)+'h';
+  document.getElementById('statTarget').textContent=totalTarget+'h';
+  document.getElementById('statRemaining').textContent=remaining.toFixed(1)+'h';
+  document.getElementById('ringPct').textContent=pct+'%';
+  document.getElementById('ringFill').setAttribute('stroke-dasharray',fillLen+' '+circ);
+  document.getElementById('ringFill').setAttribute('stroke',pct>=100?'var(--ac)':pct>=60?'var(--blue-lt)':'var(--blue)');
+
+  // Week label
+  var sunday=addDays(currentMonday,6);
+  document.getElementById('weekLabel').textContent=fmtDate(currentMonday)+' \u2013 '+fmtDate(sunday);
+  var isCurrentWeek=weekKey(currentMonday)===weekKey(getMonday(new Date()));
+  document.getElementById('weekSub').textContent=isCurrentWeek?'This week':
+    (currentMonday<new Date()?'Past week':'Future week');
+
+  // Celebrate if just hit 100
+  if(pct>=100&&totalLogged>0){
+    var ringEl=document.getElementById('ringFill');
+    ringEl.parentElement.classList.remove('celebrating');
+    void ringEl.parentElement.offsetWidth;
+    ringEl.parentElement.classList.add('celebrating');
+  }
+}
+
+// ── Insights ──────────────────────────────────────────────────────────
+function renderInsights(){
+  var wk=weekKey(currentMonday);
+  var el=document.getElementById('insights');
+  if(!cats.length){el.innerHTML='<div class="ins ins-info">Add categories on the left to see insights here.</div>';return;}
+
+  var today=new Date();var todayIdx=(today.getDay()+6)%7;
+  var isCurrentWeek=weekKey(currentMonday)===weekKey(getMonday(today));
+  var ins=[];
+  var totalLogged=0,totalTarget=0;
+  var completed=[],onTrack=[],needsWork=[];
+
+  cats.forEach(function(cat){
+    var tot=0;for(var i=0;i<7;i++)tot+=getLog(wk,cat.id,i);
+    totalLogged+=tot;totalTarget+=cat.target;
+    var pct=cat.target>0?tot/cat.target*100:0;
+    if(pct>=100)completed.push(cat.name);
+    else if(isCurrentWeek){
+      var daysLeft=6-todayIdx;
+      var needed=cat.target-tot;
+      if(daysLeft>0&&needed/daysLeft<3)onTrack.push({name:cat.name,needed:needed,daysLeft:daysLeft});
+      else if(needed>0)needsWork.push({name:cat.name,needed:needed,daysLeft:Math.max(1,daysLeft)});
+    }
+  });
+
+  if(completed.length>0){
+    ins.push({t:'good',m:'\uD83C\uDF89 '+completed.join(' and ')+' '+(completed.length>1?'have':'has')+' hit the weekly target. Solid.'});
+  }
+  if(needsWork.length>0){
+    var worst=needsWork.sort(function(a,b){return b.needed/b.daysLeft-a.needed/a.daysLeft;})[0];
+    var perDay=(worst.needed/worst.daysLeft).toFixed(1);
+    ins.push({t:'warn',m:worst.name+' needs '+worst.needed.toFixed(1)+'h more. Log '+perDay+'h/day for the next '+worst.daysLeft+' day'+(worst.daysLeft>1?'s':'')+' to hit your target.'});
+  }
+  if(onTrack.length>0){
+    ins.push({t:'info',m:onTrack.map(function(c){return c.name;}).join(', ')+' '+(onTrack.length>1?'are':'is')+' on track. Keep the pace.'});
+  }
+  if(totalLogged===0&&isCurrentWeek){
+    ins.push({t:'info',m:'Nothing logged yet this week. Enter your first hours in the grid to start tracking.'});
+  }
+  if(!isCurrentWeek&&totalLogged>0){
+    var overallPct=totalTarget>0?Math.round(totalLogged/totalTarget*100):0;
+    ins.push({t:overallPct>=80?'good':'info',m:'That week: '+totalLogged.toFixed(1)+'h logged, '+overallPct+'% of target.'});
+  }
+  if(ins.length===0){
+    ins.push({t:'info',m:'Your data saves automatically. Come back any time and your history will be here.'});
+  }
+
+  el.innerHTML=ins.map(function(i){return'<div class="ins ins-'+i.t+'">'+i.m+'</div>';}).join('');
+}
+
+// ── Copy from previous week ───────────────────────────────────────────
+function copyFromPrevWeek(){
+  var wk=weekKey(currentMonday);
+  var pwk=prevWeekKey(currentMonday);
+  if(!logs[pwk]){showToast('No data from last week to copy.');return;}
+  if(!confirm('Copy logged hours from last week into this week?'))return;
+  logs[wk]=JSON.parse(JSON.stringify(logs[pwk]));
+  saveLogs();render();showToast('Last week copied!');
+}
+
+// ── Clear week ────────────────────────────────────────────────────────
+function clearWeek(){
+  if(!confirm('Clear all logged hours for this week?'))return;
+  var wk=weekKey(currentMonday);delete logs[wk];saveLogs();render();showToast('Week cleared.');
+}
+
+// ── Copy summary ──────────────────────────────────────────────────────
+function copyWeek(){
+  var wk=weekKey(currentMonday);
+  var sunday=addDays(currentMonday,6);
+  var lines=['Weekly Hour Planner \u2014 '+fmtDate(currentMonday)+' \u2013 '+fmtDate(sunday),''];
+  cats.forEach(function(cat){
+    var tot=0;for(var i=0;i<7;i++)tot+=getLog(wk,cat.id,i);
+    var pct=cat.target>0?Math.round(tot/cat.target*100):0;
+    lines.push(cat.name+': '+tot.toFixed(1)+'h / '+cat.target+'h ('+pct+'%)');
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(function(){showToast('Copied!');});
+}
+
+// ── Export CSV ────────────────────────────────────────────────────────
+function exportCSV(){
+  var wk=weekKey(currentMonday);
+  var sunday=addDays(currentMonday,6);
+  var header=['Category','Target (h)'].concat(DAYS).concat(['Total','%']);
+  var rows=[header];
+  cats.forEach(function(cat){
+    var dayCols=[];var tot=0;
+    for(var i=0;i<7;i++){var v=getLog(wk,cat.id,i);dayCols.push(v);tot+=v;}
+    var pct=cat.target>0?Math.round(tot/cat.target*100):0;
+    rows.push([cat.name,cat.target].concat(dayCols).concat([tot.toFixed(1),pct+'%']));
+  });
+  var csv=rows.map(function(r){return r.map(function(v){return'"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='weekly_hours_'+wk+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);showToast('CSV downloaded!');
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────
+var toastTimer;
+function showToast(msg){
+  var el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){el.classList.remove('show');},2500);
+}
+
+// ── Event delegation ──────────────────────────────────────────────────
+document.addEventListener('input',function(e){
+  var el=e.target;var act=el.dataset.action;var id=el.dataset.id;
+  if(act==='catname'){updateCatName(id,el.value);}
+  if(act==='cattarget'){updateCatTarget(id,el.value);}
+  if(act==='catcolor'){updateCatColor(id,el.value);}
+  if(act==='loghour'){
+    setLog(el.dataset.wk,el.dataset.cat,parseInt(el.dataset.day),el.value);
+    var v=parseFloat(el.value)||0;
+    el.className='hour-inp'+(v>0?' '+heatClass(v):'');
+    el.style.color=v>0?'':'var(--tx3)';
+    renderStats();renderCats();renderInsights();
+    // Refresh day total in last row
+    var allInputs=document.querySelectorAll('[data-action="loghour"][data-day="'+el.dataset.day+'"]');
+    var dayTot=0;
+    allInputs.forEach(function(inp){dayTot+=parseFloat(inp.value)||0;});
+    var totCells=document.querySelectorAll('.day-tot-row td');
+    var dayIdx=parseInt(el.dataset.day)+1;
+    if(totCells[dayIdx]){totCells[dayIdx].textContent=dayTot>0?dayTot.toFixed(1)+'h':'\u2014';}
+  }
+});
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-action]');
+  if(!el)return;
+  var act=el.dataset.action;var id=el.dataset.id;
+  if(act==='del-cat'){removeCategory(id);}
+  if(act==='qchip'){addCategory(el.dataset.name,10);}
+});
+
+function escH(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ── Full render ───────────────────────────────────────────────────────
+function render(){
+  renderQuickChips();
+  renderCats();
+  renderGrid();
+  renderStats();
+  renderInsights();
+}
+
+// ── GDPR ──────────────────────────────────────────────────────────────
+(function(){if(localStorage.getItem('dl_gdpr_v1'))return;setTimeout(function(){var b=document.getElementById('gdpr');if(b)b.classList.add('show');},900);})();
+function gdprAccept(){localStorage.setItem('dl_gdpr_v1','accepted');var b=document.getElementById('gdpr');if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}}
+function gdprDecline(){localStorage.setItem('dl_gdpr_v1','declined');var b=document.getElementById('gdpr');if(b){b.style.transition='transform .3s';b.style.transform='translateY(100%)';}}
+
+// ── Skeleton ──────────────────────────────────────────────────────────
+(function(){var sk=document.getElementById('skScreen');if(!sk)return;var done=function(){sk.classList.add('out');setTimeout(function(){sk.remove();},450);};if(document.readyState==='complete'){setTimeout(done,120);}else{window.addEventListener('load',function(){setTimeout(done,120);});}})();
+
+// ── Init ──────────────────────────────────────────────────────────────
+loadCats();loadLogs();
+if(!cats.length){
+  cats=[
+    {id:'c1',name:'Deep Work',  target:20,color:'#10B981'},
+    {id:'c2',name:'Exercise',   target:5, color:'#60A5FA'},
+    {id:'c3',name:'Reading',    target:7, color:'#A78BFA'},
+    {id:'c4',name:'Side Project',target:10,color:'#FCD34D'},
+  ];
+  saveCats();
+}
+render();
+</script>
+</body>
+</html>
