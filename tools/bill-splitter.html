@@ -287,6 +287,15 @@ footer{border-top:1px solid var(--bd)}
   .btn-row{grid-template-columns:1fr}
 }
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"></div>
@@ -513,6 +522,18 @@ footer{border-top:1px solid var(--bd)}
     <p>Save recurring splits — a regular group dinner, a shared subscription, a recurring expense — and reload them instantly next time. Up to 6 templates stored locally in your browser.</p>
   </div>
 </div>
+
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the bill splitter handle unequal splits?</p><p class="faq-a">Switch to custom split mode and enter a specific amount or percentage for each person. The tool validates that the amounts add up to the total and flags any discrepancy before you finalise. Equal split mode divides the bill evenly by default.</p></div>
+<div class="faq-item"><p class="faq-q">Can it calculate tip automatically?</p><p class="faq-a">Yes. Enter a tip percentage and the splitter adds it to the total before dividing. You can also enter a fixed tip amount if you prefer. The tip, subtotal, and each person's share all appear as separate line items so everyone can verify the math.</p></div>
+<div class="faq-item"><p class="faq-q">Can some people be excluded from certain items?</p><p class="faq-a">Yes. Use item-by-item mode to assign specific dishes or charges to specific people. Add each item, select who ordered it, and the splitter calculates each person's total based only on their own items plus their share of shared charges like tax and tip.</p></div>
+<div class="faq-item"><p class="faq-q">How do I share the split with my group?</p><p class="faq-a">Hit the share button to generate a link with the split encoded in the URL. Anyone with the link sees the same numbers. You can also copy a plain-text summary to paste into a group chat.</p></div>
+<div class="faq-item"><p class="faq-q">Can I save recurring splits as templates?</p><p class="faq-a">Yes. Save any split as a named template — useful for recurring group dinners, shared subscriptions, or regular expense splits. The tool stores up to six templates in localStorage and you can reload any of them instantly.</p></div>
+<div class="faq-item"><p class="faq-q">Does the bill splitter work in any currency?</p><p class="faq-a">Yes. The tool is currency-agnostic. Set your preferred currency symbol in the settings and it appears throughout the calculation. The math works the same regardless of currency.</p></div>
+<div class="faq-item"><p class="faq-q">Is there a limit on the number of people?</p><p class="faq-a">The splitter supports up to 20 people per bill. For most group dinners, team lunches, and shared expenses, that covers every realistic scenario.</p></div>
+</section>
 
 <footer><div class="foot">
   <a href="/">Deskloop</a><span>·</span>

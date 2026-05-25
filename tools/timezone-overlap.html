@@ -367,6 +367,15 @@
 .gdpr-decline{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 13px/1 'Inter',system-ui,sans-serif;padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"><div class="sk-nav">
@@ -546,6 +555,18 @@
     <p>New York and London share 9am to 12pm ET during most of the year — a comfortable morning standup. Add Singapore and the window shrinks to early morning US time. Fully global teams spanning 12+ hours have no overlapping business hours and need async-first workflows.</p>
   </div>
 </div>
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the timezone overlap tool find meeting times?</p><p class="faq-a">Add the locations or timezones of each team member and set their working hours. The tool calculates the overlap — the window where everyone's working hours coincide — and highlights those times in green. If no overlap exists, it shows the closest windows and the hours difference between each pair of locations.</p></div>
+<div class="faq-item"><p class="faq-q">Can I compare more than two timezones at once?</p><p class="faq-a">Yes. Add as many locations as your team requires. The tool displays all timezones in a side-by-side grid and highlights the shared working window across all of them simultaneously. Useful for distributed teams spanning three or more continents.</p></div>
+<div class="faq-item"><p class="faq-q">Does it adjust for daylight saving time automatically?</p><p class="faq-a">Yes. The tool uses your browser's built-in timezone data, which includes current daylight saving time offsets for all supported regions. Times update automatically when DST changes occur so you don't need to manually adjust for seasonal clock shifts.</p></div>
+<div class="faq-item"><p class="faq-q">Can I save my team's timezone configuration?</p><p class="faq-a">Yes. Save your team's locations and working hours as a named configuration and reload it any time. Useful for teams with a fixed set of locations that you check regularly. Configurations save to localStorage and load instantly.</p></div>
+<div class="faq-item"><p class="faq-q">What counts as working hours?</p><p class="faq-a">You define working hours for each team member. The default is 9 AM to 6 PM local time, but you can adjust it for each location independently. Night-shift workers, part-time collaborators, or people with non-standard hours can each have their own window set.</p></div>
+<div class="faq-item"><p class="faq-q">Can I share my timezone overlap with the team?</p><p class="faq-a">Yes. Generate a shareable link with your team's configuration encoded in the URL. Anyone with the link sees the same timezone grid and overlap window without needing to set it up themselves.</p></div>
+<div class="faq-item"><p class="faq-q">Is this free with no account required?</p><p class="faq-a">Completely free. No sign-up, no email, no subscription. Open the page, add your team's locations, and find your overlap window immediately. Saved configurations store in your browser and nothing leaves your device.</p></div>
+</section>
+
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:18px 24px;font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none;display:flex;align-items:center;gap:5px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>

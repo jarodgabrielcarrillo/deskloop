@@ -372,6 +372,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 .seo-block h3{font-size:14px;font-weight:700;color:var(--tx);margin:24px 0 8px}
 .seo-block p{font-size:14px;color:var(--tx2);line-height:1.8;margin:0}
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"><div class="sk-nav">
@@ -740,6 +749,18 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
     <p>The invoice generator runs entirely in your browser using jsPDF. Nothing is uploaded to any server. Your business details, client data, and saved templates store locally in your browser and never leave your device.</p>
   </div>
 </div>
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">What information does the invoice generator include?</p><p class="faq-a">The invoice includes your business name and contact details, your client's name and address, a unique invoice number, issue date, due date, an itemised list of services with quantities and rates, subtotal, tax, discounts, and the total amount due. All fields are editable and the layout adapts to your content automatically.</p></div>
+<div class="faq-item"><p class="faq-q">How do I download the invoice as a PDF?</p><p class="faq-a">Click the Download PDF button and your browser generates a print-quality PDF locally. No file uploads to any server — the PDF renders entirely in your browser using your filled-in data. Save it to your device or send it directly to your client as an email attachment.</p></div>
+<div class="faq-item"><p class="faq-q">Can I save my business details so I don't retype them every time?</p><p class="faq-a">Yes. Save your business name, address, email, phone, and payment details as your default profile. The generator loads them automatically each time you open a new invoice. You only need to update client details and line items for each new bill.</p></div>
+<div class="faq-item"><p class="faq-q">Does it support tax rates and discounts?</p><p class="faq-a">Yes. Add a tax rate as a percentage and the generator calculates the tax amount and adds it to the subtotal. Apply a discount as a percentage or fixed amount before or after tax. All line items, tax, discount, and total appear as separate rows in the invoice so clients can verify every figure.</p></div>
+<div class="faq-item"><p class="faq-q">Can I save invoice templates for recurring clients?</p><p class="faq-a">Yes. Save any invoice as a template with a client name. Load it next month and only the date and invoice number need updating. Recurring retainer clients with the same monthly scope take about 30 seconds to invoice once a template exists.</p></div>
+<div class="faq-item"><p class="faq-q">What currencies does it support?</p><p class="faq-a">The invoice generator supports any currency. Set your preferred currency symbol in the settings and it appears on every line item and total. Useful for freelancers billing clients in different currencies across different projects.</p></div>
+<div class="faq-item"><p class="faq-q">Is this free with no account required?</p><p class="faq-a">Completely free. No sign-up, no subscription, no watermark on your invoices. Open the page, fill in your details, and download a professional PDF invoice immediately. Saved templates and business profiles store in your browser's localStorage.</p></div>
+</section>
+
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:16px 24px;font-family:'Inter',system-ui,sans-serif;font-size:12px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>

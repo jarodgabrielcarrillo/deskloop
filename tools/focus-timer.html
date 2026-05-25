@@ -641,6 +641,15 @@
 .gdpr-decline{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 13px/1 'Inter',system-ui,sans-serif;padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"><div class="sk-nav">
@@ -863,6 +872,18 @@
 </div>
 
 <!-- ── FOOTER ── -->
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">What is the Pomodoro technique and how does this timer use it?</p><p class="faq-a">The Pomodoro technique breaks work into focused intervals — typically 25 minutes — separated by short breaks. After four intervals you take a longer break. The focus timer implements this structure with adjustable session lengths so you can set intervals that match your work style rather than sticking rigidly to 25 minutes.</p></div>
+<div class="faq-item"><p class="faq-q">Can I change the session and break lengths?</p><p class="faq-a">Yes. Open the settings panel to set your preferred focus duration, short break length, and long break length. Changes apply immediately. Most people find that 25, 5, and 15 minutes work well as defaults, but longer sessions suit deep writing or coding work better.</p></div>
+<div class="faq-item"><p class="faq-q">Does the timer play a sound when a session ends?</p><p class="faq-a">Yes. An audio cue fires at the end of each focus session and each break. You can mute the sound in settings if you prefer a silent timer. The page title also updates with the remaining time so you can track progress from another tab without keeping the window visible.</p></div>
+<div class="faq-item"><p class="faq-q">Does it track how many sessions I complete?</p><p class="faq-a">Yes. The timer counts your completed sessions for the current day and displays your daily total. Session history saves to localStorage so your count persists across page reloads. Check your stats to see your average daily sessions and total focus time over time.</p></div>
+<div class="faq-item"><p class="faq-q">Will the timer keep running if I switch tabs?</p><p class="faq-a">Yes. The timer runs in the background regardless of which tab is active. The page title shows the countdown so you can monitor progress from any tab. Audio plays when the session ends even if the focus timer tab is not in focus.</p></div>
+<div class="faq-item"><p class="faq-q">Does this work offline?</p><p class="faq-a">Yes. Once the page loads, the timer runs entirely in your browser with no internet connection required. Your session history and settings save to localStorage locally. No data leaves your device at any point.</p></div>
+<div class="faq-item"><p class="faq-q">Is the focus timer free with no account?</p><p class="faq-a">Completely free. No sign-up, no email, no subscription. Open the page and start your first session immediately. All settings and history save automatically to your browser.</p></div>
+</section>
+
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:18px 24px;font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none;display:flex;align-items:center;gap:5px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>

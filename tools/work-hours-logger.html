@@ -478,6 +478,15 @@
 .gdpr-decline{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 13px/1 'Inter',system-ui,sans-serif;padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"><div class="sk-nav">
@@ -680,6 +689,18 @@
     <p>All data saves to your browser's localStorage. The logger works fully offline once the page has loaded. Nothing leaves your device. Export to CSV at any time to keep a permanent record outside the browser.</p>
   </div>
 </div>
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the work hours logger record my time?</p><p class="faq-a">Hit Start when you begin a task and Stop when you finish. The logger records the exact duration and attaches it to the project or client you selected. You can also add entries manually if you forgot to run the timer — enter the start time, end time, and the logger calculates the duration.</p></div>
+<div class="faq-item"><p class="faq-q">Can I track hours for multiple clients at once?</p><p class="faq-a">Yes. Create a separate project or client entry for each account you work on. Switch between them freely throughout the day. The logger keeps each client's hours separate and totals them independently so you can bill accurately without mixing up time across accounts.</p></div>
+<div class="faq-item"><p class="faq-q">Can I add notes to each time entry?</p><p class="faq-a">Yes. Each log entry has an optional notes field for task descriptions, deliverable names, or billing references. Notes appear on CSV exports and in the summary view, making it straightforward to turn your log into a detailed timesheet for client invoices.</p></div>
+<div class="faq-item"><p class="faq-q">How do I export my logged hours?</p><p class="faq-a">Click Export to download a CSV file containing all your time entries — date, project, duration, hourly rate, total value, and notes. Filter by date range or client before exporting to get exactly the records you need for a specific invoice period.</p></div>
+<div class="faq-item"><p class="faq-q">Can I set an hourly rate per project?</p><p class="faq-a">Yes. Assign a different hourly rate to each project. The logger multiplies your logged hours by the rate automatically and shows the earnings total for each client alongside the time totals. Useful for freelancers who charge different rates across different types of work.</p></div>
+<div class="faq-item"><p class="faq-q">Does my log save automatically?</p><p class="faq-a">Yes. Every entry saves to localStorage the moment you stop the timer or submit a manual entry. Your full log history persists across browser sessions indefinitely. Nothing sends to any server and no account is required.</p></div>
+<div class="faq-item"><p class="faq-q">How does this pair with the invoice generator?</p><p class="faq-a">Export your logged hours as a CSV, then use the values to populate the Invoice Generator on Deskloop. The combination gives you a complete freelance billing workflow — log time, review totals, generate a professional PDF invoice — without any paid software.</p></div>
+</section>
+
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:18px 24px;font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none;display:flex;align-items:center;gap:5px" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>

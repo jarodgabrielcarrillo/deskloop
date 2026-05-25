@@ -322,6 +322,15 @@ footer{border-top:1px solid var(--bd)}
   .controls{flex-wrap:wrap}
 }
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 
@@ -520,6 +529,18 @@ footer{border-top:1px solid var(--bd)}
   </div>
 
 </div>
+
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the task deadline tracker sort my tasks?</p><p class="faq-a">Tasks sort by urgency automatically. The tracker calculates the days remaining for each task and surfaces the most urgent ones at the top. Overdue tasks appear in red so nothing slips past unnoticed.</p></div>
+<div class="faq-item"><p class="faq-q">Can I set priorities on individual tasks?</p><p class="faq-a">Yes. Each task lets you set a priority level — high, medium, or low. The tracker factors priority into the sort order alongside the deadline so your most critical work stays visible even when it isn't the most time-sensitive item on the list.</p></div>
+<div class="faq-item"><p class="faq-q">Does my task list save between sessions?</p><p class="faq-a">Yes. All tasks save to localStorage the moment you add or edit them. Close the browser, restart your computer, come back later — your full task list is waiting exactly as you left it. Nothing sends to any server.</p></div>
+<div class="faq-item"><p class="faq-q">Can I add subtasks or notes to each task?</p><p class="faq-a">Each task supports a notes field where you can add context, links, or subtask breakdowns in plain text. The notes appear in the expanded task view without cluttering the main list.</p></div>
+<div class="faq-item"><p class="faq-q">How do I mark a task complete?</p><p class="faq-a">Click the checkmark on any task to mark it complete. Completed tasks move to the bottom of the list or into a separate completed section depending on your view setting. You can uncheck a task at any time to move it back to active.</p></div>
+<div class="faq-item"><p class="faq-q">Is there a limit on how many tasks I can add?</p><p class="faq-a">No practical limit. localStorage handles hundreds of tasks without any performance issues. For most users managing a normal workload, storage capacity is never a concern.</p></div>
+<div class="faq-item"><p class="faq-q">Do I need an account to use this?</p><p class="faq-a">No account required. Open the page and start adding tasks immediately. There is no sign-up, no email, and no subscription. The tool works fully offline once the page loads.</p></div>
+</section>
 
 <footer><div class="foot">
   <a href="/">Deskloop</a><span>·</span>

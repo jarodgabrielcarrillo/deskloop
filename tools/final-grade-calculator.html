@@ -297,6 +297,15 @@ footer{border-top:1px solid var(--bd)}
   .semester-overview{grid-template-columns:1fr 1fr}
 }
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 
@@ -618,6 +627,18 @@ footer{border-top:1px solid var(--bd)}
     <p>This calculator runs entirely in your browser. Nothing is sent to any server. Once loaded it works offline, and your data never leaves your device. Saved scenarios persist across browser sessions via localStorage.</p>
   </div>
 </div>
+
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the final grade calculator work?</p><p class="faq-a">Enter each graded component in your course — assignments, midterms, quizzes, projects — along with its weight and your current score. The calculator computes your weighted average and shows what score you need on the final exam to reach your target grade.</p></div>
+<div class="faq-item"><p class="faq-q">What if my components don't add up to 100%?</p><p class="faq-a">The calculator flags any weight discrepancy so you can correct it before running the calculation. All component weights must total 100% to produce an accurate result. If your syllabus uses a different scale, adjust the weights proportionally until they sum correctly.</p></div>
+<div class="faq-item"><p class="faq-q">Can I calculate what I need on my final exam to pass?</p><p class="faq-a">Yes. Set your target grade — whether that's passing, a B, or a specific GPA threshold — and the calculator shows the exact score you need on the final. If the required score exceeds 100%, you know immediately that the target is mathematically out of reach and can adjust your goal accordingly.</p></div>
+<div class="faq-item"><p class="faq-q">Does it support different grading scales?</p><p class="faq-a">Yes. Switch between percentage-based grading and letter grade systems. The calculator converts between scales automatically. You can also set a custom passing threshold if your institution uses a non-standard grading system.</p></div>
+<div class="faq-item"><p class="faq-q">Can I save my courses for the whole semester?</p><p class="faq-a">Yes. Save each course as a separate entry with its own component weights and scores. Switch between courses without losing data. Everything saves to localStorage so your records persist across sessions without any account.</p></div>
+<div class="faq-item"><p class="faq-q">How is a weighted average calculated?</p><p class="faq-a">Multiply each component score by its weight, then sum all the results. A midterm worth 30% with a score of 80 contributes 24 points to your weighted average. Add all the weighted contributions together and you get your current grade before the final exam.</p></div>
+<div class="faq-item"><p class="faq-q">Is this free with no sign-up?</p><p class="faq-a">Completely free. No account, no email, no subscription. Open the page, enter your grades, and get your result instantly. All saved courses stay in your browser's localStorage.</p></div>
+</section>
 
 <footer><div class="foot">
   <a href="/">Deskloop</a><span>·</span>

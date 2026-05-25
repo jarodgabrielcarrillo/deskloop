@@ -297,6 +297,15 @@ footer{border-top:1px solid var(--bd)}
   .donut-wrap{flex-direction:column;align-items:flex-start}
 }
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"></div>
@@ -510,6 +519,18 @@ footer{border-top:1px solid var(--bd)}
     <p>Copy a plain-text summary to clipboard, export a CSV file for spreadsheets, or print a clean summary. All data stays in your browser's localStorage — nothing leaves your device.</p>
   </div>
 </div>
+
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the budget planner calculate my remaining balance?</p><p class="faq-a">Enter your monthly income at the top, then add your expenses by category. The planner subtracts your total expenses from your income in real time and shows your remaining balance, savings rate, and how long it will take to reach your savings goal at the current surplus rate.</p></div>
+<div class="faq-item"><p class="faq-q">Can I track multiple months?</p><p class="faq-a">Yes. Each month stores separately in localStorage. Switch between months using the navigation arrows. Your expense categories and income carry forward as defaults so you only need to update the numbers that changed.</p></div>
+<div class="faq-item"><p class="faq-q">Can I set a savings goal?</p><p class="faq-a">Yes. Enter a savings target and the planner calculates your progress, the amount remaining, and the estimated months to reach your goal based on your current monthly surplus. Update your income or expenses and the projection adjusts instantly.</p></div>
+<div class="faq-item"><p class="faq-q">Does my budget data stay private?</p><p class="faq-a">Completely private. All data saves to your browser's localStorage and never leaves your device. No server receives your income or expense figures. Clear your browser data at any time to erase everything permanently.</p></div>
+<div class="faq-item"><p class="faq-q">Can I export my budget?</p><p class="faq-a">Yes. Export a CSV of your income and expenses for any month, or copy a plain-text summary to paste into a message or document. You can also print a clean one-page summary directly from the tool.</p></div>
+<div class="faq-item"><p class="faq-q">Is this suitable for students managing a tight budget?</p><p class="faq-a">Yes. The budget planner works for any income level and any currency. Students commonly use it to track allowance, part-time income, tuition payments, and living expenses across the semester. There is no account required and no data leaves the device.</p></div>
+<div class="faq-item"><p class="faq-q">What currencies does it support?</p><p class="faq-a">The planner is currency-agnostic. Type your amounts in any currency and the calculations work the same way. The currency symbol field lets you set your preferred symbol — peso, dollar, euro, pound, or anything else — and it appears throughout the interface.</p></div>
+</section>
 
 <footer><div class="foot">
   <a href="/">Deskloop</a><span>·</span>

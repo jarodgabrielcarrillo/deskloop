@@ -341,6 +341,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
 .seo-block h3{font-size:14px;font-weight:700;color:var(--tx);margin:24px 0 8px}
 .seo-block p{font-size:14px;color:var(--tx2);line-height:1.8;margin:0}
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"><div class="sk-nav">
@@ -561,6 +570,18 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ac);outline-offset:
     <p>Enter a target cumulative GPA and remaining credit hours, and the tool calculates the average grade you need in future courses to reach it. Useful for graduation planning or graduate school preparation.</p>
   </div>
 </div>
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the GPA calculator compute my grade point average?</p><p class="faq-a">Enter each course with its credit hours and your letter grade or percentage score. The calculator multiplies each course's grade points by its credit hours, sums the results, then divides by the total credit hours attempted. This weighted average is your GPA — courses with more credit hours carry more weight in the calculation.</p></div>
+<div class="faq-item"><p class="faq-q">Can I calculate both semester and cumulative GPA?</p><p class="faq-a">Yes. Add courses for the current semester to see your semester GPA. Enter your cumulative credit hours and GPA from previous semesters and the calculator combines them to show your updated cumulative GPA. Both figures update in real time as you add or adjust courses.</p></div>
+<div class="faq-item"><p class="faq-q">Does it support different grading scales?</p><p class="faq-a">Yes. Switch between the standard 4.0 scale, a 5.0 scale, or a percentage-based system. The calculator converts letter grades to grade points based on the scale you select. If your institution uses a non-standard conversion table, you can enter custom grade point values for each letter grade.</p></div>
+<div class="faq-item"><p class="faq-q">Can I see what GPA I need this semester to hit a target cumulative GPA?</p><p class="faq-a">Yes. Enter your current cumulative GPA, total credit hours completed, and your target GPA. Then enter the credit hours you're taking this semester. The calculator shows the minimum semester GPA you need to reach your target — useful for planning how much effort each course requires.</p></div>
+<div class="faq-item"><p class="faq-q">Can I save my courses across semesters?</p><p class="faq-a">Yes. Save each semester's courses as a named record. Your full academic history builds over time in localStorage so you can track your cumulative GPA progression across your entire degree without re-entering old data. No account required.</p></div>
+<div class="faq-item"><p class="faq-q">What is the difference between a weighted and unweighted GPA?</p><p class="faq-a">An unweighted GPA treats every course equally regardless of credit hours — a one-credit elective counts the same as a four-credit core course. A weighted GPA accounts for credit hours, giving heavier courses more influence on your average. Most universities use the weighted calculation, which is what this calculator produces.</p></div>
+<div class="faq-item"><p class="faq-q">Is this free with no sign-up?</p><p class="faq-a">Completely free. No account, no email, no subscription. Open the page, enter your courses, and get your GPA instantly. Saved semester records store in your browser's localStorage.</p></div>
+</section>
+
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:16px 24px;font-family:'Inter',system-ui,sans-serif;font-size:12px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
     <a href="/" style="color:#4C6580;text-decoration:none" onmouseover="this.style.color='#88AAC5'" onmouseout="this.style.color='#4C6580'">&larr; Deskloop</a>

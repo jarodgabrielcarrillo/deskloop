@@ -534,6 +534,15 @@
 .gdpr-decline{background:transparent;color:#4C6580;border:1px solid #142032;border-radius:8px;font:500 13px/1 'Inter',system-ui,sans-serif;padding:10px 16px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .gdpr-decline:hover{color:#88AAC5;border-color:#1A2D44}
 </style>
+
+<style>
+.faq-section{max-width:860px;margin:64px auto 0;padding:0 32px 80px}
+.faq-section h2{font-size:24px;font-weight:700;color:#EEF6FF;margin-bottom:32px;letter-spacing:-.02em}
+.faq-item{border-top:1px solid #142032;padding:24px 0}
+.faq-item:last-child{border-bottom:1px solid #142032}
+.faq-q{font-size:16px;font-weight:600;color:#EEF6FF;margin-bottom:10px}
+.faq-a{font-size:15px;color:#88AAC5;line-height:1.7}
+</style>
 </head>
 <body>
 <div class="sk-screen" id="skScreen"><div class="sk-nav">
@@ -751,6 +760,18 @@
     <p>Visible progress is the engine of habit formation. When you can see 30 consecutive green dots on a calendar, breaking the chain feels costly — and that friction is precisely what keeps the habit alive. This technique, often called "don't break the chain," was popularized by Jerry Seinfeld and validated repeatedly by behavioral psychology research.</p>
   </div>
 </div>
+
+
+<section class="faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does the streak system work?</p><p class="faq-a">Mark a habit complete each day and your streak counter increments by one. Miss a day and the streak resets to zero. The calendar shows your full completion history with coloured dots — green for completed days, empty for missed ones. Long streaks create visible momentum that makes missing a day feel costly.</p></div>
+<div class="faq-item"><p class="faq-q">Can I track habits with different frequencies?</p><p class="faq-a">Yes. Set each habit to daily, on specific weekdays, or a set number of times per week. A habit set to three times per week won't break your streak if you miss a non-target day. The tracker calculates streaks based on your chosen frequency.</p></div>
+<div class="faq-item"><p class="faq-q">How many habits can I track at once?</p><p class="faq-a">No hard limit. You can add as many habits as your localStorage can hold, which in practice means hundreds. That said, most research on habit formation suggests tracking between three and seven habits at once produces better results than tracking twenty.</p></div>
+<div class="faq-item"><p class="faq-q">Does my habit history save automatically?</p><p class="faq-a">Yes. Every completion saves instantly to localStorage. Your full history — including streaks, completion rates, and all past check-ins — stays in your browser indefinitely. Nothing sends to any server and no account is required.</p></div>
+<div class="faq-item"><p class="faq-q">Can I set a daily reminder?</p><p class="faq-a">The tracker does not send push notifications since it runs entirely in the browser with no server component. The most effective workaround is to set the page as your browser's default new tab so your habits are the first thing you see each session.</p></div>
+<div class="faq-item"><p class="faq-q">What happens if I forget to check in for a day?</p><p class="faq-a">The streak resets. You can manually backdate a completion by clicking a past date on the calendar if you genuinely completed the habit but forgot to mark it. The tool trusts you to keep your own record honestly.</p></div>
+<div class="faq-item"><p class="faq-q">Is the habit tracker free with no account?</p><p class="faq-a">Completely free. No sign-up, no email, no subscription. Open the page and add your first habit immediately. All data lives in your browser.</p></div>
+</section>
 
 <footer style="border-top:1px solid #142032;background:#060C18;padding:0">
   <div style="text-align:center;padding:18px 24px;font-family:'Inter',system-ui,sans-serif;font-size:13px;color:#4C6580;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
