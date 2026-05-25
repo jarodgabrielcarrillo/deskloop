@@ -127,13 +127,38 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://deskloop.work/blog/meeting-cost.html</loc>
+    <loc>https://deskloop.work/blog/remote-team-time-zones.html</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://deskloop.work/blog/freelance-rate.html</loc>
     <lastmod>2026-05-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://deskloop.work/blog/remote-team-time-zones.html</loc>
+    <loc>https://deskloop.work/blog/monthly-budget.html</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deskloop.work/blog/freelance-invoice.html</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deskloop.work/blog/stop-missing-deadlines.html</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deskloop.work/blog/how-to-raise-gpa.html</loc>
     <lastmod>2026-05-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
