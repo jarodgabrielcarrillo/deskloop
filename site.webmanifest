@@ -1,0 +1,13 @@
+{
+  "name": "Deskloop",
+  "short_name": "Deskloop",
+  "description": "Free productivity tools. No signup.",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#1E40AF",
+  "background_color": "#060C18",
+  "display": "standalone",
+  "start_url": "/"
+}
